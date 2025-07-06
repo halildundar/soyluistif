@@ -1,0 +1,146 @@
+{{> header}}
+<div>
+    <div class="max-w-[--max-w] mx-auto">
+        <div class="py-2 text-gray-500 font-semibold  flex items-center space-x-2 text-[0.8rem]">
+            <span class="cursor-pointer">Anasayfa</span>
+            <span class="tio">chevron_right</span>
+            {{#each breadcrumbs}}
+            
+            {{#IsEq this.last 0}}
+                <a href="{{this.url}}" class="cursor-pointer">{{this.name}}</a>
+               <span class="tio">chevron_right</span>
+               {{else}}
+                 <a href="{{this.url}}" class="cursor-pointer font-normal italic">{{this.name}}</a>
+            {{/IsEq}}
+            {{/each}}
+        </div>
+        <div class="flex py-4">
+            <div class="w-1/4 pr-4 space-y-4">
+                <div class="border border-gray-200 rounded-md px-4 py-2">
+                    <div class="font-semibold pb-2">Alt Kategoriler</div>
+                    <div class="text-[0.8rem]">
+                        {{#each altKategoriler}}
+                        <a href="{{this.url}}" class="cursor-pointer text-gray-500 hover:text-orange-700 py-1 block">
+                            {{this.name}}
+                        </a>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-md px-4 py-2">
+                    <div class="font-semibold pb-2">Fiyat Aralıkları</div>
+                    <div class="flex items-center space-x-2">
+                        <input type="number" placeholder="En Az" class="p-2 min-w-[20px] border border-gray-200">
+                        <span>-</span>
+                        <input type="number" placeholder="En Çok" class="p-2 min-w-[20px] border border-gray-200">
+                        <button class="p-2 border border-gray-300 tio bg-gray-200 hover:bg-gray-300">
+                            arrow_forward
+                        </button>
+                    </div>
+                    <div class="py-2 space-y-1 select-none text-gray-600">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="500" name="500" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="500">500.00 ₺ ve altı</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="1500" name="1500" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="1500">1.499,00 ₺ - 1.999,00 ₺</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="2000" name="2000" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="2000">1.999,00 ₺ - 2.499,00 ₺</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="2500" name="2500" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="2500">2.499,00 ₺ - 2.999,00 ₺</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="3000" name="3000" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="3000">2.999,00 ₺ - 3.499,00 ₺</label>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="border border-gray-200 rounded-md px-4 py-2">
+                    <div class="py-2 space-y-1 select-none text-gray-600">
+                        <div class="font-semibold pb-2">Listeleme</div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="ucretsiz_kargo" name="ucretsiz_kargo"
+                                class="w-[1.2rem] h-[1.2rem]">
+                            <label for="ucretsiz_kargo">Ücretsiz Kargo</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="stoktakiler" name="stoktakiler" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="stoktakiler">Sadece stoktakiler</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-3/4 px-4 py-2 border border-gray-200 rounded-md">
+                <div class="overflow-hidden w-full">
+                    <div class="font-semibold text-[1.4rem] pb-2">Kategori Title</div>
+                    <div class="grid grid-cols-4 gap-4">
+                        {{#each urunler}}
+                        <a href="/urun/{{this.url}}" class="urun{{this.id}}cursor-pointer relative">
+                            <div
+                                class="absolute top-3 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
+                                heart_outlined</div>
+                            <div
+                                class=" border border-gray-200 rounded-lg overflow-hidden pb-2 shadow-[0_0_10px_1px_rgba(0,0,0,0.1)]">
+                                <div class="group">
+                                    <img src="{{this.resim_on}}" class="group-hover:hidden w-full" alt="">
+                                    <img src="{{this.resim_arka}}" class="hidden group-hover:block w-full" alt="">
+                                </div>
+                                <div class="py-2">
+                                    <div class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold">{{this.name}}
+                                    </div>
+                                </div>
+                                <div class="py-2">
+                                    <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
+                                    <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}</div>
+                                </div>
+                                <div class="flex items-center w-1/2 mx-auto space-x-3">
+                                    <div
+                                        class="bg-[red] text-white text-[0.8rem] p-2 flex items-center justify-center rounded-md font-bold">
+                                        %{{this.indirim}}
+                                    </div>
+                                    <div>
+                                        <div class="line-through text-[0.8rem] text-[--koyu]">{{this.fiyat}}.00₺</div>
+                                        <div class="text-[1rem] leading-tight"><strong>{{this.inidirimli_fiyat}}.00₺</strong></div>
+                                    </div>
+                                </div>
+                                <div class="py-2 flex items-center justify-center">
+                                    <div class="inline-flex border border-gray-200">
+                                        <div
+                                            class="tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                                            remove</div>
+                                        <input type="number"
+                                            class="text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center"
+                                            value="1">
+                                        <div
+                                            class="tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                                            add</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-center py-2">
+                                    <button
+                                        class="p-2 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                        <i class="tio text-[1rem]">shopping_cart_add</i>
+                                        <div class="text-[0.8rem]">Sepete ekle</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                        {{else}}
+                        <div
+                            class="w-full bg-black/5 rounded-lg my-4 text-center py-5 font-bold text-gray-500 text-[1.4rem]">
+                            Hiç Veri yok</div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{> footer}}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta robots="noindex,noreferer">
+    <title>{{title}}</title>
+    {{!--
+    <link rel="preload" href="/util/fonts/The-Icon-of.eot" as="font" type="font/eot" crossorigin> --}}
+    {{!--
+    <link rel="preload" href="/util/fonts/The-Icon-of.svg" as="font" type="font/svg" crossorigin> --}}
+    <link rel="preload" href="/util/fonts/The-Icon-of.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/util/fonts/The-Icon-of.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/util/fonts/The-Icon-of.woff" as="font" type="font/woff" crossorigin>
+    <link rel="stylesheet" href="/{{scriptname}}.css">
+    {{{styles}}}
+</head>
+
+<body>
+    {{{body}}}
+    
+    <script defer src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    {{{scripts}}}
+  
+    <script defer src="/{{scriptname}}.js"></script>
+</body>
+
+</html>

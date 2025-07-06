@@ -1,0 +1,20 @@
+<div id="slider1" class="relative overflow-hidden rounded-lg shadow-[0_0_5px_1px_rgba(0,0,0,0.4)] w-full h-full ">
+    <div class="absolute top-0 left-0 w-[4rem] h-full  flex items-center justify-center z-[5]">
+        <div
+            class="btn-prev tio text-[1.4rem] text-white p-2 bg-black/30 flex items-center justify-center cursor-pointer rounded-full select-none">
+            arrow_backward</div>
+    </div>
+    <div class="absolute top-0 right-0 w-[4rem] h-full  flex items-center justify-center z-[5] select-none">
+        <div
+            class="btn-next tio text-[1.4rem] text-white p-2 bg-black/30 flex items-center justify-center cursor-pointer rounded-full">
+            arrow_forward</div>
+    </div>
+     <div class="hidden absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-transparent  to-black/60 z-[4]"></div>
+    <div class="wrap relative">
+       {{#each banners2}}
+        <div class="slide inline-flex">
+            <img src="{{this}}" class="object-cover w-full"  alt="">
+        </div>
+        {{/each}}
+    </div>
+</div>

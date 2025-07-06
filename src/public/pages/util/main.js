@@ -1,0 +1,272 @@
+import { myloc } from "../../main.js";
+const scrollChangeItems = (scrollPos) => {
+  // Top Click Button Display status
+  if (scrollPos > 200) {
+    $(".btntop").css("display", "block");
+  } else {
+    $(".btntop").css("display", "none");
+  }
+};
+export const TopBtnAndScrollPosInit = () => {
+  $(window).on("scroll", function () {
+    var scrollPos = $(document).scrollTop();
+    scrollChangeItems(scrollPos);
+  });
+  $(".btntop").on("click", function () {
+    $("html, body").animate({ scrollTop: 0 }, 500);
+    // ('html,body').animate({scrollTop: $('#top').offset().top},'slow');
+  });
+  $("html, body").animate({ scrollTop: 0 }, 10);
+};
+
+export const BannerFnc = (selector, time, animespeed) => {
+  let slideCount = $(selector + " .wrap .slide").length;
+  let slideWidth = $(selector + " .wrap .slide").width();
+  let slideWidth1 = $(selector + "").width();
+  let slideHeight = $(selector + " .wrap .slide").height();
+  let slideHeight1 = $(selector).height();
+  // $(selector + " .wrap .slide").css("height", slideHeight1);
+  $(selector + " .wrap .slide img").css("height", slideHeight1);
+  let sliderUIWidth = slideCount * slideWidth1;
+  $(selector).css({ width: slideWidth1, height: slideHeight1 });
+  $(selector + " .wrap").css({
+    width: sliderUIWidth,
+    marginLeft: -slideWidth1,
+  });
+  $(selector + " .wrap .slide").css({
+    width: slideWidth1,
+    height: slideHeight1,
+  });
+  $(selector + " .wrap .slide:last-child").prependTo(selector + " .wrap");
+  function moveLeft() {
+    $(selector + " .wrap").animate(
+      {
+        left: +slideWidth1,
+      },
+      animespeed,
+      function () {
+        $(selector + " .wrap .slide:last-child").prependTo(selector + " .wrap");
+        $(selector + " .wrap").css("left", "");
+      }
+    );
+  }
+  function moveRight() {
+    $(selector + " .wrap").animate(
+      {
+        left: -slideWidth1,
+      },
+      animespeed,
+      function () {
+        $(selector + " .wrap .slide:first-child").appendTo(selector + " .wrap");
+        $(selector + " .wrap").css("left", "");
+      }
+    );
+  }
+  let timer = 0;
+  $(selector + " .btn-prev").on("click", function () {
+    moveLeft();
+  });
+  $(selector + " .btn-next").on("click", function () {
+    moveRight();
+  });
+  $(selector).on({
+    mouseenter: function () {
+      clearInterval(timer);
+    },
+    mouseleave: function () {
+      setTimer();
+    },
+  });
+  function setTimer() {
+    timer = setInterval(() => {
+      moveRight();
+    }, time);
+  }
+  setTimer();
+};
+export const UrunThumbnailFnc = (selector, time) => {
+  const resimler = ["/assets/urun/urun1.webp", "/assets/urun/urun2.webp"];
+};
+export class LocalData {
+  _favIndex = 0;
+  get favIndex() {
+    return this._favIndex;
+  }
+  set favIndex(prevIndex) {
+    this._favIndex = prevIndex;
+    if (this._favIndex > 0) {
+      $(".favind").css("display", "flex");
+      $(".favind").html(this._favIndex);
+    } else {
+      $(".favind").css("display", "none");
+    }
+  }
+  _sepetIndex = 0;
+  get sepetIndex() {
+    return this._sepetIndex;
+  }
+  set sepetIndex(index) {
+    this._sepetIndex = index;
+    if (this._sepetIndex > 0) {
+      $(".sepetind").css("display", "flex");
+      $(".sepetind").html(this._sepetIndex);
+    } else {
+      $(".sepetind").css("display", "none");
+    }
+  }
+  _storage;
+  set storage(cust) {
+    this._storage = cust;
+    for (let i = 0; i < Object.entries(cust).length; i++) {
+      const [key, val] = Object.entries(cust)[i];
+      localStorage.setItem(key, JSON.stringify(val));
+    }
+  }
+  get storage() {
+    return localStorage;
+  }
+  constructor() {
+    if (this.storage.length == 0) {
+      this.storage = {
+        favs: [],
+        sepet: [],
+      };
+    }
+    const favs = this.getItem("favs");
+    this.favIndex = favs.length;
+
+    const sepet = this.getItem("sepet");
+    this.sepetIndex = sepet.length;
+  }
+  getItem(key) {
+    return JSON.parse(this.storage.getItem(key));
+  }
+  appendItem(key, data) {
+    let newItemDatas = this.getItem(key);
+    newItemDatas.push(data);
+    this.storage[key] = JSON.stringify(newItemDatas);
+    if (key === "favs") {
+      const favs = this.getItem("favs");
+      this.favIndex = favs.length;
+    } else if (key === "sepet") {
+      const sepet = this.getItem("sepet");
+      this.sepetIndex = sepet.length;
+    }
+  }
+  setItem(key, data) {
+    let newItemDatas = this.getItem(key);
+    let isFind;
+    console.log(data, typeof data);
+    if (typeof data === "string") {
+      isFind = newItemDatas.some((item) => item == data);
+    } else {
+      isFind = newItemDatas.some((item) => item.id == data.id);
+    }
+    if (isFind) {
+      newItemDatas = newItemDatas.map((a) => {
+        if (typeof data === "string") {
+          if (a === data) {
+            return data;
+          }
+        } else {
+          if (a.id === data.id) {
+            console.log(data);
+            return data;
+          }
+        }
+
+        return a;
+      });
+      this.storage[key] = JSON.stringify(newItemDatas);
+    } else {
+      console.log("burda", data);
+      this.appendItem(key, data);
+    }
+  }
+  deleteItem(key, data) {
+    let newItemDatas = this.getItem(key);
+    if (typeof data == "string") {
+      newItemDatas = newItemDatas.filter((a) => a != data);
+    } else {
+      newItemDatas = newItemDatas.filter((a) => a.id != data.id);
+    }
+    this.storage[key] = JSON.stringify(newItemDatas);
+    if (key === "favs") {
+      const favs = this.getItem("favs");
+      this.favIndex = favs.length;
+    } else if (key === "sepet") {
+      const sepet = this.getItem("sepet");
+      this.sepetIndex = sepet.length;
+    }
+  }
+}
+
+export const FavStatus = (classn) => {
+  let favs = myloc.getItem("favs");
+  $.each($(`${!!classn ? "." + classn : ""} .btn-fav`), function () {
+    let favElParentId = $(this).parent().attr("data-ur");
+    let isFind = favs.some((item) => {
+      return item == favElParentId;
+    });
+    if (isFind) {
+      $(this).html("heart");
+    } else {
+      $(this).html("heart_outlined");
+    }
+  });
+
+  favs = myloc.getItem("favs");
+  myloc.favIndex = favs.length;
+};
+export const FavsBtn = (el, classn) => {
+  let selectId = $(el).parent().attr("data-ur");
+  let favs = myloc.getItem("favs");
+  let isFind = favs.some((item) => item == selectId);
+  if (isFind) {
+    myloc.deleteItem("favs", selectId);
+  } else {
+    myloc.setItem("favs", selectId);
+  }
+  FavStatus(!!classn ? classn : "");
+};
+export const SepetStatus = (classn) => {
+  let sepet = myloc.getItem("sepet");
+  $.each($(`${!!classn ? "." + classn : ""} .btn-sepete-ekle`), function () {
+    let sepetEltId = $(this).attr("data-ur");
+    let isFind = sepet.some((item) => {
+      return item.id == sepetEltId;
+    });
+    if (isFind) {
+      $(`.btn-sepete-ekle[data-ur='${sepetEltId}'] span`).html(
+        "Sepeti güncelle"
+      );
+      $(`.btn-sepete-ekle[data-ur='${sepetEltId}'] i`).html(
+        "shopping_cart_outlined"
+      );
+      $(`.btn-sepete-ekle[data-ur='${sepetEltId}']`).removeClass(
+        "bg-blue-600 hover:bg-blue-700 active:bg-blue-500"
+      );
+      $(`.btn-sepete-ekle[data-ur='${sepetEltId}']`).addClass(
+        "bg-orange-600 hover:bg-orange-700 active:bg-orange-500"
+      );
+    } else {
+      $(`.btn-sepete-ekle[data-ur='${sepetEltId}'] span`).html("Sepete ekle");
+      $(`.btn-sepete-ekle[data-ur='${sepetEltId}'] i`).html(
+        "shopping_cart_add"
+      );
+      $(`.btn-sepete-ekle[data-ur='${sepetEltId}']`).addClass(
+        "bg-blue-600 hover:bg-blue-700 active:bg-blue-500"
+      );
+      $(`.btn-sepete-ekle[data-ur='${sepetEltId}']`).removeClass(
+        "bg-orange-600 hover:bg-orange-700 active:bg-orange-500"
+      );
+    }
+  });
+  sepet = myloc.getItem("sepet");
+  myloc.sepetIndex = sepet.length;
+};
+export const SepetBtn = (el, adet, classn) => {
+  let selectId = $(el).attr("data-ur");
+  myloc.setItem("sepet", { id: selectId, adet: adet });
+  SepetStatus(!!classn ? classn : "");
+};

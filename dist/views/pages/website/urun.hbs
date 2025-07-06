@@ -1,0 +1,153 @@
+{{> header}}
+<div>
+    <div class="max-w-[--max-w] mx-auto">
+        <div class="py-2 text-gray-500 font-semibold text-[0.8rem] flex items-center space-x-2">
+            <span class="cursor-pointer">Anasayfa</span>
+            <span class="tio">chevron_right</span>
+            {{#each breadcrumbs}}
+
+            {{#IsEq this.last 0}}
+
+            <a href="{{this.url}}" class="cursor-pointer font-normal italic">{{this.name}}</a>
+            {{else}}
+            <a href="{{this.url}}" class="cursor-pointer">{{this.name}}</a>
+            <span class="tio">chevron_right</span>
+            {{/IsEq}}
+            {{/each}}
+        </div>
+        <div>
+            {{!-- Top Area --}}
+            <div class="flex space-x-5 border border-gray-200 rounded-lg p-5">
+                <div class="w-[40%]">
+                    <div class="flex space-x-2">
+                        <div class="space-y-2">
+                            {{#each urun.resimler}}
+                            <a href="/uploads{{this}}" class="w-[75px] h-[75px] flex border border-gray-200">
+                                <img src="/uploads{{this}}" class="w-full h-full" alt="">
+                            </a>
+                            {{/each}}
+                        </div>
+                        <div class="flex-1 overflow-hidden relative border border-gray-200">
+                            <div class="caro3 owl-carousel owl-theme">
+                                {{#each urun.resimler}}
+                                <div>
+                                    <a href="/uploads{{this}}" class="w-full h-full">
+                                        <img src="/uploads{{this}}" class="w-full h-full" alt="">
+                                    </a>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-[60%] bg-white p-10 pt-5 border border-gray-200 rounded-md">
+                    <div class="text-[1.4rem] pb-2 font-semibold">{{urun.name}}</div>
+                    <hr class="mb-4">
+                    <div class="pb-2">
+                        <div><strong>Ürün Kod:</strong> <span>{{urun.kod}}</span></div>
+                        <div><strong>Barkod:</strong> <span>{{urun.barkod}}</span></div>
+                        <div><strong>Kategori:</strong> <span>{{lastkategori.name}}</span></div>
+                    </div>
+                    <div class=" flex items-center space-x-5">
+                        <div
+                            class="inline-flex flex-col justify-center rounded-md  text-[1.2rem] items-center p-2 text-white  bg-[red] font-semibold">
+                            <div class="">%{{urun.indirim}}</div>
+                            <div class="">İndirim</div>
+                        </div>
+                        <div class="inline-block">
+                            <div class="text-gray-600 text-[1.4rem] font-bold line-through ">{{urun.fiyat}}.00₺</div>
+                            <div class="text-[2rem] leading-none font-bold">{{urun.indirimli_fiyat}}.00₺</div>
+                        </div>
+                    </div>
+                    <div class="pt-5">
+                        <div class="inline-flex border border-gray-200">
+                            <div
+                                class="tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                                remove</div>
+                            <input type="number"
+                                class="text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center" value="1">
+                            <div
+                                class="tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                                add</div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3 py-5">
+
+                        <button
+                            class="p-2 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                            <i class="tio text-[1rem]">shopping_cart_outlined</i>
+                            <div class="text-[0.8rem]">Sepete ekle</div>
+                        </button>
+                        <button
+                            class="p-2 text-white bg-gray-500  font-bold hover:bg-gray-700 active:bg-gray-400 rounded-md flex items-center space-x-2">
+                            <i class="tio text-[1rem]">shopping_basket_outlined</i>
+                            <div class="text-[0.8rem]">Hemen Al</div>
+                        </button>
+                        <button
+                            class="p-2 text-white bg-[#33aa29]  font-bold hover:bg-green-700 active:bg-green-400 rounded-md flex items-center space-x-2">
+                            <i class="tio text-[1rem]">whatsapp_outlined</i>
+                            <div class="text-[0.8rem]">WHATSAPP ILE SİPARİŞ VER</div>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2 cursor-pointer select-none hover:text-[red]">
+                        <span class="tio text-[1.6rem] ">heart_outlined</span>
+                        <span>Favorilerime ekle</span>
+                    </div>
+                    <div class="flex items-center space-x-2 py-2">
+                        <div
+                            class="inline-flex flex-col items-center border border-gray-300 rounded-md p-2 text-[0.9rem]">
+                            <div class="tio text-[1.5rem]">protection</div>
+                            <div>Hızlı Gönderi</div>
+                        </div>
+                        <div
+                            class="inline-flex flex-col items-center border border-gray-300 rounded-md p-2 text-[0.9rem]">
+                            <div class="tio text-[1.5rem]">security</div>
+                            <div>Güvenli Alışveriş</div>
+                        </div>
+                        <div
+                            class="inline-flex flex-col items-center border border-gray-300 rounded-md p-2 text-[0.9rem]">
+                            <div class="tio text-[1.5rem]">sort</div>
+                            <div>İade ve Değişim</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="py-5">
+                <div class="border border-gray-200 rounded-lg  bg-white">
+                    <div class="flex justify-center space-x-5 py-5 border-b  border-gray-200">
+                        <div ro="urun"
+                            class="duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
+                            Ürün Açıklaması </div>
+                        <div ro="garanti"
+                            class="duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
+                            Garanti ve Teslimat</div>
+                        <div ro="yorum"
+                            class="duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
+                            Yorumlar</div>
+                    </div>
+                    <div class="p-5 alt-area">
+                        <div class="urun-ack">
+                            {{{urun.aciklama}}}
+                        </div>
+                        <div style="display:none" class="garanti-ack">
+                            {{{urun.garanti_aciklama}}}
+                        </div>
+                        <div style="display:none" class="yorum-ack">
+                            {{{urun.yorumlar}}}
+                            <div class="no-comment flex flex-col justify-center items-center py-4 ">
+                                <div class="text-[--koyu]">
+                                    Bu ürün için henüz yorum yapılmadı.
+                                </div>
+                                <button class="px-4 py-2 border border-gray-600 text-black rounded-md">
+                                    Yorum Yap
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{{> footer}}
