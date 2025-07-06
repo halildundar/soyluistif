@@ -1,0 +1,73 @@
+<div 
+    class="urun-ekle-pop fixed top-0 left-0 w-[100vw] h-[100vh] flex items-center justify-center z-[40] bg-black/20">
+    <div class="bg-white rounded-md shadow-[0_0_5px_1px_rgba(0,0,0,0.2)] flex flex-col w-1/2 h-[80%]">
+        <div class="flex items-center justify-between pl-3 pr-2 py-2">
+            <div class="font-semibold">Ürün Düzenle</div>
+            <div
+                class="btn-close-urun-edit  text-[1.4rem] p-1 hover:bg-black/10 rounded-full select-none cursor-pointer tio">
+                clear</div>
+        </div>
+        <hr>
+        <div class="pop-bread-area flex items-center space-x-1 text-[0.8rem] italic pt-2 px-2"></div>
+        <form class="flex-1 relative overflow-hidden overflow-y-auto py-2">
+            <div class="px-2">
+                <label for="name" class="frm-lbl">Ürün Adı</label>
+                <input id="name" name="name" type="text" class="frm-txt" placeholder="Ürün adı">
+                <div class="real-url text-[0.8rem] text-red-600 "></div>
+            </div>
+            <div class="flex items-center space-x-2 px-2 py-2">
+                <div>
+                    <label for="stok" class="frm-lbl">Stok(adet)</label>
+                    <input id="stok" name="stok" type="text" class="frm-txt" placeholder="Stok(adet)">
+                </div>
+                <div>
+                    <label for="fiyat" class="frm-lbl">Ürün Fiyatı(₺)</label>
+                    <input id="fiyat" name="fiyat" type="text" class="frm-txt" placeholder="Fiyat ₺">
+                </div>
+                <div>
+                    <label for="indirim" class="frm-lbl">İndirim Oran(%)</label>
+                    <input id="indirim" name="indirim" type="text" class="frm-txt" placeholder="İndirim %">
+
+                </div>
+                <div class="indirimli-fiyat text-[0.8rem] text-red-600 "></div>
+            </div>
+            <div class="px-2 py-2">
+                <div class="font-semibold">Açıklama</div>
+                <!-- Create the toolbar container -->
+                 <!-- <div id="toolbar">
+                    <button class="ql-bold">Bold</button>
+                    <button class="ql-italic">Italic</button>
+                </div>  -->
+
+                <!-- Create the editor container -->
+                <div class="aciklama h-[300px]">
+                    <p>Ürün Adı : Hidrollik Tek Etkili El Pompası Vanası B Tipi </p>
+                    <p>Not : Fiyat <bold>1 Adet</bold> İçindir.</p>
+                    <p>Lütfen Ürünün Görselini Dikkatlice İnceleyiniz Ürünün Sizin Numune İle Ölçülerinin Aynı
+                        Olduğundan Emin Olup O Şekilde Sipariş Veriniz.</p>
+                </div>
+
+            </div>
+            <div class="px-2 py-2">
+                <div class="font-semibold">Garanti ve Teslimat</div>
+                <!-- Create the editor container -->
+                <div class="garanti_aciklama h-[300px]">
+                    <p>TESLİMAT</p>
+                    <p>Ürünü sipariş verdiğiniz gün saat 18:00 ve öncesi ise siparişiniz aynı gün kargoya verilir.Ve
+                        ertesi gün teslim edilir.</p>
+                    <p>Eğer kargoyu saat 18:00'den sonra verdiyseniz ürününüzün stoklarda olması durumunda ertesi gün
+                        kargolama yapılmaktadır.</p>
+                </div>
+
+            </div>
+
+        </form>
+        <hr>
+        <div class="py-2 flex items-center justify-center space-x-2">
+            <button
+                class="btn-tamam-urun-ekle bg-blue-600  hover:bg-blue-800 active:bg-blue-400 py-1 px-2 rounded text-white">Tamam</button>
+            <button
+                class="btn-iptal-urun bg-purple-600  hover:bg-purple-800 active:bg-purple-400 px-2 py-1 rounded text-white">İptal</button>
+        </div>
+    </div>
+</div>
