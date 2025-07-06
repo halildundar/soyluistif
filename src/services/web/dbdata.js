@@ -71,7 +71,7 @@ export const getUrunlerIncludeKategori = async (url) => {
   }
   const urunler = await DB.Query(
     "SELECT * FROM `urun` WHERE JSON_CONTAINS(parents,?,'$')",
-    [[id]]
+    [id]
   );
   let isLength = allParents.length;
   let altKategoriler = await DB.Query(
