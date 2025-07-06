@@ -32,6 +32,5 @@ export const SepetInit = async() => {
     const strTemp = await getTemp("sepeturunrow.html");
     const rendred = Handlebars.compile(strTemp);
     $(".spetbfyLeft").html(rendred({urunler:urunler}))
-    console.log(strTemp);
 
 }

@@ -156,7 +156,6 @@ export class LocalData {
   setItem(key, data) {
     let newItemDatas = this.getItem(key);
     let isFind;
-    console.log(data, typeof data);
     if (typeof data === "string") {
       isFind = newItemDatas.some((item) => item == data);
     } else {
@@ -170,7 +169,6 @@ export class LocalData {
           }
         } else {
           if (a.id === data.id) {
-            console.log(data);
             return data;
           }
         }
@@ -179,7 +177,6 @@ export class LocalData {
       });
       this.storage[key] = JSON.stringify(newItemDatas);
     } else {
-      console.log("burda", data);
       this.appendItem(key, data);
     }
   }

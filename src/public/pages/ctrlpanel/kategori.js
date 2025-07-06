@@ -11,7 +11,6 @@ const makeTree = async () => {
     }
     return item;
   });
-  console.log(kategoriler);
   for (let i = 0; i < kategoriler.length; i++) {
     const element = kategoriler[i];
     let strHtml = `<div style="padding-left:${
@@ -101,7 +100,6 @@ export const InitKategori = async () => {
     if (!sendendData.parents) {
       delete sendendData.parents;
     }
-    console.log(sendendData);
     const resp = await UpdateKategori(sendendData);
     makeTree();
   });

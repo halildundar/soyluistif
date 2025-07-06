@@ -86,7 +86,6 @@ export const IsSelectKategori = async (kategori, kate) => {
     }
     await makeUrunArea(parents);
     makeBreadCrump(".bread-area");
-    console.log(parents);
   }
 };
 const makeEventForImgDelete = () => {
@@ -103,7 +102,6 @@ const makeEventForImgDelete = () => {
     });
     list.push(link);
   });
-  console.log(list);
 };
 export const InitUrun = async () => {
   IsSelectKategori();
@@ -153,7 +151,6 @@ export const InitUrun = async () => {
       formData["indirimli_fiyat"] = Math.ceil(
         formData.fiyat - (formData.indirim * formData.fiyat) / 100
       );
-      console.log(formData);
       if (!selectedUrun) {
         await addUrun(formData);
       } else {
@@ -206,7 +203,6 @@ export const InitUrun = async () => {
       formData["indirimli_fiyat"] = Math.ceil(
         formData.fiyat - (formData.indirim * formData.fiyat) / 100
       );
-      console.log(formData);
       await updateUrun(formData);
       $(`.btn-urun-temizle`).trigger("click");
       $(".btn-close-urun-edit").trigger("click");
@@ -267,15 +263,6 @@ export const InitUrun = async () => {
         });
       });
 
-      // $("#sortable").sortable({
-      //   revert: true,
-      //   update: function (e) {
-      //     $.each($(".imges"), function () {
-      //       console.log($(this).attr('src'));
-      //       list.push($(this).attr('src'))
-      //     });
-      //   },
-      // });
     });
 
     $("#sortable").sortable({
@@ -288,7 +275,6 @@ export const InitUrun = async () => {
         });
         await updateUrun({ resimler: JSON.stringify(list) });
         selectedUrun = await GetUrun(selectedUrun.id);
-        console.log(selectedUrun);
       },
     });
     makeEventForImgDelete();
