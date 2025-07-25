@@ -19,7 +19,6 @@ const getTemp = async (temname) => {
 
 export const FavorilerInit = async () => {
   let favoriler = myloc.getItem("favs");
-  console.log(favoriler);
   const strTemp = await getTemp("favorirows.html");
   const rendred = Handlebars.compile(strTemp);
   if (favoriler.length != 0) {
@@ -39,7 +38,6 @@ export const FavorilerInit = async () => {
     });
     $(".siparis-area").html(rendred({ urunler: urunler }));
 
-    console.log(urunler);
     for (let ic = 0; ic < urunler.length; ic++) {
       const urun = urunler[ic];
       $(`tr[data-ur=${urun.id}]`).on("click", function () {

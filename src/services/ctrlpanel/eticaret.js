@@ -32,7 +32,6 @@ export const EticaretApi = (app) => {
       return res.send("Hata!!");
     }
     const {id,...others} = req.body;
-    console.log(req.body);
     await DB.Query("UPDATE `eticsites` SET ? WHERE id = " + id, [others]);
     return res.json({
       msg: "OK!",

@@ -71,7 +71,6 @@ const GetMahalle = async (req, res) => {
     return res.json({ msg: "Data not found" });
   }
   const {mahalle_id} = data;
-  console.log("mahalle_id",mahalle_id);
   const rows = await DB.Query("SELECT * FROM `mahalleler` WHERE id = ?",[mahalle_id]);
   return res.json({
     ...rows

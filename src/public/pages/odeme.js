@@ -208,7 +208,6 @@ export const OdemeInit = async () => {
           // },
         ],
       };
-      console.log(requestData);
       const res = await $.ajax({
         type: "POST",
         url: "/iyz/3ds-init",

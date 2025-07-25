@@ -15,7 +15,6 @@ const verifySignature = (params, secretKey, signature) => {
     secretKey
   );
   const verified = signature === calculatedSignature;
-  console.log("Signature verified:", verified);
   return verified;
 };
 export const IyzicoApi = (app) => {
@@ -37,7 +36,6 @@ export const IyzicoApi = (app) => {
         res(result);
       });
       // iyzipay.payment.create(request, function (err, result) {
-      //   console.log(err, result);
       //   if (!!err) {
       //     rej(err);
       //   }
@@ -138,7 +136,6 @@ export const IyzicoApi = (app) => {
     request = {...request,...data};
     iyzipay.threedsInitialize.create(request, async function (err, result) {
       if (err) {
-        console.log(err);
         return res.json({ status: false, msg: err });
       }
       if (result.status === "success") {
@@ -149,7 +146,6 @@ export const IyzicoApi = (app) => {
           threeDSHtmlContent,
           systemTime,
         } = result;
-        console.log("request",request);
         await SiparisAdd({ ...request, paymentId, systemTime });
         return res.json({
           status: true,
@@ -183,7 +179,6 @@ export const IyzicoApi = (app) => {
       odemeStatus: "",
     };
     if (mdStatus == 1) {
-      console.log("mdStatus", mdStatus);
       const request = {
         conversationId: conversationId,
         locale: Iyzipay.LOCALE.TR,
@@ -205,8 +200,6 @@ export const IyzicoApi = (app) => {
         } = result;
         if (result.status === "success") {
           // verifySignature([paymentId, currency, basketId, conversationId, paidPrice, price], secretKey, signature);
-          // console.log('secretKey',secretKey);
-          console.log("result", result);
           //mail gönder ve siparişlr bölümüne kaydet.
           return res.render("pages/website/sepet/odeme-result.hbs", {
             ...resparea,

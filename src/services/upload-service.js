@@ -7,16 +7,13 @@ const storage = multer.diskStorage({
     const { dest_path } = req.body;
     let new_path = process.cwd() + '/public'+ dest_path;
     const isExist = existsSync(new_path);
-    // console.log('detPath: ',new_path,isExist)
     if (!isExist) {
       mkdirSync(new_path, { recursive: true });
     }
     cb(null, new_path);
   },
   filename: function (req, file, cb) {
-    // console.log(req.body);
     const { filename } = req.body;
-    // console.log('filename: ',filename + "." + file.originalname.split(".").pop())
     // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, filename + "." + file.originalname.split(".").pop());
   },
@@ -48,10 +45,8 @@ export const UplaodFileApi = (app) => {
     }
     const { folderpath } = req.body;
     let new_path = process.cwd() + '/public'+ folderpath;
-    console.log(new_path);
     const isExist = existsSync(new_path);
     if(isExist){
-      console.log("isExist:",isExist);
       rmdirSync(new_path, { recursive: true });
     }
     return res.json({msg:'Kaldırıldı'})

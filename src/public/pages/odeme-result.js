@@ -1,7 +1,6 @@
 import { myloc } from "../main.js";
 import { SepetStatus,SiparisStatus } from "./util/main.js";
 export const OdemeResultInit = async () => {
-  console.log("İnclude");
   if (!!$(".sip-kod span").html()) {
     let siparisId = $(".sip-kod span").html();
     // $.ajax({

@@ -168,7 +168,6 @@ export const UrunApi = async (app) => {
     if (!data) {
       return;
     }
-    console.log(data);
     let { id, ...others } = data;
     await DB.Query("UPDATE `urun` SET ? WHERE id = " + id, [others]);
     return res.json({ msg: "Ok!" });
@@ -187,7 +186,6 @@ export const UrunApi = async (app) => {
         await DB.Query("UPDATE `urun` SET `alinan` = ?,`stok_dusme_durum` = ? WHERE id = " + id, [alinan,stok_dusme_durum]);
     }
   
-    console.log(alinan)
     return res.json({ msg: "Ok!" });
   });
   return app.use("/", router);

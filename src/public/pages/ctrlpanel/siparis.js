@@ -70,7 +70,6 @@ export const InitSiparis = async () => {
         selectedSiparis = newDatas.find(
           (item) => item.paymentId == siparis.paymentId
         );
-        console.log(selectedSiparis);
         $(".name").html(
           selectedSiparis.buyer.name + " " + selectedSiparis.buyer.surname
         );
@@ -134,7 +133,6 @@ export const InitSiparis = async () => {
       data: { ...data },
       dataType: "json",
     });
-    console.log(resup);
     window.location = "/ctrlpanel/siparisler";
   });
 };

@@ -30,7 +30,6 @@ const makeTotal = (urunler) => {
   let indirim = 0;
   for (let i = 0; i < urunler.length; i++) {
     const urun = urunler[i];
-    console.log(urun.adet, urun.fiyat, urun.indirimli_fiyat);
     toplamTutar += urun.adet * urun.fiyat;
     inidirimTutar += urun.adet * urun.indirimli_fiyat;
     kdvToplam += urun.adet * urun.fiyat * 0.2;
@@ -41,7 +40,6 @@ const makeTotal = (urunler) => {
   $(".total_kdv").html('+'+kdvToplam + ".00₺");
   $(".total_indirim").html('-'+ indirim + ".00₺");
   $(".toplam").html(total + ".00₺");
-  console.log(total);
 };
 export const SepetInit = async () => {
   let sepet = getSepet();
@@ -99,7 +97,6 @@ export const SepetInit = async () => {
         sepet = sepet.filter((item) => item.id != urun.id);
         // urunler = urunler.map(item=>item.id != urun.id);
         myloc.setAllItem("sepet", sepet);
-        console.log(sepet);
         SepetInit();
         SepetStatus();
       });

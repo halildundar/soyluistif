@@ -103,32 +103,41 @@ const Goruntulenenler = async () => {
     itemsMobile: [479, 1],
   };
   let ids = myloc.getItem("seeprod");
-  ids = ids.map((item) => item.id);
-  const rsult = await $.ajax({
-    type: "POST",
-    url: "/urun/get-urunlerforgorlen",
-    data: { ids: ids },
-    dataType: "json",
-  });
+  if (!!ids && ids.length > 0) {
+    ids = ids.map((item) => item.id);
+    const rsult = await $.ajax({
+      type: "POST",
+      url: "/urun/get-urunlerforgorlen",
+      data: { ids: ids },
+      dataType: "json",
+    });
 
-  $(".caro-son").html(`
+    $(".caro-son").html(`
       <div class="owl-carousel owl-theme"></div>
     `);
-  $(".caro-son .owl-carousel.owl-theme").css({ display: "block", opacity: 1 });
-  let urunlet = rsult.map((item) => {
-    let resimler = !!item.resimler ? JSON.parse(item.resimler) : null; 
-    return {
-      ...item,
-      resimler: resimler,
-      adet: 1,
-      img_on: !!resimler && resimler.length > 0 ? "/uploads" + resimler[0] : "/assets/urun/resim_yok.webp",
-      img_arka: !!resimler && resimler.length > 1 ? "/uploads" + resimler[1] :  "/assets/urun/resim_yok.webp",
-    };
-  });
-  console.log(urunlet);
-  for (let i = 0; i < urunlet.length; i++) {
-    let urun = urunlet[i];
-    $(".caro-son .owl-carousel.owl-theme").append(`
+    $(".caro-son .owl-carousel.owl-theme").css({
+      display: "block",
+      opacity: 1,
+    });
+    let urunlet = rsult.map((item) => {
+      let resimler = !!item.resimler ? JSON.parse(item.resimler) : null;
+      return {
+        ...item,
+        resimler: resimler,
+        adet: 1,
+        img_on:
+          !!resimler && resimler.length > 0
+            ? "/uploads" + resimler[0]
+            : "/assets/urun/resim_yok.webp",
+        img_arka:
+          !!resimler && resimler.length > 1
+            ? "/uploads" + resimler[1]
+            : "/assets/urun/resim_yok.webp",
+      };
+    });
+    for (let i = 0; i < urunlet.length; i++) {
+      let urun = urunlet[i];
+      $(".caro-son .owl-carousel.owl-theme").append(`
        <a class="pr-2  cursor-pointer relative block z-0" route="/urun/${urun.url}" data-ur="${urun.id}">
         <div
           class="btn-fav z-10 absolute top-4 right-5  text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
@@ -180,9 +189,10 @@ const Goruntulenenler = async () => {
         </div>
       </a>
       `);
-  }
+    }
 
     $(".caro-son .owl-carousel").owlCarousel(settingsCaroson);
+  }
 };
 const SearchHeaderItems = () => {
   $(".btn-srch").on("click", function () {

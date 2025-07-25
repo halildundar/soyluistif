@@ -50,9 +50,7 @@ function getMakeSubKat(kateg, id) {
             `);
     $(`.link[data-ur='${sub.id}'] span`).on("click", function () {
       const txtStr = $(this).html();
-      console.log(txtStr);
       if (txtStr == "add") {
-        console.log(sub);
         getMakeSubKat(sub, sub.id);
         $(this).html("remove");
       } else {

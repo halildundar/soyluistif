@@ -173,7 +173,6 @@ export const InitEticaret = async () => {
       let ext = filefulnmae.split("/").pop().split(".").pop();
       filefulnmae = filefulnmae.replace("." + ext, "");
       await doUpload("/uploads/eticlogos", filefulnmae, selectedImgFile, 1);
-      console.log("/uploads/eticlogos/", selectedImgFile.name);
       $(".spinr").css("display", "none");
       formData.site_logo = "/uploads/eticlogos/" + filefulnmae + "." + ext;
       await $.ajax({
@@ -222,5 +221,4 @@ export const InitEticaret = async () => {
   });
 
   const sites = await getEsitesData();
-  console.log(sites);
 };
