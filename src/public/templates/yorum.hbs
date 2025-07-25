@@ -1,0 +1,20 @@
+<div class="yorum-area space-y-2">
+    {{#each yorumlar}}
+    <div class="py-4 pl-4 border border-gray-200 rounded-md bg-[aliceblue]">
+        <div class="flex items-center justify-between ">
+            <div class="font-bold text-[0.8rem]">{{this.ad_soyad}}</div>
+            <div class="text-[0.8rem] pr-4">{{this.tarih}}</div>
+        </div>
+        <div class="text-[0.9rem]">
+            {{this.msg_area}}
+            
+        </div>
+    </div>
+    {{else}}
+    <div class="no-comment flex flex-col justify-center items-center py-4 ">
+        <div class="text-[--koyu]">
+            Bu ürün için henüz yorum yapılmadı.
+        </div>
+    </div>
+    {{/each}}
+</div>

@@ -114,6 +114,28 @@ export class LocalData {
       $(".sepetind").css("display", "none");
     }
   }
+  _siparisIndex = 0;
+  get siparisIndex() {
+    return this._siparisIndex;
+  }
+  set siparisIndex(index) {
+    this._siparisIndex = index;
+    if (this._siparisIndex > 0) {
+      $(".siparisind").css("display", "flex");
+      $(".siparisind").html(this._siparisIndex);
+    } else {
+      $(".siparisind").css("display", "none");
+    }
+  }
+
+  _seeprod = 0;
+  get seeprod() {
+    return this._seeprod;
+  }
+  set seeprod(index) {
+    this._seeprod = index;
+  }
+
   _storage;
   set storage(cust) {
     this._storage = cust;
@@ -126,17 +148,32 @@ export class LocalData {
     return localStorage;
   }
   constructor() {
-    if (this.storage.length == 0) {
-      this.storage = {
-        favs: [],
-        sepet: [],
-      };
+    let favs = this.getItem("favs");
+    if (favs == null) {
+      this.setAllItem("favs", []);
     }
-    const favs = this.getItem("favs");
+    favs = this.getItem("favs");
     this.favIndex = favs.length;
 
-    const sepet = this.getItem("sepet");
+    let sepet = this.getItem("sepet");
+    if (sepet == null) {
+      this.setAllItem("sepet", []);
+    }
+    sepet = this.getItem("sepet");
     this.sepetIndex = sepet.length;
+
+    let siparis = this.getItem("siparis");
+    if (siparis == null) {
+      this.setAllItem("siparis", []);
+    }
+    siparis = this.getItem("siparis");
+    this.siparisIndex = siparis.length;
+
+    let seeprod = this.getItem("seeprod");
+    if (seeprod == null) {
+      this.setAllItem("seeprod", []);
+    }
+    seeprod = this.getItem("seeprod");
   }
   getItem(key) {
     return JSON.parse(this.storage.getItem(key));
@@ -195,6 +232,12 @@ export class LocalData {
       const sepet = this.getItem("sepet");
       this.sepetIndex = sepet.length;
     }
+  }
+  setAllItem(key, data) {
+    this.storage.setItem(key, JSON.stringify(data));
+  }
+  deleteAllItem(key) {
+    this.storage.removeItem(key);
   }
 }
 
@@ -266,4 +309,8 @@ export const SepetBtn = (el, adet, classn) => {
   let selectId = $(el).attr("data-ur");
   myloc.setItem("sepet", { id: selectId, adet: adet });
   SepetStatus(!!classn ? classn : "");
+};
+export const SiparisStatus = (classn) => {
+  let siparis = myloc.getItem("siparis");
+  myloc.siparisIndex = siparis.length;
 };

@@ -4,6 +4,7 @@ import {
   getMainMenu,
   getOneCikanlar,
   getYeniler,
+  GetEticLogos
 } from "./dbdata.js";
 const makeBannerAndUrunler = async () => {
   const bannerHomeLeft = await getBanners("homeleft");
@@ -16,7 +17,7 @@ const makeBannerAndUrunler = async () => {
   let onecikanlar = await getOneCikanlar();
   onecikanlar = onecikanlar.map((item) => {
     let imgs = !!item["resimler"] ? JSON.parse(item["resimler"]) : [];
-    let newItem = { ...item, resimler: imgs };
+    let newItem = { ...item,kalan_stok:item.stok - item.alinan, resimler: imgs };
     newItem["img_on"] =
       newItem.resimler.length > 0
         ? "/uploads" + newItem.resimler[0]
@@ -30,7 +31,7 @@ const makeBannerAndUrunler = async () => {
   let coksatanlar = await getCokSatanlar();
   coksatanlar = coksatanlar.map((item) => {
     let imgs = !!item["resimler"] ? JSON.parse(item["resimler"]) : [];
-    let newItem = { ...item, resimler: imgs };
+    let newItem = { ...item,kalan_stok:item.stok - item.alinan, resimler: imgs };
     newItem["img_on"] =
       newItem.resimler.length > 0
         ? "/uploads" + newItem.resimler[0]
@@ -44,7 +45,7 @@ const makeBannerAndUrunler = async () => {
   let enyeniler = await getYeniler();
   enyeniler = enyeniler.map((item) => {
     let imgs = !!item["resimler"] ? JSON.parse(item["resimler"]) : [];
-    let newItem = { ...item, resimler: imgs };
+    let newItem = { ...item,kalan_stok:item.stok - item.alinan, resimler: imgs };
     newItem["img_on"] =
       newItem.resimler.length > 0
         ? "/uploads" + newItem.resimler[0]
@@ -65,10 +66,9 @@ const makeBannerAndUrunler = async () => {
     mainMenus,
   };
 };
-
 export const HomePageRender = async (req, res) => {
   const { enyeniler, coksatanlar, onecikanlar, imagesBg, imagesSm, mainMenus } = await makeBannerAndUrunler();
- 
+  const eticSiteler = await GetEticLogos();
   res.render("pages/website/home/main.hbs", {
     title: "Anasayfa",
     scriptname: `main`,
@@ -92,5 +92,6 @@ export const HomePageRender = async (req, res) => {
     onecikanlar: onecikanlar,
     coksatanlar: coksatanlar,
     enyeniler: enyeniler,
+    eticSiteler:eticSiteler
   });
 };

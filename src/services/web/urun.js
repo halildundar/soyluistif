@@ -1,10 +1,12 @@
-import { getUrunByUrl, makeBredCrump,getMainMenu } from "./dbdata.js";
+import { getUrunByUrl, makeBredCrump,getMainMenu,GetEticLogos } from "./dbdata.js";
+
 export const UrunPageRender = async (req, res) => {
   const { urunurl } = req.params;
   let urun;
   let parents = [];
   let lastkategori;
   const mainMenus = await getMainMenu();
+      const eticSiteler = await GetEticLogos();
   if (!!urunurl) {
     urun = await getUrunByUrl(urunurl);
     urun.resimler = !!urun.resimler ? JSON.parse(urun.resimler) : urun.resimler;
@@ -32,6 +34,7 @@ export const UrunPageRender = async (req, res) => {
     urun: urun,
     breadcrumbs: parents,
     lastkategori: lastkategori,
-    menus:[...mainMenus]
+    menus:[...mainMenus],
+    eticSiteler:eticSiteler
   });
 };

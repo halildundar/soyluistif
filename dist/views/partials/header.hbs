@@ -27,37 +27,46 @@
     </div>
     <div class=" w-1/2">
       <div class="flex overflow-hidden rounded-lg bg-white space-x-2 border border-gray-300">
-        <select name="" id=""
-          class="bg-gray-200 px-4 text-gray-600 text-[0.9rem] border-r border-gray-300 outline-none">
+        <select  id="srch-kat-sel"
+          class="bg-gray-200 px-4 text-gray-600 text-[1rem] border-r border-gray-300 outline-none">
 
-          <option value="">Tüm Kategoriler</option>
-          <option value="">Hırdavat</option>
-          <option value="">Pnomatik</option>
-          <option value="">Hidrolik</option>
-          <option value="">Otomativ</option>
+          <option value="/kategori/all">Tüm Kategoriler</option>
+          {{#each menus}}
+            <option value="{{this.url}}">{{this.name}}</option>
+          {{/each}}
+     
         </select>
-        <input type="text" class="bg-transparent flex-1 text-[1.2rem]" placeholder="soyluistif.com.tr araması yapın">
+        <input type="text" class="intxt-sserch bg-transparent flex-1 text-[1.2rem]" placeholder="soyluistif.com.tr araması yapın">
         <div
-          class="tio inline-block p-2 text-[2rem] text-gray-800  bg-[--main] hover:bg-[--main-dark] duration-200 cursor-pointer select-none">
+          class="btn-srch tio inline-block p-2 text-[2rem] text-white  bg-[--main] hover:bg-[--main-dark] duration-200 cursor-pointer select-none">
           search</div>
       </div>
     </div>
     <div class="w-1/4 pl-2">
-      <div class="flex items-center justify-end space-x-4">
-        <a href="/sepet"
-          class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
-          <i class="tio text-[1.6rem]">shopping_cart_outlined</i>
-          <span class="text-[0.9rem]">Sepetim</span>
-          <span
-            class="sepetind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]">1</span>
-        </a>
-        <div
+      <div class="flex items-center justify-end space-x-2">
+         
+      
+        <a href="/favori"
           class="btn-go-fv flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
           <i class="tio text-[1.6rem]">heart_outlined</i>
-          <span class="text-[0.9rem]">Favorilerim</span>
+          <span class="text-[0.9rem]">Favoriler</span>
           <span
-            class="favind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]">1</span>
-        </div>
+            class="favind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]"></span>
+        </a>
+          <a href="/sepet"
+          class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+          <i class="tio text-[1.6rem]">shopping_cart_outlined</i>
+          <span class="text-[0.9rem]">Sepet</span>
+          <span
+            class="sepetind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]"></span>
+        </a>
+        <a href="/siparis"
+          class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+          <i class="tio text-[1.6rem]">shopping_icon</i>
+          <span class="text-[0.9rem]">Siparişler</span>
+          <span
+            class="siparisind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]"></span>
+        </a>
 
 
       </div>

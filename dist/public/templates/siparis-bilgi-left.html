@@ -1,0 +1,148 @@
+<form class="space-y-2 fat-area ">
+  <div class="font-semibold text-[1.2rem] pb-4">Fatura Bilgileri</div>
+  <div class="flex space-x-2">
+    <div class="w-1/2">
+      <label for="isim" class="frm-lbl">İsim*</label>
+      <input type="text" name="isim" placeholder="isim" class="frm-txt" />
+    </div>
+    <div class="w-1/2">
+      <label for="soyisim" class="frm-lbl">Soyisim*</label>
+      <input type="text" name="soyisim" placeholder="soyisim" class="frm-txt" />
+    </div>
+  </div>
+  <div class="flex space-x-2">
+    <div class="w-1/3">
+      <label for="tc" class="frm-lbl">TC*</label>
+      <input type="text" name="tc" placeholder="11111111111" class="frm-txt" />
+    </div>
+    <div class="w-1/3">
+      <label for="telefon" class="frm-lbl">Telefon*</label>
+      <input
+        type="text"
+        name="telefon"
+        placeholder="5XXXXXXXXX"
+        class="frm-txt"
+      />
+    </div>
+    <div class="w-1/3">
+      <label for="email" class="frm-lbl">Email*</label>
+      <input
+        type="text"
+        name="email"
+        placeholder="xxx@xxx.xxx"
+        class="frm-txt"
+      />
+    </div>
+  </div>
+  <div>
+    <label for="" class="frm-lbl">Adres</label>
+    <div class="flex items-center space-x-2 mb-1">
+      <select name="il_id" class="frm-slct"></select>
+      <select name="ilce_id" class="frm-slct"></select>
+      <select name="mahalle_id" class="frm-slct"></select>
+    </div>
+    <div class="text-end text-[0.8rem] py-1">
+      Posta Kodu: <span class="pk"></span>
+    </div>
+    <input
+      type="text"
+      class="frm-txt"
+      name="adres"
+      placeholder="Cadde/Bulvar/Sokak/Kapı No..."
+    />
+  </div>
+  <div>
+    <label for="aciklama" class="frm-lbl">Açıklama</label>
+    <textarea
+      class="frm-textarea"
+      name="aciklama"
+      id="aciklama"
+      cols="30"
+      placeholder="Mesaj Giriniz"
+      class="w-full h-[100px]"
+    ></textarea>
+  </div>
+  <div class="flex items-center space-x-1">
+    <input
+      type="checkbox"
+      class="frm-chckbx"
+      id="isOtherAdres"
+      name="isOtherAdres"
+    />
+    <label for="isOtherAdres" class="select-none"
+      >Fatura bilgileri dışında adrese gönderilsin?</label
+    >
+  </div>
+</form>
+
+<form style="display:none" class="space-y-2 pt-4 kar-area ">
+  <hr />
+  <div class="font-semibold text-[1.2rem] pb-4">Adres Bilgileri</div>
+  <div class="flex space-x-2">
+    <div class="w-1/2">
+      <label for="isim" class="frm-lbl">İsim*</label>
+      <input type="text" name="isim" placeholder="isim" class="frm-txt" />
+    </div>
+    <div class="w-1/2">
+      <label for="soyisim" class="frm-lbl">Soyisim*</label>
+      <input type="text" name="soyisim" placeholder="soyisim" class="frm-txt" />
+    </div>
+  </div>
+  <div class="flex space-x-2">
+    <div class="w-1/2">
+      <label for="telefon" class="frm-lbl">Telefon*</label>
+      <input
+        type="text"
+        name="telefon"
+        placeholder="5XXXXXXXXX"
+        class="frm-txt"
+      />
+    </div>
+    <div class="w-1/2">
+      <label for="email" class="frm-lbl">Email*</label>
+      <input
+        type="text"
+        name="email"
+        placeholder="xxx@xxx.xxx"
+        class="frm-txt"
+      />
+    </div>
+  </div>
+  <div>
+    <label for="" class="frm-lbl">Adres</label>
+    <div class="flex items-center space-x-2 mb-1">
+      <select name="il_id" class="frm-slct"></select>
+      <select name="ilce_id" class="frm-slct"></select>
+      <select name="mahalle_id" class="frm-slct"></select>
+    </div>
+    <div class="text-end text-[0.8rem] py-1">
+      Posta Kodu: <span class="pk"></span>
+    </div>
+    <input
+      type="text"
+      class="frm-txt"
+      name="adres"
+      placeholder="Cadde/Bulvar/Sokak/Kapı No..."
+    />
+  </div>
+  <div>
+    <label for="aciklama" class="frm-lbl">Açıklama</label>
+    <textarea
+      class="frm-textarea"
+      name="aciklama"
+      id="aciklama"
+      cols="30"
+      placeholder="Mesaj Giriniz"
+      class="w-full h-[100px]"
+    ></textarea>
+  </div>
+  
+
+</form>
+<div class="text-center">
+     <button
+          class="btn-adres-clear w-1/2 py-2 bg-blue-500 hover:bg-blue-700 active:bg-blue-400 text-white rounded font-bold"
+        >
+         Temizle
+        </button>
+  </div>

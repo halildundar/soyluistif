@@ -78,60 +78,61 @@
                 </div>
             </div>
             <div class="w-3/4 px-4 py-2 border border-gray-200 rounded-md">
-                <div class="overflow-hidden w-full">
-                    <div class="font-semibold text-[1.4rem] pb-2">Kategori Title</div>
+                <div class="urunler overflow-hidden w-full">
+                    {{!-- <div class="font-semibold text-[1.4rem] pb-2">Kategori Title</div> --}}
                     <div class="grid grid-cols-4 gap-4">
                         {{#each urunler}}
-                        <a href="/urun/{{this.url}}" class="urun{{this.id}}cursor-pointer relative">
+                         <a route="/urun/{{this.url}}" class="pr-2 z-0  cursor-pointer relative block h-full" data-ur="{{this.id}}">
+                    <div
+                        class="btn-fav absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
+                        heart_outlined</div>
+                    <div
+                        class=" border border-gray-200 rounded-lg overflow-hidden pb-2 shadow-[0_0_10px_1px_rgba(0,0,0,0.1)]">
+                        <div class="group h-[200px] overflow-hidden ">
+                            <img src="{{this.resim_on}}" class="group-hover:hidden w-full h-full" alt="">
+                            <img src="{{this.resim_arka}}" class="hidden group-hover:block w-full h-full" alt="">
+                        </div>
+                        <div class="py-2">
+                            <div class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-1 px-5">{{this.name}}
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
+                            <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}</div>
+                        </div>
+                        <div class="flex items-center w-1/2 mx-auto space-x-3">
                             <div
-                                class="absolute top-3 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
-                                heart_outlined</div>
-                            <div
-                                class=" border border-gray-200 rounded-lg overflow-hidden pb-2 shadow-[0_0_10px_1px_rgba(0,0,0,0.1)]">
-                                <div class="group">
-                                    <img src="{{this.resim_on}}" class="group-hover:hidden w-full" alt="">
-                                    <img src="{{this.resim_arka}}" class="hidden group-hover:block w-full" alt="">
-                                </div>
-                                <div class="py-2">
-                                    <div class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold px-4 line-clamp-1">{{this.name}}
-                                    </div>
-                                </div>
-                                <div class="py-2">
-                                    <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
-                                    <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}</div>
-                                </div>
-                                <div class="flex items-center w-1/2 mx-auto space-x-3">
-                                    <div
-                                        class="bg-[red] text-white text-[0.8rem] p-2 flex items-center justify-center rounded-md font-bold">
-                                        %{{this.indirim}}
-                                    </div>
-                                    <div>
-                                        <div class="line-through text-[0.8rem] text-[--koyu]">{{this.fiyat}}.00₺</div>
-                                        <div class="text-[1rem] leading-tight"><strong>{{this.indirimli_fiyat}}.00₺</strong></div>
-                                    </div>
-                                </div>
-                                <div class="py-2 flex items-center justify-center">
-                                    <div class="inline-flex border border-gray-200">
-                                        <div
-                                            class="tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
-                                            remove</div>
-                                        <input type="number"
-                                            class="text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center"
-                                            value="1">
-                                        <div
-                                            class="tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
-                                            add</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-center py-2">
-                                    <button
-                                        class="p-2 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
-                                        <i class="tio text-[1rem]">shopping_cart_add</i>
-                                        <div class="text-[0.8rem]">Sepete ekle</div>
-                                    </button>
+                                class="bg-[red] text-white text-[0.8rem] p-2 flex items-center justify-center rounded-md font-bold">
+                                %{{this.indirim}}
+                            </div>
+                            <div>
+                                <div class="line-through text-[0.8rem] text-[--koyu]">{{this.fiyat}}.00₺</div>
+                                <div class="text-[1rem] leading-tight"><strong>{{this.indirimli_fiyat}}.00₺</strong>
                                 </div>
                             </div>
-                        </a>
+                        </div>
+                        <div class="btn-sepet-area py-2 flex flex-col items-center justify-center" data-ur="{{this.id}}">
+                            <div class="inline-flex border border-gray-200">
+                                <div data-ur="{{this.id}}"
+                                    class="btn-subsepet tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                                    remove</div>
+                                <input type="number" data-ur="{{this.id}}"
+                                    class="in-adetsepet text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center"
+                                    value="1">
+                                <div data-ur="{{this.id}}"
+                                    class="btn-addsepet tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                                    add</div>
+                            </div>
+                            <div class="flex items-center justify-center py-2">
+                                <button data-ur="{{this.id}}"
+                                    class="btn-sepete-ekle   px-2 py-1 text-white   font-bold bg-blue-600 hover:bg-blue-700 active:bg-blue-500 rounded-md flex items-center space-x-2">
+                                    <i class="tio text-[1rem]">shopping_cart_add</i>
+                                    <div class="text-[0.9rem]"><span>Sepete ekle</span></div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
                         {{else}}
                         <div
                             class="w-full bg-black/5 rounded-lg my-4 text-center py-5 font-bold text-gray-500 text-[1.4rem]">

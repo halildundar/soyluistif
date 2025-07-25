@@ -4,6 +4,7 @@ let selectedUrun;
 let selectedKategori;
 let parents;
 let kategoriler;
+
 const makeBreadCrump = (classname) => {
   let newItems = kategoriler.filter((item) => {
     return !selectedKategori.parents
@@ -103,8 +104,10 @@ const makeEventForImgDelete = () => {
     list.push(link);
   });
 };
+
 export const InitUrun = async () => {
   IsSelectKategori();
+
   $(`.btn-urun-temizle`).on("click", function () {
     $(".btn-urun-ekle").css("display", "inline-block");
     $(".btn-urun-duzenle").css("display", "none");
@@ -130,7 +133,7 @@ export const InitUrun = async () => {
       theme: "snow",
     });
     $(".garanti_aciklama .ql-editor").html(
-      `<p>Ürün Adı : Hidrollik Tek Etkili El Pompası Vanası B Tipi</p><p>Not : Fiyat 1 Adet İçindir.</p><p>Lütfen Ürünün Görselini Dikkatlice İnceleyiniz Ürünün Sizin Numune İle Ölçülerinin Aynı Olduğundan Emin Olup O Şekilde Sipariş Veriniz.</p><strong>Halil Dündar</strong>`
+      `<p>Ürün Adı : Hidrollik Tek Etkili El Pompası Vanası B Tipi</p><p>Not : Fiyat 1 Adet İçindir.</p><p>Lütfen Ürünün Görselini Dikkatlice İnceleyiniz Ürünün Sizin Numune İle Ölçülerinin Aynı Olduğundan Emin Olup O Şekilde Sipariş Veriniz.`
     );
     $(".btn-close-urun-edit").on("click", function () {
       $(".urun-ekle-pop").remove();
@@ -152,7 +155,7 @@ export const InitUrun = async () => {
         formData.fiyat - (formData.indirim * formData.fiyat) / 100
       );
       if (!selectedUrun) {
-        await addUrun(formData);
+        await addUrun({...formData,kayit_tarih:new Date().getTime()});
       } else {
         await updateUrun(formData);
         $(`.btn-urun-temizle`).trigger("click");
@@ -160,7 +163,6 @@ export const InitUrun = async () => {
       $(".btn-close-urun-edit").trigger("click");
       await makeUrunArea(parents);
     });
-
     makeBreadCrump(".pop-bread-area");
   });
   $(".btn-urun-duzenle").on("click", async function () {

@@ -1,7 +1,18 @@
 import express from "express";
 import { DB } from "../mysql.js";
 let router = express.Router({ mergeParams: true });
+export const CtrlPanelSlaytRender = async (req, res) => {
+  res.render("pages/ctrlpanel/slaytlar.hbs", {
+    title: "Slaytlar",
+    scriptname: `ctrlpanel-main`,
+    styles:`<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">`,
+    scripts:`  <script defer src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> 
+    <script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`
+  });
+};
+
 export const SlaytApi = (app) => {
+  
   router.post("/ctrlpanel/slaytlar/add-item", async (req, res) => {
     const data = req.body;
     if (!data) {
@@ -44,5 +55,7 @@ export const SlaytApi = (app) => {
       msg: "Ok!",
     });
   });
+  router.get("/ctrlpanel/slaytlar", CtrlPanelSlaytRender);
+  
   return app.use("/", router);
 };

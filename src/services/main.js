@@ -9,10 +9,17 @@ import {
   KategoriPageApi,
   CtrlPanelPageApi,
   MenuApi,
-  SepetPageApi
+  SepetPageApi,
+  SiparisPageApi,
+  FavoriPageApi
 } from "./router.js";
+import {IyzicoApi} from './iyzipay.js';
+import {AdresApi} from './adres.js';
+import { getMainMenu } from "./web/dbdata.js";
 // initPassportLocal();
 export let appRoutes = (app) => {
+  IyzicoApi(app);
+  AdresApi(app);
   UplaodFileApi(app);
   HomePageApi(app);
   KurumsalPageApi(app);
@@ -21,6 +28,8 @@ export let appRoutes = (app) => {
   CtrlPanelPageApi(app);
   MenuApi(app);
   SepetPageApi(app);
+  SiparisPageApi(app);
+  FavoriPageApi(app);
   router.post("/templates/get-temp", async (req, res) => {
     const data = req.body;
     if (!data) {
@@ -32,10 +41,21 @@ export let appRoutes = (app) => {
     res.set("Content-Type", "text/plain");
     return res.send(strText);
   });
-  router.get("/*", (req, res) => {
-    res.render("pages/404.hbs", {
-      title: "Kontrol Panel",
+  router.get("/ctrlpanel", async (req, res) => {
+    return res.render("pages/ctrlpanel/dashboard.hbs", {
+      title: "Anasayfa",
+      scriptname: `ctrlpanel-main`,
+      scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
+    });
+  });
+  router.get("/ctrlpanel**", (req, res) => res.redirect("/ctrlpanel/"));
+  router.get("**", async (req, res) => {
+    const mainMenus = await getMainMenu();
+    res.status(404).render("pages/404.hbs", {
+      title: "404 Not Found",
       scriptname: `main`,
+      scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
+      menus: mainMenus,
     });
   });
   return app.use("/", router);

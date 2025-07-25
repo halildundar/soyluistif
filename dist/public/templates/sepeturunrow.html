@@ -1,5 +1,5 @@
 {{#IsEq urunler.length 0}}
-<div class="py-5 font-semibold text-black/50 text-[1.4rem] text-center">
+<div class="py-20 font-semibold text-black/50 text-[1.4rem] text-center">
   Sepet Boş
 </div>
 {{else}}
@@ -8,18 +8,19 @@
     <tr class="">
       <th class="text-start">Product</th>
       <th class="text-start">Miktar</th>
-      <th class="text-start">Fiyat</th>
+      <th class="text-start">Birim Fiyat(₺)</th>
+      <th class="text-start">İndirim</th>
       <th class="text-start"></th>
     </tr>
   </thead>
   <tbody class="">
     {{#each urunler}}
-    <tr class="py-2">
+    <tr class="py-2" data-ur="{{this.id}}">
       <td>
-        <div class="flex">
-          <img src="{{this.resim}}" class="w-[100px] h-[100px]" alt="" />
+        <div class="flex items-center space-x-4">
+          <img src="{{this.resim}}" class="w-[75px] h-[75px]" alt="" />
           <div class="flex-1 flex flex-col justify-start">
-            <div class="text-[1rem] font-semibold">{{this.name}}</div>
+            <div class="text-[1rem] font-medium line-clamp-2">{{this.name}}</div>
             <!-- <div class="text-[0.8rem] text-gray-600">{{{this.aciklama}}}</div> -->
           </div>
         </div>
@@ -27,19 +28,16 @@
       <td>
         <div class="inline-flex border border-gray-200">
           <div
-            data-ur="{{this.id}}"
             class="btn-subsepet tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300"
           >
             remove
           </div>
           <input
             type="number"
-            data-ur="{{this.id}}"
             class="in-adetsepet text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center"
             value="{{this.adet}}"
           />
           <div
-            data-ur="{{this.id}}"
             class="btn-addsepet tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300"
           >
             add
@@ -48,13 +46,18 @@
       </td>
       <td>
         <div class="font-semibold text-[1.1rem]">
-          {{this.indirimli_fiyat}}.00 ₺
+          {{this.fiyat}}.00 ₺
+        </div>
+      </td>
+      <td>
+        <div class="font-semibold text-[1.1rem]">
+          %{{this.indirim}} ({{this.indirimli_fiyat}}₺)
         </div>
       </td>
       <td>
         <div class="flex items-center space-x-2">
           <!-- <i class="tio text-[1.2rem] p-2 border border-gray-300 rounded">heart</i> -->
-          <i class="tio text-[1.2rem] p-2 border border-gray-300 rounded"
+          <i class="btn-remove-urun cursor-pointer hover:bg-black/5 tio text-[1.2rem] p-2 border border-gray-300 rounded"
             >delete</i
           >
         </div>

@@ -1,0 +1,206 @@
+{{> ctrlheader}}
+<div class="siparis-areaa">
+    <div class="max-w-[--max-w] mx-auto flex py-5">
+        {{!-- <div class="w-1/4 pr-5">
+            <div class=" p-2 border border-gray-200 rounded-md">
+                <div class="frm-lbl eklelbl">Sipariş Left Area</div>
+                <div class="siparis-left-area">
+
+                </div>
+            </div>
+        </div> --}}
+        <div class="w-full relative">
+            <div class="border border-gray-200 rounded-md p-2">
+                <div class="flex items-center">
+                    <div class="flex-1 py-1 px-2">
+                        <div class="font-semibold text-[1.2rem]">Siparişler</div>
+                        <div class="bread-area flex  items-center text-[0.8rem] italic"></div>
+                    </div>
+                    <div style="display:none"
+                        class="btn-area-siparis flex items-center space-x-1 text-[1rem] text-white ">
+                        <button
+                            class="btn-siparis-ekle rounded px-2 py-1 bg-blue-600 hover:bg-blue-800 active:bg-blue-400">Ekle</button>
+                        <button style="display:none"
+                            class="btn-siparis-resim rounded px-2 py-1 bg-green-600 hover:bg-green-800 active:bg-green-400">Resimler</button>
+                        <button style="display:none"
+                            class="btn-siparis-duzenle rounded px-2 py-1 bg-orange-600 hover:bg-orange-800 active:bg-orange-400">Düzenle</button>
+                        <button style="display:none"
+                            class="btn-siparis-sil rounded px-2 py-1 bg-red-600 hover:bg-red-800 active:bg-red-400">Sil</button>
+                        <button style="display:none"
+                            class="btn-siparis-temizle rounded px-2 py-1 bg-purple-600 hover:bg-purple-800 active:bg-purple-400">Seçimi
+                            Kaldır</button>
+                    </div>
+                </div>
+                <hr class="my-2">
+                <div class="siparis-area" style="display:none">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="text-[0.8rem] ">
+                                <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[100px]">Sipariş No</th>
+                                <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[100px]">Tarih</th>
+                                <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[100px]">Durum</th>
+                                <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[300px]">Alıcı</th>
+                                <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[300px]">Ürünler</th>
+                                <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[150px]">Fiyat(₺)</th>
+                                <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[300px]">Kargo Adres</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="siparis-yok py-10 text-[1.4rem] text-black/40 font-semibold text-center"> Hiç sipariş yok!
+                </div>
+            </div>
+
+            <div class="spinn1 absolute top-0 left-0 w-full h-full flex items-center justify-center bg-[--acik]">
+                <div class="spin icon-spin-1 spin-steps1 text-[2rem] text-[--main]"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display:none"
+    class="urnpop fixed top-0 left-0 w-[100vw] h-[100vh] flex items-center justify-center bg-black/10">
+    <div class="flex flex-col bg-white rounded-md w-1/2 h-[75vh]">
+        <div class="pl-3 pr-2 py-1 flex items-center justify-between select-none">
+            <div class="font-semibold text-[1.2rem]">Ürün</div>
+            <i class="btn-clse tio p-2 text-[1.4rem] hover:bg-black/10 rounded-full cursor-pointer">clear</i>
+        </div>
+        <div class="flex-1 relative overflow-hidden overflow-y-auto urun-tnt  text-[0.8rem]">
+            <div class="p-1 px-2">
+                <div class="border border-gray-200 rounded p-1 bg-yellow-600/5">
+                    <label for="durum" class="frm-lbl">Sipariş durumu</label>
+                    <hr>
+                    <div class="byrarea p-[0.4rem]">
+
+                        <div class="flex items-center space-x-2">
+                            <select name="durum" id="durum" class="frm-slct">
+                                <option value="Sipariş Alındı">Sipariş Alındı</option>
+                                <option value="Kargoya Verildi">Kargoya Verildi</option>
+                                <option value="İptal Edildi">İptal Edildi</option>
+                                {{!-- <option value="Sipariş Alındı">Sipariş Alındı</option> --}}
+                            </select>
+                            <button
+                                class="btn-drmkydt px-2 py-1  bg-blue-500 hover:bg-blue-700 active:bg-blue-400 rounded text-[0.8rem] text-white">Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="p-1 px-2">
+                <div class="border border-gray-200 rounded p-1 bg-yellow-600/5">
+                    <div class="font-semibold px-[0.4rem]">Alıcı</div>
+                    <hr>
+                    <div class="byrarea p-[0.4rem]">
+                        <div class="flex">
+                            <div class="font-semibold w-1/6">İsim Soyisim</div>
+                            <div class="px-2">:</div>
+                            <div class="name w-3/4"></div>
+                        </div>
+                        <div class="flex">
+                            <div class="font-semibold w-1/6">TC</div>
+                            <div class="px-2">:</div>
+                            <div class="tc w-3/4"></div>
+                        </div>
+                        <div class="flex">
+                            <div class="font-semibold w-1/6">Email</div>
+                            <div class="px-2">:</div>
+                            <div class="email w-3/4"></div>
+                        </div>
+                        <div class="flex">
+                            <div class="font-semibold w-1/6">Telefon</div>
+                            <div class="px-2">:</div>
+                            <div class="tel w-3/4"></div>
+                        </div>
+                        <div class="flex">
+                            <div class="font-semibold w-1/6">Adres</div>
+                            <div class="px-2">:</div>
+                            <div class="adres w-3/4"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="flex p-1 px-2">
+                <div class="w-1/2 pr-2">
+                    <div class="border border-gray-200 rounded p-1 bg-yellow-600/5">
+                        <div class="font-semibold px-[0.4rem]">Fatura Bilgileri</div>
+                        <hr>
+                        <div class="byrarea p-[0.4rem]">
+                            <div class="flex">
+                                <div class="font-semibold w-1/4">İsim Soyisim</div>
+                                <div class="px-2">:</div>
+                                <div class="fatContactName w-3/4"></div>
+                            </div>
+                            <div class="flex">
+                                <div class="font-semibold w-1/4">Email</div>
+                                <div class="px-2">:</div>
+                                <div class="email w-3/4"></div>
+                            </div>
+                            <div class="flex">
+                                <div class="font-semibold w-1/4">Telefon</div>
+                                <div class="px-2">:</div>
+                                <div class="tel w-3/4"></div>
+                            </div>
+                            <div class="flex">
+                                <div class="font-semibold w-1/4">Adres</div>
+                                <div class="px-2">:</div>
+                                <div class="fatAdres w-3/4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-1/2">
+                    <div class="border border-gray-200 rounded p-1 bg-yellow-600/5">
+                        <div class="font-semibold px-[0.4rem]">Adres Bilgileri(Kargo)</div>
+                        <hr>
+                        <div class="byrarea p-[0.4rem]">
+                            <div class="flex">
+                                <div class="font-semibold w-1/4">İsim Soyisim</div>
+                                <div class="px-2">:</div>
+                                <div class="karContactName w-3/4"></div>
+                            </div>
+                            <div class="flex">
+                                <div class="font-semibold w-1/4">Email</div>
+                                <div class="px-2">:</div>
+                                <div class="email w-3/4"></div>
+                            </div>
+                            <div class="flex">
+                                <div class="font-semibold w-1/4">Telefon</div>
+                                <div class="px-2">:</div>
+                                <div class="tel w-3/4"></div>
+                            </div>
+                            <div class="flex">
+                                <div class="font-semibold w-1/4">Adres</div>
+                                <div class="px-2">:</div>
+                                <div class="karAdres w-3/4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-1 px-2">
+                <div class="border border-gray-200 rounded p-1 bg-yellow-600/5">
+                    <div class="font-semibold px-[0.4rem]">Ürünler</div>
+                    <hr>
+                    <div class="byrarea p-[0.4rem]">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="border-y border-gray-200">
+                                    <th class="text-start">Ürün</th>
+                                    <th class="text-start">İndirim</th>
+                                    <th class="text-start">Fiyat</th>
+                                    <th class="text-start">Satış</th>
+                                       <th class="text-end">Toplam</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -47,6 +47,7 @@
                         <div><strong>Ürün Kod:</strong> <span>{{urun.kod}}</span></div>
                         <div><strong>Barkod:</strong> <span>{{urun.barkod}}</span></div>
                         <div><strong>Kategori:</strong> <span>{{lastkategori.name}}</span></div>
+                        <div><strong>Stok:</strong> <span>{{urun.stok}}</span> adet</div>
                     </div>
                     <div class=" flex items-center space-x-5">
                         <div
@@ -61,39 +62,57 @@
                     </div>
                     <div class="pt-5">
                         <div class="inline-flex border border-gray-200">
-                            <div
-                                class="tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                            <div data-ur="{{urun.id}}"
+                                class="btn-subsepet tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
                                 remove</div>
-                            <input type="number"
-                                class="text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center" value="1">
-                            <div
-                                class="tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                            <input type="number" data-ur="{{urun.id}}"
+                                class="in-adetsepet text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center"
+                                value="1">
+                            <div data-ur="{{urun.id}}"
+                                class=" btn-addsepet tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
                                 add</div>
                         </div>
                     </div>
                     <div class="flex space-x-3 py-5">
-
-                        <button
-                            class="p-2 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                        {{#IsEq urun.stok 0}}
+                        <div class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
+                            <div>Stoklarımız Tükenmiştir. </div>
+                            <div>Whatsapp üzerinden iletişime geçebilirsiniz</div>
+                        </div>
+                        {{else}}
+                        <button data-ur="{{urun.id}}"
+                            class="btn-sepete-ekle p-2 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
                             <i class="tio text-[1rem]">shopping_cart_outlined</i>
                             <div class="text-[0.8rem]">Sepete ekle</div>
                         </button>
                         <button
-                            class="p-2 text-white bg-gray-500  font-bold hover:bg-gray-700 active:bg-gray-400 rounded-md flex items-center space-x-2">
+                            class="btn-hmnal p-2 text-white bg-gray-500  font-bold hover:bg-gray-700 active:bg-gray-400 rounded-md flex items-center space-x-2">
                             <i class="tio text-[1rem]">shopping_basket_outlined</i>
                             <div class="text-[0.8rem]">Hemen Al</div>
                         </button>
-                        <button
+                        {{/IsEq}}
+                        <a href="https://api.whatsapp.com/send?phone=905077217649&text=http://localhost:3000/urun/{{urun.url}}"
+                            target="_blank"
                             class="p-2 text-white bg-[#33aa29]  font-bold hover:bg-green-700 active:bg-green-400 rounded-md flex items-center space-x-2">
                             <i class="tio text-[1rem]">whatsapp_outlined</i>
                             <div class="text-[0.8rem]">WHATSAPP ILE SİPARİŞ VER</div>
-                        </button>
+                        </a>
                     </div>
-                    <div class="flex items-center space-x-2 cursor-pointer select-none hover:text-[red]">
+                    <div data-ur="{{urun.id}}"
+                        class="flex items-center space-x-2 cursor-pointer select-none hover:text-[red] btn-fav1 ">
                         <span class="tio text-[1.6rem] ">heart_outlined</span>
                         <span>Favorilerime ekle</span>
                     </div>
-                    <div class="flex items-center space-x-2 py-2">
+                    <div class="flex items-center space-x-4 py-2">
+                        <div class="inline-flex items-center space-x-1"><strong
+                                class="tio text-[1.4rem]">incognito</strong> <strong class="goruntulenme text-[1.2rem]"
+                                data-say="{{urun.goruntulenme}}">{{urun.goruntulenme}}</strong></div>
+                        <div class="inline-flex items-center space-x-1"><strong
+                                class="tio text-[1.4rem]">thumbs_up</strong> <strong class="begenilme text-[1.2rem]"
+                                data-say="{{urun.begenilme}}">{{urun.begenilme}}</strong></div>
+                        <div class="kalan hidden" data-say="{{urun.alinan}}">{{urun.alinan}}</div>
+                    </div>
+                    <div class="flex items-center space-x-2 py-5">
                         <div
                             class="inline-flex flex-col items-center border border-gray-300 rounded-md p-2 text-[0.9rem]">
                             <div class="tio text-[1.5rem]">protection</div>
@@ -121,7 +140,7 @@
                         <div ro="garanti"
                             class="duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
                             Garanti ve Teslimat</div>
-                        <div ro="yorum"
+                        <div ro="yorum" data-ur="{{urun.id}}"
                             class="duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
                             Yorumlar</div>
                     </div>
@@ -132,14 +151,24 @@
                         <div style="display:none" class="garanti-ack">
                             {{{urun.garanti_aciklama}}}
                         </div>
-                        <div style="display:none" class="yorum-ack">
-                            {{{urun.yorumlar}}}
-                            <div class="no-comment flex flex-col justify-center items-center py-4 ">
-                                <div class="text-[--koyu]">
-                                    Bu ürün için henüz yorum yapılmadı.
+                        <div style="display:none" class="yorum-ack space-y-5 w-1/2 mx-auto space-x-2">
+                            {{!-- {{{urun.yorumlar}}} --}}
+
+                            <hr>
+                            <div class="yrmfrma-rea flex flex-col space-y-2">
+                                <div>
+                                    <label for="" class="frm-lbl">Ad-Soyad</label>
+                                    <input type="text" placeholder="Ad/Soyad" class="frm-txt" name="ad_soyad">
+                                    <div class="text-red-500 italic text-[0.8rem] err-adsyd"></div>
+                                </div>
+                                <div>
+                                    <label for="" class="frm-lbl">Yorumunuz</label>
+                                    <textarea class="frm-txt !h-[150px] w-full" placeholder="Yorum yap"
+                                        name="msg_area"></textarea>
+                                    <div class="text-red-500 italic text-[0.8rem] err-msgra"></div>
                                 </div>
                                 <button class="px-4 py-2 border border-gray-600 text-black rounded-md">
-                                    Yorum Yap
+                                    Gönder
                                 </button>
                             </div>
                         </div>

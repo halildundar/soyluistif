@@ -1,0 +1,75 @@
+{{> ctrlheader}}
+<div class="siparis-areaa">
+    <div class="max-w-[--max-w] mx-auto flex py-5">
+        <div class="w-1/2 mx-auto relative">
+            <div class="flex items-center justify-between pb-2">
+                <div class="font-bold">E-Ticaret Siteler</div>
+                <div>
+                    <button
+                        class="btn-opn px-2 py-1 rounded text-[0.9rem] text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-400">Ekle</button>
+                </div>
+            </div>
+            <div class="">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="border border-gray-300">
+                            <th class="bg-gray-200">Sıra</th>
+                            <th class="bg-gray-200">Name</th>
+                            <th class="bg-gray-200 text-start">Logo</th>
+                            <th class="bg-gray-200">Link</th>
+                            <th class="bg-gray-200"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="display:none" class="etic-pop fixed top-0 left-0 w-[100vw] h-[100vh] flex items-start py-32 justify-center bg-black/5 overflow-hidden">
+
+    <div class="w-[400px]  bg-white rounded-md shadow-[0_0_5px_1px_rgba(0,0,0,0.3)] flex flex-col pb-2 relative">
+        <div class="flex items-center justify-between px-2 py-2">
+            <div class="font-bold">Site Ekle</div>
+            <i class="tio btn-kpt select-none p-1 rounded-full cursor-pointer hover:bg-black/10 text-[1.2rem]" title="Kapat">clear</i>
+        </div>
+        <hr>
+        <div class="flex-1">
+            <form class="px-2 py-2 space-y-2">
+                <div>
+                    <label for="site_name" class="frm-lbl">Site Adı</label>
+                    <input type="text" name="site_name" placeholder="Site Adı" class="frm-txt">
+                </div>
+                <div>
+                    <label for="site_url" class="frm-lbl">Site Link</label>
+                    <input type="text" name="site_url" placeholder="Site Link" class="frm-txt">
+                </div>
+                <div class="flex items-center">
+                    <label for="sira" class="frm-lbl pr-2">Sıra</label>
+                    <input type="number" name="sira" placeholder="Sıra No" class="frm-txt" value="0">
+                </div>
+                <div>
+                    <div class="img-area relative w-[250px] h-[150px] cursor-pointer select-none">
+                        <img class="bg-gray-200 rounded border border-gray-300 w-full h-full" alt="">
+                        <div
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-400 font-bold">
+                            Resim</div>
+                        <input type="hidden" name="site_logo">
+                    </div>
+                    <input type="file" class="fileselect hidden" accept=".webp,.png,.jpeg,.jpg">
+                </div>
+            </form>
+            <div class="px-2 text-center">
+                <button 
+                    class="btn-save-site px-2 py-1 rounded text-[0.9rem] text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-400">Kaydet</button>
+                      <button style="display:none"
+                    class="btn-guncelle-site px-2 py-1 rounded text-[0.9rem] text-white bg-orange-600 hover:bg-orange-700 active:bg-orange-400">Güncelle</button>
+            </div>
+        </div>
+        <div style="display:none" class="spinr absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
+                <div class="spin icon-spin-1 spin-steps1 text-[--main] text-[3rem]" ></div>
+        </div>
+    </div>
+
+</div>

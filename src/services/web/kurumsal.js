@@ -1,10 +1,11 @@
 import { DB } from "../mysql.js";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { getMainMenu} from './dbdata.js';
+import { getMainMenu,GetEticLogos} from './dbdata.js';
 
 export const KurumsalRender = async (req, res) => {
     const mainMenus = await getMainMenu();
+       const eticSiteler = await GetEticLogos();
   const kurumsalviewPath = join(process.cwd(), "/views/pages/website/kurumsal");
   let tempstr = "Not Found";
   let pageurl = "";
@@ -40,6 +41,7 @@ export const KurumsalRender = async (req, res) => {
     temp: tempstr,
     pagename: pagename,
     pageurl:pageurl,
-    menus:mainMenus
+    menus:mainMenus,
+    eticSiteler:eticSiteler
   });
 };

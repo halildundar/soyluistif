@@ -79,6 +79,7 @@ export default {
       },
     ],
   },
+ 
 
   optimization: {
     minimize: true,
@@ -131,5 +132,5 @@ export default {
     // })
   ],
   externalsPresets: { node: true },
-  externals: [nodeExternals()],
+  externals: [nodeExternals()]
 };

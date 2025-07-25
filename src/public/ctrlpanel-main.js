@@ -1,7 +1,8 @@
 import "./ctrlpanel-main.scss";
 import "./jqform-serialize.js";
 import "./owl.carousel.js";
-import { DashboardInit,KategorilerInit,SlaytlarInit } from "./pages/ctrlpanel/main.js";
+// import "./socket.js";
+import { DashboardInit,KategorilerInit,SlaytlarInit,SiparislerInit,EticaretInit } from "./pages/ctrlpanel/main.js";
 
 Handlebars.registerHelper("inc", function (value, options) {
   return parseInt(value) + 1;
@@ -21,6 +22,10 @@ $(async function () {
     KategorilerInit();
   }else if(pathname.includes("/ctrlpanel/slaytlar")){
     SlaytlarInit();
+  }else if(pathname.includes("/ctrlpanel/siparisler")){
+    SiparislerInit();
+  }else if(pathname.includes("/ctrlpanel/etic-siteler")){
+    EticaretInit();
   }
    
 });

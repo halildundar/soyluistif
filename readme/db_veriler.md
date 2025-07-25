@@ -37,6 +37,30 @@ CREATE TABLE IF NOT EXISTS `slayt`(
 `sira` LONGTEXT  NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `siparis`(
+`id` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`paymentId` VARCHAR(255),
+`locale` VARCHAR(255),
+`conversationId` VARCHAR(255),
+`price` LONGTEXT  NULL,
+`paidPrice` LONGTEXT  NULL,
+`installment`: VARCHAR(255),
+`basketId`: VARCHAR(255),
+`callbackUrl` VARCHAR(255),
+`paymentCard` LONGTEXT  NULL,
+`buyer` LONGTEXT  NULL,
+`shippingAddress` LONGTEXT  NULL,
+`billingAddress` LONGTEXT  NULL,
+`basketItems` LONGTEXT  NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `eticsites`(
+`id` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`sira` INT(11),
+`site_name` VARCHAR(255) ,
+`site_logo` VARCHAR(500) ,
+`site_url` VARCHAR(5000) ,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `firmalar`(
 `id` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 `kisa_ad` VARCHAR(255) NOT NULL,

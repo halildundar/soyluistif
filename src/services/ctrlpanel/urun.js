@@ -2,7 +2,23 @@ import express from "express";
 import { DB } from "../mysql.js";
 import { existsSync, rmdirSync } from "fs";
 let router = express.Router({ mergeParams: true });
-
+export const CtrlPanelUrunRender = async (req, res) => {
+  res.render("pages/ctrlpanel/urun.hbs", {
+    title: "Ürünler",
+    scriptname: `ctrlpanel-main`,
+    styles: `<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"> <link
+  href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
+  rel="stylesheet"
+/>
+<link
+  href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.bubble.css"
+  rel="stylesheet"
+/>`,
+    scripts: `  <script defer src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> 
+    <script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script> 
+    <script defer src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>`,
+  });
+};
 export const UrunApi = async (app) => {
   router.post("/ctrlpanel/kategori/add-item", async (req, res) => {
     const data = req.body;
@@ -87,8 +103,8 @@ export const UrunApi = async (app) => {
         : [];
       for (let j = 0; j < resimler.length; j++) {
         let imgurl = "/uploads" + resimler[j];
-        let filename = imgurl.split('/').pop();
-        imgurl = imgurl.replace(filename,'');
+        let filename = imgurl.split("/").pop();
+        imgurl = imgurl.replace(filename, "");
         let new_path = process.cwd() + "/public" + imgurl;
         const isExist = existsSync(new_path);
         if (isExist) {
@@ -145,6 +161,34 @@ export const UrunApi = async (app) => {
     let { id } = data;
     const resp = await DB.Query("SELECT * FROM `urun` WHERE id = ?", [id]);
     return res.json(resp[0]);
+  });
+  router.get("/ctrlpanel/urunler", CtrlPanelUrunRender);
+  router.post("/urun/update-urun-goruntu", async (req, res) => {
+    const data = req.body;
+    if (!data) {
+      return;
+    }
+    console.log(data);
+    let { id, ...others } = data;
+    await DB.Query("UPDATE `urun` SET ? WHERE id = " + id, [others]);
+    return res.json({ msg: "Ok!" });
+  });
+  router.post("/urun/update-stok", async (req, res) => {
+    const data = req.body;
+    if (!data) {
+      return;
+    }
+    let { id, alinan } = data;
+    const resp = await DB.Query("SELECT alinan,stok_dusme_durum FROM `urun` WHERE id = " + id);
+    let stok_dusme_durum = 'düşürülmedi';
+    if(resp[0].stok_dusme_durum == 'düşürülmedi'){
+      alinan = parseInt(alinan) + resp[0].alinan;
+      stok_dusme_durum = "düşürüldü";
+        await DB.Query("UPDATE `urun` SET `alinan` = ?,`stok_dusme_durum` = ? WHERE id = " + id, [alinan,stok_dusme_durum]);
+    }
+  
+    console.log(alinan)
+    return res.json({ msg: "Ok!" });
   });
   return app.use("/", router);
 };

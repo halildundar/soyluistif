@@ -11,7 +11,10 @@ import session from "express-session";
 import passport from "passport";
 import compression from "compression";
 const app = express();
+// const server = require('http').createServer(app);
+// import { Server } from "socket.io";
 let PORT = process.env.PORT || 3000;
+// let SOCKET_PORT = process.env.SOCKET_PORT || 3001;
 //only development mode
 if (process.env.NODE_ENV === "development") {
   const livereload = require("livereload");
@@ -67,6 +70,11 @@ app.all("**", (req, res) => {
 
 
 //****************************************/
+// const io = new Server(server);
+// io.on("connection", (socket) => {
+//   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+// });
+// io.listen(SOCKET_PORT);
 app.listen(PORT, () => {
   console.log(`Server is starting at ${PORT}`);
 });

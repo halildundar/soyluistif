@@ -43,6 +43,9 @@ export const HomeInit = () => {
   $(".owl-carousel a").on("click", function () {
     location.href = $(this).attr("route");
   });
+  $(".cok-satan a").on("click", function () {
+    location.href = $(this).attr("route");
+  });
   $(".btn-fav").on("click", function (ev) {
     ev.stopPropagation();
     FavsBtn(this);
@@ -69,7 +72,7 @@ export const HomeInit = () => {
   $(".btn-sepete-ekle").on("click", function (e) {
     e.stopPropagation();
     const id = $(this).attr("data-ur");
-    let adetVal = $(`.in-adetsepet[data-ur='${id}']`).val();
+    let adetVal = Number($(`.in-adetsepet[data-ur='${id}']`).val());
     SepetBtn(this, adetVal);
   });
   SepetStatus();
