@@ -5,6 +5,7 @@ import {SiparisByiIyzIDGet} from './web/dbdata.js';
 const Iyzipay = require("iyzipay");
 import {Transport} from './mail/main.js';
 import { utils } from "./utilsiyzico.js";
+import { HOST_NAME } from "./main.js";
 const iyzipay = new Iyzipay({
   apiKey: process.env.IYZICO_API_KEY,
   secretKey: process.env.IYZICO_SECRET_KEY,
@@ -22,7 +23,7 @@ const trns = new Transport();
          <div>Sn.<strong>Soyluistif Makinaları</strong></div>
           <div><strong>Ödemeniz Gerçekleştirildi</strong></div>
           <div style="padding:5px 10px; background-color:rgba(0,0,0,0.2); font-weight:700">${siparisKodu}</div>
-            <a href="${process.env.HOST_NAME}/siparis" target="_blank" style="text-decoration:underline;color:blue">Siparişi Görüntüle</a>
+            <a href="${HOST_NAME}/siparis" target="_blank" style="text-decoration:underline;color:blue">Siparişi Görüntüle</a>
           <div>Lütfen yukarıdaki linkten siparişinize ulaşabilirsiniz!</div>
       </div>
     `,
@@ -87,7 +88,7 @@ export const IyzicoApi = (app) => {
       basketId: "B67832",
       paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
       paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
-      callbackUrl: process.env.HOST_NAME + "/iyz/3ds-pay",
+      callbackUrl: HOST_NAME + "/iyz/3ds-pay",
       paymentCard: {
         cardHolderName: data.cardHolderName,
         cardNumber: data.cardNumber,
