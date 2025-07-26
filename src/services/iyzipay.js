@@ -22,7 +22,7 @@ const trns = new Transport();
          <div>Sn.<strong>Soyluistif Makinaları</strong></div>
           <div><strong>Ödemeniz Gerçekleştirildi</strong></div>
           <div style="padding:5px 10px; background-color:rgba(0,0,0,0.2); font-weight:700">${siparisKodu}</div>
-            <a href="http://localhost:3000/siparis" target="_blank" style="text-decoration:underline;color:blue">Siparişi Görüntüle</a>
+            <a href="${process.env.HOST_NAME}/siparis" target="_blank" style="text-decoration:underline;color:blue">Siparişi Görüntüle</a>
           <div>Lütfen yukarıdaki linkten siparişinize ulaşabilirsiniz!</div>
       </div>
     `,
@@ -87,7 +87,7 @@ export const IyzicoApi = (app) => {
       basketId: "B67832",
       paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
       paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
-      callbackUrl: "http://localhost:3000/iyz/3ds-pay",
+      callbackUrl: process.env.HOST_NAME + "/iyz/3ds-pay",
       paymentCard: {
         cardHolderName: data.cardHolderName,
         cardNumber: data.cardNumber,

@@ -154,7 +154,7 @@ export const OdemeInit = async () => {
         basketId: "B67832",
         // paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
         // paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
-        callbackUrl: "http://localhost:3000/iyz/3ds-pay",
+        callbackUrl: process.env.HOST_NAME + "/iyz/3ds-pay",
         paymentCard: {
           cardHolderName: formCard.cardHolderName,
           cardNumber: formCard.cardNumber,
@@ -193,7 +193,7 @@ export const OdemeInit = async () => {
       if (res.status) {
         if (!!res.html) {
           window.location =
-            "http://localhost:3000/iyz/3ds-verify?ulre=" +
+            process.env.HOST_NAME + "/iyz/3ds-verify?ulre=" +
             encodeURIComponent(res.html);
         }
       } else {
