@@ -18,6 +18,7 @@ import "./views/pages/website/sepet/odeme.hbs";
 import "./views/pages/website/sepet/siparis-bilgi.hbs";
 import "./views/pages/website/sepet/odeme-result.hbs";
 import "./views/pages/website/siparis/main.hbs";
+import "./views/pages/website/siparis/main query.hbs";
 import "./views/pages/website/favori/main.hbs";
 import "./views/pages/dashboard.hbs";
 import "./views/pages/signin.hbs";

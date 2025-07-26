@@ -182,30 +182,6 @@ export const OdemeInit = async () => {
         billingAddress: billingAddress,
         basketItems: [
           ...newUrunler,
-          // {
-          //   id: "BI101",
-          //   name: "Binocular",
-          //   category1: "Collectibles",
-          //   category2: "Accessories",
-          //   itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
-          //   price: "0.3",
-          // },
-          // {
-          //   id: "BI102",
-          //   name: "Game code",
-          //   category1: "Game",
-          //   category2: "Online Game Items",
-          //   itemType: Iyzipay.BASKET_ITEM_TYPE.VIRTUAL,
-          //   price: "0.5",
-          // },
-          // {
-          //   id: "BI103",
-          //   name: "Usb",
-          //   category1: "Electronics",
-          //   category2: "Usb / Cable",
-          //   itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
-          //   price: "0.2",
-          // },
         ],
       };
       const res = await $.ajax({

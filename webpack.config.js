@@ -11,7 +11,7 @@ export default {
   // mode: "development",
   mode: process.env.NODE_ENV,
   // devtool: process.env.NODE_ENV == "development" ? "eval-source-map" : false, //eval
-  devtool:'eval-source-map',
+  devtool:false,
   entry: {
     server: "./src/server.js",
     viewchanges: "./src/viewschanges.js",
@@ -131,6 +131,7 @@ export default {
     //   port: 4200,
     //   server: { baseDir: ['dist'] }
     // })
+   
   ],
   externalsPresets: { node: true },
   externals: [nodeExternals()]

@@ -3,10 +3,10 @@
   Sepet Boş
 </div>
 {{else}}
-<table class="w-full">
+<table class="w-full border-collapse">
   <thead>
-    <tr class="">
-      <th class="text-start">Product</th>
+    <tr class="text-[0.7rem] md:text-[0.9rem] border-b border-gray-200">
+      <th class="text-start">Ürün</th>
       <th class="text-start">Miktar</th>
       <th class="text-start">Birim Fiyat(₺)</th>
       <th class="text-start">İndirim</th>
@@ -15,49 +15,49 @@
   </thead>
   <tbody class="">
     {{#each urunler}}
-    <tr class="py-2" data-ur="{{this.id}}">
+    <tr class="py-2 border-y border-gray-200" data-ur="{{this.id}}">
       <td>
-        <div class="flex items-center space-x-4">
-          <img src="{{this.resim}}" class="w-[75px] h-[75px]" alt="" />
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4">
+          <img src="{{this.resim}}" class="w-[50px] h-[50px] md:w-[75px] md:h-[75px]" alt="" />
           <div class="flex-1 flex flex-col justify-start">
-            <div class="text-[1rem] font-medium line-clamp-2">{{this.name}}</div>
+            <div class="text-[0.8rem] md:text-[1rem] font-medium line-clamp-3 md:line-clamp-2 pr-2 ">{{this.name}}</div>
             <!-- <div class="text-[0.8rem] text-gray-600">{{{this.aciklama}}}</div> -->
           </div>
         </div>
       </td>
-      <td>
-        <div class="inline-flex border border-gray-200">
+      <td class="px-1">
+        <div class="inline-flex border border-gray-200 ">
           <div
-            class="btn-subsepet tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300"
+            class="btn-subsepet tio text-[0.8rem] md:text-[1rem] p-1 md:p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300"
           >
             remove
           </div>
           <input
             type="number"
-            class="in-adetsepet text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center"
+            class="in-adetsepet text-[0.9rem] w-[30px] md:w-[50px] border-r border-l border-gray-200 text-center"
             value="{{this.adet}}"
           />
           <div
-            class="btn-addsepet tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300"
+            class="btn-addsepet tio text-[0.8rem] md:text-[1rem] p-1 md:p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300"
           >
             add
           </div>
         </div>
       </td>
       <td>
-        <div class="font-semibold text-[1.1rem]">
+        <div class="font-semibold text-[0.8rem] md:text-[1.1rem]">
           {{this.fiyat}}.00 ₺
         </div>
       </td>
       <td>
-        <div class="font-semibold text-[1.1rem]">
+        <div class="font-semibold text-[0.8rem] md:text-[1.1rem]">
           %{{this.indirim}} ({{this.indirimli_fiyat}}₺)
         </div>
       </td>
       <td>
         <div class="flex items-center space-x-2">
           <!-- <i class="tio text-[1.2rem] p-2 border border-gray-300 rounded">heart</i> -->
-          <i class="btn-remove-urun cursor-pointer hover:bg-black/5 tio text-[1.2rem] p-2 border border-gray-300 rounded"
+          <i class="btn-remove-urun cursor-pointer hover:bg-black/5 tio text-[0.9rem] md:text-[1.2rem] p-2 border border-gray-300 rounded"
             >delete</i
           >
         </div>

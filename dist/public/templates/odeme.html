@@ -1,8 +1,8 @@
-<div class="flex items-start space-x-2">
-  <div class="w-1/2 px-4 py-2 border border-gray-200 rounded">
-    <div class="w-1/2 mx-auto py-5">
+<div class="flex flex-col md:flex-row items-start md:space-x-2 space-y-2 md:space-y-0">
+  <div class="md:w-1/2 px-4 py-2 border border-gray-200 rounded">
+    <div class="w-3/4 md:w-1/2 mx-auto py-5">
       <form class="form-card space-y-2 ">
-        <div class="font-semibold text-[1.2rem]">Kredi Kart Bilgileri</div>
+        <div class="font-semibold text-[1.2rem] text-center">Kredi Kart Bilgileri</div>
         <input
           type="text"
           placeholder="Card Number"
@@ -70,8 +70,8 @@
       </div> -->
     </div>
   </div>
-  <div class="w-1/2 px-4 py-2 border border-gray-200 rounded">
-    <div class="font-semibold text-[1.2rem] pb-4">Siparişiniz</div>
+  <div class="md:w-1/2 px-4 py-2 border border-gray-200 rounded">
+    <div class="font-semibold text-[1.2rem] pb-4 hidden md:block">Siparişiniz</div>
     <div class="font-semibold text-[1rem]">Ürün</div>
     <div class="py-5 border-y border-gray-300">
       <table class="w-full table-uruns">
@@ -79,12 +79,12 @@
         <tr>
           <td class="">
             <div class="pl-2 flex items-center">
-              <div class="text-start line-clamp-1 pr-1">{{this.adet}}</div>
+              <div class="text-start  pr-2 leading-tight">{{this.adet}}</div>
               <div>x</div>
             </div>
           </td>
-          <td class="w-1/2 pl-1">
-            <div class="text-start line-clamp-1">{{this.name}}</div>
+          <td class="w-1/2 pl-2">
+            <div class="text-start line-clamp-2">{{this.name}}</div>
           </td>
           <td class="w-1/2 text-end">₺ {{this.fiyat}}.00</td>
         </tr>

@@ -95,7 +95,6 @@ export const SiparisBilgiInit = async () => {
       if (!!adres) {
         $("#isOtherAdres").prop("checked", true);
         $("#isOtherAdres").trigger("change");
-
         $("form.kar-area [name='isim']").val(adres["isim"]);
         $("form.kar-area [name='soyisim']").val(adres["soyisim"]);
         $("form.kar-area [name='email']").val(adres["email"]);
@@ -109,11 +108,13 @@ export const SiparisBilgiInit = async () => {
         $("form.kar-area [name='adres']").val(adres["adres"]);
         $("form.kar-area [name='aciklama']").val(adres["aciklama"]);
       } else {
-        $(".btn-save-to-pay").css({
-          "pointer-events": "none",
-          "background-color": "#dbdbdb",
-          color: "#00000080",
-        });
+        if ($("#isOtherAdres").attr("checked")) {
+          $(".btn-save-to-pay").css({
+            "pointer-events": "none",
+            "background-color": "#dbdbdb",
+            color: "#00000080",
+          });
+        }
       }
     } else {
       $(".btn-save-to-pay").css({
@@ -124,32 +125,30 @@ export const SiparisBilgiInit = async () => {
     }
 
     $(".btn-save-to-pay").on("click", async function () {
-      if (!!fatura) {
-        let faturaData = $(".fat-area").serializeJSON();
-        const mahFat = await $.ajax({
-          type: "POST",
-          url: "/get-mahalle",
-          data: { mahalle_id: faturaData["mahalle_id"] },
-          dataType: "json",
-        });
-        faturaData["mahalle"] = mahFat[0].mahalle_adi;
-        faturaData["pk"] = mahFat[0].posta_kodu;
-        const ilceFat = await $.ajax({
-          type: "POST",
-          url: "/get-ilce",
-          data: { ilce_id: faturaData["ilce_id"] },
-          dataType: "json",
-        });
-        faturaData["ilce"] = ilceFat[0].ilce_adi;
-        const ilFat = await $.ajax({
-          type: "POST",
-          url: "/get-il",
-          data: { il_id: faturaData["il_id"] },
-          dataType: "json",
-        });
-        faturaData["il"] = ilFat[0].il_adi;
-        myloc.setAllItem("fatura", faturaData);
-      }
+      let faturaData = $(".fat-area").serializeJSON();
+      const mahFat = await $.ajax({
+        type: "POST",
+        url: "/get-mahalle",
+        data: { mahalle_id: faturaData["mahalle_id"] },
+        dataType: "json",
+      });
+      faturaData["mahalle"] = mahFat[0].mahalle_adi;
+      faturaData["pk"] = mahFat[0].posta_kodu;
+      const ilceFat = await $.ajax({
+        type: "POST",
+        url: "/get-ilce",
+        data: { ilce_id: faturaData["ilce_id"] },
+        dataType: "json",
+      });
+      faturaData["ilce"] = ilceFat[0].ilce_adi;
+      const ilFat = await $.ajax({
+        type: "POST",
+        url: "/get-il",
+        data: { il_id: faturaData["il_id"] },
+        dataType: "json",
+      });
+      faturaData["il"] = ilFat[0].il_adi;
+      myloc.setAllItem("fatura", faturaData);
       if (!!adres) {
         let adresData = $(".fat-area").serializeJSON();
         const mahAdres = await $.ajax({

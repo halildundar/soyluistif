@@ -2,7 +2,7 @@
 <div>
     <div class="max-w-[--max-w] mx-auto">
         <div class="flex py-5">
-            <div class="w-[70%] pr-5">
+            <div class="hidden md:block md:w-[70%] pr-5">
                 <div class="caroBig owl-carousel owl-theme  overflow-hidden rounded-md">
                     {{#each imagesBg}}
                     <div class="">
@@ -11,7 +11,7 @@
                     {{/each}}
                 </div>
             </div>
-            <div class="w-[30%]">
+            <div class="md:w-[30%] w-full">
                 <div class="caroSma owl-carousel owl-theme  overflow-hidden rounded-md ">
                     {{#each imagesSm}}
                     <div class="">
@@ -24,16 +24,16 @@
 
         </div>
 
-        <div class="overflow-hidden pt-5 ">
-            <div class="font-semibold text-[1.4rem] py-2">Öne Çıkanlar</div>
-            <div class="caro1 owl-carousel owl-theme">
+        <div class="overflow-hidden pt-5 px-5">
+            <div class="font-semibold text-[1.4rem] py-2 ">Öne Çıkanlar</div>
+            <div class="caro1 owl-carousel owl-theme px-2">
                 {{#each onecikanlar}}
                 <a class="pr-2  cursor-pointer relative block z-0" route="/urun/{{this.url}}" data-ur="{{this.id}}">
                     <div
                         class="btn-fav z-10 absolute top-4 right-5  text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                         heart_outlined</div>
                     <div
-                        class=" border border-gray-200 rounded-lg overflow-hidden pb-2 shadow-[0_0_10px_1px_rgba(0,0,0,0.1)]">
+                        class=" border border-gray-300 rounded-lg overflow-hidden pb-2 ">
                         <div class="group h-[200px] overflow-hidden ">
                             <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" alt="">
                             <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full" alt="">
@@ -94,16 +94,16 @@
                 {{/each}}
             </div>
         </div>
-        <div class="overflow-hidden pt-5 ">
+        <div class="overflow-hidden pt-5 px-5">
             <div class="font-semibold text-[1.4rem] py-2">Yeni Ürünler</div>
-            <div class="caro2 owl-carousel owl-theme">
+            <div class="caro2 owl-carousel owl-theme px-2">
                 {{#each enyeniler}}
                 <a class="pr-2  cursor-pointer relative block z-0" route="/urun/{{this.url}}" data-ur="{{this.id}}">
                     <div
                         class="btn-fav  absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                         heart_outlined</div>
                     <div
-                        class="z-[1] border border-gray-200 rounded-lg overflow-hidden pb-2 shadow-[0_0_10px_1px_rgba(0,0,0,0.1)]">
+                        class="z-[1] border border-gray-300 rounded-lg overflow-hidden pb-2 ">
                         <div class="group h-[200px] overflow-hidden ">
                             <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" alt="">
                             <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full" alt="">
@@ -165,9 +165,9 @@
                 {{/each}}
             </div>
         </div>
-        <div class="overflow-hidden pt-5 ">
+        <div class="overflow-hidden pt-5 px-2">
             <div class="font-semibold text-[1.4rem] py-2">En Çok Satanlar</div>
-            <div class="cok-satan grid grid-cols-6 gap-3 ">
+            <div class="cok-satan grid grid-cols-2 gap-1 md:grid-cols-6  md:gap-3 ">
                 {{#each coksatanlar}}
                 <a route="/urun/{{this.url}}" class="pr-2 z-0  cursor-pointer relative block h-full"
                     data-ur="{{this.id}}">
@@ -175,7 +175,7 @@
                         class="btn-fav absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                         heart_outlined</div>
                     <div
-                        class=" border border-gray-200 rounded-lg overflow-hidden pb-2 shadow-[0_0_10px_1px_rgba(0,0,0,0.1)]">
+                        class=" border border-gray-300 rounded-lg overflow-hidden pb-2 ">
                         <div class="group h-[200px] overflow-hidden ">
                             <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" alt="">
                             <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full" alt="">

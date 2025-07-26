@@ -1,21 +1,21 @@
 {{> header}}
 <div>
     <div class="max-w-[--max-w] mx-auto">
-        <div class="py-2 text-gray-500 font-semibold  flex items-center space-x-2 text-[0.8rem]">
+        <div class="py-2 text-gray-500 font-semibold  flex items-center space-x-2 text-[0.8rem] px-2">
             <span class="cursor-pointer">Anasayfa</span>
             <span class="tio">chevron_right</span>
             {{#each breadcrumbs}}
-            
+
             {{#IsEq this.last 0}}
-                <a href="{{this.url}}" class="cursor-pointer">{{this.name}}</a>
-               <span class="tio">chevron_right</span>
-               {{else}}
-                 <a href="{{this.url}}" class="cursor-pointer font-normal italic">{{this.name}}</a>
+            <a href="{{this.url}}" class="cursor-pointer">{{this.name}}</a>
+            <span class="tio">chevron_right</span>
+            {{else}}
+            <a href="{{this.url}}" class="cursor-pointer font-normal italic">{{this.name}}</a>
             {{/IsEq}}
             {{/each}}
         </div>
-        <div class="flex py-4">
-            <div class="w-1/4 pr-4 space-y-4">
+        <div class="flex py-2 md:py-4">
+            <div class="hidden md:block md:w-1/4 pr-4 space-y-4">
                 <div class="border border-gray-200 rounded-md px-4 py-2">
                     <div class="font-semibold pb-2">Alt Kategoriler</div>
                     <div class="text-[0.8rem]">
@@ -77,68 +77,81 @@
                     </div>
                 </div>
             </div>
-            <div class="w-3/4 px-4 py-2 border border-gray-200 rounded-md">
+            <div class="w-full md:w-3/4 px-2 md:px-4 md:py-2 border border-gray-200 rounded-md">
                 <div class="urunler overflow-hidden w-full">
                     {{!-- <div class="font-semibold text-[1.4rem] pb-2">Kategori Title</div> --}}
-                    <div class="grid grid-cols-4 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-4">
                         {{#each urunler}}
-                         <a route="/urun/{{this.url}}" class="pr-2 z-0  cursor-pointer relative block h-full" data-ur="{{this.id}}">
-                    <div
-                        class="btn-fav absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
-                        heart_outlined</div>
-                    <div
-                        class=" border border-gray-200 rounded-lg overflow-hidden pb-2 shadow-[0_0_10px_1px_rgba(0,0,0,0.1)]">
-                        <div class="group h-[200px] overflow-hidden ">
-                            <img src="{{this.resim_on}}" class="group-hover:hidden w-full h-full" alt="">
-                            <img src="{{this.resim_arka}}" class="hidden group-hover:block w-full h-full" alt="">
-                        </div>
-                        <div class="py-2">
-                            <div class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-1 px-5">{{this.name}}
-                            </div>
-                        </div>
-                        <div class="py-2">
-                            <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
-                            <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}</div>
-                        </div>
-                        <div class="flex items-center w-1/2 mx-auto space-x-3">
+                        <a route="/urun/{{this.url}}" class=" z-0  cursor-pointer relative block h-full"
+                            data-ur="{{this.id}}">
                             <div
-                                class="bg-[red] text-white text-[0.8rem] p-2 flex items-center justify-center rounded-md font-bold">
-                                %{{this.indirim}}
-                            </div>
-                            <div>
-                                <div class="line-through text-[0.8rem] text-[--koyu]">{{this.fiyat}}.00₺</div>
-                                <div class="text-[1rem] leading-tight"><strong>{{this.indirimli_fiyat}}.00₺</strong>
+                                class="btn-fav absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
+                                heart_outlined</div>
+                            <div class=" border border-gray-300  rounded-lg overflow-hidden pb-2 ]">
+                                <div class="group h-[200px] overflow-hidden ">
+                                    <img src="{{this.resim_on}}" class="group-hover:hidden w-full h-full" alt="">
+                                    <img src="{{this.resim_arka}}" class="hidden group-hover:block w-full h-full"
+                                        alt="">
+                                </div>
+                                <hr class="border-2 border-orange-300">
+                                <div class="bg-gray-50">
+                                    <div class="py-2">
+                                        <div
+                                            class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-1 px-5">
+                                            {{this.name}}
+                                        </div>
+                                    </div>
+                                    <div class="py-2">
+                                        <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
+                                        <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center w-1/2 mx-auto space-x-3">
+                                        <div
+                                            class="bg-[red] text-white text-[0.8rem] p-2 flex items-center justify-center rounded-md font-bold">
+                                            %{{this.indirim}}
+                                        </div>
+                                        <div>
+                                            <div class="line-through text-[0.8rem] text-[--koyu]">{{this.fiyat}}.00₺
+                                            </div>
+                                            <div class="text-[1rem] leading-tight">
+                                                <strong>{{this.indirimli_fiyat}}.00₺</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-sepet-area py-2 flex flex-col items-center justify-center"
+                                        data-ur="{{this.id}}">
+                                        <div class="inline-flex border border-gray-200">
+                                            <div data-ur="{{this.id}}"
+                                                class="btn-subsepet tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                                                remove</div>
+                                            <input type="number" data-ur="{{this.id}}"
+                                                class="in-adetsepet text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center"
+                                                value="1">
+                                            <div data-ur="{{this.id}}"
+                                                class="btn-addsepet tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
+                                                add</div>
+                                        </div>
+                                        <div class="flex items-center justify-center py-2">
+                                            <button data-ur="{{this.id}}"
+                                                class="btn-sepete-ekle   px-2 py-1 text-white   font-bold bg-blue-600 hover:bg-blue-700 active:bg-blue-500 rounded-md flex items-center space-x-2">
+                                                <i class="tio text-[1rem]">shopping_cart_add</i>
+                                                <div class="text-[0.9rem]"><span>Sepete ekle</span></div>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="btn-sepet-area py-2 flex flex-col items-center justify-center" data-ur="{{this.id}}">
-                            <div class="inline-flex border border-gray-200">
-                                <div data-ur="{{this.id}}"
-                                    class="btn-subsepet tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
-                                    remove</div>
-                                <input type="number" data-ur="{{this.id}}"
-                                    class="in-adetsepet text-[0.9rem] w-[50px] border-r border-l border-gray-200 text-center"
-                                    value="1">
-                                <div data-ur="{{this.id}}"
-                                    class="btn-addsepet tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
-                                    add</div>
-                            </div>
-                            <div class="flex items-center justify-center py-2">
-                                <button data-ur="{{this.id}}"
-                                    class="btn-sepete-ekle   px-2 py-1 text-white   font-bold bg-blue-600 hover:bg-blue-700 active:bg-blue-500 rounded-md flex items-center space-x-2">
-                                    <i class="tio text-[1rem]">shopping_cart_add</i>
-                                    <div class="text-[0.9rem]"><span>Sepete ekle</span></div>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                        {{else}}
-                        <div
-                            class="w-full bg-black/5 rounded-lg my-4 text-center py-5 font-bold text-gray-500 text-[1.4rem]">
-                            Hiç Veri yok</div>
+                        </a>
                         {{/each}}
                     </div>
+                      {{#each urunler}}
+
+                      {{else}}
+                          <div
+                            class="w-full bg-black/5 rounded-lg my-4 text-center py-5 font-bold text-gray-500 text-[1.4rem]">
+                            Hiç Veri yok</div>
+                         {{/each}}
                 </div>
             </div>
         </div>

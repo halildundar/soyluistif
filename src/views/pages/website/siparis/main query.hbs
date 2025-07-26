@@ -1,0 +1,76 @@
+{{>header}}
+<div>
+    <div>
+        <div class="max-w-[--max-w] mx-auto ">
+            <div class="flex items-center justify-between py-2">
+                <div class="font-semibold text-[1.2rem]">Siparişler</div>
+                <div>
+                    <div class="flex items-center border border-gray-300 p-1 pl-2 relative">
+                        <input type="text" name="siparis-search" placeholder="Sipariş Id " class="bg-transparent">
+
+                        <button
+                            class="btn-siparis-getir px-2 py-1 rounded text-white text-[0.9rem] bg-blue-600 active:bg-hover:400 hover:bg-blue-700">Getir</button>
+                        <div style="display:none"
+                            class="err1-txt absolute top-full left-0 w-full bg-white border-gray-200 shadow-md px-2 py-1 text-red-500 text-center">
+                            Lütfen Sipariş id giriniz
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div>
+
+    </div>
+    <div>
+        <div 
+            class="siparis-area max-w-[--max-w] min-h-[400px] mx-auto text-center font-semibold py-4">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="text-black/70 border border-gray-300 bg-black/5">
+                        <th>Sipariş No</th>
+                        <th>Tarih</th>
+                        <th>Durum</th>
+                        <th>Ürünler</th>
+                        <th>Tahsil Edilen</th>
+                        <th>Adres</th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody class="text-[0.9rem] font-normal">
+                    <tr class="tr{{siparis.paymentId}} border border-gray-300 ">
+                        <td class=" py-4">{{siparis.paymentId}}</td>
+                        <td>{{tarih}}</td>
+                        <td class="text-green-600 font-bold">{{siparis.status}}</td>
+                        <td>
+                            <ul class=''>{{urunlerStr}}</ul>
+                        </td>
+                        <td>{{siparis.price}}₺</td>
+                        <td>
+                            <ul class=' text-[0.7rem]'>
+                                <li><strong>Kargo Adres: </strong> {{billingAddress}}</li>
+                                <li><strong>Fatura Adres: </strong> {{shippingAddress}}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <button title="Çıkar"
+                                class="btnrmove{{siparis.paymentId}} tio rounded-full hover:bg-red-700 bg-red-500 active:bg-red-400 text-white p-1 text-[1.2rem]">clear</button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="display:none" class="siparis-yok max-w-[--max-w] mx-auto py-10  min-h-[300px] ">
+            <div class="  text-center font-semibold text-black/30 text-[2rem]">Sipariş Yok</div>
+            <div class="text-center text-black/30">
+                Sipariş numarasına sahipseniz arama yapınız! <br>
+                Sipariş Numarası sipariş bilgi alanında girmiş olduğunuz mail adresinize gönderilmiştir!
+            </div>
+        </div>
+    </div>
+
+</div>
+{{> footer}}

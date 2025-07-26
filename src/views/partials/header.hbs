@@ -1,5 +1,5 @@
-<header class="">
-  <div class="flex items-center justify-between py-1 max-w-[--max-w] mx-auto">
+<header class="sticky top-0  z-[52] md:relative ">
+  <div class="hidden md:flex items-center justify-between py-1 max-w-[--max-w] mx-auto">
     <div class="flex items-center space-x-2">
       <div class="flex items-center space-x-1">
         <i class="tio">call</i>
@@ -19,24 +19,25 @@
       </div>
     </div>
   </div>
-  <div class="flex items-center  pb-1 max-w-[--max-w] mx-auto">
+  <div class="hidden md:flex items-center  pb-1 max-w-[--max-w] mx-auto">
     <div class="relative w-1/4">
       <a href="/" class="flex">
         <img src="/assets/logoY.png" class="w-auto h-[5.5rem]" alt="">
       </a>
     </div>
-    <div class=" w-1/2">
+    <div class="w-1/2">
       <div class="flex overflow-hidden rounded-lg bg-white space-x-2 border border-gray-300">
-        <select  id="srch-kat-sel"
+        <select id="srch-kat-sel"
           class="bg-gray-200 px-4 text-gray-600 text-[1rem] border-r border-gray-300 outline-none">
 
           <option value="/kategori/all">Tüm Kategoriler</option>
           {{#each menus}}
-            <option value="{{this.url}}">{{this.name}}</option>
+          <option value="{{this.url}}">{{this.name}}</option>
           {{/each}}
-     
+
         </select>
-        <input type="text" class="intxt-sserch bg-transparent flex-1 text-[1.2rem]" placeholder="soyluistif.com.tr araması yapın">
+        <input type="text" class="intxt-sserch bg-transparent flex-1 text-[1.2rem]"
+          placeholder="soyluistif.com.tr araması yapın">
         <div
           class="btn-srch tio inline-block p-2 text-[2rem] text-white  bg-[--main] hover:bg-[--main-dark] duration-200 cursor-pointer select-none">
           search</div>
@@ -44,8 +45,8 @@
     </div>
     <div class="w-1/4 pl-2">
       <div class="flex items-center justify-end space-x-2">
-         
-      
+
+
         <a href="/favori"
           class="btn-go-fv flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
           <i class="tio text-[1.6rem]">heart_outlined</i>
@@ -53,7 +54,7 @@
           <span
             class="favind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]"></span>
         </a>
-          <a href="/sepet"
+        <a href="/sepet"
           class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
           <i class="tio text-[1.6rem]">shopping_cart_outlined</i>
           <span class="text-[0.9rem]">Sepet</span>
@@ -72,7 +73,7 @@
       </div>
     </div>
   </div>
-  <div class="bg-[--main]">
+  <div class="hidden md:block bg-[--main]">
     <div class="flex items-center justify-between  max-w-[--max-w] mx-auto ">
       <div class="flex">
         <a href="/" class="tio hover:bg-black/10 duration-300 text-white px-3 py-2 flex items-center justify-center"
@@ -80,7 +81,8 @@
           home
         </a>
         {{#each menus}}
-        <a href="{{this.url}}" data-id="{{this.id}}" data-index="1" class="hover:bg-black/10 duration-300 text-white px-3 py-2 relative font-bold">
+        <a href="{{this.url}}" data-id="{{this.id}}" data-index="1"
+          class="hover:bg-black/10 duration-300 text-white px-3 py-2 relative font-bold">
           {{this.name}}
         </a>
         {{/each}}
@@ -88,4 +90,98 @@
     </div>
   </div>
 
+
+  <div class="flex md:hidden items-center py-2 px-2 border-b-2 border-[--main]  bg-[--acik]">
+    <div>
+      <i class="tio text-[2rem] p-2 px-1 text-gray-600 mob-sid-men-op">menu_left</i>
+    </div>
+    <div class="flex-1 flex items-center justify-center">
+      <a href="/">
+        <img src="/assets/logoY.png" class="h-[50px] w-auto" alt="">
+      </a>
+    </div>
+    <div class="pr-2">
+      <a href="/siparis"
+        class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+        <i class="tio text-[1.6rem]">shopping_icon</i>
+        <span
+          class="siparisind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]"></span>
+      </a>
+    </div>
+  </div>
 </header>
+
+
+<div class="fixed w-full bottom-0 z-[52] bg-[--acik] flex px-2 py-2 border-t-2 border-[--main]">
+  <a href="/" class="w-full flex items-center justify-center flex-col">
+    <i class="tio text-[2rem]">home</i>
+    <span class="text-[0.8rem]">Anasayfa</span>
+  </a>
+  <a href="/kategori/all" class="w-full flex items-center justify-center flex-col">
+    <div
+      class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+      <i class="tio text-[1.6rem]">search</i>
+    </div>
+    <span class="text-[0.8rem]">Ürünler</span>
+  </a>
+  <a href="/sepet" class="w-full flex items-center justify-center flex-col">
+    <div
+      class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+      <i class="tio text-[1.6rem]">shopping_cart_outlined</i>
+      <span
+        class="sepetind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]"></span>
+    </div>
+    <span class="text-[0.8rem]">Sepetim</span>
+  </a>
+  <a href="/favori" class="w-full flex items-center justify-center flex-col">
+    <div
+      class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+      <i class="tio text-[1.6rem]">heart_outlined</i>
+      <span
+        class="favind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]"></span>
+    </div>
+    <span class="text-[0.8rem]">Favorilerim</span>
+  </a>
+  <a href="/siparis" class="w-full flex items-center justify-center flex-col">
+    <div
+      class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+      <i class="tio text-[1.6rem]">shopping_icon</i>
+      <span
+        class="siparisind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]"></span>
+    </div>
+    <span class="text-[0.8rem]">Siparişler</span>
+  </a>
+</div>
+
+
+<div class="overflow-hidden fixed top-0 left-0 w-0 h-full bg-[--acik] z-[99] md:hidden flex flex-col mob-sde-mn">
+  <div class="flex items-center px-2 py-1">
+    <a href="/">
+      <img src="/assets/logoY.png" class="h-[50px] w-auto" alt="">
+    </a>
+    <div class="flex-1"></div>
+    <i
+      class="btn-men-clos rounded-full tio p-2 text-[1.4rem] border border-gray-300 text-gray-400 hover:bg-black/5">clear</i>
+  </div>
+  <div class="px-4 py-2 flex items-center  bg-gray-100">
+    <input type="text" class="intt-serc flex-1 text-[1.2rem] bg-transparent text-gray-500 font-semibold" placeholder="Search">
+    <i class="btn-srcee text-[1.8rem] tio p-2 text-gray-400">search</i>
+  </div>
+  <div class="font-semibold text-[1.2rem] px-4 py-2">Tüm Kategoriler</div>
+  <div
+    class="pl-5 border border-gray-200 rounded-md p-2 kategori1-area flex-1 relative overflow-x-auto overflow-y-auto">
+    <div class="sublink text-[1.2rem]" data-pur="0"></div>
+  </div>
+  <hr class=" border border-gray-300">
+  <div class="pt-2 grid grid-cols-2 gap-2 px-4">
+    <button class="border border-gray-300 py-4 font-semibold rounded-md text-gray-600">
+      Hakkımızda
+    </button>
+    <button class="border border-gray-300 py-4 font-semibold rounded-md text-gray-600">
+      İletişim
+    </button>
+    <button class="border border-gray-300 py-4 font-semibold rounded-md col-span-full text-gray-600">
+      Mesafeli Satış Sözleşmesi
+    </button>
+  </div>
+</div>

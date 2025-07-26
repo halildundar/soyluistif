@@ -1,13 +1,13 @@
 {{>header}}
 <div>
     <div class="max-w-[--max-w] mx-auto ">
-        <div class="py-2 text-gray-500 font-semibold  flex items-center space-x-2 text-[1rem]">
+        <div class="py-2 text-gray-500 font-semibold  flex items-center space-x-2 text-[1rem] px-5 md:px-2">
             <span class="cursor-pointer">Anasayfa</span>
             <span class="tio">chevron_right</span>
             <a href="/{{pageurl}}" class="cursor-pointer font-normal italic">{{pagename}}</a>
         </div>
-        <div class="flex space-x-5 mb-4 py-5">
-            <div class="w-1/4 border border-gray-200">
+        <div class="flex md:space-x-5 mb-4 py-5">
+            <div class="hidden md:block md:w-1/4 border border-gray-200">
                 {{#IsEq pagename 'hakkimizda'}}
                 <a href="/hakkimizda"
                     class="block px-4 py-2 hover:bg-black/10 text-[--main] font-semibold hover:text-black   border-gray-300 cursor-pointer">
@@ -39,7 +39,7 @@
 
                     Mesafeli Satış Sözleşmesi</a>
                 {{/IsEq}}
-                {{#IsEq pagename 'havale-bildirimleri'}}
+                {{!-- {{#IsEq pagename 'havale-bildirimleri'}}
                 <a href="/havale-bildirimleri"
                     class="block px-4 py-2 hover:bg-black/10 text-[--main] font-semibold hover:text-black border-t  border-gray-200 cursor-pointer">
                     Havale Bildirimleri</a>
@@ -58,9 +58,9 @@
                     class="block px-4 py-2 hover:bg-black/10 hover:font-semibold hover:text-black text-[--koyu-dark]  border-t border-b border-gray-200 cursor-pointer">
 
                     Sipariş Takip</a>
-                {{/IsEq}}
+                {{/IsEq}} --}}
             </div>
-            <div class="w-3/4">
+            <div class="w-full md:w-3/4">
                 {{{temp}}}
             </div>
         </div>

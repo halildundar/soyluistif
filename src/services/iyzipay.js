@@ -1,22 +1,42 @@
 import express from "express";
 let router = express.Router({ mergeParams: true });
 import { getMainMenu, SiparisAdd } from "./web/dbdata.js";
+import {SiparisByiIyzIDGet} from './web/dbdata.js';
 const Iyzipay = require("iyzipay");
+import {Transport} from './mail/main.js';
 import { utils } from "./utilsiyzico.js";
 const iyzipay = new Iyzipay({
   apiKey: process.env.IYZICO_API_KEY,
   secretKey: process.env.IYZICO_SECRET_KEY,
   uri: process.env.IYZICO_BASE_URL,
 });
+const sendMail = async (email,siparisKodu)=>{
+const trns = new Transport();
+  const ersp = await trns.sendMail({
+    to: email,
+    subject: "Soyluistif Alışveriş",
+    text: "",
+    html: `
+      <div style="padding:40px 10px;text-align:center;">
+      
+         <div>Sn.<strong>Soyluistif Makinaları</strong></div>
+          <div><strong>Ödemeniz Gerçekleştirildi</strong></div>
+          <div style="padding:5px 10px; background-color:rgba(0,0,0,0.2); font-weight:700">${siparisKodu}</div>
+            <a href="http://localhost:3000/siparis" target="_blank" style="text-decoration:underline;color:blue">Siparişi Görüntüle</a>
+          <div>Lütfen yukarıdaki linkten siparişinize ulaşabilirsiniz!</div>
+      </div>
+    `,
+  });
+}
 
-const verifySignature = (params, secretKey, signature) => {
-  const calculatedSignature = utils.calculateHmacSHA256Signature(
-    params,
-    secretKey
-  );
-  const verified = signature === calculatedSignature;
-  return verified;
-};
+// const verifySignature = (params, secretKey, signature) => {
+//   const calculatedSignature = utils.calculateHmacSHA256Signature(
+//     params,
+//     secretKey
+//   );
+//   const verified = signature === calculatedSignature;
+//   return verified;
+// };
 export const IyzicoApi = (app) => {
   router.post("/iyz/bin-check", async (req, res) => {
     const data = req.body;
@@ -168,11 +188,10 @@ export const IyzicoApi = (app) => {
     if (!data) {
       return;
     }
-    const { status, paymentId, conversationId, conversationData, mdStatus } =
-      data;
+    const { status, paymentId, conversationId, conversationData, mdStatus } = data;
     const mainMenus = await getMainMenu();
     let resparea = {
-      title: "Ödeme Başarısız",
+      title: "Ödeme Sonuç",
       scriptname: `main`,
       scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
       menus: mainMenus,
@@ -198,9 +217,14 @@ export const IyzicoApi = (app) => {
           price,
           signature,
         } = result;
+        // console.log("result:", result);
         if (result.status === "success") {
           // verifySignature([paymentId, currency, basketId, conversationId, paidPrice, price], secretKey, signature);
           //mail gönder ve siparişlr bölümüne kaydet.
+          const [data] = await SiparisByiIyzIDGet([paymentId]);
+          console.log(result);
+          const {email} = JSON.parse(data.buyer);
+          await sendMail(email,paymentId);
           return res.render("pages/website/sepet/odeme-result.hbs", {
             ...resparea,
             odemestatus: "Success",

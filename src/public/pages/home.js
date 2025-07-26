@@ -19,9 +19,9 @@ const settingsCaro1 = {
   // Responsive
   responsive: true,
   items: 6,
-  itemsDesktop: [1199, 4],
-  itemsDesktopSmall: [980, 3],
-  itemsTablet: [768, 2],
+  itemsDesktop: [1199, 1],
+  itemsDesktopSmall: [980, 1],
+  itemsTablet: [768, 1],
   itemsMobile: [479, 1],
 };
 let settingsCaro2 = { ...settingsCaro1 };

@@ -44,6 +44,7 @@
 .owl-controls .owl-page,
 .owl-controls .owl-buttons div {
   cursor: pointer;
+  display: none;
 }
 .owl-controls {
   -webkit-user-select: none;
@@ -164,7 +165,7 @@
   display: flex !important;
 }
 .caro1.owl-carousel,.caro2.owl-carousel,.caro3.owl-carousel,.caroBig.owl-carousel,.caroSma.owl-carousel {
-  .owl-controls.clickable {
+  .owl-controls {
     .owl-prev,
     .owl-next {
       position: absolute;

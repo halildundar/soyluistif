@@ -5,8 +5,8 @@
 {{else}}
 <table class="w-full border-collapse">
   <thead>
-    <tr class="">
-      <th class="text-start">Ürün</th>
+    <tr class=" text-[0.8rem] md:text-[1rem]">
+      <th class="md:text-start pl-2">Ürün</th>
       <th class="text-start">Birim Fiyat(₺)</th>
       <th class="text-start">İndirim</th>
       <th class="text-start"></th>
@@ -14,27 +14,27 @@
   </thead>
   <tbody class="">
     {{#each urunler}}
-    <tr class="py-2 border-y border-gray-200 cursor-pointer 0 group" data-ur="{{this.id}}">
-      <td>
-        <div class="flex items-center space-x-4 group-hover:text-orange-600">
-          <img src="{{this.resim}}" class="w-[75px] h-[75px]" alt="" />
+    <tr class="py-2 border-y border-gray-200 cursor-pointer group px-2" data-ur="{{this.id}}">
+      <td class="w-[40%]">
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4 group-hover:text-orange-600 px-2">
+          <img src="{{this.resim}}" class="w-[50px] h-[50px] md:w-[75px] md:h-[75px] mx-auto md:mx-0" alt="" />
           <div class="flex flex-col justify-start">
-            <div class="text-[1rem] font-medium line-clamp-2">{{this.name}}</div>
+            <div class="text-[0.8rem] md:text-[1rem] font-medium line-clamp-2 pr-5">{{this.name}}</div>
           </div>
         </div>
       </td>
       <td class="text-start group-hover:text-orange-600">
-        <div class="font-semibold text-[1.1rem]">
+        <div class="font-semibold text-[0.8rem] md:text-[1.1rem]">
           {{this.fiyat}}.00 ₺
         </div>
       </td>
       <td class="text-start group-hover:text-orange-600" >
-        <div class="font-semibold text-[1.1rem]">
+        <div class="font-semibold text-[0.8rem] md:text-[1.1rem]">
           %{{this.indirim}} ({{this.indirimli_fiyat}}₺)
         </div>
       </td>
       <td>
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2 pr-2">
           <!-- <i class="tio text-[1.2rem] p-2 border border-gray-300 rounded">heart</i> -->
           <i title="Favorilerden Çıkar" class="btn-remove-favs cursor-pointer rounded-full hover:bg-black/5 tio text-[1.2rem] p-1 border select-none border-red-600 text-red-600"
             >clear</i
