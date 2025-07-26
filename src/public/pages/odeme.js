@@ -1,5 +1,6 @@
 import { myloc } from "../main.js";
 import {CreditCardArea} from '../util/fncs.js';
+config({ path: ["const.env"] });
 const getUrunler = (ids) => {
   return $.ajax({
     type: "POST",
