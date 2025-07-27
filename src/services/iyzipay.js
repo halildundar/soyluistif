@@ -70,6 +70,7 @@ export const IyzicoApi = (app) => {
     if (!strar) {
       return res.send("not Found");
     }
+    console.log(strar);
     const buff = Buffer.from(strar, "base64");
     console.log(buff.toString("utf8"));
     res.setHeader('Content-type','text/html');
