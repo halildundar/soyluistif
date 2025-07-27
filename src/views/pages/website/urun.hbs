@@ -23,7 +23,7 @@
                         <div class="space-y-2  overflow-y-auto whitespace-nowrap">
                             {{#each urun.resimler}}
                             <a href="/uploads{{this}}" class="w-[75px] h-[75px] inline-flex md:flex border border-gray-200">
-                                <img src="/uploads{{this}}" class="w-full h-full" alt="">
+                                <img src="/uploads{{this}}" class="w-full h-full" fetchpriority="high" alt="">
                             </a>
                             {{/each}}
                         </div>
@@ -32,7 +32,7 @@
                                 {{#each urun.resimler}}
                                 <div>
                                     <a href="/uploads{{this}}" class="w-full h-full">
-                                        <img src="/uploads{{this}}" class="w-full h-full" alt="">
+                                        <img src="/uploads{{this}}" class="w-full h-full" fetchpriority="high" alt="">
                                     </a>
                                 </div>
                                 {{/each}}

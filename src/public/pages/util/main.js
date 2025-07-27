@@ -136,6 +136,14 @@ export class LocalData {
     this._seeprod = index;
   }
 
+  _filters = 0;
+  get filters() {
+    return this._filters;
+  }
+  set filters(index) {
+    this._filters = index;
+  }
+
   _storage;
   set storage(cust) {
     this._storage = cust;
@@ -174,6 +182,18 @@ export class LocalData {
       this.setAllItem("seeprod", []);
     }
     seeprod = this.getItem("seeprod");
+
+    
+    let filters = this.getItem("filters");
+    if (filters == null) {
+      this.setAllItem("filters", {
+        minfiyat:0,
+        maxfiyat:0,
+        ucretsiz_kargo:0,
+        stokta:0
+      });
+    }
+    filters = this.getItem("filters");
   }
   getItem(key) {
     return JSON.parse(this.storage.getItem(key));

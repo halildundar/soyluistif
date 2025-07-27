@@ -379,7 +379,6 @@ const InitMobilTree = async () => {
       $('body').css({overflow:'auto'});
 
   });
-  console.log($(".mob-sid-men-op")[0])
   $(".mob-sid-men-op").on("click", function () {
       $('body').css({overflow:'hidden'});
 

@@ -30,32 +30,38 @@
                 <div class="border border-gray-200 rounded-md px-4 py-2">
                     <div class="font-semibold pb-2">Fiyat Aralıkları</div>
                     <div class="flex items-center space-x-2">
-                        <input type="number" placeholder="En Az" class="p-2 min-w-[20px] border border-gray-200">
+                        <input type="number" name="minfiyat" placeholder="En Az"
+                            class="p-2 min-w-[20px] flex-1  border border-gray-200">
                         <span>-</span>
-                        <input type="number" placeholder="En Çok" class="p-2 min-w-[20px] border border-gray-200">
+                        <input type="number" name="maxfiyat" placeholder="En Çok"
+                            class="p-2 min-w-[20px] flex-1  border border-gray-200">
                         <button class="p-2 border border-gray-300 tio bg-gray-200 hover:bg-gray-300">
                             arrow_forward
                         </button>
                     </div>
                     <div class="py-2 space-y-1 select-none text-gray-600">
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="500" name="500" class="w-[1.2rem] h-[1.2rem]">
+                            <input type="radio" id="tum" name="minmax" value="" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="tum">Tüm Fiyatlar</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="radio" id="500" name="minmax" value="500" class="w-[1.2rem] h-[1.2rem]">
                             <label for="500">500.00 ₺ ve altı</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="1500" name="1500" class="w-[1.2rem] h-[1.2rem]">
+                            <input type="radio" id="1500" name="minmax" value="1500" class="w-[1.2rem] h-[1.2rem]">
                             <label for="1500">1.499,00 ₺ - 1.999,00 ₺</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="2000" name="2000" class="w-[1.2rem] h-[1.2rem]">
+                            <input type="radio" id="2000" name="minmax" value="2000" class="w-[1.2rem] h-[1.2rem]">
                             <label for="2000">1.999,00 ₺ - 2.499,00 ₺</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="2500" name="2500" class="w-[1.2rem] h-[1.2rem]">
+                            <input type="radio" id="2500" name="minmax" value="2500" class="w-[1.2rem] h-[1.2rem]">
                             <label for="2500">2.499,00 ₺ - 2.999,00 ₺</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="3000" name="3000" class="w-[1.2rem] h-[1.2rem]">
+                            <input type="radio" id="3000" name="minmax" value="3000" class="w-[1.2rem] h-[1.2rem]">
                             <label for="3000">2.999,00 ₺ - 3.499,00 ₺</label>
                         </div>
                     </div>
@@ -66,18 +72,19 @@
                     <div class="py-2 space-y-1 select-none text-gray-600">
                         <div class="font-semibold pb-2">Listeleme</div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="ucretsiz_kargo" name="ucretsiz_kargo"
+                            <input type="checkbox" id="ucretsiz_kargo" value="on" name="ucretsiz_kargo"
                                 class="w-[1.2rem] h-[1.2rem]">
                             <label for="ucretsiz_kargo">Ücretsiz Kargo</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="stoktakiler" name="stoktakiler" class="w-[1.2rem] h-[1.2rem]">
+                            <input type="checkbox" id="stoktakiler" name="stoktakiler" value="on" class="w-[1.2rem] h-[1.2rem]">
                             <label for="stoktakiler">Sadece stoktakiler</label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="w-full md:w-3/4 px-2 md:px-4 md:py-2 border border-gray-200 rounded-md">
+                <div class="fltr-area"></div>
                 <div class="urunler overflow-hidden w-full">
                     {{!-- <div class="font-semibold text-[1.4rem] pb-2">Kategori Title</div> --}}
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-4">
@@ -89,7 +96,8 @@
                                 heart_outlined</div>
                             <div class=" border border-gray-300  rounded-lg overflow-hidden pb-2 ]">
                                 <div class="group h-[200px] overflow-hidden ">
-                                    <img src="{{this.resim_on}}" class="group-hover:hidden w-full h-full" alt="">
+                                    <img src="{{this.resim_on}}" class="group-hover:hidden w-full h-full"
+                                        fetchpriority="high" alt="">
                                     <img src="{{this.resim_arka}}" class="hidden group-hover:block w-full h-full"
                                         alt="">
                                 </div>
@@ -145,13 +153,13 @@
                         </a>
                         {{/each}}
                     </div>
-                      {{#each urunler}}
+                    {{#each urunler}}
 
-                      {{else}}
-                          <div
-                            class="w-full bg-black/5 rounded-lg my-4 text-center py-5 font-bold text-gray-500 text-[1.4rem]">
-                            Hiç Veri yok</div>
-                         {{/each}}
+                    {{else}}
+                    <div
+                        class="w-full bg-black/5 rounded-lg my-4 text-center py-5 font-bold text-gray-500 text-[1.4rem]">
+                        Hiç Veri yok</div>
+                    {{/each}}
                 </div>
             </div>
         </div>

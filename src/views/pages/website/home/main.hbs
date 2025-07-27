@@ -6,7 +6,7 @@
                 <div class="caroBig owl-carousel owl-theme  overflow-hidden rounded-md">
                     {{#each imagesBg}}
                     <div class="">
-                        <img src="{{this}}" class="object-fill w-full h-full" alt="">
+                        <img src="{{this}}" class="object-fill w-full h-full" fetchpriority="high" alt="">
                     </div>
                     {{/each}}
                 </div>
@@ -15,7 +15,7 @@
                 <div class="caroSma owl-carousel owl-theme  overflow-hidden rounded-md ">
                     {{#each imagesSm}}
                     <div class="">
-                        <img src="{{this}}" class="object-fill w-full h-full" alt="">
+                        <img src="{{this}}" class="object-fill w-full h-full" fetchpriority="high" alt="">
                     </div>
                     {{/each}}
                 </div>
@@ -35,7 +35,7 @@
                     <div
                         class=" border border-gray-300 rounded-lg overflow-hidden pb-2 ">
                         <div class="group h-[200px] overflow-hidden ">
-                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" alt="">
+                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" fetchpriority="high" alt="">
                             <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full" alt="">
                         </div>
                         <div class="py-2">
@@ -105,7 +105,7 @@
                     <div
                         class="z-[1] border border-gray-300 rounded-lg overflow-hidden pb-2 ">
                         <div class="group h-[200px] overflow-hidden ">
-                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" alt="">
+                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" fetchpriority="high" alt="">
                             <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full" alt="">
                         </div>
                         <div class="py-2">
@@ -177,8 +177,8 @@
                     <div
                         class=" border border-gray-300 rounded-lg overflow-hidden pb-2 ">
                         <div class="group h-[200px] overflow-hidden ">
-                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" alt="">
-                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full" alt="">
+                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" fetchpriority="high" alt="">
+                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full"  alt="">
                         </div>
                         <div class="py-2">
                             <div class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-1 px-5">
