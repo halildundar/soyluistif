@@ -1,9 +1,10 @@
 import express from "express";
 let router = express.Router({ mergeParams: true });
 import { getMainMenu, SiparisAdd } from "./web/dbdata.js";
-import {SiparisByiIyzIDGet} from './web/dbdata.js';
+import { SiparisByiIyzIDGet } from "./web/dbdata.js";
+import {DB} from "./mysql.js";
 const Iyzipay = require("iyzipay");
-import {Transport} from './mail/main.js';
+import { Transport } from "./mail/main.js";
 import { utils } from "./utilsiyzico.js";
 import { HOST_NAME } from "./main.js";
 const iyzipay = new Iyzipay({
@@ -11,8 +12,8 @@ const iyzipay = new Iyzipay({
   secretKey: process.env.IYZICO_SECRET_KEY,
   uri: process.env.IYZICO_BASE_URL,
 });
-const sendMail = async (email,siparisKodu)=>{
-const trns = new Transport();
+const sendMail = async (email, siparisKodu) => {
+  const trns = new Transport();
   const ersp = await trns.sendMail({
     to: email,
     subject: "Soyluistif Alışveriş",
@@ -27,7 +28,7 @@ const trns = new Transport();
       </div>
     `,
   });
-}
+};
 // const verifySignature = (params, secretKey, signature) => {
 //   const calculatedSignature = utils.calculateHmacSHA256Signature(
 //     params,
@@ -64,18 +65,19 @@ export const IyzicoApi = (app) => {
     return res.json(iyzResult);
   });
   router.get("/iyz/3ds-verify", async (req, res) => {
-    let strar = req.query.ulre;
-    if (!strar) {
+    let paymentId = req.query.ulre;
+    if (!paymentId) {
       return res.send("not Found");
     }
-    console.log(strar);
-    const buff = Buffer.from(strar, "base64");
-    console.log(buff.toString("utf8"));
-    res.setHeader('Content-type','text/html');
+    console.log(paymentId);
+    const resp =await DB.Query("SELECT threeDSHtmlContent FROM `siparis` WHERE `paymentId` = "+paymentId);
+    const buff = Buffer.from(resp[0].threeDSHtmlContent, "base64");
+    res.setHeader("Content-type", "text/html");
     return res.send(buff.toString("utf8"));
   });
   router.post("/iyz/3ds-init", async (req, res) => {
     const data = req.body;
+    console.log(data);
     if (!data) {
       return;
     }
@@ -155,7 +157,7 @@ export const IyzicoApi = (app) => {
         },
       ],
     };
-    request = {...request,...data};
+    request = { ...request, ...data };
     iyzipay.threedsInitialize.create(request, async function (err, result) {
       if (err) {
         return res.json({ status: false, msg: err });
@@ -168,10 +170,13 @@ export const IyzicoApi = (app) => {
           threeDSHtmlContent,
           systemTime,
         } = result;
-        await SiparisAdd({ ...request, paymentId, systemTime });
+        await SiparisAdd({ ...request, paymentId, systemTime,threeDSHtmlContent });
+        // res.setHeader("Content-type", "text/html");
+        // return res.send(buff.toString("utf8"));
+        
         return res.json({
           status: true,
-          html: threeDSHtmlContent,
+          html: paymentId,
         });
       } else if (result.status == "failure") {
         return res.json({
@@ -190,7 +195,8 @@ export const IyzicoApi = (app) => {
     if (!data) {
       return;
     }
-    const { status, paymentId, conversationId, conversationData, mdStatus } = data;
+    const { status, paymentId, conversationId, conversationData, mdStatus } =
+      data;
     const mainMenus = await getMainMenu();
     let resparea = {
       title: "Ödeme Sonuç",
@@ -224,8 +230,8 @@ export const IyzicoApi = (app) => {
           // verifySignature([paymentId, currency, basketId, conversationId, paidPrice, price], secretKey, signature);
           //mail gönder ve siparişlr bölümüne kaydet.
           const [data] = await SiparisByiIyzIDGet([paymentId]);
-          const {email} = JSON.parse(data.buyer);
-          await sendMail(email,paymentId);
+          const { email } = JSON.parse(data.buyer);
+          await sendMail(email, paymentId);
           return res.render("pages/website/sepet/odeme-result.hbs", {
             ...resparea,
             odemestatus: "Success",

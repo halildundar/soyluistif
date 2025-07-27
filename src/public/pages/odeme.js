@@ -103,6 +103,8 @@ export const OdemeInit = async () => {
         dataType: "json",
       });
     });
+
+    
     $(".btn-3dinit").on("click", async function () {
       let formCard = $(".form-card").serializeJSON();
       formCard["binNumber"] = formCard["cardNumber"].slice(0, 6);
@@ -190,6 +192,7 @@ export const OdemeInit = async () => {
         data: { ...requestData },
         dataType: "json",
       });
+      console.log(res);
       if (res.status) {
         if (!!res.html) {
           window.location =
