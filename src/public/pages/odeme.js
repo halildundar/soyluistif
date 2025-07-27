@@ -89,6 +89,9 @@ export const OdemeInit = async () => {
     const strTempRight = await getTemp("odeme.html");
     const rendredRight = Handlebars.compile(strTempRight);
     $(".spetbfyRight").html(rendredRight({ urunler: urunler }));
+    $("[name='selctcart']").on("change",function(){
+      $("[name='cardNumber']").val($(this).val());
+    });
     CreditCardArea();
     makeTotal(urunler);
 

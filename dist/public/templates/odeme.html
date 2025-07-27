@@ -1,14 +1,29 @@
-<div class="flex flex-col md:flex-row items-start md:space-x-2 space-y-2 md:space-y-0">
+<div
+  class="flex flex-col md:flex-row items-start md:space-x-2 space-y-2 md:space-y-0"
+>
   <div class="md:w-1/2 px-4 py-2 border border-gray-200 rounded">
     <div class="w-3/4 md:w-1/2 mx-auto py-5">
-      <form class="form-card space-y-2 " >
-        <div class="font-semibold text-[1.2rem] text-center">Kredi Kart Bilgileri</div>
+      <div class="pb-2">
+        <label for="" class="frm-lbl">Test Kart Seçimi</label>
+        <select name="selctcart" id="" class="frm-slct">
+          <option value="4766620000000001">Başarılı Ödeme</option>
+          <option value="4111111111111129">Not sufficient funds</option>
+          <option value="4129111111111111">Do not honour</option>
+          <option value="4127111111111113">Lost card</option>
+          <option value="4125111111111115">Expired card</option>
+          <option value="4124111111111116">Invalid cvc2</option>
+        </select>
+      </div>
+      <form class="form-card space-y-2">
+        <div class="font-semibold text-[1.2rem] text-center">
+          Kredi Kart Bilgileri
+        </div>
         <input
           type="text"
           placeholder="Card Number"
           name="cardNumber"
           class="frm-txt text-center font-bold text-gray-600"
-          value="4766620000000001"
+          value=""
         />
         <input
           type="text"
@@ -71,7 +86,9 @@
     </div>
   </div>
   <div class="md:w-1/2 px-4 py-2 border border-gray-200 rounded">
-    <div class="font-semibold text-[1.2rem] pb-4 hidden md:block">Siparişiniz</div>
+    <div class="font-semibold text-[1.2rem] pb-4 hidden md:block">
+      Siparişiniz
+    </div>
     <div class="font-semibold text-[1rem]">Ürün</div>
     <div class="py-5 border-y border-gray-300">
       <table class="w-full table-uruns">
@@ -79,7 +96,7 @@
         <tr>
           <td class="">
             <div class="pl-2 flex items-center">
-              <div class="text-start  pr-2 leading-tight">{{this.adet}}</div>
+              <div class="text-start pr-2 leading-tight">{{this.adet}}</div>
               <div>x</div>
             </div>
           </td>
