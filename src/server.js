@@ -10,7 +10,9 @@ import cookieParser from 'cookie-parser';
 import session from "express-session";
 import passport from "passport";
 import compression from "compression";
+import cors from "cors";
 const app = express();
+app.use(cors({ origin: true }));
 // const server = require('http').createServer(app);
 // import { Server } from "socket.io";
 let PORT = process.env.PORT || 3000;
@@ -54,8 +56,9 @@ app.set("view engine", ".hbs");
 app.set("views", `${process.cwd()}/views`);
 
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ limit: '100mb',extended: true }));
+app.use(bodyParser.json({limit: '100mb'}));
+app.use(bodyParser.text({ limit: '100mb' }))
 app.use(methodOverride("_method"));
 
 app.use(passport.initialize());

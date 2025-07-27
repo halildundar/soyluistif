@@ -71,6 +71,7 @@ export const IyzicoApi = (app) => {
       return res.send("not Found");
     }
     const buff = Buffer.from(strar, "base64");
+    res.setHeader('Content-type','text/html');
     return res.send(buff.toString("utf8"));
   });
   router.post("/iyz/3ds-init", async (req, res) => {
@@ -223,7 +224,6 @@ export const IyzicoApi = (app) => {
           // verifySignature([paymentId, currency, basketId, conversationId, paidPrice, price], secretKey, signature);
           //mail gönder ve siparişlr bölümüne kaydet.
           const [data] = await SiparisByiIyzIDGet([paymentId]);
-          console.log(result);
           const {email} = JSON.parse(data.buyer);
           await sendMail(email,paymentId);
           return res.render("pages/website/sepet/odeme-result.hbs", {
@@ -236,7 +236,6 @@ export const IyzicoApi = (app) => {
           if (!!paymentId) {
             await SiparisDelete(paymentId);
           }
-
           return res.render("pages/website/sepet/odeme-result.hbs", {
             ...resparea,
             odemestatus: "Error",
