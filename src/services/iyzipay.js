@@ -71,6 +71,7 @@ export const IyzicoApi = (app) => {
       return res.send("not Found");
     }
     const buff = Buffer.from(strar, "base64");
+    console.log(buff.toString("utf8"));
     res.setHeader('Content-type','text/html');
     return res.send(buff.toString("utf8"));
   });
