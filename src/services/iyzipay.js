@@ -19,7 +19,6 @@ const trns = new Transport();
     text: "",
     html: `
       <div style="padding:40px 10px;text-align:center;">
-      
          <div>Sn.<strong>Soyluistif Makinaları</strong></div>
           <div><strong>Ödemeniz Gerçekleştirildi</strong></div>
           <div style="padding:5px 10px; background-color:rgba(0,0,0,0.2); font-weight:700">${siparisKodu}</div>
@@ -29,7 +28,6 @@ const trns = new Transport();
     `,
   });
 }
-
 // const verifySignature = (params, secretKey, signature) => {
 //   const calculatedSignature = utils.calculateHmacSHA256Signature(
 //     params,
