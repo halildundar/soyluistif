@@ -17,9 +17,9 @@ import {IyzicoApi} from './iyzipay.js';
 import {AdresApi} from './adres.js';
 import { getMainMenu } from "./web/dbdata.js";
 // initPassportLocal();
-export const HOST_NAME = "http://crazy-noyce.89-250-72-218.plesk.page" //"http://localhost:3000";
+export const HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page" //"http://localhost:3000";
 
-// export const HOST_NAME = "http://localhost:3000" //"http://crazy-noyce.89-250-72-218.plesk.page";
+// export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let appRoutes = (app) => {
   IyzicoApi(app);
   AdresApi(app);

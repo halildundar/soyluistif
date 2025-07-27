@@ -12,8 +12,8 @@ import { SiparisInit } from "./pages/siparis.js";
 import { OdemeInit } from "./pages/odeme.js";
 import { OdemeResultInit } from "./pages/odeme-result.js";
 import { FavorilerInit } from "./pages/favoriler.js";
-export const HOST_NAME = "http://crazy-noyce.89-250-72-218.plesk.page" //"http://localhost:3000";
-// export const HOST_NAME = "http://localhost:3000" //"http://crazy-noyce.89-250-72-218.plesk.page";
+export const HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page" //"http://localhost:3000";
+// export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let myloc;
 Handlebars.registerHelper("inc", function (value, options) {
   return parseInt(value) + 1;
