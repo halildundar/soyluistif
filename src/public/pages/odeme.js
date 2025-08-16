@@ -98,6 +98,7 @@ export const OdemeInit = async () => {
     //Ödeme Yap
     $(".btn-check-bin").on("click", async function () {
       let formCard = $(".form-card").serializeJSON();
+      formCard['cardNumber'] =  formCard["cardNumber"].trim().replace(/\s/g,'');
       formCard["binNumber"] = formCard["cardNumber"].slice(0, 6);
       const res = await $.ajax({
         type: "POST",
