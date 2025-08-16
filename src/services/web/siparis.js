@@ -1,4 +1,4 @@
-import { getMainMenu, GetEticLogos } from "./dbdata.js";
+import { getMainMenu, GetEticLogos,GetSettings } from "./dbdata.js";
 import { SiparisByiIyzIDGet } from "./dbdata.js";
 function pad(num, size) {
   num = num.toString();
@@ -8,6 +8,7 @@ function pad(num, size) {
 export const SiparişBilgiPageRender = async (req, res) => {
   const mainMenus = await getMainMenu();
   const eticSiteler = await GetEticLogos();
+      const sett = await GetSettings();
   res.render("pages/website/sepet/siparis-bilgi.hbs", {
     title: "Siparişler",
     scriptname: `main`,
@@ -20,7 +21,7 @@ export const SiparişBilgiPageRender = async (req, res) => {
 export const SiparişlerPageRender = async (req, res) => {
   const mainMenus = await getMainMenu();
   const eticSiteler = await GetEticLogos();
-
+    const sett = await GetSettings();
   const query = req.query;
   let data = {
     title: "Siparişler",
@@ -28,13 +29,12 @@ export const SiparişlerPageRender = async (req, res) => {
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: mainMenus,
     eticSiteler: eticSiteler,
+    wpno:sett.whatsappno
   };
   if (!!query && !!query["crp"]) {
     const [siparis] = await SiparisByiIyzIDGet([query.crp]);
-    console.log(siparis);
     let urunlerStr = '';
     let urunler = JSON.parse(siparis.basketItems);
-    console.log(urunler);
     for (let i = 0; i < urunler.length; i++) {
       const urun = urunler[i];
       urunlerStr += `${urun.adet} x ${urun.name}\n\r`
@@ -52,7 +52,8 @@ export const SiparişlerPageRender = async (req, res) => {
       ...data, siparis,
       tarih: time,
       shippingAddress,billingAddress,
-      urunlerStr
+      urunlerStr,
+      wpno:sett.whatsappno
     });
   }
   return res.render("pages/website/siparis/main.hbs", data);

@@ -175,3 +175,7 @@ export const GetEticLogos = async () => {
   }
   return [];
 };
+export const GetSettings = async ()=>{
+  const rep = await DB.Query('SELECT * FROM `settings` WHERE id = 1');
+  return rep[0];
+}

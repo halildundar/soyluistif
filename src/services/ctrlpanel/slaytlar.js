@@ -34,7 +34,7 @@ export const SlaytApi = (app) => {
     await DB.Query("DELETE FROM `slayt` WHERE id =" + id);
     return res.json({ msg: "OK!" });
   });
-  router.post("/ctrlpanel/slaytlar/get-items",checkLoggedIn, async (req, res) => {
+  router.post("/ctrlpanel/slaytlar/get-items", async (req, res) => {
     const data = req.body;
     if (!data) {
       return;

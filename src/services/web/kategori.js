@@ -2,7 +2,8 @@ import {
   getUrunlerIncludeKategori,
   getUrunlerIncludeKategori1,
 } from "./dbdata.js";
-import { getMainMenu, GetEticLogos } from "./dbdata.js";
+import { getMainMenu, GetEticLogos,GetSettings } from "./dbdata.js";
+
 const makeUrunler = async () => {
   const mainMenus = await getMainMenu();
 
@@ -11,6 +12,7 @@ const makeUrunler = async () => {
 export const KategoriPageRenderAll = async (req, res) => {
   const mainMenus = await makeUrunler();
     const eticSiteler = await GetEticLogos();
+      const sett = await GetSettings();
   const { search } = req.query;
   let { urunler, altKategoriler, breadcrumbs } =
     await getUrunlerIncludeKategori1(search);
@@ -39,6 +41,7 @@ export const KategoriPageRenderAll = async (req, res) => {
     breadcrumbs: breadcrumbs,
     dizi1: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     eticSiteler: eticSiteler,
+    wpno:sett.whatsappno
   });
 };
 export const KategoriPageRender = async (req, res) => {

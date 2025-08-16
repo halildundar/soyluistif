@@ -13,7 +13,7 @@ export const EticaretApi = (app) => {
       user:req.user
     });
   });
-  router.post("/get-esites",checkLoggedIn,  async (req, res) => {
+  router.post("/get-esites",  async (req, res) => {
     if (!req.body) {
       return res.send("Hata!!");
     }

@@ -4,7 +4,8 @@ import {
   getMainMenu,
   getOneCikanlar,
   getYeniler,
-  GetEticLogos
+  GetEticLogos,
+  GetSettings
 } from "./dbdata.js";
 const makeBannerAndUrunler = async () => {
   const bannerHomeLeft = await getBanners("homeleft");
@@ -66,9 +67,11 @@ const makeBannerAndUrunler = async () => {
     mainMenus,
   };
 };
+
 export const HomePageRender = async (req, res) => {
   const { enyeniler, coksatanlar, onecikanlar, imagesBg, imagesSm, mainMenus } = await makeBannerAndUrunler();
   const eticSiteler = await GetEticLogos();
+  const sett = await GetSettings();
   res.render("pages/website/home/main.hbs", {
     title: "Anasayfa",
     scriptname: `main`,
@@ -92,6 +95,7 @@ export const HomePageRender = async (req, res) => {
     onecikanlar: onecikanlar,
     coksatanlar: coksatanlar,
     enyeniler: enyeniler,
-    eticSiteler:eticSiteler
+    eticSiteler:eticSiteler,
+    wpno:sett.whatsappno
   });
 };

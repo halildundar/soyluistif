@@ -21,8 +21,8 @@
 @import "./util/creditcards.scss";
 @import "./owl.scss";
 
-
 .deneme {
+  background-image: url(./assets/wplogo.png);
   background-image: url(./assets/notfound.webp);
   background-image: url(./assets/logo.png);
   background-image: url(./assets/logo1.png);
@@ -233,12 +233,12 @@ textarea {
     @apply text-[1rem];
   }
   .frm-txt,
-  .frm-slct{
+  .frm-slct {
     @apply text-[1rem] px-1.5 h-[2rem];
   }
-  
+
   .frm-textarea {
-        @apply text-[1rem] px-1.5 h-[6rem];
+    @apply text-[1rem] px-1.5 h-[6rem];
   }
 }
 @media screen and (min-width: 1900px) {

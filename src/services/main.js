@@ -22,7 +22,6 @@ import { initPassportLocal } from "./auth/passportCtrl.js";
 import { AuthApi} from "./auth/signin.js";
 initPassportLocal();
 export const HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page" //"http://localhost:3000";
-
 // export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let appRoutes = (app) => {
   IyzicoApi(app);
@@ -60,7 +59,6 @@ export let appRoutes = (app) => {
     });
   });
   router.get("/ctrlpanel**",(req, res) => res.redirect("/ctrlpanel/"));
-  CtrlPanelPageApi(app);
   router.get("**", async (req, res) => {
     const mainMenus = await getMainMenu();
     res.status(404).render("pages/404.hbs", {
