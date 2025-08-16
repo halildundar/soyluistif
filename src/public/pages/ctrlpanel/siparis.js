@@ -61,7 +61,12 @@ export const InitSiparis = async () => {
         </li>`;
         iadelerTop += parseInt(urun.price);
       }
-      let txtStatusColor = siparis.status === 'Sipariş İptal Edildi' ? "text-red-500" : siparis.status.includes('Sipariş İade') ? "text-blue-500":"text-green-500"
+      let txtStatusColor =
+        siparis.status === "Sipariş İptal Edildi"
+          ? "text-red-500"
+          : siparis.status.includes("Sipariş İade")
+          ? "text-blue-500"
+          : "text-green-500";
       $(".siparis-area tbody").append(`
           <tr class="text-[0.8rem] tr${
             siparis.paymentId
@@ -74,8 +79,8 @@ export const InitSiparis = async () => {
               }</td>
             <td class="p-1 border-l border-t border-gray-200 ">
               <div class="${txtStatusColor} font-bold  px-2">${
-                siparis.status
-              }</div>
+        siparis.status
+      }</div>
             </td>
              <td class="p-1 border-l border-t border-gray-200 min-w-[300px]  px-2">
                 <div>${siparis.buyer.name} ${siparis.buyer.surname}</div> 
@@ -140,7 +145,7 @@ export const InitSiparis = async () => {
         }
         if (!!selectedSiparis.iadeItems) {
           let iadeItems = selectedSiparis.iadeItems;
-          $(".byrareaiade tbody").html('');
+          $(".byrareaiade tbody").html("");
           for (let i = 0; i < iadeItems.length; i++) {
             const item = iadeItems[i];
             $(".byrareaiade tbody").append(`
@@ -189,12 +194,12 @@ export const InitSiparis = async () => {
           }
         });
 
-        if(!!selectedSiparis.basketItems.length == 0){
-          $('.btn-iptal-et').css('display','none')
+        if (!!selectedSiparis.basketItems.length == 0) {
+          $(".btn-iptal-et").css("display", "none");
         }
-        if(!selectedSiparis.status == 'Sipariş İptal Edildi'){
-            $('.btn-iptal-et').css('display','none');
-              $('.btn-iade-et').css('display','none')
+        if (!selectedSiparis.status == "Sipariş İptal Edildi") {
+          $(".btn-iptal-et").css("display", "none");
+          $(".btn-iade-et").css("display", "none");
         }
         // $(`.byrarea tbody [data-ur='13']`).trigger("click");
       });
@@ -206,7 +211,10 @@ export const InitSiparis = async () => {
 
   $(".btn-clse").on("click", () => {
     $(".urnpop").css("display", "none");
-       $(".errare").html("");
+    $(".errare").html("");
+    $(".btn-iade-et").css("display", "none");
+     $(".btn-iade-et").css("display", "none");
+          $(".btn-drmkydt").css("display", "inline-block");
   });
 
   $(".btn-drmkydt").on("click", async function () {
@@ -286,9 +294,9 @@ export const InitSiparis = async () => {
         failuremsgs.push(result);
       }
     }
-   
+
     if (failuremsgs.length == 0) {
-       const resup = await $.ajax({
+      const resup = await $.ajax({
         type: "POST",
         url: "/ctrlpanel/siparisler/update",
         data: { ...data },
@@ -323,7 +331,7 @@ export const InitSiparis = async () => {
       if (res.result.status == "failure") {
         $(".errare").html(res.result.errorMessage);
       } else {
-         const resup = await $.ajax({
+        const resup = await $.ajax({
           type: "POST",
           url: "/ctrlpanel/siparisler/update",
           data: { ...data },
