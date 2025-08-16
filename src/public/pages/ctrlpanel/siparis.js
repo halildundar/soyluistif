@@ -174,6 +174,7 @@ export const InitSiparis = async () => {
         }
 
         $(".byrarea tbody [type='checkbox']").on("change", function () {
+          iadeEdilen = [];
           $.each($(".byrarea tbody [type='checkbox']"), function () {
             let basketUrunler = selectedSiparis.basketItems;
             const isChecked = $(this).prop("checked");
@@ -213,8 +214,8 @@ export const InitSiparis = async () => {
     $(".urnpop").css("display", "none");
     $(".errare").html("");
     $(".btn-iade-et").css("display", "none");
-     $(".btn-iade-et").css("display", "none");
-          $(".btn-drmkydt").css("display", "inline-block");
+    $(".btn-iade-et").css("display", "none");
+    $(".btn-drmkydt").css("display", "inline-block");
   });
 
   $(".btn-drmkydt").on("click", async function () {
@@ -284,12 +285,9 @@ export const InitSiparis = async () => {
       );
     }
     const ressq = await Promise.all(promises);
-    console.log(ressq);
-    console.log(data);
     let failuremsgs = [];
     for (let i = 0; i < ressq.length; i++) {
       const { result } = ressq[i];
-      console.log(result);
       if (result.status == "failure") {
         failuremsgs.push(result);
       }
