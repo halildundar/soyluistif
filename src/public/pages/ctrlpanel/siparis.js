@@ -206,6 +206,7 @@ export const InitSiparis = async () => {
 
   $(".btn-clse").on("click", () => {
     $(".urnpop").css("display", "none");
+       $(".errare").html("");
   });
 
   $(".btn-drmkydt").on("click", async function () {
