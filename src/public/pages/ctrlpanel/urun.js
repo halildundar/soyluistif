@@ -180,11 +180,11 @@ export const InitUrun = async () => {
     $("[name='name']").val(selectedUrun.name);
     $("[name='url']").val(selectedUrun.url);
     $("[name='kod']").val(selectedUrun.kod);
-    $("[name='barkod']").val(selectedUrun.barkod);
     $("[name='fiyat']").val(selectedUrun.fiyat);
     $("[name='indirim']").val(selectedUrun.indirim);
     $("[name='indirimli_fiyat']").val(selectedUrun.indirimli_fiyat);
     $("[name='stok']").val(selectedUrun.stok);
+        $("[name='kdv']").val(selectedUrun.kdv);
     $(".aciklama .ql-editor").html(JSON.parse(selectedUrun.aciklama));
     $(".garanti_aciklama .ql-editor").html(
       JSON.parse(selectedUrun.garanti_aciklama)
