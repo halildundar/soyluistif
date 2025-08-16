@@ -41,7 +41,7 @@
                                 <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[100px]">Durum</th>
                                 <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[300px]">Alıcı</th>
                                 <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[300px]">Ürünler</th>
-                                <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[150px]">Fiyat(₺)</th>
+                                <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[150px]">Tahsil Edilen</th>
                                 <th class="bg-gray-100 text-start px-2 py-1 border-gray-300 w-[300px]">Kargo Adres</th>
                             </tr>
                         </thead>
@@ -70,22 +70,68 @@
                 <div class="border border-gray-200 rounded p-1 bg-yellow-600/5">
                     <label for="durum" class="frm-lbl">Sipariş durumu</label>
                     <hr>
-                    <div class="byrarea p-[0.4rem]">
+                    <div class="flex items-center space-x-2">
+                        <div class="byrarea p-[0.4rem] w-1/2">
+                            <div class="flex items-center space-x-2">
+                                <select name="durum" id="durum" class="frm-slct">
+                                    <option value="Sipariş Alındı">Sipariş Alındı</option>
+                                    <option value="Hazırlanıyor">Hazırlanıyor</option>
+                                    <option value="Kargoya Verildi">Kargoya Verildi</option>
+                                    <option value="Teslim Edildi">Teslim Edildi</option>
+                                    <option value="Sipariş İadesi Yapıldı ve Düzenlendi">Sipariş İadesi Yapıldı ve Düzenlendi</option>
+                                    <option value="Sipariş İadesi Yapıldı">Sipariş İadesi Yapıldı</option>
+                                     <option value="Sipariş İptal Edildi">Sipariş iptal Edildi</option>
+                                </select>
 
-                        <div class="flex items-center space-x-2">
-                            <select name="durum" id="durum" class="frm-slct">
-                                <option value="Sipariş Alındı">Sipariş Alındı</option>
-                                <option value="Kargoya Verildi">Kargoya Verildi</option>
-                                <option value="İptal Edildi">İptal Edildi</option>
-                                {{!-- <option value="Sipariş Alındı">Sipariş Alındı</option> --}}
-                            </select>
-                            <button
-                                class="btn-drmkydt px-2 py-1  bg-blue-500 hover:bg-blue-700 active:bg-blue-400 rounded text-[0.8rem] text-white">Kaydet</button>
+                            </div>
                         </div>
+                        <div class="flex-1"></div>
+
                     </div>
                 </div>
 
             </div>
+
+            <div class="p-1 px-2">
+                <div class="border border-gray-200 rounded p-1 bg-yellow-600/5">
+                    <div class="font-semibold px-[0.4rem] bg-white">Ürünler</div>
+                    <hr>
+                    <div class="byrarea p-[0.4rem]">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="border-y border-gray-200">
+                                    <th class="text-start">#</th>
+                                    <th class="text-start">Ürün</th>
+                                    <th class="text-start">İndirim</th>
+                                    <th class="text-start">Fiyat</th>
+                                    <th class="text-start">Satış</th>
+                                    <th class="text-end">Toplam</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="border border-gray-200 rounded p-1 my-2 bg-yellow-600/5">
+                    <div class="font-semibold px-[0.4rem]">İadeler</div>
+                    <hr>
+                    <div class="byrareaiade p-[0.4rem]">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="border-y border-gray-200">
+                                    <th class="text-start">Ürün</th>
+                                    <th class="text-start">İndirim</th>
+                                    <th class="text-start">Fiyat</th>
+                                    <th class="text-start">Satış</th>
+                                    <th class="text-end">Toplam</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <div class="p-1 px-2">
                 <div class="border border-gray-200 rounded p-1 bg-yellow-600/5">
                     <div class="font-semibold px-[0.4rem]">Alıcı</div>
@@ -178,29 +224,23 @@
                     </div>
                 </div>
             </div>
-            <div class="p-1 px-2">
-                <div class="border border-gray-200 rounded p-1 bg-yellow-600/5">
-                    <div class="font-semibold px-[0.4rem]">Ürünler</div>
-                    <hr>
-                    <div class="byrarea p-[0.4rem]">
-                        <table class="w-full border-collapse">
-                            <thead>
-                                <tr class="border-y border-gray-200">
-                                    <th class="text-start">Ürün</th>
-                                    <th class="text-start">İndirim</th>
-                                    <th class="text-start">Fiyat</th>
-                                    <th class="text-start">Satış</th>
-                                       <th class="text-end">Toplam</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        </div>
+        <div class="py-2 px-2">
+            <div class="text-red-500  ">
+                 <ul class="errare">
 
+                 </ul>
             </div>
+        </div>
+        <div class="px-2 py-1 flex items-center justify-center space-x-2">
+            <button 
+                class="btn-drmkydt px-2 py-1  bg-blue-500 hover:bg-blue-700 active:bg-blue-400 rounded text-[0.8rem] text-white">Kaydet</button>
+            <button style="display:none"
+                class="btn-iade-et px-2 py-1  bg-red-500 hover:bg-red-700 active:bg-red-400 rounded text-[0.8rem] text-white">İade
+                Et ve Kaydet</button>
+
+                <button 
+                class="btn-iptal-et px-2 py-1  bg-gray-600 hover:bg-gray-800 active:bg-gray-500 rounded text-[0.8rem] text-white">İptal Et</button>
         </div>
     </div>
 </div>

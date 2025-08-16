@@ -23,7 +23,7 @@ import {
   SiparisGetBYID,
 } from "./web/dbdata.js";
 import { FavorilerPageRender } from "./web/favoriler.js";
-
+import { RaporUrunApi } from "./ctrlpanel/rapor-urunler.js";
 export const HomePageApi = (app) => {
   router.get("/", HomePageRender);
   return app.use("/", router);
@@ -179,5 +179,6 @@ export const CtrlPanelPageApi = (app) => {
   SlaytApi(app);
   SiparisApi(app);
   EticaretApi(app);
+  RaporUrunApi(app);
   return app.use("/", router);
 };

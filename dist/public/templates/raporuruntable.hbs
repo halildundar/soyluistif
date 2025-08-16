@@ -1,0 +1,57 @@
+
+{{#IsEq urunler.length 0}}
+<div class="text-center w-full py-20 text-[1.4rem] font-bold text-black/60">
+    Hiç Ürün Bulunmamaktadır
+</div>
+{{else}}
+<table class="w-full border-collapse">
+    <thead>
+        <tr class="border border-gray-300 text-[0.8rem]">
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-start">Ürün Kodu</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-start">Ürün</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-start">Kategoriler</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-center">İndirim</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-start">Fiyat</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-center">İnd.Fiyat</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-center">KDV</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-start">Etkileşim</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-center">Stok</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-center">Kalan</th>
+            <th class="border border-gray-300 px-2 py-1 bg-gray-100 text-start">Resimler</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each urunler}}
+        <tr data-ur="{{this.id}}" class="text-[0.8rem]">
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-start">{{this.kod}}</td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-start">{{this.name}}</td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-start text-[0.7rem]">{{{this.kategoristr}}}</td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-center">%{{this.indirim}}</td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-center">{{this.fiyat}}₺</td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-center">{{this.indirimli_fiyat}}₺</td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-center">%{{this.kdv}}</td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-start">
+                <div>
+                    <span>Beğinilme:</span>
+                    <span>{{this.begenilme}}</span>
+                </div>
+                <div>
+                    <span>Görüntülenme:</span>
+                    <span>{{this.goruntulenme}}</span>
+                </div>
+            </td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-center">{{this.stok}}</td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-center">{{this.kalan}}</td>
+            <td class="border border-gray-300 px-2 py-1 bg-gray-50 text-start">
+                <button
+                    class="btn-seeimg{{this.id}} bg-blue-500 active:bg-blue-400 text-white px-2 py-1 text-[0.8rem] rounded hover:bg-blue-600">Resimler</button>
+              
+            </td>
+        </tr>
+
+        {{/each}}
+    </tbody>
+</table>
+{{/IsEq}}
+
+

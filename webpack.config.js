@@ -17,6 +17,7 @@ export default {
     viewchanges: "./src/viewschanges.js",
     "public/main": "./src/public/main.js",
     "public/ctrlpanel-main": "./src/public/ctrlpanel-main.js",
+     "public/signin": "./src/public/pages/auth/signin.js",
   },
   output: {
     path: resolve(process.cwd(), "dist"),

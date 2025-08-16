@@ -1,0 +1,33 @@
+[
+  {
+    "itemId": "14",
+    "paymentTransactionId": "27145462",
+    "transactionStatus": 2,
+    "price": 4500,
+    "paidPrice": 4500,
+    "merchantCommissionRate": 0,
+    "merchantCommissionRateAmount": 0,
+    "iyziCommissionRateAmount": 49.5,
+    "iyziCommissionFee": 0.25,
+    "blockageRate": 0,
+    "blockageRateAmountMerchant": 0,
+    "blockageRateAmountSubMerchant": 0,
+    "blockageResolvedDate": "2025-08-23 00:00:00",
+    "subMerchantPrice": 0,
+    "subMerchantPayoutRate": 0,
+    "subMerchantPayoutAmount": 0,
+    "merchantPayoutAmount": 4450.25,
+    "convertedPayout": {
+      "paidPrice": 4500,
+      "iyziCommissionRateAmount": 49.5,
+      "iyziCommissionFee": 0.25,
+      "blockageRateAmountMerchant": 0,
+      "blockageRateAmountSubMerchant": 0,
+      "subMerchantPayoutAmount": 0,
+      "merchantPayoutAmount": 4450.25,
+      "iyziConversionRate": 0,
+      "iyziConversionRateAmount": 0,
+      "currency": "TRY"
+    }
+  }
+]

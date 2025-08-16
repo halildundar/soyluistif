@@ -43,11 +43,12 @@ const makeUrunArea = async (parents) => {
       const str = `<tr class="urun${urun.id} cursor-pointer hover:bg-black/5">
                   <td class="p-1 border-l border-t border-gray-300">${urun.name}</td>
                   <td class="p-1 border-l border-t border-gray-300">${urun.url}</td>
-                  <td class="p-1 border-l border-t border-gray-300">${urun.kod}-${urun.barkod}</td>
+                  <td class="p-1 border-l border-t border-gray-300">${urun.kod}</td>
                   <td class="p-1 border-l border-t border-gray-300">${urun.fiyat}</td>
                   <td class="p-1 border-l border-t border-gray-300">${urun.indirim}</td>
                   <td class="p-1 border-l border-t border-gray-300">${urun.indirimli_fiyat}</td>
                     <td class="p-1 border-l border-t border-gray-300">${urun.stok}</td>
+                     <td class="p-1 border-l border-t border-gray-300">${urun.stok - urun.alinan}</td>
               </tr>`;
       $(".urun-area table tbody").append(str);
       $(`.urun-area table tbody .urun${urun.id}`).on("click", function () {

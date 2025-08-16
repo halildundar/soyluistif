@@ -1,0 +1,50 @@
+{{> ctrlheader}}
+
+<div>
+    <div class="max-w-[--max-w] mx-auto">
+        {{> raporlarheader}}
+        <div class="py-2 flex items-center">
+            <div class="w-1/4 flex items-center space-x-2 px-2 py-1 border border-gray-200 bg-black/5">
+                <button class="tio text-[1.4rem] text-gray-400">search</button>
+                <input type="text" placeholder="search" id="search" class="flex-1 bg-transparent text-[0.8rem]">
+            </div>
+            <div class="flex-1"></div>
+            <button
+                class="btn-xprtcsv text-white bg-green-600 hover:bg-green-800 active:bg-green-500 rounded text-[0.8rem] px-3 py-1">Export(.csv)</button>
+        </div>
+        <div class="inittble relative min-h-[300px]">
+
+            <div class="spinrea py-10 absolute top-0 left-0 w-full h-full bg-[--color] flex items-start justify-center">
+                <div class="spin icon-spin-1 spin-steps1 text-[2rem] text-orange-600"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display:none"
+    class="csvpopurunler fixed top-0 left-0 w-[100vw] h-[100vh] flex items-center justify-center bg-black/10">
+    <div class="w-[25%] h-auto rounded bg-white flex flex-col">
+        <div class="flex items-center justify-between px-2 pr-1 py-1">
+            <div class="font-semibold">Ürünleri Dışa Aktar</div>
+            <button
+                class="btn-close rounded-full p-1 bg-black/5 hover:bg-black/10 active:bg-transparent text-[1.4rem] tio">clear</button>
+        </div>
+        <div class="flex-1 relative py-10">
+            <div class="flex items-center justify-center">
+                <div class="font-semibold">
+                    <span> Toplam Ürün Sayısı:</span>
+                    <span class="spnurunadet"></span>
+                </div>
+            </div>
+            <div style="display:none"  class="indrlink text-center py-2">
+                <a href="" target="_blank" class="underline text-blue-600 text-[1.2rem]">İndir</a>
+            </div>
+            <div class="text-center">
+                  <button class="btn-print-run text-white bg-green-600 hover:bg-green-800 active:bg-green-500 rounded text-[0.8rem] px-3 py-1">Export(.csv)</button>
+            </div>
+
+            <div style="display:none" class="spinreacsv flex items-center justify-center absolute top-0 left-0 w-full h-full z-10 bg-white">
+                <div class="spin icon-spin-1 spin-steps1 text-[2rem] text-orange-600"></div>
+            </div>
+        </div>
+    </div>
+</div>

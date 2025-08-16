@@ -76,6 +76,7 @@ export const SiparisInit = async () => {
       return {
         ...item,
         basketItems: JSON.parse(item.basketItems),
+        iadeItems: !!item.iadeItems ? JSON.parse(item.iadeItems) : [],
         billingAddress: JSON.parse(item.billingAddress),
         shippingAddress: JSON.parse(item.shippingAddress),
         buyer: JSON.parse(item.buyer),
@@ -104,14 +105,27 @@ export const SiparisInit = async () => {
             <span>${urun.indirimli_fiyat}₺</span>
         </li>`;
         }
+        let iadelerStr = "";
+        let iadeTopPrice = 0;
+        for (let j = 0; j < siparis.iadeItems.length; j++) {
+          const urun = siparis.iadeItems[j];
+          iadelerStr += `<li>
+              <span class="text-red-500"><strong>${urun.name}</strong></span>
+              <span> - </span>
+              <span>${urun.price}₺</span>
+          </li>`;
+          iadeTopPrice += parseInt(urun.price);
+        }
+              let txtStatusColor = siparis.status === 'Sipariş İptal Edildi' ? "text-red-500" : siparis.status.includes('Sipariş İade') ? "text-blue-500":"text-green-500"
+
         $("tbody").append(`
            <tr class="tr${siparis.paymentId} border border-gray-300 table-row md:hidden"> 
               <td colSpan=5>
                 <div class="flex items-center w-full">
                     <div class="py-4 flex-1">${siparis.paymentId}</div>
                     <div class="flex-1 leading-none">${tarih}</div>
-                    <div class="text-green-600 font-bold flex-1">${siparis.status}</div>
-                    <div class="flex-1">${siparis.price}₺</div>
+                    <div class="${txtStatusColor} font-bold flex-1">${siparis.status}</div>
+                    <div class="flex-1">${siparis.price - iadeTopPrice}.00₺</div>
                     <div class="pr-2">
                         <button title="Çıkar" class="btnrmove${siparis.paymentId} tio rounded-full hover:bg-red-700 bg-red-500 active:bg-red-400 text-white p-1 text-[0.9rem] md:text-[1.2rem]">clear</button>
                     </div>
@@ -119,6 +133,7 @@ export const SiparisInit = async () => {
                 <div>
                   <div>
                          <ul class=''>${urunlerStr}</ul>
+                           <ul class='text-red-500'>${iadelerStr}</ul>
                   </div>
                   <div class="px-5">
                       <ul class=' text-[0.7rem]'>
@@ -134,15 +149,16 @@ export const SiparisInit = async () => {
         <tr class="tr${siparis.paymentId} border border-gray-300 hidden md:table-row">
           <td class=" py-4">${siparis.paymentId}</td>
             <td>${tarih}</td>
-               <td class="text-green-600 font-bold">${siparis.status}</td>
-            <td class="hidden md:block">
+               <td class="${txtStatusColor} font-bold">${siparis.status}</td>
+            <td class="hidden md:table-cell">
                 <ul class=''>${urunlerStr}</ul>
+                 <ul class='text-red-500'>${iadelerStr}</ul>
             </td>
-                  <td>${siparis.price}₺</td>
-            <td class="hidden md:block">
+                  <td>${siparis.price - iadeTopPrice}.00₺</td>
+            <td class="hidden md:table-cell">
                 <ul class=' text-[0.7rem]'>
-                        <li><strong>Kargo Adres: </strong> ${siparis.billingAddress.address}</li>
-                            <li><strong>Fatura Adres: </strong> ${siparis.shippingAddress.address}</li>
+                        <li><strong>Kargo: </strong> ${siparis.billingAddress.address}</li>
+                            <li><strong>Fatura: </strong> ${siparis.shippingAddress.address}</li>
                 </ul>
             </td>
             <td>
@@ -176,6 +192,7 @@ export const SiparisInit = async () => {
           return {
             ...item,
             basketItems: JSON.parse(item.basketItems),
+            iadeItems: !!item.iadeItems ? JSON.parse(item.iadeItems) : [],
             billingAddress: JSON.parse(item.billingAddress),
             shippingAddress: JSON.parse(item.shippingAddress),
             buyer: JSON.parse(item.buyer),
@@ -186,7 +203,7 @@ export const SiparisInit = async () => {
           $(".siparis-yok").css("display", "none");
           $(".siparis-area").css("display", "block");
           for (let i = 0; i < newSiparisler.length; i++) {
-            const siparis = newSiparisler[i];
+            let siparis = newSiparisler[i];
             const systemDate = new Date(Number(siparis.systemTime));
             const tarih = `${pad(systemDate.getDate(), 2)}.${pad(
               systemDate.getMonth() - 1,
@@ -204,6 +221,15 @@ export const SiparisInit = async () => {
               <span>${urun.price}₺</span>
           </li>`;
             }
+            let iadelerStr = "";
+            for (let j = 0; j < siparis.iadeItems.length; j++) {
+              const urun = siparis.iadeItems[j];
+              iadelerStr += `<li>
+              <span class="text-red-500"><strong>${urun.name}</strong></span>
+              <span> - </span>
+              <span>${urun.price}₺</span>
+          </li>`;
+            }
             $("tbody").append(`
           <tr class="tr${siparis.paymentId} border border-gray-300 ">
             <td class="py-4">${siparis.paymentId}</td>
@@ -211,12 +237,13 @@ export const SiparisInit = async () => {
                  <td class="text-green-600 font-bold">${siparis.status}</td>
               <td>
                   <ul class=''>${urunlerStr}</ul>
+                  <ul>${iadelerStr}</ul>
               </td>
                     <td>${siparis.price}₺</td>
               <td>
                   <ul class=' text-[0.7rem]'>
-                          <li><strong>Kargo Adres: </strong> ${siparis.billingAddress.address}</li>
-                              <li><strong>Fatura Adres: </strong> ${siparis.shippingAddress.address}</li>
+                          <li><strong>Kargo: </strong> ${siparis.billingAddress.address}</li>
+                              <li><strong>Fatura: </strong> ${siparis.shippingAddress.address}</li>
                   </ul>
               </td>
               <td>

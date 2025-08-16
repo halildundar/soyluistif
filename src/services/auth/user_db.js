@@ -1,5 +1,5 @@
 import { compare } from "bcryptjs";
-import { ArtiDoksanCertDB } from "../mysql.js";
+import { DB } from "../mysql.js";
 
 export let handleLogin = async (email, passw) => {
   let user = await findUserByEmail(email);
@@ -11,7 +11,7 @@ export let handleLogin = async (email, passw) => {
 };
 export let findUserByEmail = async (email) => {
   try {
-    const rows = await ArtiDoksanCertDB.Query("SELECT * FROM `personel` WHERE `email` = ? ", email);
+    const rows = await DB.Query("SELECT * FROM `users` WHERE `email` = ? ", email);
     return rows[0];
   } catch (error) {
     console.log(error);
@@ -20,7 +20,7 @@ export let findUserByEmail = async (email) => {
 };
 export let findUserById = async (id) => {
   try {
-    const rows = await ArtiDoksanCertDB.Query("SELECT * FROM `personel` WHERE `id` = ? ", id);
+    const rows = await DB.Query("SELECT * FROM `users` WHERE `id` = ? ", id);
     return rows[0];
   } catch (error) {
     console.log(error);
@@ -45,7 +45,7 @@ export let comparePassword = (passw, userObject) => {
 
 export let getpersonel = async ()=>{
   try {
-    const rows = await ArtiDoksanCertDB.Query("SELECT * FROM `personel`");
+    const rows = await DB.Query("SELECT * FROM `users`");
     console.log(rows);
     return rows;
   } catch (error) {
@@ -55,7 +55,7 @@ export let getpersonel = async ()=>{
 }
 export let updateUser = async (id,queryData)=>{
   try {
-    const rows = await ArtiDoksanCertDB.Query("UPDATE `personel` SET ? WHERE id = ?",[queryData,id]);
+    const rows = await DB.Query("UPDATE `users` SET ? WHERE id = ?",[queryData,id]);
     return rows;
   } catch (error) {
     console.log(error);
@@ -64,7 +64,7 @@ export let updateUser = async (id,queryData)=>{
 }
 export let saveUser = async (queryData)=>{
   try {
-    const rows = await ArtiDoksanCertDB.Query("INSERT INTO `personel` VALUES (0,?)",[queryData]);
+    const rows = await DB.Query("INSERT INTO `users` VALUES (0,?)",[queryData]);
     return rows;
   } catch (error) {
     console.log(error);
@@ -73,7 +73,7 @@ export let saveUser = async (queryData)=>{
 }
 export let deleteUser = async (id)=>{
   try {
-    const rows = await ArtiDoksanCertDB.Query("DELETE FROM `personel` WHERE id = ?",[id]);
+    const rows = await DB.Query("DELETE FROM `users` WHERE id = ?",[id]);
     return rows;
   } catch (error) {
     console.log(error);

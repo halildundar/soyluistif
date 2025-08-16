@@ -17,7 +17,7 @@ export let Authenticate = (req, res, next) => {
           if (err) {
             return next(err);
           }
-          return res.redirect("/");
+          return res.redirect("/ctrlpanel");
         });
         break;
       case "json":
@@ -31,6 +31,7 @@ export let Authenticate = (req, res, next) => {
             .json({ ok: false, msg: "Kullunıcı bulunamadı" });
         }
         if (!!info) {
+          console.log(info,user)
           return res
             .status(401)
             .json({ ok: false, msg: "Email veya şifre hatalı" });

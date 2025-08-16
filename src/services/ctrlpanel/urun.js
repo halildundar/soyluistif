@@ -2,6 +2,7 @@ import express from "express";
 import { DB } from "../mysql.js";
 import { existsSync, rmdirSync } from "fs";
 let router = express.Router({ mergeParams: true });
+import {checkLoggedIn} from '../auth/auth.js';
 export const CtrlPanelUrunRender = async (req, res) => {
   res.render("pages/ctrlpanel/urun.hbs", {
     title: "Ürünler",
@@ -17,10 +18,11 @@ export const CtrlPanelUrunRender = async (req, res) => {
     scripts: `  <script defer src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>`,
+    user:req.user
   });
 };
 export const UrunApi = async (app) => {
-  router.post("/ctrlpanel/kategori/add-item", async (req, res) => {
+  router.post("/ctrlpanel/kategori/add-item",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -30,7 +32,7 @@ export const UrunApi = async (app) => {
       msg: "Ok!",
     });
   });
-  router.post("/ctrlpanel/kategori/update-item", async (req, res) => {
+  router.post("/ctrlpanel/kategori/update-item",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -44,7 +46,7 @@ export const UrunApi = async (app) => {
       msg: "Ok!",
     });
   });
-  router.post("/ctrlpanel/kategori/get-all-items", async (req, res) => {
+  router.post("/ctrlpanel/kategori/get-all-items",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -52,7 +54,7 @@ export const UrunApi = async (app) => {
     const items = await DB.Query("SELECT * FROM `kategori`");
     return res.json(items);
   });
-  router.post("/ctrlpanel/kategori/delete-items", async (req, res) => {
+  router.post("/ctrlpanel/kategori/delete-items",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -67,7 +69,7 @@ export const UrunApi = async (app) => {
     // return res.json(items);
     return res.json({ msg: "OK!" });
   });
-  router.post("/ctrlpanel/urun/add-urun", async (req, res) => {
+  router.post("/ctrlpanel/urun/add-urun",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -75,7 +77,7 @@ export const UrunApi = async (app) => {
     await DB.Query("INSERT INTO `urun` SET ?", [data]);
     return res.json({ msg: "OK!" });
   });
-  router.post("/ctrlpanel/urun/update-urun", async (req, res) => {
+  router.post("/ctrlpanel/urun/update-urun",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -84,7 +86,7 @@ export const UrunApi = async (app) => {
     await DB.Query("UPDATE `urun` SET ? WHERE id =" + id, [others]);
     return res.json({ msg: "OK!" });
   });
-  router.post("/ctrlpanel/urun/delete-urun-from-kategori", async (req, res) => {
+  router.post("/ctrlpanel/urun/delete-urun-from-kategori",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -116,7 +118,7 @@ export const UrunApi = async (app) => {
     await DB.Query("COMMIT");
     return res.json({ msg: "OK!" });
   });
-  router.post("/ctrlpanel/urun/delete-urun", async (req, res) => {
+  router.post("/ctrlpanel/urun/delete-urun",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -125,7 +127,7 @@ export const UrunApi = async (app) => {
     await DB.Query("DELETE FROM `urun` WHERE id =" + id);
     return res.json({ msg: "OK!" });
   });
-  router.post("/ctrlpanel/urun/get-urunler", async (req, res) => {
+  router.post("/ctrlpanel/urun/get-urunler",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -142,7 +144,7 @@ export const UrunApi = async (app) => {
     );
     return res.json(resp);
   });
-  router.post("/ctrlpanel/urun/get-urun-resimler", async (req, res) => {
+  router.post("/ctrlpanel/urun/get-urun-resimler",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -153,7 +155,7 @@ export const UrunApi = async (app) => {
     ]);
     return res.json(resp[0].resimler);
   });
-  router.post("/ctrlpanel/urun/get-urun", async (req, res) => {
+  router.post("/ctrlpanel/urun/get-urun",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -162,8 +164,8 @@ export const UrunApi = async (app) => {
     const resp = await DB.Query("SELECT * FROM `urun` WHERE id = ?", [id]);
     return res.json(resp[0]);
   });
-  router.get("/ctrlpanel/urunler", CtrlPanelUrunRender);
-  router.post("/urun/update-urun-goruntu", async (req, res) => {
+  router.get("/ctrlpanel/urunler",checkLoggedIn, CtrlPanelUrunRender);
+  router.post("/urun/update-urun-goruntu",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;
@@ -172,7 +174,7 @@ export const UrunApi = async (app) => {
     await DB.Query("UPDATE `urun` SET ? WHERE id = " + id, [others]);
     return res.json({ msg: "Ok!" });
   });
-  router.post("/urun/update-stok", async (req, res) => {
+  router.post("/urun/update-stok",checkLoggedIn, async (req, res) => {
     const data = req.body;
     if (!data) {
       return;

@@ -334,3 +334,23 @@ export const SiparisStatus = (classn) => {
   let siparis = myloc.getItem("siparis");
   myloc.siparisIndex = siparis.length;
 };
+
+export const GetTemp = async (htmlpath) => {
+  const str = await $.ajax({
+    type: "POST",
+    url: "/template/get-txt",
+    data: { filepath: htmlpath },
+  });
+  let rendered = Handlebars.compile(str);
+  return rendered;
+};
+export const SpinnerPop = async (action) => {
+  if (action == "open") {
+    const render = await GetTemp("spiner.hbs");
+    $("body").append(render({}));
+  }
+
+  if (action == "close") {
+    $(".genel-spinner").remove();
+  }
+};

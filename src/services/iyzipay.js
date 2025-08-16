@@ -2,7 +2,7 @@ import express from "express";
 let router = express.Router({ mergeParams: true });
 import { getMainMenu, SiparisAdd } from "./web/dbdata.js";
 import { SiparisByiIyzIDGet } from "./web/dbdata.js";
-import {DB} from "./mysql.js";
+import { DB } from "./mysql.js";
 const Iyzipay = require("iyzipay");
 import { Transport } from "./mail/main.js";
 import { utils } from "./utilsiyzico.js";
@@ -70,7 +70,10 @@ export const IyzicoApi = (app) => {
       return res.send("not Found");
     }
     console.log(paymentId);
-    const resp =await DB.Query("SELECT threeDSHtmlContent FROM `siparis` WHERE `paymentId` = "+paymentId);
+    const resp = await DB.Query(
+      "SELECT threeDSHtmlContent FROM `siparis` WHERE `paymentId` = " +
+        paymentId
+    );
     const buff = Buffer.from(resp[0].threeDSHtmlContent, "base64");
     res.setHeader("Content-type", "text/html");
     return res.send(buff.toString("utf8"));
@@ -170,10 +173,15 @@ export const IyzicoApi = (app) => {
           threeDSHtmlContent,
           systemTime,
         } = result;
-        await SiparisAdd({ ...request, paymentId, systemTime,threeDSHtmlContent });
+        await SiparisAdd({
+          ...request,
+          paymentId,
+          systemTime,
+          threeDSHtmlContent,
+        });
         // res.setHeader("Content-type", "text/html");
         // return res.send(buff.toString("utf8"));
-        
+
         return res.json({
           status: true,
           html: paymentId,
@@ -224,6 +232,9 @@ export const IyzicoApi = (app) => {
           paidPrice,
           price,
           signature,
+          iyziCommissionRateAmount,
+          iyziCommissionFee,
+          itemTransactions,
         } = result;
         // console.log("result:", result);
         if (result.status === "success") {
@@ -232,6 +243,10 @@ export const IyzicoApi = (app) => {
           const [data] = await SiparisByiIyzIDGet([paymentId]);
           const { email } = JSON.parse(data.buyer);
           await sendMail(email, paymentId);
+          await DB.Query(
+            "UPDATE `siparis` SET ? WHERE paymentId = " + paymentId,
+            [{ itemTransactions: JSON.stringify(itemTransactions) }]
+          );
           return res.render("pages/website/sepet/odeme-result.hbs", {
             ...resparea,
             odemestatus: "Success",
@@ -341,6 +356,58 @@ export const IyzicoApi = (app) => {
         odememesaj: "Bilinmeyen kart no.",
       });
     }
+  });
+  router.post("/iyz/iade", async (req, res) => {
+    if (!req.body) {
+      return;
+    }
+    // interface RefundRequestData {
+    // locale?: Locale;
+    // conversationId?: string;
+    // paymentTransactionId: string;
+    // price: number | string;
+    // ip: string;
+    // currency: Currency;
+    // reason?: RefundReason;
+    // description?: string;
+    let request = {
+      locale: Iyzipay.LOCALE.TR,
+      conversationId: "123456789",
+      paymentTransactionId: "",
+      price: "",
+      ip: "85.34.78.112",
+      currency: Iyzipay.CURRENCY.TRY,
+      // paymentId:''
+    };
+    const { paymentId, paymentTransactionId, price } = req.body;
+    request.paymentTransactionId = paymentTransactionId;
+    request.price = price;
+    // request.paymentId = paymentId;
+    iyzipay.refund.create(request, function (err, result) {
+      if (err) {
+        return res.json({ status: false, msg: err });
+      }
+      return res.json({ status: true, msg: "Ok!", result: result });
+    });
+  });
+  router.post("/iyz/iptal", async (req, res) => {
+    if (!req.body) {
+      return;
+    }
+    let request = {
+      locale: Iyzipay.LOCALE.TR,
+      paymentId: "",
+      ip: "85.34.78.112",
+    };
+    const { paymentId } = req.body;
+    request.paymentId = paymentId;
+    // request.paymentId = paymentId;
+    iyzipay.cancel.create(request, function (err, result) {
+      if (err) {
+        return res.json({ status: false, msg: err });
+      }
+      return res.json({ status: true, msg: "Ok!", result: result });
+    });
   });
 
   return app.use("/", router);

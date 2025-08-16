@@ -4,6 +4,7 @@ import "./views/layouts/main.hbs";
 import "./views/partials/header.hbs";
 import "./views/partials/footer.hbs";
 import "./views/partials/ctrlheader.hbs";
+import "./views/partials/raporlarheader.hbs";
 import "./views/pages/website/home/main.hbs";
 import "./views/pages/website/kurumsal/main.hbs";
 import "./views/pages/website/kurumsal/hakkimizda.hbs";
@@ -29,6 +30,7 @@ import "./views/pages/ctrlpanel/urun.hbs";
 import "./views/pages/ctrlpanel/slaytlar.hbs";
 import "./views/pages/ctrlpanel/siparisler.hbs";
 import "./views/pages/ctrlpanel/eticaret.hbs";
+import "./views/pages/ctrlpanel/rapor-urunler.hbs";
 
 import "./public/templates/popurunekle.html";
 import "./public/templates/popurunresim.html";
@@ -39,6 +41,9 @@ import "./public/templates/siparis-bilgi-left.html";
 import "./public/templates/odeme.html";
 import "./public/templates/404.html";
 import "./public/templates/yorum.hbs";
+import "./public/templates/raporuruntable.hbs";
+import "./public/templates/spiner.hbs";
+
 
 // import { config } from "dotenv";
 // config("./.env");
