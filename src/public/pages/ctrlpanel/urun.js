@@ -391,7 +391,7 @@ Lütfen Ürünün Görselini Dikkatlice İnceleyiniz Ürünün Sizin Numune İle
           };
           newArrayItems.push(items);
         }
-        if (newArrayItems.length > 0 && newArrayItems.length < 100) {
+        if (newArrayItems.length > 0 && newArrayItems.length <= 100) {
             $('.errtxtcsv').html('');
           const re = await $.ajax({
             type: "POST",
