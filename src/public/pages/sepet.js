@@ -35,16 +35,11 @@ const makeTotal = (urunler) => {
     kdvToplam +=
       urun.adet *
       urun.fiyat *
-      (!urun.kdv || urun.kdv == 0 ? 1 : urun.kdv / 100);
+      (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
   }
   indirim = toplamTutar - inidirimTutar;
-  let total;
-  if (!urun.kdv || urun.kdv == 0) {
-    kdvToplam = 0;
-  } else {
-    total = inidirimTutar + kdvToplam;
-  }
-  $(".kdv_area").html(`KDV(${!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv}%):`)
+
+  let total = inidirimTutar + kdvToplam;
   $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + "$");
   $(".total_kdv").html("+" + kdvToplam + "$");
   $(".total_indirim").html("-" + indirim.toFixed(2) + "$");
