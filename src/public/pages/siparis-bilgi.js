@@ -31,14 +31,25 @@ const makeTotal = (urunler) => {
     const urun = urunler[i];
     toplamTutar += urun.adet * urun.fiyat;
     inidirimTutar += urun.adet * urun.indirimli_fiyat;
-    kdvToplam += urun.adet * urun.fiyat * 0.2;
+  kdvToplam +=
+      urun.adet *
+      urun.fiyat *
+      (urun.kdv == 0 || !urun.kdv ? 1 : urun.kdv / 100);
   }
   indirim = toplamTutar - inidirimTutar;
-  let total = inidirimTutar + kdvToplam;
-  $(".toplam_tutar").html("+" + toplamTutar + ".00₺");
-  $(".total_kdv").html("+" + kdvToplam + ".00₺");
-  $(".total_indirim").html("-" + indirim + ".00₺");
-  $(".toplam").html(total + ".00₺");
+  let total ;
+  
+if (urun.kdv == 0 || !urun.kdv) {
+    kdvToplam = 0;
+  } else {
+    total = inidirimTutar + kdvToplam;
+  }
+  $(".kdv_area").html(`KDV(${urun.kdv == 0 || !urun.kdv ? 0 : urun.kdv}%):`)
+
+  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2)  + "$");
+  $(".total_kdv").html("+" + kdvToplam + "$");
+  $(".total_indirim").html("-" + indirim.toFixed(2)  + "$");
+  $(".toplam").html(total.toFixed(2)  + "$");
 };
 export const SiparisBilgiInit = async () => {
   const sepet = myloc.getItem("sepet");

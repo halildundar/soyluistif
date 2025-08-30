@@ -125,7 +125,7 @@ export const SiparisInit = async () => {
                     <div class="py-4 flex-1">${siparis.paymentId}</div>
                     <div class="flex-1 leading-none">${tarih}</div>
                     <div class="${txtStatusColor} font-bold flex-1">${siparis.status}</div>
-                    <div class="flex-1">${siparis.price - iadeTopPrice}.00₺</div>
+                    <div class="flex-1">${siparis.price - iadeTopPrice}$</div>
                     <div class="pr-2">
                         <button title="Çıkar" class="btnrmove${siparis.paymentId} tio rounded-full hover:bg-red-700 bg-red-500 active:bg-red-400 text-white p-1 text-[0.9rem] md:text-[1.2rem]">clear</button>
                     </div>
@@ -154,7 +154,7 @@ export const SiparisInit = async () => {
                 <ul class=''>${urunlerStr}</ul>
                  <ul class='text-red-500'>${iadelerStr}</ul>
             </td>
-                  <td>${siparis.price - iadeTopPrice}.00₺</td>
+                  <td>${siparis.price - iadeTopPrice}$</td>
             <td class="hidden md:table-cell">
                 <ul class=' text-[0.7rem]'>
                         <li><strong>Kargo: </strong> ${siparis.billingAddress.address}</li>

@@ -1,5 +1,5 @@
 import { myloc } from "../main.js";
-import { SepetStatus} from './util/main.js';
+import { SepetStatus } from "./util/main.js";
 const getUrunler = (ids) => {
   return $.ajax({
     type: "POST",
@@ -32,14 +32,23 @@ const makeTotal = (urunler) => {
     const urun = urunler[i];
     toplamTutar += urun.adet * urun.fiyat;
     inidirimTutar += urun.adet * urun.indirimli_fiyat;
-    kdvToplam += urun.adet * urun.fiyat * 0.2;
+    kdvToplam +=
+      urun.adet *
+      urun.fiyat *
+      (urun.kdv == 0 || !urun.kdv ? 1 : urun.kdv / 100);
   }
   indirim = toplamTutar - inidirimTutar;
-  let total = inidirimTutar + kdvToplam;
-  $(".toplam_tutar").html('+'+ toplamTutar + ".00₺");
-  $(".total_kdv").html('+'+kdvToplam + ".00₺");
-  $(".total_indirim").html('-'+ indirim + ".00₺");
-  $(".toplam").html(total + ".00₺");
+  let total;
+  if (urun.kdv == 0 || !urun.kdv) {
+    kdvToplam = 0;
+  } else {
+    total = inidirimTutar + kdvToplam;
+  }
+  $(".kdv_area").html(`KDV(${urun.kdv == 0 || !urun.kdv ? 0 : urun.kdv}%):`)
+  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + "$");
+  $(".total_kdv").html("+" + kdvToplam + "$");
+  $(".total_indirim").html("-" + indirim.toFixed(2) + "$");
+  $(".toplam").html(total.toFixed(2) + "$");
 };
 export const SepetInit = async () => {
   let sepet = getSepet();
@@ -61,7 +70,7 @@ export const SepetInit = async () => {
         adet: adet,
       };
     });
-   makeTotal(urunler);
+    makeTotal(urunler);
     $(".spetbfyLeft").html(rendred({ urunler: urunler }));
     for (let i = 0; i < urunler.length; i++) {
       let urun = urunler[i];
@@ -75,7 +84,7 @@ export const SepetInit = async () => {
         findedSepetUrun.adet = urun.adet;
         myloc.setItem("sepet", findedSepetUrun);
         sepet = myloc.getItem("sepet");
-           makeTotal(urunler);
+        makeTotal(urunler);
       });
       $(`tr[data-ur='${urun.id}'] .btn-addsepet`).on("click", function () {
         urun.adet += 1;
@@ -91,7 +100,7 @@ export const SepetInit = async () => {
         findedSepetUrun.adet = urun.adet;
         myloc.setItem("sepet", findedSepetUrun);
         sepet = myloc.getItem("sepet");
-           makeTotal(urunler);
+        makeTotal(urunler);
       });
       $(`tr[data-ur='${urun.id}'] .btn-remove-urun`).on("click", function () {
         sepet = sepet.filter((item) => item.id != urun.id);
@@ -101,14 +110,13 @@ export const SepetInit = async () => {
         SepetStatus();
       });
     }
-     
   } else {
     $(".spetbfyLeft").html(rendred({ urunler: [] }));
     $(".leftarea").css("width", "100%");
     $(".rightarea").css("display", "none");
   }
 
-  $(".btn-sepet-ony").on('click',function(){
-    window.location.href = '/siparis-bilgi'
-  })
+  $(".btn-sepet-ony").on("click", function () {
+    window.location.href = "/siparis-bilgi";
+  });
 };
