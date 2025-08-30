@@ -16,11 +16,11 @@
     margin: 0;
   }
 }
-@import "./util/icons.scss";
+
 @import "./util/spinner.scss";
 @import "./util/creditcards.scss";
 @import "./owl.scss";
-
+@import "./util/icons.scss";
 .deneme {
   background-image: url(./assets/wplogo.png);
   background-image: url(./assets/notfound.webp);
