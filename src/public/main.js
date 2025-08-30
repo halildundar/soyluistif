@@ -85,7 +85,12 @@ $(async function () {
   makeMenuItems();
   SearchHeaderItems();
   Goruntulenenler();
-  InitMobilTree();
+
+  
+  if (window.matchMedia('(max-width: 767px)').matches) {
+    InitMobilTree();
+  }
+
 });
 const Goruntulenenler = async () => {
   const settingsCaroson = {
