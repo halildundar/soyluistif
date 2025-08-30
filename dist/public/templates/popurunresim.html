@@ -29,7 +29,7 @@
       <div id="sortable" class="grid gap-2 grid-cols-5 px-2">
         {{#each resimler}}
         <div
-          class="imges h-[150px] w-full bg-orange-600 flex items-center justify-center  hover:cursor-move relative"
+          class="imges h-[150px] w-full border border-gray-200 rounded flex items-center justify-center  hover:cursor-move relative"
         >
           <img
             src="/uploads{{this}}"
@@ -37,7 +37,7 @@
             alt=""
           />
           <i
-            class="btn-sil-img${{@index}} tio rounded-full text-[1.4rem] bg-red-700 text-white cursor-pointer absolute top-2 right-2 p-1" data-it="{{@index}}"
+            class="btn-sil-img {{@index}} tio rounded-full text-[1.4rem] bg-red-700 text-white cursor-pointer absolute top-2 right-2 p-1" data-it="{{@index}}"
             >clear</i
           >
         </div>
