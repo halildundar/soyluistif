@@ -56,9 +56,9 @@ app.set("view engine", ".hbs");
 app.set("views", `${process.cwd()}/views`);
 
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ limit: '100mb',extended: true }));
+app.use(bodyParser.urlencoded({ limit: '100mb',extended: true, parameterLimit: 1000000 }));
 app.use(bodyParser.json({limit: '100mb'}));
-app.use(bodyParser.text({ limit: '100mb' }))
+app.use(bodyParser.text({ limit: '100mb' }));
 app.use(methodOverride("_method"));
 
 app.use(passport.initialize());

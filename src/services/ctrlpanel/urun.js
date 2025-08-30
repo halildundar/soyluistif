@@ -190,5 +190,21 @@ export const UrunApi = async (app) => {
   
     return res.json({ msg: "Ok!" });
   });
+    router.post("/ctrlpanel/urun/insert-multiple-urun", async (req, res) => {
+    const data = req.body;
+    if (!data) {
+      return;
+    }
+    let {arrayData} = data;
+    let promises = [];
+    await  DB.Query("START TRANSACTION");
+    for (let i = 0; i < arrayData.length; i++) {
+      const element = arrayData[i];
+      promises.push(DB.Query("INSERT INTO `urun` set ?",[{...element}]));
+    }
+    await Promise.all(promises);
+    await  DB.Query("COMMIT");
+    return res.json({status:true,msg:'Ok!'});
+  });
   return app.use("/", router);
 };

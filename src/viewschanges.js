@@ -44,7 +44,8 @@ import "./public/templates/404.html";
 import "./public/templates/yorum.hbs";
 import "./public/templates/raporuruntable.hbs";
 import "./public/templates/spiner.hbs";
-
+import "./public/templates/uruntoplu.hbs";
+import "./public/assets/temp-multiple-urun.csv"
 
 // import { config } from "dotenv";
 // config("./.env");

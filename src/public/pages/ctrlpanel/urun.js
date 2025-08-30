@@ -31,6 +31,7 @@ const makeUrunArea = async (parents) => {
   selectedUrun = null;
   //Popup Ürün ekle
   urunler = await GetUrunler(JSON.stringify(parents));
+  urunler = urunler.sort((a, b) => (a.kayit_tarih < b.kayit_tarih ? -1 : 1));
   if (!!urunler && urunler.length == 0) {
     $(".urun-yok").css("display", "block");
     $(".urun-area table").css("display", "none");
@@ -40,16 +41,36 @@ const makeUrunArea = async (parents) => {
     $(".urun-area table tbody").html("");
     for (let i = 0; i < urunler.length; i++) {
       const urun = urunler[i];
-      const str = `<tr class="urun${urun.id} cursor-pointer hover:bg-black/5 text-[0.8rem]">
-                  <td class="p-1 border-l border-t border-gray-300">${urun.name}</td>
-                  <td class="p-1 border-l border-t border-gray-300">${urun.url}</td>
-                  <td class="p-1 border-l border-t border-gray-300">${urun.kod}</td>
-                  <td class="p-1 border-l border-t border-gray-300">${urun.fiyat.toFixed(2)}</td>
-                  <td class="p-1 border-l border-t border-gray-300">${urun.indirim}</td>
-                  <td class="p-1 border-l border-t border-gray-300">${urun.indirimli_fiyat.toFixed(2)}</td>
-                    <td class="p-1 border-l border-t border-gray-300">${urun.stok}</td>
-                     <td class="p-1 border-l border-t border-gray-300">${urun.stok - urun.alinan}</td>
-                      <td class="p-1 border-l border-t border-gray-300">${urun.kdv}</td>
+      const str = `<tr class="urun${
+        urun.id
+      } cursor-pointer hover:bg-black/5 text-[0.8rem]">
+                  <td class="p-1 border-l border-t border-gray-300">${
+                    urun.name
+                  }</td>
+                  <td class="p-1 border-l border-t border-gray-300">${
+                    urun.url
+                  }</td>
+                  <td class="p-1 border-l border-t border-gray-300">${
+                    urun.kod
+                  }</td>
+                  <td class="p-1 border-l border-t border-gray-300">${urun.fiyat.toFixed(
+                    2
+                  )}</td>
+                  <td class="p-1 border-l border-t border-gray-300">${
+                    urun.indirim
+                  }</td>
+                  <td class="p-1 border-l border-t border-gray-300">${urun.indirimli_fiyat.toFixed(
+                    2
+                  )}</td>
+                    <td class="p-1 border-l border-t border-gray-300">${
+                      urun.stok
+                    }</td>
+                     <td class="p-1 border-l border-t border-gray-300">${
+                       urun.stok - urun.alinan
+                     }</td>
+                      <td class="p-1 border-l border-t border-gray-300">${
+                        urun.kdv
+                      }</td>
               </tr>`;
       $(".urun-area table tbody").append(str);
       $(`.urun-area table tbody .urun${urun.id}`).on("click", function () {
@@ -151,9 +172,10 @@ export const InitUrun = async () => {
       formData["garanti_aciklama"] = JSON.stringify(
         $(".garanti_aciklama .ql-editor").html()
       );
-      formData["indirimli_fiyat"] =  formData.fiyat - (formData.indirim * formData.fiyat) / 100.00;
+      formData["indirimli_fiyat"] =
+        formData.fiyat - (formData.indirim * formData.fiyat) / 100.0;
       if (!selectedUrun) {
-        await addUrun({...formData,kayit_tarih:new Date().getTime()});
+        await addUrun({ ...formData, kayit_tarih: new Date().getTime() });
       } else {
         await updateUrun(formData);
         $(`.btn-urun-temizle`).trigger("click");
@@ -181,7 +203,7 @@ export const InitUrun = async () => {
     $("[name='indirim']").val(selectedUrun.indirim);
     $("[name='indirimli_fiyat']").val(selectedUrun.indirimli_fiyat);
     $("[name='stok']").val(selectedUrun.stok);
-        $("[name='kdv']").val(selectedUrun.kdv);
+    $("[name='kdv']").val(selectedUrun.kdv);
     $(".aciklama .ql-editor").html(JSON.parse(selectedUrun.aciklama));
     $(".garanti_aciklama .ql-editor").html(
       JSON.parse(selectedUrun.garanti_aciklama)
@@ -200,7 +222,8 @@ export const InitUrun = async () => {
       formData["garanti_aciklama"] = JSON.stringify(
         $(".garanti_aciklama .ql-editor").html()
       );
-      formData["indirimli_fiyat"] = formData.fiyat - (formData.indirim * formData.fiyat) / 100;
+      formData["indirimli_fiyat"] =
+        formData.fiyat - (formData.indirim * formData.fiyat) / 100;
       await updateUrun(formData);
       $(`.btn-urun-temizle`).trigger("click");
       $(".btn-close-urun-edit").trigger("click");
@@ -260,7 +283,6 @@ export const InitUrun = async () => {
           makeEventForImgDelete();
         });
       });
-
     });
 
     $("#sortable").sortable({
@@ -279,6 +301,114 @@ export const InitUrun = async () => {
     $(".pop-title-area").html(selectedUrun.name);
     $(".btn-close-urun-resim-edit").on("click", function () {
       $(".urunresim-ekle-pop").remove();
+    });
+  });
+
+  $(".btn-multi-ekle").on("click", async function () {
+    const str = await GetTemp("uruntoplu.hbs");
+    const rand = Handlebars.compile(str);
+    $("body").append(rand({}));
+    $(".toplusave .btn-close").on("click", function () {
+      $(".toplusave").remove();
+    });
+
+    $(".btn-listcsv-sec ").on("click", function () {
+      $(".coklucsvlist").val("");
+      $(".coklucsvlist").trigger("click");
+    });
+    function parseCsv(data) {
+      const re = /(;|\r?\n|\r|^)(?:"([^"]*(?:""[^"]*)*)"|([^;\r\n]*))/gi;
+      const result = [[]];
+      let matches;
+      while ((matches = re.exec(data))) {
+        if (matches[1].length && matches[1] !== ";") result.push([]);
+        result[result.length - 1].push(
+          matches[2] !== undefined ? matches[2].replace(/""/g, '"') : matches[3]
+        );
+      }
+      return result;
+    }
+    function arrayToObject(csvArray) {
+      //Take the first line (headers) from the array and remove it from the array.
+      const headers = csvArray.shift();
+
+      // Iterate through the rows and reduce each column to an object
+      // return csvArray.map((row) =>
+      //   headers.reduce((acc, currentHeader, i) => ({
+      //       ...acc,
+      //       ...{ [currentHeader]: row[i] },
+      //     }),{})
+      // );
+      let newArray = csvArray.map((row) =>
+        headers.reduce((acc, currentHeader, i) => {
+          let newHeader = "";
+          let val = row[i];
+          if (currentHeader == "KDV(%)") {
+            newHeader = "kdv";
+            val = parseInt(val);
+          } else if (currentHeader == "Stok(adet)") {
+            newHeader = "stok";
+            val = parseInt(val);
+          } else if (currentHeader == "Ürün Adı") {
+            newHeader = "name";
+          } else if (currentHeader == "Ürün Fiyat($)") {
+            newHeader = "fiyat";
+            val = parseFloat(val);
+          } else if (currentHeader == "Ürün Kodu") {
+            newHeader = "kod";
+          } else if (currentHeader == "İndirim Oran(%)") {
+            newHeader = "indirim";
+            val = parseInt(val);
+          }
+          return {
+            ...acc,
+            ...{ [newHeader]: val },
+          };
+        }, {})
+      );
+      return newArray.filter((it) => !!it.name);
+    }
+    $(".coklucsvlist").on("change", function () {
+      const file = $(this)[0].files[0];
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const csvArray = parseCsv(e.target.result);
+        const arrayOfObjects = arrayToObject(csvArray);
+        let newArrayItems = [];
+        for (let i = 0; i < arrayOfObjects.length; i++) {
+          let atd = arrayOfObjects[i];
+          let items = {
+            ...atd,
+            aciklama:
+              JSON.stringify(`Ürün Adı : Hidrollik Tek Etkili El Pompası Vanası B Tipi
+Not : Fiyat 1 Adet İçindir.
+Lütfen Ürünün Görselini Dikkatlice İnceleyiniz Ürünün Sizin Numune İle Ölçülerinin Aynı Olduğundan Emin Olup O Şekilde Sipariş Veriniz.`),
+            garanti_aciklama: JSON.stringify(`1-3 Gün İçinde Teslim Edilir`),
+            fiyat: atd.fiyat,
+            indirimli_fiyat: atd.fiyat - (atd.indirim * atd.fiyat) / 100.0,
+            url: StringToUrl(atd.name),
+            parents: JSON.stringify(parents),
+          };
+          newArrayItems.push(items);
+        }
+        if (newArrayItems.length > 0 && newArrayItems.length < 100) {
+            $('.errtxtcsv').html('');
+          const re = await $.ajax({
+            type: "POST",
+            url: "/ctrlpanel/urun/insert-multiple-urun",
+            data: { arrayData: newArrayItems },
+            dataType: "json",
+          });
+          if (re.status) {
+            $(".btn-close-urun-edit").trigger("click");
+            await makeUrunArea(parents);
+            $(".toplusave .btn-close").trigger("click");
+          }
+        }else{
+          $('.errtxtcsv').html("1'den fazla ve max.100 Ürün Ekleyin")
+        }
+      };
+      reader.readAsText(file);
     });
   });
 };

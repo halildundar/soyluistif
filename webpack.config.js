@@ -65,7 +65,7 @@ export default {
         },
       },
       {
-        test: /\.(html|hbs|ico|txt|docx|ps1|config|json|env)$/,
+        test: /\.(html|hbs|ico|txt|docx|ps1|config|json|env|csv)$/,
         type: "javascript/auto",
         use: [
           {

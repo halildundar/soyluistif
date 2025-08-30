@@ -86,7 +86,7 @@ $(async function () {
   SearchHeaderItems();
   Goruntulenenler();
 
-  
+
   if (window.matchMedia('(max-width: 767px)').matches) {
     InitMobilTree();
   }

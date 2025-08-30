@@ -92,3 +92,8 @@ SELECT * from `planlama` WHERE str_to_date(denetim_tarih,'%d.%m.%Y') between str
 nodemailer için gmail şifresi elde etme
 MAIL_PASSWORD='eomk unmg cvfz wxal' (orjianl şifre 'Bet123456*')
 https://security.google.com/settings/security/apppasswords
+
+START TRANSACTION;
+SELECT @A:=SUM(salary) FROM table1 WHERE type=1;
+UPDATE table2 SET summary=@A WHERE type=1;
+COMMIT;
