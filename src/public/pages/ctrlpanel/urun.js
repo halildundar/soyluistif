@@ -151,7 +151,7 @@ export const InitUrun = async () => {
       formData["garanti_aciklama"] = JSON.stringify(
         $(".garanti_aciklama .ql-editor").html()
       );
-      formData["kod"] = "kod1";
+      // formData["kod"] = "kod1";
       console.log(formData.fiyat - (formData.indirim * formData.fiyat) / 100.00);
       formData["indirimli_fiyat"] =  formData.fiyat - (formData.indirim * formData.fiyat) / 100.00;
       if (!selectedUrun) {
