@@ -151,8 +151,6 @@ export const InitUrun = async () => {
       formData["garanti_aciklama"] = JSON.stringify(
         $(".garanti_aciklama .ql-editor").html()
       );
-      // formData["kod"] = "kod1";
-      console.log(formData.fiyat - (formData.indirim * formData.fiyat) / 100.00);
       formData["indirimli_fiyat"] =  formData.fiyat - (formData.indirim * formData.fiyat) / 100.00;
       if (!selectedUrun) {
         await addUrun({...formData,kayit_tarih:new Date().getTime()});
@@ -202,7 +200,6 @@ export const InitUrun = async () => {
       formData["garanti_aciklama"] = JSON.stringify(
         $(".garanti_aciklama .ql-editor").html()
       );
-            console.log(formData.fiyat - (formData.indirim * formData.fiyat) / 100);
       formData["indirimli_fiyat"] = formData.fiyat - (formData.indirim * formData.fiyat) / 100;
       await updateUrun(formData);
       $(`.btn-urun-temizle`).trigger("click");
