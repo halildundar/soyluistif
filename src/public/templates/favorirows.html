@@ -7,7 +7,7 @@
   <thead>
     <tr class=" text-[0.8rem] md:text-[1rem]">
       <th class="md:text-start pl-2">Ürün</th>
-      <th class="text-start">Birim Fiyat(₺)</th>
+      <th class="text-start">Birim Fiyat($)</th>
       <th class="text-start">İndirim</th>
       <th class="text-start"></th>
     </tr>
@@ -25,12 +25,12 @@
       </td>
       <td class="text-start group-hover:text-orange-600">
         <div class="font-semibold text-[0.8rem] md:text-[1.1rem]">
-          {{this.fiyat}}.00 ₺
+          {{#DigitFract this.fiyat 2}}{{/DigitFract}}$
         </div>
       </td>
       <td class="text-start group-hover:text-orange-600" >
         <div class="font-semibold text-[0.8rem] md:text-[1.1rem]">
-          %{{this.indirim}} ({{this.indirimli_fiyat}}₺)
+          {{#DigitFract this.indirimli_fiyat 2}}{{/DigitFract}}$ (%{{this.indirim}})
         </div>
       </td>
       <td>
