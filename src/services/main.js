@@ -32,12 +32,11 @@ export let appRoutes = (app) => {
   KurumsalPageApi(app);
   UrunPageApi(app);
   KategoriPageApi(app);
- 
   MenuApi(app);
   SepetPageApi(app);
   SiparisPageApi(app);
   FavoriPageApi(app);
-    AuthApi(app);
+  AuthApi(app);
   router.post("/templates/get-temp", async (req, res) => {
     const data = req.body;
     if (!data) {

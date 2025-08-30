@@ -152,7 +152,6 @@ export const InitUrun = async () => {
         $(".garanti_aciklama .ql-editor").html()
       );
       formData["kod"] = "kod1";
-      formData["barkod"] = "barkod1";
       formData["indirimli_fiyat"] = Math.ceil(
         formData.fiyat - (formData.indirim * formData.fiyat) / 100
       );

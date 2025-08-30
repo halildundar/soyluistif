@@ -15,6 +15,7 @@ export const SiparişBilgiPageRender = async (req, res) => {
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: mainMenus,
     eticSiteler: eticSiteler,
+    wpno:sett.whatsappno
   });
 };
 

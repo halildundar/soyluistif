@@ -12,6 +12,7 @@ import "./views/pages/website/kurumsal/iletisim.hbs";
 import "./views/pages/website/kurumsal/havale-bildirimleri.hbs";
 import "./views/pages/website/kurumsal/mesafeli-satis-sozlesmesi.hbs";
 import "./views/pages/website/kurumsal/siparis-takip.hbs";
+import "./views/pages/website/auth/login.hbs";
 import "./views/pages/website/urun.hbs";
 import "./views/pages/website/kategori.hbs";
 import "./views/pages/website/sepet/main.hbs";

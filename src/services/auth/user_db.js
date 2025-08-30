@@ -11,7 +11,10 @@ export let handleLogin = async (email, passw) => {
 };
 export let findUserByEmail = async (email) => {
   try {
-    const rows = await DB.Query("SELECT * FROM `users` WHERE `email` = ? ", email);
+    const rows = await DB.Query(
+      "SELECT * FROM `users` WHERE `email` = ? ",
+      email
+    );
     return rows[0];
   } catch (error) {
     console.log(error);
@@ -27,14 +30,43 @@ export let findUserById = async (id) => {
     return false;
   }
 };
+export let findMusteriByEmail = async (email) => {
+  try {
+    const rows = await DB.Query(
+      "SELECT * FROM `musteriler` WHERE `email` = ? ",
+      email
+    );
+    return rows[0];
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+export let findMusteriById = async (id) => {
+  try {
+    const rows = await DB.Query(
+      "SELECT * FROM `musteriler` WHERE `id` = ? ",
+      id
+    );
+    return rows[0];
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 export let comparePassword = (passw, userObject) => {
   return new Promise(async (resolve, reject) => {
     try {
       // const isMatch = await compare(passw, userObject.passw);
-      const isMatch = passw === userObject.sifre;
+      let isMatch;
+      if ("sifre" in userObject) {
+        isMatch = passw === userObject.sifre;
+      } else if ("passw" in userObject) {
+        isMatch = passw === userObject.passw;
+      }
       if (isMatch) {
         resolve(true);
-      }else{
+      } else {
         resolve(`The password that you've entered is incorrect`);
       }
     } catch (e) {
@@ -43,7 +75,7 @@ export let comparePassword = (passw, userObject) => {
   });
 };
 
-export let getpersonel = async ()=>{
+export let getpersonel = async () => {
   try {
     const rows = await DB.Query("SELECT * FROM `users`");
     console.log(rows);
@@ -52,32 +84,78 @@ export let getpersonel = async ()=>{
     console.log(error);
     return false;
   }
-}
-export let updateUser = async (id,queryData)=>{
+};
+export let updateUser = async (id, queryData) => {
   try {
-    const rows = await DB.Query("UPDATE `users` SET ? WHERE id = ?",[queryData,id]);
+    const rows = await DB.Query("UPDATE `users` SET ? WHERE id = ?", [
+      queryData,
+      id,
+    ]);
     return rows;
   } catch (error) {
     console.log(error);
     return false;
   }
-}
-export let saveUser = async (queryData)=>{
+};
+export let saveUser = async (queryData) => {
   try {
-    const rows = await DB.Query("INSERT INTO `users` VALUES (0,?)",[queryData]);
+    const rows = await DB.Query("INSERT INTO `users` VALUES (0,?)", [
+      queryData,
+    ]);
     return rows;
   } catch (error) {
     console.log(error);
     return false;
   }
-}
-export let deleteUser = async (id)=>{
+};
+export let deleteUser = async (id) => {
   try {
-    const rows = await DB.Query("DELETE FROM `users` WHERE id = ?",[id]);
+    const rows = await DB.Query("DELETE FROM `users` WHERE id = ?", [id]);
     return rows;
   } catch (error) {
     console.log(error);
     return false;
   }
-}
+};
 
+
+export let getMusteriler = async () => {
+  try {
+    const rows = await DB.Query("SELECT * FROM `musteriler`");
+    console.log(rows);
+    return rows;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+export let updateMusteri = async (id, others) => {
+  try {
+    const rows = await DB.Query("UPDATE `musteriler` SET ? WHERE id = ?", [
+      others,
+      id,
+    ]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+export let saveMusteri = async (data) => {
+  try {
+    const rows = await DB.Query("INSERT INTO `musteriler` SET ?", [data]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+export let deleteMusteri = async (id) => {
+  try {
+    const rows = await DB.Query("DELETE FROM `musteriler` WHERE id = ?", [id]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};

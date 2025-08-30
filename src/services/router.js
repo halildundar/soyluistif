@@ -24,6 +24,7 @@ import {
 } from "./web/dbdata.js";
 import { FavorilerPageRender } from "./web/favoriler.js";
 import { RaporUrunApi } from "./ctrlpanel/rapor-urunler.js";
+import {checkMusteriLoggedIn} from './auth/auth.js';
 export const HomePageApi = (app) => {
   router.get("/", HomePageRender);
   return app.use("/", router);
@@ -140,8 +141,8 @@ export const SiparisPageApi = (app) => {
 };
 export const SepetPageApi = (app) => {
   router.get("/sepet*", SepetPageRender);
-  router.get("/siparis-bilgi*", SiparişBilgiPageRender);
-  router.get("/odeme*", OdemePageRender);
+  router.get("/siparis-bilgi*",checkMusteriLoggedIn, SiparişBilgiPageRender);
+  router.get("/odeme*",checkMusteriLoggedIn, OdemePageRender);
   router.post("/sepet/get-urunler", async (req, res) => {
     const data = req.body;
     if (!data) {

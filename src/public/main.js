@@ -12,6 +12,7 @@ import { SiparisInit } from "./pages/siparis.js";
 import { OdemeInit } from "./pages/odeme.js";
 import { OdemeResultInit } from "./pages/odeme-result.js";
 import { FavorilerInit } from "./pages/favoriler.js";
+import { LoginInit } from "./pages/auth/login.js";
 export const HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page" //"http://localhost:3000";
 // export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let myloc;
@@ -69,7 +70,11 @@ $(async function () {
     FavorilerInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
-  } else {
+  }else if (pathname == "/login") {
+       LoginInit();
+    $("body").css("overflow", "auto");
+    $(".all-spinn").css("display", "none");
+  }else {
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
   }
