@@ -54,8 +54,8 @@
                                 %{{this.indirim}}
                             </div>
                             <div>
-                                <div class="line-through text-[0.8rem] text-[--koyu]">{{this.fiyat}}.00₺</div>
-                                <div class="text-[1rem] leading-tight"><strong>{{this.indirimli_fiyat}}.00₺</strong>
+                               <div class="line-through text-[0.8rem] text-[--koyu]">{{#DigitFract this.fiyat 2}} {{/DigitFract}}$</div>
+                                <div class="text-[1rem] leading-tight"><strong>{{#DigitFract this.indirimli_fiyat 2}}  {{/DigitFract}}$</strong>
                                 </div>
                             </div>
                         </div>
@@ -124,8 +124,8 @@
                                 %{{this.indirim}}
                             </div>
                             <div>
-                                <div class="line-through text-[0.8rem] text-[--koyu]">{{this.fiyat}}.00₺</div>
-                                <div class="text-[1rem] leading-tight"><strong>{{this.indirimli_fiyat}}.00₺</strong>
+                                <div class="line-through text-[0.8rem] text-[--koyu]">{{#DigitFract this.fiyat 2}} {{/DigitFract}}$</div>
+                                <div class="text-[1rem] leading-tight"><strong>{{#DigitFract this.indirimli_fiyat 2}}  {{/DigitFract}}$</strong>
                                 </div>
                             </div>
                         </div>
@@ -196,8 +196,8 @@
                                 %{{this.indirim}}
                             </div>
                             <div>
-                                <div class="line-through text-[0.8rem] text-[--koyu]">{{this.fiyat}}.00₺</div>
-                                <div class="text-[1rem] leading-tight"><strong>{{this.indirimli_fiyat}}.00₺</strong>
+                             <div class="line-through text-[0.8rem] text-[--koyu]">{{#DigitFract this.fiyat 2}} {{/DigitFract}}$</div>
+                                <div class="text-[1rem] leading-tight"><strong>{{#DigitFract this.indirimli_fiyat 2}}  {{/DigitFract}}$</strong>
                                 </div>
                             </div>
                         </div>

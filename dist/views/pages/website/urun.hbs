@@ -56,8 +56,8 @@
                             <div class="">İndirim</div>
                         </div>
                         <div class="inline-block">
-                            <div class="text-gray-600 text-[1.4rem] font-bold line-through ">{{urun.fiyat}}.00₺</div>
-                            <div class="text-[2rem] leading-none font-bold">{{urun.indirimli_fiyat}}.00₺</div>
+                            <div class="text-gray-600 text-[1.4rem] font-bold line-through ">{{#DigitFract urun.fiyat 2}} {{/DigitFract}}$</div>
+                            <div class="text-[2rem] leading-none font-bold">{{#DigitFract urun.indirimli_fiyat 2}}  {{/DigitFract}}$</div>
                         </div>
                     </div>
                     <div class="pt-5">

@@ -8,6 +8,9 @@ export function list(value, name, options) {
   );
 }
 
+export function DigitFract(value,fractDigit) {
+  return value.toFixed(fractDigit)
+}
 
 export function IsEq(v1, v2, options) {
   if (v1 === v2) {

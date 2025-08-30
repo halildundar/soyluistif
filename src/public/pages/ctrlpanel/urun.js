@@ -44,9 +44,9 @@ const makeUrunArea = async (parents) => {
                   <td class="p-1 border-l border-t border-gray-300">${urun.name}</td>
                   <td class="p-1 border-l border-t border-gray-300">${urun.url}</td>
                   <td class="p-1 border-l border-t border-gray-300">${urun.kod}</td>
-                  <td class="p-1 border-l border-t border-gray-300">${urun.fiyat}</td>
+                  <td class="p-1 border-l border-t border-gray-300">${urun.fiyat.toFixed(2)}</td>
                   <td class="p-1 border-l border-t border-gray-300">${urun.indirim}</td>
-                  <td class="p-1 border-l border-t border-gray-300">${urun.indirimli_fiyat}</td>
+                  <td class="p-1 border-l border-t border-gray-300">${urun.indirimli_fiyat.toFixed(2)}</td>
                     <td class="p-1 border-l border-t border-gray-300">${urun.stok}</td>
                      <td class="p-1 border-l border-t border-gray-300">${urun.stok - urun.alinan}</td>
                       <td class="p-1 border-l border-t border-gray-300">${urun.kdv}</td>
@@ -152,9 +152,8 @@ export const InitUrun = async () => {
         $(".garanti_aciklama .ql-editor").html()
       );
       formData["kod"] = "kod1";
-      formData["indirimli_fiyat"] = Math.ceil(
-        formData.fiyat - (formData.indirim * formData.fiyat) / 100
-      );
+      console.log(formData.fiyat - (formData.indirim * formData.fiyat) / 100.00);
+      formData["indirimli_fiyat"] =  formData.fiyat - (formData.indirim * formData.fiyat) / 100.00;
       if (!selectedUrun) {
         await addUrun({...formData,kayit_tarih:new Date().getTime()});
       } else {
@@ -203,9 +202,8 @@ export const InitUrun = async () => {
       formData["garanti_aciklama"] = JSON.stringify(
         $(".garanti_aciklama .ql-editor").html()
       );
-      formData["indirimli_fiyat"] = Math.ceil(
-        formData.fiyat - (formData.indirim * formData.fiyat) / 100
-      );
+            console.log(formData.fiyat - (formData.indirim * formData.fiyat) / 100);
+      formData["indirimli_fiyat"] = formData.fiyat - (formData.indirim * formData.fiyat) / 100;
       await updateUrun(formData);
       $(`.btn-urun-temizle`).trigger("click");
       $(".btn-close-urun-edit").trigger("click");

@@ -2,7 +2,7 @@ import { config } from "dotenv";
 config({ path: ["const.env"] });
 import express from "express";
 import { engine } from "express-handlebars";
-import { list, calc,IsEq,BiggerThan,LessThan,Inc,Json } from "./services/helpers/help.js";
+import { list, calc,IsEq,BiggerThan,LessThan,Inc,Json,DigitFract } from "./services/helpers/help.js";
 import { appRoutes } from "./services/main.js";
 import bodyParser from "body-parser";
 import methodOverride from "method-override";
@@ -49,7 +49,7 @@ app.engine(
     extname: ".hbs",
     layoutsDir: "views/layouts",
     partialsDir: ["views/partials"],
-    helpers: { calc, list, IsEq,BiggerThan,LessThan,Inc,Json },
+    helpers: { calc, list, IsEq,BiggerThan,LessThan,Inc,Json,DigitFract },
   })
 );
 app.set("view engine", ".hbs");

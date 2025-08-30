@@ -25,6 +25,10 @@ Handlebars.registerHelper("IsEq", function (v1, v2, options) {
   }
   return options.inverse(this);
 });
+Handlebars.registerHelper("DigitFract", function (value,fractDigit) {
+ return value.toFixed(fractDigit)
+});
+
 $(async function () {
   myloc = new LocalData();
   let pathname = this.location.pathname;
@@ -142,6 +146,13 @@ const Goruntulenenler = async () => {
             : "/assets/urun/resim_yok.webp",
       };
     });
+    // urunlet = urunlet.map(it=>{
+    //   return {
+    //     ...it,
+    //     fiyat:it.fiyat.toFixed(2),
+    //     indirimli_fiyat:it.indirimli_fiyat.toFixed(2)
+    //   }
+    // })
     for (let i = 0; i < urunlet.length; i++) {
       let urun = urunlet[i];
       $(".caro-son .owl-carousel.owl-theme").append(`
@@ -169,8 +180,8 @@ const Goruntulenenler = async () => {
               %${urun.indirim}
             </div>
             <div>
-              <div class="line-through text-[0.8rem] text-[--koyu]">${urun.fiyat}.00₺</div>
-              <div class="text-[1rem] leading-tight"><strong>${urun.indirimli_fiyat}.00₺</strong>
+              <div class="line-through text-[0.8rem] text-[--koyu]">${urun.fiyat.toFixed(2)}$</div>
+              <div class="text-[1rem] leading-tight"><strong>${urun.indirimli_fiyat.toFixed(2)}$</strong>
               </div>
             </div>
           </div>

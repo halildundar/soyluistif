@@ -45,7 +45,6 @@ export const UrunPageApi = (app) => {
       return;
     }
     const { ids } = data;
-    console.log(ids);
     const result = await DB.Query("SELECT * FROM `urun` WHERE id IN  ?", [[ids]]);
     return res.json(result);
   });
