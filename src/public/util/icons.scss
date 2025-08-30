@@ -1,16 +1,16 @@
-// @font-face {
-//   font-family: "The-Icon-of";
-//   src: url("./util/fonts/The-Icon-of.woff2");
-//   src: url("./util/fonts/The-Icon-of.eot");
-//   src: url("./util/fonts/The-Icon-of.eot#iefix") format("embedded-opentype"),
-//     url("./util/fonts/The-Icon-of.woff2") format("woff2"),
-//     url("./util/fonts/The-Icon-of.ttf") format("truetype"),
-//     url("./util/fonts/The-Icon-of.woff") format("woff"),
-//     url("./util/fonts/The-Icon-of.svg#The-Icon-of") format("svg");
-//   font-weight: normal;
-//   font-style: normal;
-//   font-display: block;
-// }
+@font-face {
+  font-family: "The-Icon-of";
+  src: url("./util/fonts/The-Icon-of.woff2");
+  src: url("./util/fonts/The-Icon-of.eot");
+  src: url("./util/fonts/The-Icon-of.eot#iefix") format("embedded-opentype"),
+    url("./util/fonts/The-Icon-of.woff2") format("woff2"),
+    url("./util/fonts/The-Icon-of.ttf") format("truetype"),
+    url("./util/fonts/The-Icon-of.woff") format("woff"),
+    url("./util/fonts/The-Icon-of.svg#The-Icon-of") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
 .tio {
   font-family: "The-Icon-of";
   font-style: normal;
