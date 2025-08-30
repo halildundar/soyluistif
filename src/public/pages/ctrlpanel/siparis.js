@@ -9,7 +9,7 @@ export const InitSiparis = async () => {
   });
   if (!!siparisler && siparisler.length > 1) {
     siparisler = siparisler.sort((a, b) =>
-      parseInt(a.systemTime) < parseInt(b.systemTime) ? 1 : -1
+      parseFloat(a.systemTime) < parseFloat(b.systemTime) ? 1 : -1
     );
   }
   let newDatas = siparisler.map((item) => {
@@ -47,7 +47,7 @@ export const InitSiparis = async () => {
         urunlerStr += `<li>
             <span>   ${urun.adet} x <strong>${urun.name}</strong></span>
             <span> - </span>
-            <span>${urun.indirimli_fiyat}₺</span>
+            <span>${urun.indirimli_fiyat.toFixed(2)}$</span>
         </li>`;
       }
       let iadelerStr = "";
@@ -57,9 +57,9 @@ export const InitSiparis = async () => {
         iadelerStr += `<li>
             <span>   ${urun.adet} x <strong>${urun.name}</strong></span>
             <span> - </span>
-            <span>${urun.indirimli_fiyat}₺</span>
+            <span>${urun.indirimli_fiyat.toFixed(2)}$</span>
         </li>`;
-        iadelerTop += parseInt(urun.price);
+        iadelerTop += parseFloat(urun.price);
       }
       let txtStatusColor =
         siparis.status === "Sipariş İptal Edildi"
@@ -100,7 +100,7 @@ export const InitSiparis = async () => {
                     </div>
             </td>
              <td class="p-1 border-l border-t border-gray-200  px-2">
-                <div>${siparis.price - iadelerTop}.00₺</div>
+                <div>${siparis.price - iadelerTop}.00$</div>
              </td>
                 <td class="p-1 border-l border-t border-gray-200 text-[0.7rem]  px-2">
               <strong>Kargo Adres:</strong> ${
@@ -137,9 +137,9 @@ export const InitSiparis = async () => {
                                     <td class="py-1 flex items-center" ><input type="checkbox"  data-ur="${item.id}" class="w-[1.2rem] h-[1.2rem]"></td>
                                     <td class="py-1">${item.adet} x ${item.name}</td>
                                     <td class="py-1">${item.indirim}%</td>
-                                    <td class="py-1">${item.fiyat}₺</td>
-                                    <td class="py-1">${item.indirimli_fiyat}₺</td>
-                                        <td class="text-end font-bold py-1">${item.price}₺</td>
+                                    <td class="py-1">${item.fiyat}$</td>
+                                    <td class="py-1">${item.indirimli_fiyat}$</td>
+                                        <td class="text-end font-bold py-1">${item.price}$</td>
                                 </tr>
             `);
         }
@@ -152,9 +152,9 @@ export const InitSiparis = async () => {
             <tr class="border-y border-gray-200">
                                     <td class="py-1">${item.adet} x ${item.name}</td>
                                     <td class="py-1">${item.indirim}%</td>
-                                    <td class="py-1">${item.fiyat}₺</td>
-                                    <td class="py-1">${item.indirimli_fiyat}₺</td>
-                                        <td class="text-end font-bold py-1">${item.price}₺</td>
+                                    <td class="py-1">${item.fiyat}$</td>
+                                    <td class="py-1">${item.indirimli_fiyat}$</td>
+                                        <td class="text-end font-bold py-1">${item.price}$</td>
                                 </tr>
             `);
           }
