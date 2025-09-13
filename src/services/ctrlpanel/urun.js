@@ -196,14 +196,12 @@ export const UrunApi = async (app) => {
       return;
     }
     let {arrayData} = data;
-    let promises = [];
-    await  DB.Query("START TRANSACTION");
-    for (let i = 0; i < arrayData.length; i++) {
-      const element = arrayData[i];
-      promises.push(DB.Query("INSERT INTO `urun` set ?",[{...element}]));
+    // let promises = [];
+    const rs = await  DB.Query("START TRANSACTION");
+    for (const element of arrayData) {
+          await DB.Query("INSERT INTO `urun` set ?",[{...element}])
     }
-    await Promise.all(promises);
-    await  DB.Query("COMMIT");
+    const re1 = await  DB.Query("COMMIT");
     return res.json({status:true,msg:'Ok!'});
   });
   return app.use("/", router);

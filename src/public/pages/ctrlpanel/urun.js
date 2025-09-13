@@ -312,7 +312,7 @@ export const InitUrun = async () => {
       $(".toplusave").remove();
     });
 
-    $(".btn-listcsv-sec ").on("click", function () {
+    $(".btn-listcsv-sec").on("click", function () {
       $(".coklucsvlist").val("");
       $(".coklucsvlist").trigger("click");
     });
@@ -369,6 +369,7 @@ export const InitUrun = async () => {
       return newArray.filter((it) => !!it.name);
     }
     $(".coklucsvlist").on("change", function () {
+      $(".toplusave .spnte").css('display','flex');
       const file = $(this)[0].files[0];
       const reader = new FileReader();
       reader.onload = async (e) => {
@@ -399,6 +400,7 @@ Lütfen Ürünün Görselini Dikkatlice İnceleyiniz Ürünün Sizin Numune İle
             data: { arrayData: newArrayItems },
             dataType: "json",
           });
+          console.log("re",re)
           if (re.status) {
             $(".btn-close-urun-edit").trigger("click");
             await makeUrunArea(parents);
@@ -407,6 +409,7 @@ Lütfen Ürünün Görselini Dikkatlice İnceleyiniz Ürünün Sizin Numune İle
         }else{
           $('.errtxtcsv').html("1'den fazla ve max.100 Ürün Ekleyin")
         }
+           $(".toplusave .spnte").css('display','none');
       };
       reader.readAsText(file);
     });

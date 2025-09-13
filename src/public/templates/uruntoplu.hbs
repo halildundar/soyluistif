@@ -1,25 +1,30 @@
-<div class="toplusave fixed top-0 left-0 w-[100vw] h-[100vh] flex items-center justify-center flex-col bg-black/10">
-    <div class="py-1 px-2 pl-3 flex flex-col bg-white w-[30vw]  rounded shadow-[0_0_10px_1px_rgba(0,0,0,0.3)]">
+<div class="toplusave fixed top-0 left-0 w-[100vw] h-[100vh] flex items-center justify-center flex-col bg-black/10 ">
+    <div class="py-1 px-2 pl-3 flex flex-col bg-white w-[30vw]  rounded shadow-[0_0_10px_1px_rgba(0,0,0,0.3)] relative overflow-hidden">
         <div class="flex items-center space-x-1">
             <div class="font-semibold">Çoklu Kaydetme</div>
             <div>
-              
+
             </div>
             <div class="flex-1"></div>
 
             <button class="btn-close tio bg-black/5 hover:bg-black/10 active:bg-black/0 p-1 rounded-full">clear</button>
         </div>
-          <div class="text-center pt-5 errtxtcsv text-red-600 font-bold"></div>
+        <div class="text-center pt-5 errtxtcsv text-red-600 font-bold"></div>
         <div class="text-center pt-5">
-            <a href="/assets/temp-multiple-urun.csv" target="_blank" download="temp-multiple-urun.csv" class=" text-green-600 hover:underline hover:cursor-pointer">Template Dosyası</a>
+            <a href="/assets/temp-multiple-urun.csv" target="_blank" download="temp-multiple-urun.csv"
+                class=" text-green-600 hover:underline hover:cursor-pointer">Template Dosyası</a>
         </div>
-       
+
         <div class="flex items-center justify-center py-5">
-              
+
             <button
                 class="btn-listcsv-sec bg-blue-500 hover:bg-blue-700 active:bg-blue-400 text-white rounded px-2 py-1 text-[0.8rem]">Dosya
                 Seç</button>
-                <input type="file" class="hidden coklucsvlist" accept=".csv">
+            <input type="file" class="hidden coklucsvlist" accept=".csv">
+        </div>
+        <div style="display: none;" class="spnte absolute top-0 left-0 w-full h-full bg-white/80 flex flex-col items-center justify-center">
+            <div class="spin icon-spin-1 spin-steps1 text-orange-500 text-[1.4rem]"></div>
         </div>
     </div>
+
 </div>
