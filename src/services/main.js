@@ -11,7 +11,8 @@ import {
   MenuApi,
   SepetPageApi,
   SiparisPageApi,
-  FavoriPageApi
+  FavoriPageApi,
+  MusteriApi
 } from "./router.js";
 import {IyzicoApi} from './iyzipay.js';
 import {AdresApi} from './adres.js';
@@ -37,6 +38,8 @@ export let appRoutes = (app) => {
   SiparisPageApi(app);
   FavoriPageApi(app);
   AuthApi(app);
+  
+  MusteriApi(app);
   router.post("/templates/get-temp", async (req, res) => {
     const data = req.body;
     if (!data) {

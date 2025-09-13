@@ -18,7 +18,7 @@ const settingsCaro1 = {
    autoHeight: false,
   // Responsive
   responsive: true,
-  items: 6,
+  items: 5,
   itemsDesktop: [1199, 1],
   itemsDesktopSmall: [980, 1],
   itemsTablet: [768, 1],

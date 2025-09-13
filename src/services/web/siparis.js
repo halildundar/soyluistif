@@ -30,7 +30,8 @@ export const SiparişlerPageRender = async (req, res) => {
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: mainMenus,
     eticSiteler: eticSiteler,
-    wpno:sett.whatsappno
+    wpno:sett.whatsappno,
+    musteri:req.user
   };
   if (!!query && !!query["crp"]) {
     const [siparis] = await SiparisByiIyzIDGet([query.crp]);
@@ -54,7 +55,8 @@ export const SiparişlerPageRender = async (req, res) => {
       tarih: time,
       shippingAddress,billingAddress,
       urunlerStr,
-      wpno:sett.whatsappno
+      wpno:sett.whatsappno,
+       musteri:req.user
     });
   }
   return res.render("pages/website/siparis/main.hbs", data);

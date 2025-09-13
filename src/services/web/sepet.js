@@ -40,5 +40,6 @@ export const SiparişBilgiPageRender = async (req, res) => {
     menus: mainMenus,
     eticSiteler: eticSiteler,
     wpno: sett.whatsappno,
+     musteri:req.user
   });
 };

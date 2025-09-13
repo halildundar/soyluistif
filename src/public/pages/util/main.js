@@ -18,7 +18,16 @@ export const TopBtnAndScrollPosInit = () => {
   });
   $("html, body").animate({ scrollTop: 0 }, 10);
 };
-
+export const RandomId = (length) => {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
 export const BannerFnc = (selector, time, animespeed) => {
   let slideCount = $(selector + " .wrap .slide").length;
   let slideWidth = $(selector + " .wrap .slide").width();

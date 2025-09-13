@@ -44,6 +44,7 @@ export const KurumsalRender = async (req, res) => {
     pageurl:pageurl,
     menus:mainMenus,
     eticSiteler:eticSiteler,
-    wpno:sett.whatsappno
+    wpno:sett.whatsappno,
+     musteri:req.user
   });
 };

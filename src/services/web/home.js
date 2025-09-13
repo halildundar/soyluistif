@@ -96,6 +96,7 @@ export const HomePageRender = async (req, res) => {
     coksatanlar: coksatanlar,
     enyeniler: enyeniler,
     eticSiteler:eticSiteler,
-    wpno:sett.whatsappno
+    wpno:sett.whatsappno,
+    musteri:req.user
   });
 };

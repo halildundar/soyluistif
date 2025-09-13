@@ -41,7 +41,8 @@ export const KategoriPageRenderAll = async (req, res) => {
     breadcrumbs: breadcrumbs,
     dizi1: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     eticSiteler: eticSiteler,
-    wpno:sett.whatsappno
+    wpno:sett.whatsappno,
+     musteri:req.user
   });
 };
 export const KategoriPageRender = async (req, res) => {
@@ -78,5 +79,6 @@ export const KategoriPageRender = async (req, res) => {
     breadcrumbs: breadcrumbs,
     dizi1: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     eticSiteler: eticSiteler,
+     musteri:req.user
   });
 };

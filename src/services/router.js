@@ -24,7 +24,10 @@ import {
 } from "./web/dbdata.js";
 import { FavorilerPageRender } from "./web/favoriler.js";
 import { RaporUrunApi } from "./ctrlpanel/rapor-urunler.js";
-import {checkMusteriLoggedIn} from './auth/auth.js';
+import {checkMusteriLoggedIn,checkMusteriLoggedOut} from './auth/auth.js';
+import {Uyeol, UyeOlPageRender} from "./web/musteri/uye-ol.js";
+import {OnayKodPageRender} from "./web/musteri/onay-kod.js";
+import {UserBilgiPageRender} from  "./web/musteri/user-bilgi.js";
 export const HomePageApi = (app) => {
   router.get("/", HomePageRender);
   return app.use("/", router);
@@ -134,7 +137,7 @@ export const SiparisPageApi = (app) => {
     const result = await SiparisByiIyzIDGet(ids);
     return res.json(result);
   });
-  router.get("/siparis*", SiparişlerPageRender);
+  router.get("/siparis*",checkMusteriLoggedIn, SiparişlerPageRender);
   router.get("/siparis", (req, res) => res.redirect("/siparis/"));
   return app.use("/", router);
 };
@@ -172,6 +175,13 @@ export const FavoriPageApi = (app) => {
   router.get("/sepet", (req, res) => res.redirect("/sepet/"));
   return app.use("/", router);
 };
+export const MusteriApi = (app)=>{
+    router.get("/uye-ol", UyeOlPageRender);
+     router.post("/uye-ol", Uyeol);
+    router.get("/onay-kodu",OnayKodPageRender);
+    router.get("/musteri",checkMusteriLoggedIn,UserBilgiPageRender)
+  return app.use("/", router);
+}
 
 //Kontrol Panel Router
 export const CtrlPanelPageApi = (app) => {

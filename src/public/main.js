@@ -13,6 +13,8 @@ import { OdemeInit } from "./pages/odeme.js";
 import { OdemeResultInit } from "./pages/odeme-result.js";
 import { FavorilerInit } from "./pages/favoriler.js";
 import { LoginInit } from "./pages/auth/login.js";
+import { UyeOlInit } from "./pages/auth/uyeol.js";
+import { OnayKodInit } from "./pages/auth/onay-kod.js";
 export const HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page" //"http://localhost:3000";
 // export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let myloc;
@@ -78,6 +80,14 @@ $(async function () {
        LoginInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
+  }else if (pathname == "/uye-ol") {
+       UyeOlInit();
+    $("body").css("overflow", "auto");
+    $(".all-spinn").css("display", "none");
+  }else if (pathname == "/onay-kodu") {
+       OnayKodInit();
+    $("body").css("overflow", "auto");
+    $(".all-spinn").css("display", "none");
   }else {
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
@@ -86,7 +96,14 @@ $(async function () {
   SearchHeaderItems();
   Goruntulenenler();
 
-
+  $(".btn-logut").on('click',async function(){
+    await $.ajax({
+      type: "POST",
+      url: "/logout",
+      data: {}
+    });
+    location.href = location.href;
+  });
   if (window.matchMedia('(max-width: 767px)').matches) {
     InitMobilTree();
   }

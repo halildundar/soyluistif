@@ -52,7 +52,7 @@ export let Authenticate = (req, res, next) => {
   })(req, res, next);
 };
 export let Authenticate1 = (req, res, next) => {
-  passport.authenticate("musteri", function (err, user, info) {
+  return passport.authenticate("musteri", function (err, user, info) {
     switch (req.accepts("html", "json")) {
       case "html":
         if (err) {
@@ -73,10 +73,8 @@ export let Authenticate1 = (req, res, next) => {
           return next(err);
         }
         if (!user) {
-          console.log("Kullunıcı bulunamadı");
-          return res
-            .status(401)
-            .json({ ok: false, msg: "Kullunıcı bulunamadı" });
+          console.log("Kullunıcı bulunamadı11");
+          return res.status(401).json({ ok: false, msg: "Kullunıcı bulunamadı" });
         }
         if (!!info) {
           console.log(info, user);
@@ -100,7 +98,7 @@ export let Authenticate1 = (req, res, next) => {
   })(req, res, next);
 };
 export let initPassportLocal = () => {
-  const localOptions = {
+  let localOptions = {
     usernameField: "email",
     passwordField: "sifre",
     passReqToCallback: true,
@@ -133,6 +131,11 @@ export let initPassportLocal = () => {
       }
     }
   );
+  localOptions = {
+    usernameField: "email",
+    passwordField: "passw",
+    passReqToCallback: true,
+  };
   const localStrtegyMusteri = new LocalStrategy(
     localOptions,
     async (req, email, sifre, done) => {
