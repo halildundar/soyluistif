@@ -15,7 +15,7 @@ import { FavorilerInit } from "./pages/favoriler.js";
 import { LoginInit } from "./pages/auth/login.js";
 import { UyeOlInit } from "./pages/auth/uyeol.js";
 import { OnayKodInit } from "./pages/auth/onay-kod.js";
-export const HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page" //"http://localhost:3000";
+export const HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page"; //"http://localhost:3000";
 // export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let myloc;
 Handlebars.registerHelper("inc", function (value, options) {
@@ -27,8 +27,8 @@ Handlebars.registerHelper("IsEq", function (v1, v2, options) {
   }
   return options.inverse(this);
 });
-Handlebars.registerHelper("DigitFract", function (value,fractDigit) {
- return value.toFixed(fractDigit)
+Handlebars.registerHelper("DigitFract", function (value, fractDigit) {
+  return value.toFixed(fractDigit);
 });
 
 $(async function () {
@@ -76,19 +76,19 @@ $(async function () {
     FavorilerInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
-  }else if (pathname == "/login") {
-       LoginInit();
+  } else if (pathname == "/login") {
+    LoginInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
-  }else if (pathname == "/uye-ol") {
-       UyeOlInit();
+  } else if (pathname == "/uye-ol") {
+    UyeOlInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
-  }else if (pathname == "/onay-kodu") {
-       OnayKodInit();
+  } else if (pathname == "/onay-kodu") {
+    OnayKodInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
-  }else {
+  } else {
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
   }
@@ -96,18 +96,17 @@ $(async function () {
   SearchHeaderItems();
   Goruntulenenler();
 
-  $(".btn-logut").on('click',async function(){
+  $(".btn-logut").on("click", async function () {
     await $.ajax({
       type: "POST",
       url: "/logout",
-      data: {}
+      data: {},
     });
     location.href = location.href;
   });
-  if (window.matchMedia('(max-width: 767px)').matches) {
+  if (window.matchMedia("(max-width: 767px)").matches) {
     InitMobilTree();
   }
-
 });
 const Goruntulenenler = async () => {
   const settingsCaroson = {
@@ -178,14 +177,20 @@ const Goruntulenenler = async () => {
     for (let i = 0; i < urunlet.length; i++) {
       let urun = urunlet[i];
       $(".caro-son .owl-carousel.owl-theme").append(`
-       <a class="pr-2  cursor-pointer relative block z-0" route="/urun/${urun.url}" data-ur="${urun.id}">
+       <a class="pr-2  cursor-pointer relative block z-0" route="/urun/${
+         urun.url
+       }" data-ur="${urun.id}">
         <div
           class="btn-fav z-10 absolute top-4 right-5  text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
           heart_outlined</div>
         <div class=" border border-gray-300 rounded-lg overflow-hidden pb-2">
           <div class="group h-[200px] overflow-hidden ">
-            <img src="${urun.img_on}" class="group-hover:hidden w-full h-full" alt="">
-            <img src="${urun.img_arka}" class="hidden group-hover:block w-full h-full" alt="">
+            <img src="${
+              urun.img_on
+            }" class="group-hover:hidden w-full h-full" alt="">
+            <img src="${
+              urun.img_arka
+            }" class="hidden group-hover:block w-full h-full" alt="">
           </div>
           <div class="py-2">
             <div class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold px-5 line-clamp-1">
@@ -194,7 +199,9 @@ const Goruntulenenler = async () => {
           </div>
           <div class="py-2">
             <div class="urun-kod text-center text-[0.8rem]">${urun.kod}</div>
-            <div class="stok text-[--koyu] text-[0.8rem] text-center"><strong>Stok:</strong>${urun.kalan_stok} adet
+            <div class="stok text-[--koyu] text-[0.8rem] text-center"><strong>Stok:</strong>${
+              urun.kalan_stok
+            } adet
             </div>
           </div>
           <div class="flex items-center w-1/2 mx-auto space-x-3">
@@ -202,12 +209,18 @@ const Goruntulenenler = async () => {
               %${urun.indirim}
             </div>
             <div>
-              <div class="line-through text-[0.8rem] text-[--koyu]">${urun.fiyat.toFixed(2)}$</div>
-              <div class="text-[1rem] leading-tight"><strong>${urun.indirimli_fiyat.toFixed(2)}$</strong>
+              <div class="line-through text-[0.8rem] text-[--koyu]">${urun.fiyat.toFixed(
+                2
+              )}$</div>
+              <div class="text-[1rem] leading-tight"><strong>${urun.indirimli_fiyat.toFixed(
+                2
+              )}$</strong>
               </div>
             </div>
           </div>
-          <div class="btn-sepet-area py-2 flex items-center flex-col justify-center" data-ur="${urun.id}">
+          <div class="btn-sepet-area py-2 flex items-center flex-col justify-center" data-ur="${
+            urun.id
+          }">
             <div class="inline-flex border border-gray-200">
               <div data-ur="${urun.id}"
                 class="btn-subsepet tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
@@ -253,12 +266,13 @@ const getMenuList = async (id, parent_length) => {
 export const makeMenuItems = () => {
   function initMenuEvent() {
     $("a[href*='/kategori/']").on("mouseenter", async function () {
+      $(".indexMenu1").remove();
       $(this).off("mouseenter");
       const alt_menus = await getMenuList(
         $(this).attr("data-id"),
         $(this).attr("data-index")
       );
-      let str = `<div class="indexMenu1 absolute top-full left-0 w-[300px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
+      let str = `<div class="indexMenu1 absolute top-full -left-1/2 w-[275px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
       for (let i = 0; i < alt_menus.length; i++) {
         const menu = alt_menus[i];
         str += `
@@ -282,7 +296,8 @@ ${menu.name}
           $(this).attr("data-id"),
           $(this).attr("data-index")
         );
-        let str = `<div class="indexMenu2 absolute top-0 left-full w-[300px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
+        $(".indexMenu2").remove();
+        let str = `<div class="indexMenu2 absolute top-full right-0 w-[200px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
         for (let i = 0; i < alt_menus.length; i++) {
           const menu = alt_menus[i];
           str += `
@@ -404,26 +419,30 @@ const IsSelectKategori = async (kategori, kate) => {
 };
 
 const InitMobilTree = async () => {
-
-  $('.btn-srcee ').on('click',function(){
-    window.location = '/kategori/all?search=' + $('.intt-serc ').val()
-  })
+  $(".btn-srcee ").on("click", function () {
+    window.location = "/kategori/all?search=" + $(".intt-serc ").val();
+  });
   $(".btn-men-clos").on("click", function () {
-    $(".mob-sde-mn").animate({
-      width: "0",
-      overflow:"hidden",
-      opacity:0
-    },200);
-      $('body').css({overflow:'auto'});
-
+    $(".mob-sde-mn").animate(
+      {
+        width: "0",
+        overflow: "hidden",
+        opacity: 0,
+      },
+      200
+    );
+    $("body").css({ overflow: "auto" });
   });
   $(".mob-sid-men-op").on("click", function () {
-      $('body').css({overflow:'hidden'});
+    $("body").css({ overflow: "hidden" });
 
-    $(".mob-sde-mn").animate({
-      width: "100vw",
-      opacity:1
-    },200);
+    $(".mob-sde-mn").animate(
+      {
+        width: "100vw",
+        opacity: 1,
+      },
+      200
+    );
   });
   await GetKategoriler();
   // let TopKateogirler = getSubKateg(0, kategoriler.length);
