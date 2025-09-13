@@ -272,7 +272,7 @@ export const makeMenuItems = () => {
         $(this).attr("data-id"),
         $(this).attr("data-index")
       );
-      let str = `<div class="indexMenu1 absolute top-full -left-1/2 w-[275px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
+      let str = `<div class="indexMenu1 absolute top-full -left-1/2 w-[250px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
       for (let i = 0; i < alt_menus.length; i++) {
         const menu = alt_menus[i];
         str += `
@@ -297,7 +297,7 @@ ${menu.name}
           $(this).attr("data-index")
         );
         $(".indexMenu2").remove();
-        let str = `<div class="indexMenu2 absolute top-full right-0 w-[200px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
+        let str = `<div class="indexMenu2 absolute top-full -right-[4rem] w-[200px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
         for (let i = 0; i < alt_menus.length; i++) {
           const menu = alt_menus[i];
           str += `
