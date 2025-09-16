@@ -28,7 +28,7 @@ const RaporUrunler = async (req, res) => {
     let urunler = await getAllUrunler();
     return res.json(urunler);
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return res.json(error);
   }
 };
@@ -84,22 +84,26 @@ export const RaporUrunApi = async (app) => {
 
 const getAllUrunler = async () => {
   let rows = await DB.Query("SELECT * from `urun`");
-  rows = rows.sort((a, b) => (a.name < b.name ? -1 : 1));
-  rows = rows.map((item) => {
-    return {
-      ...item,
-      kalan: item.stok - item.alinan,
-      resimler: JSON.parse(item.resimler),
-      parents: JSON.parse(item.parents),
-    };
-  });
-  let promises = [];
-  for (let i = 0; i < rows.length; i++) {
-    const urun = rows[i];
-    promises.push(makeParents(urun));
-  }
+  console.error(rows);
+  if (!!rows) {
+    rows = rows.sort((a, b) => (a.name < b.name ? -1 : 1));
+    rows = rows.map((item) => {
+      return {
+        ...item,
+        kalan: item.stok - item.alinan,
+        resimler: JSON.parse(item.resimler),
+        parents: JSON.parse(item.parents),
+      };
+    });
+    let promises = [];
+    for (let i = 0; i < rows.length; i++) {
+      const urun = rows[i];
+      promises.push(makeParents(urun));
+    }
 
-  return Promise.all(promises);
+    return Promise.all(promises);
+  }
+  return [];
 };
 const makeParents = async (urun) => {
   let promises = [];
