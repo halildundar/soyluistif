@@ -28,6 +28,7 @@ const RaporUrunler = async (req, res) => {
     let urunler = await getAllUrunler();
     return res.json(urunler);
   } catch (error) {
+    console.error(error)
     return res.json(error);
   }
 };

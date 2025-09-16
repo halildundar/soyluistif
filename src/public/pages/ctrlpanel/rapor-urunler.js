@@ -13,24 +13,24 @@ export const InitRaporUrunler = async () => {
   popCSV();
 };
 const popCSV = () => {
-    let csvUrl = '';
+  let csvUrl = "";
   $(".btn-xprtcsv").on("click", function () {
     $(".spnurunadet").html(filteredUrunler.length);
     $(".csvpopurunler").css("display", "flex");
   });
-  $(".csvpopurunler .btn-close").on("click",async function () {
+  $(".csvpopurunler .btn-close").on("click", async function () {
     $(".csvpopurunler").css("display", "none");
     $(".indrlink").css("display", "none");
     $(".indrlink a").attr("href", "").attr("download", "");
-    if(!!csvUrl){
-        await $.ajax({
-            type: "POST",
-            url: "/ctrlpanel/rapor-deletecsv",
-            data: {url:csvUrl},
-            dataType: "json",
-        });
+    if (!!csvUrl) {
+      await $.ajax({
+        type: "POST",
+        url: "/ctrlpanel/rapor-deletecsv",
+        data: { url: csvUrl },
+        dataType: "json",
+      });
     }
-    csvUrl = '';
+    csvUrl = "";
   });
 
   $(".btn-print-run").on("click", async function () {
@@ -73,19 +73,21 @@ const searchArea = () => {
   });
 };
 const getUrunler = async () => {
-  allUrunler = await $.ajax({
+  let items = await $.ajax({
     type: "POST",
     url: "/ctrlpanel/rapor-urunler",
-    data: { },
+    data: {},
     dataType: "json",
   });
-  filteredUrunler = [...allUrunler];
-  rendTempTable = await GetTemp("raporuruntable.hbs");
-  $(".inittble").html(
-    rendTempTable({
-      urunler: allUrunler,
-    })
-  );
+  if (!!items && items.length >= 0) {
+    filteredUrunler = [...allUrunler];
+    rendTempTable = await GetTemp("raporuruntable.hbs");
+    $(".inittble").html(
+      rendTempTable({
+        urunler: allUrunler,
+      })
+    );
+  }
 };
 const SeeIamges = () => {
   $(".seeImgs").remove();
