@@ -59,14 +59,14 @@ export const DB = new NewDB(
   dbConfig.password
 );
 
-const runTestDb = async () => {
-  let kategoriler = await DB.Query("SELECT * FROM `kategori`");
-  for (let i = 0; i < kategoriler.length; i++) {
-    let parents = kategoriler[i].parents;
-    if (!!parents && parents.includes(`"`)) {
-      parents = parents.replace(/"/g, "");
-      await DB.Query("UPDATE `kategori` SET parents = ? WHERE id = ?",[parents,kategoriler[i].id])
-    }
-  }
-};
-runTestDb();
+// const runKAtegoriTirnakRemove = async () => {
+//   let kategoriler = await DB.Query("SELECT * FROM `kategori`");
+//   for (let i = 0; i < kategoriler.length; i++) {
+//     let parents = kategoriler[i].parents;
+//     if (!!parents && parents.includes(`"`)) {
+//       parents = parents.replace(/"/g, "");
+//       await DB.Query("UPDATE `kategori` SET parents = ? WHERE id = ?",[parents,kategoriler[i].id])
+//     }
+//   }
+// };
+// runKAtegoriTirnakRemove();
