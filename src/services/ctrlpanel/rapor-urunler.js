@@ -84,9 +84,15 @@ export const RaporUrunApi = async (app) => {
 
 const getAllUrunler = async () => {
   let rows = await DB.Query("SELECT * from `urun`");
-  console.error(rows);
   if (!!rows) {
-    rows = rows.sort((a, b) => (a.name < b.name ? -1 : 1));
+    
+    rows = rows.sort((a, b) => {
+      if(!a.name){
+        console.error(a)
+      }
+      
+      return !!a.name && !!b.name && a.name < b.name ? -1 : 1
+    });
     rows = rows.map((item) => {
       return {
         ...item,
