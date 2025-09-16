@@ -15,7 +15,10 @@ import { FavorilerInit } from "./pages/favoriler.js";
 import { LoginInit } from "./pages/auth/login.js";
 import { UyeOlInit } from "./pages/auth/uyeol.js";
 import { OnayKodInit } from "./pages/auth/onay-kod.js";
-export const HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page"; //"http://localhost:3000";
+import { UserInfoInit } from "./pages/auth/user-info.js";
+import { UserAdresInit } from "./pages/auth/user-adres.js";
+import { UserOrdersInit } from "./pages/auth/user-siparis.js";
+export const HOST_NAME = location.origin; //"http://localhost:3000";
 // export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let myloc;
 Handlebars.registerHelper("inc", function (value, options) {
@@ -86,6 +89,18 @@ $(async function () {
     $(".all-spinn").css("display", "none");
   } else if (pathname == "/onay-kodu") {
     OnayKodInit();
+    $("body").css("overflow", "auto");
+    $(".all-spinn").css("display", "none");
+  } else if (pathname.includes("/cust/info")) {
+    UserInfoInit();
+    $("body").css("overflow", "auto");
+    $(".all-spinn").css("display", "none");
+  } else if (pathname.includes("/cust/adress")) {
+    UserAdresInit();
+    $("body").css("overflow", "auto");
+    $(".all-spinn").css("display", "none");
+  } else if (pathname.includes("/cust/order")) {
+    UserOrdersInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
   } else {
@@ -264,58 +279,64 @@ const getMenuList = async (id, parent_length) => {
 };
 
 export const makeMenuItems = () => {
-  function initMenuEvent() {
+  let timer;
+  let initMenuEvent = () => {
     $("a[href*='/kategori/']").on("mouseenter", async function () {
       $(".indexMenu1").remove();
-      $(this).off("mouseenter");
-      const alt_menus = await getMenuList(
-        $(this).attr("data-id"),
-        $(this).attr("data-index")
-      );
-      let str = `<div class="indexMenu1 absolute top-full -left-1/2 w-[250px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
-      for (let i = 0; i < alt_menus.length; i++) {
-        const menu = alt_menus[i];
-        str += `
-        <a href="${menu.url}" data-id="${menu.id}" data-index="2" class="text-[0.8rem] font-semibold block w-full hover:bg-black/10 duration-300 text-black px-3 py-2 relative">
-${menu.name}
-        </a>
-        `;
-      }
-      str += "</div>";
-      if (alt_menus.length > 0) {
-        $(this).append(str);
-        $(this).on("mouseleave", async function () {
-          $(".indexMenu1").remove();
-          $("a[href*='/kategori/']").off("mouseenter");
-          initMenuEvent();
-        });
-      }
-      $(`[data-index="2"]`).off("mouseenter");
-      $(`[data-index="2"]`).on("mouseenter", async function () {
+      let el = $(this);
+      clearTimeout(timer);
+      timer = setTimeout(async () => {
+        el.off("mouseenter");
         const alt_menus = await getMenuList(
-          $(this).attr("data-id"),
-          $(this).attr("data-index")
+          el.attr("data-id"),
+          el.attr("data-index")
         );
-        $(".indexMenu2").remove();
-        let str = `<div class="indexMenu2 absolute top-full -right-[4rem] w-[200px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
+        let str = `<div class="indexMenu1 absolute top-full -left-1/2 w-[250px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
         for (let i = 0; i < alt_menus.length; i++) {
           const menu = alt_menus[i];
           str += `
         <a href="${menu.url}" data-id="${menu.id}" data-index="2" class="text-[0.8rem] font-semibold block w-full hover:bg-black/10 duration-300 text-black px-3 py-2 relative">
 ${menu.name}
-        </a>`;
+        </a>
+        `;
         }
         str += "</div>";
         if (alt_menus.length > 0) {
-          $(this).append(str);
-          $(this).off("mouseleave");
-          $(this).on("mouseleave", async function () {
-            $(".indexMenu2").remove();
+          el.append(str);
+          el.on("mouseleave", async function () {
+            $(".indexMenu1").remove();
+            $("a[href*='/kategori/']").off("mouseenter");
+            initMenuEvent();
+            clearTimeout(timer);
           });
         }
-      });
+        $(`[data-index="2"]`).off("mouseenter");
+        $(`[data-index="2"]`).on("mouseenter", async function () {
+          const alt_menus = await getMenuList(
+            $(this).attr("data-id"),
+            $(this).attr("data-index")
+          );
+          $(".indexMenu2").remove();
+          let str = `<div class="indexMenu2 absolute top-full -right-[4rem] w-[200px] h-auto shadow-[0_0_3px_1px_rgba(0,0,0,0.3)] rounded-md flex flex-col bg-white z-[50]">`;
+          for (let i = 0; i < alt_menus.length; i++) {
+            const menu = alt_menus[i];
+            str += `
+        <a href="${menu.url}" data-id="${menu.id}" data-index="2" class="text-[0.8rem] font-semibold block w-full hover:bg-black/10 duration-300 text-black px-3 py-2 relative">
+${menu.name}
+        </a>`;
+          }
+          str += "</div>";
+          if (alt_menus.length > 0) {
+            $(this).append(str);
+            $(this).off("mouseleave");
+            $(this).on("mouseleave", async function () {
+              $(".indexMenu2").remove();
+            });
+          }
+        });
+      }, 500);
     });
-  }
+  };
   initMenuEvent();
 };
 

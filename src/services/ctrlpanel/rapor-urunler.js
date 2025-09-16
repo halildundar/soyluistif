@@ -1,8 +1,14 @@
 import express from "express";
 import { DB } from "../mysql.js";
-import { existsSync, rmdirSync, mkdirSync, writeFileSync, unlinkSync } from "fs";
+import {
+  existsSync,
+  rmdirSync,
+  mkdirSync,
+  writeFileSync,
+  unlinkSync,
+} from "fs";
 let router = express.Router({ mergeParams: true });
-import { checkLoggedIn} from '../auth/auth.js';
+import { checkLoggedIn } from "../auth/auth.js";
 const RaporUrunRender = async (req, res) => {
   res.render("pages/ctrlpanel/rapor-urunler.hbs", {
     title: "Ürün Listesi",
@@ -10,7 +16,7 @@ const RaporUrunRender = async (req, res) => {
     styles: ``,
     scripts: `  <script defer src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
-      user:req.user
+    user: req.user,
   });
 };
 
@@ -18,8 +24,12 @@ const RaporUrunler = async (req, res) => {
   if (!req.body) {
     return res.json([]);
   }
-  let urunler = await getAllUrunler();
-  return res.json(urunler);
+  try {
+    let urunler = await getAllUrunler();
+    return res.json(urunler);
+  } catch (error) {
+    return res.json(error);
+  }
 };
 const RaporExportCSV = async (req, res) => {
   if (!req.body) {
@@ -41,7 +51,11 @@ const RaporExportCSV = async (req, res) => {
     "\uFEFFNo;ÜrünKodu;Ürün Adı;Kategorler;İndirim(%);Fiyat(₺);İndirimli Fiyat(₺);Kdv(%);Beğenilme;Görüntülenme;Stok;Kalan\n";
   for (let i = 0; i < urunler.length; i++) {
     const urun = urunler[i];
-    let rowStr = `${i+1};${urun.kod};${urun.name};"${urun.kategoristr}";${urun.indirim};${urun.fiyat};${urun.indirimli_fiyat};${urun.kdv};${urun.begenilme};${urun.goruntulenme};${urun.stok};${urun.kalan}\n`;
+    let rowStr = `${i + 1};${urun.kod};${urun.name};"${urun.kategoristr}";${
+      urun.indirim
+    };${urun.fiyat};${urun.indirimli_fiyat};${urun.kdv};${urun.begenilme};${
+      urun.goruntulenme
+    };${urun.stok};${urun.kalan}\n`;
     allStr += rowStr;
   }
 
@@ -53,15 +67,15 @@ const RaporExportCSV = async (req, res) => {
   });
 };
 export const RaporUrunApi = async (app) => {
-  router.get("/ctrlpanel/rapor-urunler",checkLoggedIn, RaporUrunRender);
-  router.post("/ctrlpanel/rapor-urunler",checkLoggedIn, RaporUrunler);
-  router.post("/ctrlpanel/rapor-exportcsv",checkLoggedIn, RaporExportCSV);
-  router.post("/ctrlpanel/rapor-deletecsv",checkLoggedIn, (req, res) => {
+  router.get("/ctrlpanel/rapor-urunler", checkLoggedIn, RaporUrunRender);
+  router.post("/ctrlpanel/rapor-urunler", checkLoggedIn, RaporUrunler);
+  router.post("/ctrlpanel/rapor-exportcsv", checkLoggedIn, RaporExportCSV);
+  router.post("/ctrlpanel/rapor-deletecsv", checkLoggedIn, (req, res) => {
     if (!req.body) {
       return res.json({ status: false, msg: "Failure" });
     }
-    const {url} = req.body;
-    unlinkSync(process.cwd() + '/public' +url);
+    const { url } = req.body;
+    unlinkSync(process.cwd() + "/public" + url);
     return res.json({ status: true, msg: "Ok!" });
   });
   return app.use("/", router);

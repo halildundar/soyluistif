@@ -41,7 +41,7 @@ const makeTotal = (urunler) => {
 
   let total = inidirimTutar + kdvToplam;
   $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + "$");
-  $(".total_kdv").html("+" + kdvToplam + "$");
+  $(".total_kdv").html("+" + kdvToplam.toFixed(2)  + "$");
   $(".total_indirim").html("-" + indirim.toFixed(2) + "$");
   $(".toplam").html(total.toFixed(2) + "$");
 };

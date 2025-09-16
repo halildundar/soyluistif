@@ -79,12 +79,14 @@ export const IyzicoApi = (app) => {
     return res.send(buff.toString("utf8"));
   });
   router.post("/iyz/3ds-init", async (req, res) => {
+    let user = req.user;
     const data = req.body;
     console.log(data);
     if (!data) {
       return;
     }
     let request = {
+      userid:user.id,
       locale: Iyzipay.LOCALE.TR,
       conversationId: "123456789",
       price: "1",
@@ -247,11 +249,13 @@ export const IyzicoApi = (app) => {
             "UPDATE `siparis` SET ? WHERE paymentId = " + paymentId,
             [{ itemTransactions: JSON.stringify(itemTransactions) }]
           );
+           let user = {...req.user,adres:JSON.parse(req.user.adres)};
           return res.render("pages/website/sepet/odeme-result.hbs", {
             ...resparea,
             odemestatus: "Success",
             odememesaj: "Ödeme Başarılı",
             paymentId: paymentId,
+            musteri:user
           });
         } else if (result.status == "failure") {
           if (!!paymentId) {

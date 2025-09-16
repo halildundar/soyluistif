@@ -26,23 +26,32 @@
         </button>
 
         <div
-          class="hidden group-hover:flex items-center flex-col absolute top-full right-0 w-[200px] min-h-[100px] bg-white z-[10] shadow-[0_0_10px_1px_rgba(0,0,0,0.2)]">
-          <a  href="/musteri"
-            class="bg-black/5  hover:bg-black/10 active:bg-transparent flex items-center space-x-2 rounded px-2 py-1 w-full">
+          class="hidden py-2 group-hover:flex items-center flex-col absolute top-full right-0 z-[100]  bg-white shadow-[0_0_10px_1px_rgba(0,0,0,0.2)]">
+          <div class="px-4 pb-4">
+            <div class="text-center py-1">{{musteri.name}} {{musteri.surname}}</div>
+              <div class="text-center py-1 text-[0.8rem] italic">{{musteri.email}} </div>
+          </div>
+          <a  href="/cust"
+            class="bg-black/5  hover:bg-black/10 active:bg-transparent flex items-center space-x-2 rounded px-4 py-2 w-full font-normal">
             <i class="tio text-[1.2rem]">info_outined</i>
-            Kullanıcı Bilgilerim
+            <div class="text-nowrap ">Kullanıcı Bilgilerim</div>
           </a>
-          <button
-            class="bg-black/5  hover:bg-black/10 active:bg-transparent flex items-center space-x-2 rounded px-2 py-1 w-full">
+            <a  href="/cust/adress"
+            class="bg-black/5  hover:bg-black/10 active:bg-transparent flex items-center space-x-2 rounded px-4 py-2 w-full font-normal">
+            <i class="tio text-[1.2rem]">bus</i>
+            <div class="text-nowrap ">Adres Bilgilerim</div>
+          </a>
+          <a href="/cust/order"
+            class="bg-black/5  hover:bg-black/10 active:bg-transparent flex items-center space-x-2 rounded px-4 py-2 w-full  font-normal">
             <i class="tio text-[1.2rem]">shopping_icon</i>
-            Siparişlerim
-          </button>
+            <div class="text-nowrap">Siparişlerim</div>
+          </a>
 
           <hr>
-          <div class="px-5 w-full pt-4">
+          <div class="px-5 w-full pt-4 flex justify-center">
             <button
-              class="btn-logut bg-red-500 text-white hover:bg-red-600 active:bg-red-400 flex items-center space-x-2 rounded px-2 py-1 w-full">
-              <i class="tio text-[1.2rem]">signout</i>
+              class="btn-logut text-center bg-red-500 text-white hover:bg-red-600 active:bg-red-400 flex items-center space-x-2 rounded px-2 py-1">
+              <i class="tio text-[1.2rem] text-center">sign_out</i>
               Çıkış
             </button>
           </div>
@@ -94,7 +103,7 @@
             class="sepetind absolute -top-2 -right-2 rounded-full  text-[0.9rem] flex items-center justify-center w-[1.4rem] h-[1.4rem]  text-white bg-[--main]"></span>
         </a>
         {{#if musteri}}
-        <a href="/siparis"
+        <a href="/cust/order"
           class="flex items-center space-x-1 relative rounded-lg hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
           <i class="tio text-[1.6rem]">shopping_icon</i>
           <span class="text-[0.9rem]">Siparişler</span>

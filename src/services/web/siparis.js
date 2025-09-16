@@ -9,13 +9,15 @@ export const SiparişBilgiPageRender = async (req, res) => {
   const mainMenus = await getMainMenu();
   const eticSiteler = await GetEticLogos();
       const sett = await GetSettings();
+       let user = {...req.user,adres:JSON.parse(req.user.adres)}
   res.render("pages/website/sepet/siparis-bilgi.hbs", {
     title: "Siparişler",
     scriptname: `main`,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: mainMenus,
     eticSiteler: eticSiteler,
-    wpno:sett.whatsappno
+    wpno:sett.whatsappno,
+    musteri:user
   });
 };
 
@@ -24,6 +26,7 @@ export const SiparişlerPageRender = async (req, res) => {
   const eticSiteler = await GetEticLogos();
     const sett = await GetSettings();
   const query = req.query;
+  let user = {...req.user,adres:JSON.parse(req.user.adres)}
   let data = {
     title: "Siparişler",
     scriptname: `main`,
@@ -31,7 +34,7 @@ export const SiparişlerPageRender = async (req, res) => {
     menus: mainMenus,
     eticSiteler: eticSiteler,
     wpno:sett.whatsappno,
-    musteri:req.user
+    musteri:user
   };
   if (!!query && !!query["crp"]) {
     const [siparis] = await SiparisByiIyzIDGet([query.crp]);
@@ -56,7 +59,7 @@ export const SiparişlerPageRender = async (req, res) => {
       shippingAddress,billingAddress,
       urunlerStr,
       wpno:sett.whatsappno,
-       musteri:req.user
+       musteri:user
     });
   }
   return res.render("pages/website/siparis/main.hbs", data);

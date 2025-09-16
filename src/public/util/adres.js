@@ -52,68 +52,73 @@ export async function GetMahalle(mahalle_id) {
   )[0];
 }
 let iller, ilceler, mahalleler;
-export async function AdresAlanInit() {
+export async function AdresAlanInit(classname) {
+  let selectorIl = !!classname
+    ? `${classname} [name='il_id']`
+    : "[name='il_id']";
+  let selectorIlce = !!classname
+    ? `${classname} [name='ilce_id']`
+    : "[name='ilce_id']";
+  let selectorMahalle = !!classname
+    ? `${classname} [name='mahalle_id']`
+    : "[name='mahalle_id']";
   iller = await GetIller();
   $.map(iller, function (item, key) {
-    $("[name='il_id']").append(
-      `<option value="${item.id}">${item.il_adi}</option>`
-    );
+    $(selectorIl).append(`<option value="${item.id}">${item.il_adi}</option>`);
   });
   ilceler = await GetIlceler(iller[0].id);
   $.map(ilceler, function (item, key) {
-    $("[name='ilce_id']").append(
-      `<option value="${item.id}">${item.ilce_adi}</option>`
-    );
+    $(selectorIlce).append(`<option value="${item.id}">${item.ilce_adi}</option>`);
   });
   mahalleler = await GetMahalleler(iller[0].id, ilceler[0].id);
 
   $.map(mahalleler, function (item, key) {
     if (item.il_id == 1 && item.ilce_id == 1 && item.id == 1) {
-      $(".pk").html(item.posta_kodu);
+      $(`${classname} .pk`).html(item.posta_kodu);
     }
-    $("[name='mahalle_id']").append(
+    $(selectorMahalle).append(
       `<option value="${item.id}">${item.mahalle_adi}</option>`
     );
   });
-  $("[name='il_id']").on("change", async function () {
-    ilceler = await GetIlceler($("[name='il_id']").val());
-    $("[name='ilce_id']").html("");
-    $("[name='mahalle_id']").html("");
+  $(selectorIl).on("change", async function () {
+    ilceler = await GetIlceler($(selectorIl).val());
+    $(selectorIlce).html("");
+    $(selectorMahalle).html("");
     $.map(ilceler, function (item, key) {
-      $("[name='ilce_id']").append(
+      $(selectorIlce).append(
         `<option value="${item.id}">${item.ilce_adi}</option>`
       );
     });
-    mahalleler = await GetMahalleler($("[name='il_id']").val(), ilceler[0].id);
+    mahalleler = await GetMahalleler($(selectorIl).val(), ilceler[0].id);
     $.map(mahalleler, function (item, key) {
-      $("[name='mahalle_id']").append(
+      $(selectorMahalle).append(
         `<option value="${item.id}">${item.mahalle_adi}</option>`
       );
     });
 
-    $(`[name='mahalle_id']`).trigger("change");
+    $(selectorMahalle).trigger("change");
   });
-  $("[name='ilce_id']").on("change", async function () {
+  $(selectorIlce).on("change", async function () {
     mahalleler = await GetMahalleler(
-      $("[name='il_id']").val(),
-      $("[name='ilce_id']").val()
+      $(selectorIl).val(),
+      $(selectorIlce).val()
     );
-    $("[name='mahalle_id']").html("");
+    $(selectorMahalle).html("");
     $.map(mahalleler, function (item, key) {
-      $("[name='mahalle_id']").append(
+      $(selectorMahalle).append(
         `<option value="${item.id}">${item.mahalle_adi}</option>`
       );
     });
-    $(`[name='mahalle_id']`).trigger("change");
+    $(selectorMahalle).trigger("change");
   });
-  $("[name='mahalle_id']").on("change", async function () {
+  $(selectorMahalle).on("change", async function () {
     $.map(mahalleler, (item) => {
       if (
-        item.il_id == $("[name='il_id']").val() &&
-        item.ilce_id == $("[name='ilce_id']").val() &&
-        item.id == $("[name='mahalle_id']").val()
+        item.il_id == $(selectorIl).val() &&
+        item.ilce_id == $(selectorIlce).val() &&
+        item.id == $(selectorMahalle).val()
       ) {
-        $(".pk").html(item.posta_kodu);
+        $(`${classname} .pk`).html(item.posta_kodu);
       }
     });
   });
@@ -130,8 +135,8 @@ export const SetAdresData = (il_id, ilce_id, mahalle_id, classname) => {
         $(`[name='mahalle_id']`).trigger("change");
       }, 300);
     }, 300);
-  }else{
-      $(`${classname} [name='il_id']`).val(il_id);
+  } else {
+    $(`${classname} [name='il_id']`).val(il_id);
     $(`${classname} [name='il_id']`).trigger("change");
     setTimeout(() => {
       $(`${classname} [name='ilce_id']`).val(ilce_id);

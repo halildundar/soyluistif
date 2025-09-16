@@ -19,6 +19,7 @@ export const OdemePageRender = async (req, res) => {
   const mainMenus = await getMainMenu();
   const eticSiteler = await GetEticLogos();
   const sett = await GetSettings();
+    let user = {...req.user,adres:JSON.parse(req.user.adres)}
   res.render("pages/website/sepet/odeme.hbs", {
     title: "Ödeme",
     scriptname: `main`,
@@ -26,6 +27,7 @@ export const OdemePageRender = async (req, res) => {
     menus: mainMenus,
     eticSiteler: eticSiteler,
     wpno: sett.whatsappno,
+    musteri:user
   });
 };
 
@@ -33,6 +35,7 @@ export const SiparişBilgiPageRender = async (req, res) => {
   const mainMenus = await getMainMenu();
   const eticSiteler = await GetEticLogos();
   const sett = await GetSettings();
+    let user = {...req.user,adres:JSON.parse(req.user.adres)}
   res.render("pages/website/sepet/siparis-bilgi.hbs", {
     title: "Sipariş Bilgi",
     scriptname: `main`,
@@ -40,6 +43,6 @@ export const SiparişBilgiPageRender = async (req, res) => {
     menus: mainMenus,
     eticSiteler: eticSiteler,
     wpno: sett.whatsappno,
-     musteri:req.user
+     musteri:user
   });
 };

@@ -31,19 +31,19 @@ const makeTotal = (urunler) => {
     const urun = urunler[i];
     toplamTutar += urun.adet * urun.fiyat;
     inidirimTutar += urun.adet * urun.indirimli_fiyat;
-  kdvToplam +=
+    kdvToplam +=
       urun.adet *
       urun.fiyat *
       (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
   }
   indirim = toplamTutar - inidirimTutar;
- indirim = toplamTutar - inidirimTutar;
+  indirim = toplamTutar - inidirimTutar;
   let total = inidirimTutar + kdvToplam;
 
-  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2)  + "$");
-  $(".total_kdv").html("+" + kdvToplam + "$");
-  $(".total_indirim").html("-" + indirim.toFixed(2)  + "$");
-  $(".toplam").html(total.toFixed(2)  + "$");
+  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + "$");
+  $(".total_kdv").html("+" + kdvToplam.toFixed(2) + "$");
+  $(".total_indirim").html("-" + indirim.toFixed(2) + "$");
+  $(".toplam").html(total.toFixed(2) + "$");
 };
 export const SiparisBilgiInit = async () => {
   const sepet = myloc.getItem("sepet");
@@ -64,14 +64,40 @@ export const SiparisBilgiInit = async () => {
     });
 
     // Sol Alan Init
-    const strTempLeft = await getTemp("siparis-bilgi-left.html");
-    const rendredLeft = Handlebars.compile(strTempLeft);
-    $(".spetbfyLeft").html(rendredLeft({ urunler: urunler }));
-    await AdresAlanInit();
+    // const strTempLeft = await getTemp("siparis-bilgi-left.html");
+    // const rendredLeft = Handlebars.compile(strTempLeft);
+    // $(".spetbfyLeft").html(rendredLeft({ urunler: urunler }));
+    await AdresAlanInit(".fat-area");
+    if (!!$(".fat-area [name='il_id']").attr("data-ur")) {
+      SetAdresData(
+        $(".fat-area [name='il_id']").attr("data-ur"),
+        $(".fat-area [name='ilce_id']").attr("data-ur"),
+        $(".fat-area [name='mahalle_id']").attr("data-ur"),
+        ".fat-area"
+      );
+    } else {
+      SetAdresData(1, 1, 1, ".fat-area");
+    }
+    await AdresAlanInit(".kar-area");
+    if (!!$(".kar-area [name='il_id']").attr("data-ur")) {
+      SetAdresData(
+        $(".kar-area [name='il_id']").attr("data-ur"),
+        $(".kar-area [name='ilce_id']").attr("data-ur"),
+        $(".kar-area [name='mahalle_id']").attr("data-ur"),
+        ".kar-area"
+      );
+    } else {
+      SetAdresData(1, 1, 1, ".kar-area");
+    }
 
     // Sağ Alan Init
     const strTempRight = await getTemp("siparis-bilgi-right.html");
     const rendredRight = Handlebars.compile(strTempRight);
+    urunler = urunler.map(it=>{
+      return {...it,
+        fiyatStr:it.fiyat.toFixed(2) + '$'
+      }
+    })
     $(".spetbfyRight").html(rendredRight({ urunler: urunler }));
     makeTotal(urunler);
 
@@ -79,55 +105,63 @@ export const SiparisBilgiInit = async () => {
     $("#isOtherAdres").on("change", function () {
       const status = $(this).prop("checked");
       $(".kar-area").css("display", !status ? "none" : "block");
-    });
-
-    const fatura = myloc.getItem("fatura");
-    const adres = myloc.getItem("adres");
-    if (!!fatura) {
-      $("form.fat-area [name='isim']").val(fatura["isim"]);
-      $("form.fat-area [name='soyisim']").val(fatura["soyisim"]);
-      $("form.fat-area [name='email']").val(fatura["email"]);
-      $("form.fat-area [name='tc']").val(fatura["tc"]);
-      $("form.fat-area [name='telefon']").val(fatura["telefon"]);
-      SetAdresData(
-        fatura["il_id"],
-        fatura["ilce_id"],
-        fatura["mahalle_id"],
-        ".fat-area"
-      );
-      $("form.fat-area [name='adres']").val(fatura["adres"]);
-      $("form.fat-area [name='aciklama']").val(fatura["aciklama"]);
-      if (!!adres) {
-        $("#isOtherAdres").prop("checked", true);
-        $("#isOtherAdres").trigger("change");
-        $("form.kar-area [name='isim']").val(adres["isim"]);
-        $("form.kar-area [name='soyisim']").val(adres["soyisim"]);
-        $("form.kar-area [name='email']").val(adres["email"]);
-        $("form.kar-area [name='telefon']").val(adres["telefon"]);
-        SetAdresData(
-          adres["il_id"],
-          adres["ilce_id"],
-          adres["mahalle_id"],
-          ".kar-area"
-        );
-        $("form.kar-area [name='adres']").val(adres["adres"]);
-        $("form.kar-area [name='aciklama']").val(adres["aciklama"]);
-      } else {
-        if ($("#isOtherAdres").attr("checked")) {
-          $(".btn-save-to-pay").css({
-            "pointer-events": "none",
-            "background-color": "#dbdbdb",
-            color: "#00000080",
-          });
-        }
+      if (!status) {
+        $(".kar-area input[type='text']").val("");
+        $(".kar-area textarea").html("");
+        SetAdresData(1, 1, 1, ".kar-area");
       }
-    } else {
-      $(".btn-save-to-pay").css({
-        "pointer-events": "none",
-        "background-color": "#dbdbdb",
-        color: "#00000080",
-      });
+    });
+    if (!!$(".kar-area [name='isim']").val()) {
+      $("#isOtherAdres").trigger("click");
     }
+
+    // const fatura = myloc.getItem("fatura");
+    // const adres = myloc.getItem("adres");
+    // if (!!fatura) {
+    //   $("form.fat-area [name='isim']").val(fatura["isim"]);
+    //   $("form.fat-area [name='soyisim']").val(fatura["soyisim"]);
+    //   $("form.fat-area [name='email']").val(fatura["email"]);
+    //   $("form.fat-area [name='tc']").val(fatura["tc"]);
+    //   $("form.fat-area [name='telefon']").val(fatura["telefon"]);
+    //   SetAdresData(
+    //     fatura["il_id"],
+    //     fatura["ilce_id"],
+    //     fatura["mahalle_id"],
+    //     ".fat-area"
+    //   );
+    //   $("form.fat-area [name='adres']").val(fatura["adres"]);
+    //   $("form.fat-area [name='aciklama']").val(fatura["aciklama"]);
+    //   if (!!adres) {
+    //     $("#isOtherAdres").prop("checked", true);
+    //     $("#isOtherAdres").trigger("change");
+    //     $("form.kar-area [name='isim']").val(adres["isim"]);
+    //     $("form.kar-area [name='soyisim']").val(adres["soyisim"]);
+    //     $("form.kar-area [name='email']").val(adres["email"]);
+    //     $("form.kar-area [name='telefon']").val(adres["telefon"]);
+    //     SetAdresData(
+    //       adres["il_id"],
+    //       adres["ilce_id"],
+    //       adres["mahalle_id"],
+    //       ".kar-area"
+    //     );
+    //     $("form.kar-area [name='adres']").val(adres["adres"]);
+    //     $("form.kar-area [name='aciklama']").val(adres["aciklama"]);
+    //   } else {
+    //     if ($("#isOtherAdres").attr("checked")) {
+    //       $(".btn-save-to-pay").css({
+    //         "pointer-events": "none",
+    //         "background-color": "#dbdbdb",
+    //         color: "#00000080",
+    //       });
+    //     }
+    //   }
+    // } else {
+    //   $(".btn-save-to-pay").css({
+    //     "pointer-events": "none",
+    //     "background-color": "#dbdbdb",
+    //     color: "#00000080",
+    //   });
+    // }
 
     $(".btn-save-to-pay").on("click", async function () {
       let faturaData = $(".fat-area").serializeJSON();
@@ -154,59 +188,49 @@ export const SiparisBilgiInit = async () => {
       });
       faturaData["il"] = ilFat[0].il_adi;
       myloc.setAllItem("fatura", faturaData);
-      if (!!adres) {
-        let adresData = $(".fat-area").serializeJSON();
-        const mahAdres = await $.ajax({
-          type: "POST",
-          url: "/get-mahalle",
-          data: { mahalle_id: adresData["mahalle_id"] },
-          dataType: "json",
-        });
-        adresData["mahalle"] = mahAdres[0].mahalle_adi;
-        adresData["pk"] = mahAdres[0].posta_kodu;
-        const ilceAdres = await $.ajax({
-          type: "POST",
-          url: "/get-ilce",
-          data: { ilce_id: adresData["ilce_id"] },
-          dataType: "json",
-        });
-        adresData["ilce"] = ilceAdres[0].ilce_adi;
-        const ilAdres = await $.ajax({
-          type: "POST",
-          url: "/get-il",
-          data: { il_id: adresData["il_id"] },
-          dataType: "json",
-        });
-        adresData["il"] = ilAdres[0].il_adi;
-        myloc.setAllItem("adres", adresData);
-      }
+      let adresData = $(".kar-area").serializeJSON();
+      const mahAdres = await $.ajax({
+        type: "POST",
+        url: "/get-mahalle",
+        data: { mahalle_id: adresData["mahalle_id"] },
+        dataType: "json",
+      });
+      adresData["mahalle"] = mahAdres[0].mahalle_adi;
+      adresData["pk"] = mahAdres[0].posta_kodu;
+      const ilceAdres = await $.ajax({
+        type: "POST",
+        url: "/get-ilce",
+        data: { ilce_id: adresData["ilce_id"] },
+        dataType: "json",
+      });
+      adresData["ilce"] = ilceAdres[0].ilce_adi;
+      const ilAdres = await $.ajax({
+        type: "POST",
+        url: "/get-il",
+        data: { il_id: adresData["il_id"] },
+        dataType: "json",
+      });
+      adresData["il"] = ilAdres[0].il_adi;
+      myloc.setAllItem("adres",  $("#isOtherAdres").prop('checked') ? adresData : faturaData);
+      let adres = {
+        fatura: faturaData,
+        kargo: adresData,
+      };
+      console.log(adres);
       window.location = "/odeme";
     });
 
     $(".btn-adres-clear").on("click", function () {
-      $("form.fat-area [name='isim']").val("");
-      $("form.fat-area [name='soyisim']").val("");
-      $("form.fat-area [name='email']").val("");
-      $("form.fat-area [name='tc']").val("");
-      $("form.fat-area [name='telefon']").val();
       SetAdresData(1, 1, 1, ".fat-area");
-      $("form.fat-area [name='adres']").val("");
-      $("form.fat-area [name='aciklama']").val("");
-      if (!!adres) {
-        $("#isOtherAdres").prop("checked", true);
-        $("#isOtherAdres").trigger("change");
-        $("form.kar-area [name='isim']").val("");
-        $("form.kar-area [name='soyisim']").val("");
-        $("form.kar-area [name='email']").val("");
-        $("form.kar-area [name='telefon']").val("");
-        SetAdresData(1, 1, 1, ".kar-area");
-        $("form.kar-area [name='adres']").val("");
-        $("form.kar-area [name='aciklama']").val("");
+      SetAdresData(1, 1, 1, ".kar-area");
+      $("input[type='text']").val("");
+      $("textarea").html("");
+
+      if (!!$("#isOtherAdres").prop("checked")) {
+        $("#isOtherAdres").trigger("click");
       }
-      $("#isOtherAdres").prop("checked", false);
-      $(".kar-area").css("display", "none");
-      myloc.deleteAllItem("adres");
-      myloc.deleteAllItem("fatura");
+      // myloc.deleteAllItem("adres");
+      // myloc.deleteAllItem("fatura");
       $(".btn-save-to-pay").css({
         "pointer-events": "none",
         "background-color": "#dbdbdb",

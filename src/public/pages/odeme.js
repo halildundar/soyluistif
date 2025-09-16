@@ -1,5 +1,5 @@
-import { myloc,HOST_NAME } from "../main.js";
-import {CreditCardArea} from '../util/fncs.js';
+import { myloc, HOST_NAME } from "../main.js";
+import { CreditCardArea } from "../util/fncs.js";
 const getUrunler = (ids) => {
   return $.ajax({
     type: "POST",
@@ -18,7 +18,7 @@ const getTemp = async (temname) => {
 };
 const getOneTotal = (urun) => {
   let toplamTutar = urun.adet * urun.fiyat;
-  let kdvToplam = urun.adet * urun.fiyat * 0.2;
+  let kdvToplam = urun.adet * urun.fiyat * (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
   let inidirimTutar = urun.adet * urun.indirimli_fiyat;
   let indirim = toplamTutar - inidirimTutar;
   indirim = toplamTutar - inidirimTutar;
@@ -39,7 +39,7 @@ const getTotal = (urunler) => {
     const urun = urunler[i];
     toplamTutar += urun.adet * urun.fiyat;
     inidirimTutar += urun.adet * urun.indirimli_fiyat;
-    kdvToplam += urun.adet * urun.fiyat * 0.2;
+    kdvToplam += urun.adet * urun.fiyat * (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
   }
   indirim = toplamTutar - inidirimTutar;
   let total = inidirimTutar + kdvToplam;
@@ -59,14 +59,14 @@ const makeTotal = (urunler) => {
     const urun = urunler[i];
     toplamTutar += urun.adet * urun.fiyat;
     inidirimTutar += urun.adet * urun.indirimli_fiyat;
-    kdvToplam += urun.adet * urun.fiyat * 0.2;
+    kdvToplam += urun.adet * urun.fiyat * (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
   }
   indirim = toplamTutar - inidirimTutar;
   let total = inidirimTutar + kdvToplam;
-  $(".toplam_tutar").html("+" + toplamTutar + ".00₺");
-  $(".total_kdv").html("+" + kdvToplam + ".00₺");
-  $(".total_indirim").html("-" + indirim + ".00₺");
-  $(".toplam").html(total + ".00₺");
+  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + '$');
+  $(".total_kdv").html("+" + kdvToplam.toFixed(2) + "$");
+  $(".total_indirim").html("-" + indirim.toFixed(2) + "$");
+  $(".toplam").html(total.toFixed(2) + "$");
 };
 export const OdemeInit = async () => {
   const sepet = myloc.getItem("sepet");
@@ -88,8 +88,13 @@ export const OdemeInit = async () => {
     // Sağ Alan Init
     const strTempRight = await getTemp("odeme.html");
     const rendredRight = Handlebars.compile(strTempRight);
+    urunler = urunler.map(it=>{
+      return {...it,
+        fiyatStr:it.fiyat.toFixed(2) + '$'
+      }
+    })
     $(".spetbfyRight").html(rendredRight({ urunler: urunler }));
-    $("[name='selctcart']").on("change",function(){
+    $("[name='selctcart']").on("change", function () {
       $("[name='cardNumber']").val($(this).val());
     });
     CreditCardArea();
@@ -98,7 +103,7 @@ export const OdemeInit = async () => {
     //Ödeme Yap
     $(".btn-check-bin").on("click", async function () {
       let formCard = $(".form-card").serializeJSON();
-      formCard['cardNumber'] =  formCard["cardNumber"].trim().replace(/\s/g,'');
+      formCard["cardNumber"] = formCard["cardNumber"].trim().replace(/\s/g, "");
       formCard["binNumber"] = formCard["cardNumber"].slice(0, 6);
       const res = await $.ajax({
         type: "POST",
@@ -108,15 +113,17 @@ export const OdemeInit = async () => {
       });
     });
 
-    
     $(".btn-3dinit").on("click", async function () {
       let formCard = $(".form-card").serializeJSON();
       formCard["binNumber"] = formCard["cardNumber"].slice(0, 6);
       const fatura = myloc.getItem("fatura");
       const adres = myloc.getItem("adres");
       let { total } = getTotal(urunler);
+              console.log("total:",total);
       let newUrunler = urunler.map((urun) => {
         let price = getOneTotal(urun);
+
+        console.log("price:",price.total);
         let newItem = {
           id: urun.id,
           name: urun.name,
@@ -124,10 +131,13 @@ export const OdemeInit = async () => {
           category2: "",
           itemType: "PHYSICAL", // 'VIRTUAL'
           price: price.total,
-          adet:urun.adet,
-          indirimli_fiyat:urun.indirimli_fiyat,
-          fiyat:urun.fiyat,
-          indirim:urun.indirim
+          adet: urun.adet,
+          indirimli_fiyat: urun.indirimli_fiyat,
+          fiyat: urun.fiyat,
+          indirim: urun.indirim,
+          url: `/urun/${urun.url}`,
+          kod: urun.kod,
+          kdv: urun.kdv,
         };
         return newItem;
       });
@@ -137,6 +147,9 @@ export const OdemeInit = async () => {
         country: "Türkiye",
         address: `${fatura.mahalle} ${fatura.adres} ${fatura.ilce} / ${fatura.il}`,
         zipCode: `${fatura.pk}`,
+        identityNumber: `${fatura.tc}`,
+        telefon: `${fatura.telefon}`,
+        email: `${fatura.email}`,
       };
       let shippingAddress = {};
       if (!adres) {
@@ -148,6 +161,9 @@ export const OdemeInit = async () => {
           country: "Türkiye",
           address: `${adres.mahalle} ${adres.adres} ${adres.ilce} / ${adres.il}`,
           zipCode: `${adres.pk}`,
+          identityNumber: `${adres.tc}`,
+          telefon: `${adres.telefon}`,
+          email: `${adres.email}`,
         };
       }
       let requestData = {
@@ -186,9 +202,7 @@ export const OdemeInit = async () => {
         },
         shippingAddress: shippingAddress,
         billingAddress: billingAddress,
-        basketItems: [
-          ...newUrunler,
-        ],
+        basketItems: [...newUrunler],
       };
       const res = await $.ajax({
         type: "POST",
@@ -196,12 +210,10 @@ export const OdemeInit = async () => {
         data: { ...requestData },
         dataType: "json",
       });
-      console.log(res);
       if (res.status) {
         if (!!res.html) {
           window.location =
-            HOST_NAME + "/iyz/3ds-verify?ulre=" +
-            encodeURIComponent(res.html);
+            HOST_NAME + "/iyz/3ds-verify?ulre=" + encodeURIComponent(res.html);
         }
       } else {
         $(".errmsg").remove();

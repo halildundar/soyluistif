@@ -11,7 +11,8 @@ export const OdemeResultInit = async () => {
     // });
     if (!!siparisId) {
       myloc.setAllItem("sepet", []);
-      myloc.setItem("siparis", {id:siparisId});
+      myloc.setAllItem("adres", []);
+      // myloc.setItem("siparis", {id:siparisId});
       SepetStatus();
         SiparisStatus();
     }

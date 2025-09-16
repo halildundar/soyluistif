@@ -16,6 +16,8 @@ import "./views/pages/website/auth/login.hbs";
 import "./views/pages/website/auth/uye-ol.hbs";
 import "./views/pages/website/auth/onay-kod.hbs";
 import "./views/pages/website/auth/user-bilgi.hbs";
+import "./views/pages/website/auth/user-adresbilgi.hbs";
+import "./views/pages/website/auth/user-siparis.hbs";
 import "./views/pages/website/urun.hbs";
 import "./views/pages/website/kategori.hbs";
 import "./views/pages/website/sepet/main.hbs";

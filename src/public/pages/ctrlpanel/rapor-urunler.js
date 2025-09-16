@@ -76,7 +76,7 @@ const getUrunler = async () => {
   allUrunler = await $.ajax({
     type: "POST",
     url: "/ctrlpanel/rapor-urunler",
-    data: { urun: "1" },
+    data: { },
     dataType: "json",
   });
   filteredUrunler = [...allUrunler];

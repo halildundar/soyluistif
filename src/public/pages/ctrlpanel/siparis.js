@@ -47,7 +47,7 @@ export const InitSiparis = async () => {
         urunlerStr += `<li>
             <span>   ${urun.adet} x <strong>${urun.name}</strong></span>
             <span> - </span>
-            <span>${urun.indirimli_fiyat.toFixed(2)}$</span>
+            <span>${urun.indirimli_fiyat}$</span>
         </li>`;
       }
       let iadelerStr = "";
@@ -100,7 +100,7 @@ export const InitSiparis = async () => {
                     </div>
             </td>
              <td class="p-1 border-l border-t border-gray-200  px-2">
-                <div>${siparis.price - iadelerTop}.00$</div>
+                <div>${parseFloat(siparis.price - iadelerTop).toFixed(2)}</div>
              </td>
                 <td class="p-1 border-l border-t border-gray-200 text-[0.7rem]  px-2">
               <strong>Kargo Adres:</strong> ${
@@ -131,15 +131,16 @@ export const InitSiparis = async () => {
         $("[name='durum']").val(selectedSiparis.status);
         $(".byrarea tbody").html("");
         for (let i = 0; i < selectedSiparis.basketItems.length; i++) {
-          const item = selectedSiparis.basketItems[i];
+          let item = selectedSiparis.basketItems[i];
+          console.log(item);
           $(".byrarea tbody").append(`
             <tr class="border-y border-gray-200">
                                     <td class="py-1 flex items-center" ><input type="checkbox"  data-ur="${item.id}" class="w-[1.2rem] h-[1.2rem]"></td>
                                     <td class="py-1">${item.adet} x ${item.name}</td>
                                     <td class="py-1">${item.indirim}%</td>
-                                    <td class="py-1">${item.fiyat}$</td>
-                                    <td class="py-1">${item.indirimli_fiyat}$</td>
-                                        <td class="text-end font-bold py-1">${item.price}$</td>
+                                    <td class="py-1  text-end">${parseFloat(item.fiyat).toFixed(2)}$</td>
+                                    <td class="py-1  text-end">${parseFloat(item.indirimli_fiyat).toFixed(2)}$</td>
+                                        <td class="text-end font-bold py-1">${parseFloat(item.price).toFixed(2)}$</td>
                                 </tr>
             `);
         }
@@ -147,14 +148,14 @@ export const InitSiparis = async () => {
           let iadeItems = selectedSiparis.iadeItems;
           $(".byrareaiade tbody").html("");
           for (let i = 0; i < iadeItems.length; i++) {
-            const item = iadeItems[i];
+            let item = iadeItems[i];
             $(".byrareaiade tbody").append(`
             <tr class="border-y border-gray-200">
                                     <td class="py-1">${item.adet} x ${item.name}</td>
                                     <td class="py-1">${item.indirim}%</td>
-                                    <td class="py-1">${item.fiyat}$</td>
-                                    <td class="py-1">${item.indirimli_fiyat}$</td>
-                                        <td class="text-end font-bold py-1">${item.price}$</td>
+                                    <td class="py-1 text-end">${parseFloat(item.fiyat).toFixed(2)}$</td>
+                                    <td class="py-1 text-end">${parseFloat(item.indirimli_fiyat).toFixed(2)}$</td>
+                                        <td class="text-end font-bold py-1">${parseFloat(item.price).toFixed(2)}$</td>
                                 </tr>
             `);
           }
