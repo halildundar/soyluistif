@@ -86,14 +86,17 @@ const getAllUrunler = async () => {
   let rows = await DB.Query("SELECT * from `urun`");
   if (!!rows) {
     
-    rows = rows.sort((a, b) => {
-      if(!a.name){
-        console.error(a)
-      }
+    // rows = rows.sort((a, b) => {
+    //   if(!a.name){
+    //     console.error(a)
+    //   }
       
-      return !!a.name && !!b.name && a.name < b.name ? -1 : 1
-    });
+    //   return !!a.name && !!b.name && a.name < b.name ? -1 : 1
+    // });
     rows = rows.map((item) => {
+      if(!item || !item.name){
+        console.error(item);
+      }
       return {
         ...item,
         kalan: item.stok - item.alinan,
