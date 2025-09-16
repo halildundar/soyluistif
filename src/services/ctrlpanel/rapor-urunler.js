@@ -85,16 +85,13 @@ export const RaporUrunApi = async (app) => {
 const getAllUrunler = async () => {
   let rows = await DB.Query("SELECT * from `urun`");
   if (!!rows) {
-    
-    // rows = rows.sort((a, b) => {
-    //   if(!a.name){
-    //     console.error(a)
-    //   }
-      
-    //   return !!a.name && !!b.name && a.name < b.name ? -1 : 1
-    // });
+    rows = rows.sort((a, b) => {
+      if (!a.name) {
+        console.error(a);
+      }
+      return !!a.name && !!b.name && a.name < b.name ? -1 : 1;
+    });
     rows = rows.map((item) => {
-      
       return {
         ...item,
         kalan: item.stok - item.alinan,
@@ -121,12 +118,17 @@ const makeParents = async (urun) => {
   }
   let names = await Promise.all(promises);
   for (let i = 0; i < names.length; i++) {
-    const name = names[i];
-    strKategori += name + "<br>";
+     const name = names[i];
+    if (!!name) {
+      strKategori += name + "<br>";
+    }
   }
   return { ...urun, kategoristr: strKategori };
 };
 const getKategoriName = async (id) => {
   let kategori = await DB.Query("SELECT * from `kategori` WHERE id = ?", [id]);
-  return kategori[0].name;
+  if (!!kategori && kategori.length > 0) {
+    return kategori[0].name;
+  }
+  return null;
 };

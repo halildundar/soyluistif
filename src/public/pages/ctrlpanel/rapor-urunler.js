@@ -72,6 +72,15 @@ const searchArea = () => {
     }, 500);
   });
 };
+const removeDuplicates = (arr) => {
+  let result = arr.reduce((unique, o) => {
+    if (!unique.some((obj) => obj.name === o.name && obj.kod === o.kod)) {
+      unique.push(o);
+    }
+    return unique;
+  }, []);
+  return result;
+};
 const getUrunler = async () => {
   let items = await $.ajax({
     type: "POST",
@@ -79,15 +88,31 @@ const getUrunler = async () => {
     data: {},
     dataType: "json",
   });
-  if (!!items && items.length >= 0) {
-    filteredUrunler = [...allUrunler];
-    rendTempTable = await GetTemp("raporuruntable.hbs");
-    $(".inittble").html(
-      rendTempTable({
-        urunler: allUrunler,
-      })
-    );
+  console.log(items);
+  allUrunler = [];
+  filteredUrunler = [];
+  for (let i = 0; i < items.length; i++) {
+    const element = items[i];
+    if (!!element) {
+      allUrunler.push(element);
+    } else {
+      console.log(element);
+    }
   }
+  allUrunler = removeDuplicates(allUrunler);
+
+  filteredUrunler = [...allUrunler];
+  rendTempTable = await GetTemp("raporuruntable.hbs");
+  $(".inittble").html(
+    rendTempTable({
+      urunler: allUrunler,
+    })
+  );
+  // if (!!items && items.length >= 0) {
+  //   filteredUrunler = [...allUrunler];
+  //
+
+  // }
 };
 const SeeIamges = () => {
   $(".seeImgs").remove();

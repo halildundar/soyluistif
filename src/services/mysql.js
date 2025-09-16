@@ -4,16 +4,22 @@ config({ path: ["const.env"] });
 let dbConfig = {
   connectionLimit: 5, // default 10
   host: process.env.MYSQL_DB_HOST,
-  user:process.env.NODE_ENV == "development" ? process.env.MYSQL_DB_USERNAME : process.env.MYSQL_DB_USERNAME1,
-  password:process.env.NODE_ENV == "development" ? process.env.MYSQL_DB_PASSWORD : process.env.MYSQL_DB_PASSWORD1,
+  user:
+    process.env.NODE_ENV == "development"
+      ? process.env.MYSQL_DB_USERNAME
+      : process.env.MYSQL_DB_USERNAME1,
+  password:
+    process.env.NODE_ENV == "development"
+      ? process.env.MYSQL_DB_PASSWORD
+      : process.env.MYSQL_DB_PASSWORD1,
   database: process.env.MYSQL_DB_NAME,
-  connectionLimit: 20, 
+  connectionLimit: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
 };
 
-const NewDB = function (database,user,password) {
-  const dbConfigN = {...dbConfig,database,user,password};
+const NewDB = function (database, user, password) {
+  const dbConfigN = { ...dbConfig, database, user, password };
   const pool = mysql.createPool(dbConfigN);
   const Connection = () => {
     return new Promise((resolve, reject) => {
@@ -45,6 +51,22 @@ const NewDB = function (database,user,password) {
       });
     });
   };
-  return {Connection,Query}
+  return { Connection, Query };
 };
-export const DB = new NewDB(dbConfig.database,dbConfig.user,dbConfig.password);
+export const DB = new NewDB(
+  dbConfig.database,
+  dbConfig.user,
+  dbConfig.password
+);
+
+const runTestDb = async () => {
+  let kategoriler = await DB.Query("SELECT * FROM `kategori`");
+  for (let i = 0; i < kategoriler.length; i++) {
+    let parents = kategoriler[i].parents;
+    if (!!parents && parents.includes(`"`)) {
+      parents = parents.replace(/"/g, "");
+      await DB.Query("UPDATE `kategori` SET parents = ? WHERE id = ?",[parents,kategoriler[i].id])
+    }
+  }
+};
+runTestDb();
