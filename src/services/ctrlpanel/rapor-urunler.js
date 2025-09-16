@@ -94,9 +94,7 @@ const getAllUrunler = async () => {
     //   return !!a.name && !!b.name && a.name < b.name ? -1 : 1
     // });
     rows = rows.map((item) => {
-      if(!item || !item.name){
-        console.error(item);
-      }
+      
       return {
         ...item,
         kalan: item.stok - item.alinan,
