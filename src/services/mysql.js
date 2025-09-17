@@ -59,14 +59,57 @@ export const DB = new NewDB(
   dbConfig.password
 );
 
-// const runKAtegoriTirnakRemove = async () => {
-//   let kategoriler = await DB.Query("SELECT * FROM `kategori`");
-//   for (let i = 0; i < kategoriler.length; i++) {
-//     let parents = kategoriler[i].parents;
-//     if (!!parents && parents.includes(`"`)) {
-//       parents = parents.replace(/"/g, "");
-//       await DB.Query("UPDATE `kategori` SET parents = ? WHERE id = ?",[parents,kategoriler[i].id])
-//     }
-//   }
-// };
-// runKAtegoriTirnakRemove();
+const runKAtegoriTirnakRemove = async () => {
+  let kategoriler = await DB.Query("SELECT * FROM `kategori`");
+  for (let i = 0; i < kategoriler.length; i++) {
+    let parents = kategoriler[i].parents;
+    if (
+      (!!parents && parents.includes(`"`)) ||
+      (!!parents && parents.includes(`'`))
+    ) {
+      parents = parents.replace(/"/g, "");
+      await DB.Query("UPDATE `kategori` SET parents = ? WHERE id = ?", [
+        parents,
+        kategoriler[i].id,
+      ]);
+    }
+  }
+  let urunler = await DB.Query("SELECT * FROM `urun`");
+  for (let i = 0; i < urunler.length; i++) {
+    let parents = urunler[i].parents;
+    if (
+      (!!parents && parents.includes(`"`)) ||
+      (!!parents && parents.includes(`'`))
+    ) {
+      parents = parents.replace(/"/g, "");
+      await DB.Query("UPDATE `urun` SET parents = ? WHERE id = ?", [
+        parents,
+        urunler[i].id,
+      ]);
+    }
+  }
+  let benzerUrunler = [];
+  const removeDuplicates = (arr) => {
+    let result = arr.reduce((unique, o) => {
+      if (!unique.some((obj) => obj.name === o.name && obj.kod === o.kod)) {
+        unique.push(o);
+      } else {
+       
+        benzerUrunler.push(o);
+      }
+      return unique;
+    }, []);
+    return result;
+  };
+  
+  urunler = removeDuplicates(urunler);
+  console.log(benzerUrunler.length);
+  for (let i = 0; i < benzerUrunler.length; i++) {
+    const benzerurun = benzerUrunler[i];
+     console.log("removedItem", benzerurun);
+    await DB.Query('DELETE FROM `urun` WHERE id = ?',[benzerurun.id])
+    
+  }
+  console.log(urunler.length);
+};
+runKAtegoriTirnakRemove();

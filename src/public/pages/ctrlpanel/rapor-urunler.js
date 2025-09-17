@@ -76,6 +76,8 @@ const removeDuplicates = (arr) => {
   let result = arr.reduce((unique, o) => {
     if (!unique.some((obj) => obj.name === o.name && obj.kod === o.kod)) {
       unique.push(o);
+    }else{
+      console.log('removedItem',o)
     }
     return unique;
   }, []);
