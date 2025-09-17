@@ -14,8 +14,7 @@ export const KategoriPageRenderAll = async (req, res) => {
     const eticSiteler = await GetEticLogos();
       const sett = await GetSettings();
   const { search } = req.query;
-  let { urunler, altKategoriler, breadcrumbs } =
-    await getUrunlerIncludeKategori1(search);
+  let { urunler, altKategoriler, breadcrumbs } = await getUrunlerIncludeKategori1(search);
   urunler = urunler.map((item) => {
     item.resimler = JSON.parse(item.resimler);
     let newItem = {

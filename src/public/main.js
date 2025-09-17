@@ -265,7 +265,7 @@ const Goruntulenenler = async () => {
 const SearchHeaderItems = () => {
   $(".btn-srch").on("click", function () {
     let searchLink =
-      $("#srch-kat-sel").val() + "?search=" + $(".intxt-sserch").val().trim();
+      $("#srch-kat-sel").val() + "?search=" + $(".intxt-sserch").val().toLocaleLowerCase().trim();
     window.location = searchLink;
   });
 };
@@ -277,7 +277,6 @@ const getMenuList = async (id, parent_length) => {
     dataType: "json",
   });
 };
-
 export const makeMenuItems = () => {
   let timer;
   let initMenuEvent = () => {

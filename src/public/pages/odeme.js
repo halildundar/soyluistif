@@ -114,16 +114,15 @@ export const OdemeInit = async () => {
     });
 
     $(".btn-3dinit").on("click", async function () {
+      $(".spnte").css('display','flex');
       let formCard = $(".form-card").serializeJSON();
+      formCard["cardNumber"] = formCard["cardNumber"].replace(/\s/g,"");
       formCard["binNumber"] = formCard["cardNumber"].slice(0, 6);
       const fatura = myloc.getItem("fatura");
       const adres = myloc.getItem("adres");
       let { total } = getTotal(urunler);
-              console.log("total:",total);
       let newUrunler = urunler.map((urun) => {
         let price = getOneTotal(urun);
-
-        console.log("price:",price.total);
         let newItem = {
           id: urun.id,
           name: urun.name,
@@ -223,7 +222,9 @@ export const OdemeInit = async () => {
             `<div class="errmsg text-red-500 text-center font-semibold py-2">${res.msg}</div>`
           );
       }
+           $(".spnte").css('display','flex');
     });
+
   } else {
     window.location = "/";
   }

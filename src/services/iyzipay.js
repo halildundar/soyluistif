@@ -69,7 +69,6 @@ export const IyzicoApi = (app) => {
     if (!paymentId) {
       return res.send("not Found");
     }
-    console.log(paymentId);
     const resp = await DB.Query(
       "SELECT threeDSHtmlContent FROM `siparis` WHERE `paymentId` = " +
         paymentId
@@ -81,7 +80,6 @@ export const IyzicoApi = (app) => {
   router.post("/iyz/3ds-init", async (req, res) => {
     let user = req.user;
     const data = req.body;
-    console.log(data);
     if (!data) {
       return;
     }
@@ -238,7 +236,6 @@ export const IyzicoApi = (app) => {
           iyziCommissionFee,
           itemTransactions,
         } = result;
-        // console.log("result:", result);
         if (result.status === "success") {
           // verifySignature([paymentId, currency, basketId, conversationId, paidPrice, price], secretKey, signature);
           //mail gönder ve siparişlr bölümüne kaydet.
