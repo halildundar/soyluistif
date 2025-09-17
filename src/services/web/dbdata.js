@@ -12,6 +12,9 @@ export const getMainMenu = async () => {
   );
   return items;
 };
+export const GetCurrncySym = (item)=>{
+  return item.currency == "USD" ? "$" : item.currency == "EUR" ? "€" : "₺"
+}
 export const getMenus = async () => {
   const items = await DB.Query("SELECT * FROM `kategori`");
   return items;

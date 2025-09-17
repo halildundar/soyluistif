@@ -38,6 +38,7 @@
                     <table class="w-full border-collapse">
                         <tr class="border-y border-gray-300">
                             <th class="text-start py-1 px-2">Ürün Adı</th>
+                                  <th class="text-center py-1 px-2">Birim</th>
                             <th class="text-center py-1 px-2">Adet</th>
                             <th class="text-end py-1 px-2">Birim Fiyat</th>
                             <th class="text-center py-1 px-2">İndirim</th>
@@ -51,18 +52,19 @@
                             <td class="py-1 px-2">
                                 <a href="{{this.url}}" target="_blank" class="text-blue-500 hover:underline">{{this.name}}</a>
                             </td>
+                              <td class="py-1 px-2  text-center">{{this.currency}}</td>
                             <td class="py-1 px-2 text-center">{{this.adet}}</td>
-                            <td class="py-1 px-2  text-end">{{this.fiyat}}$</td>
+                            <td class="py-1 px-2  text-end">{{this.fiyat}}</td>
                             <td class="py-1 px-2  text-center">%{{this.indirim}}</td>
-                            <td class="py-1 px-2  text-end">{{this.indirimli_fiyat}}$</td>
+                            <td class="py-1 px-2  text-end">{{this.indirimli_fiyat}}</td>
                                <td class="py-1 px-2  text-center">%{{this.kdv}}</td>
-                            <td class="py-1 px-2  text-end">{{this.price}}$</td>
+                            <td class="py-1 px-2  text-end">{{this.price}}</td>
                         </tr>
                         {{/each}}
                         <tr>
-                            <th colspan="5"></th>
+                            <th colspan="6"></th>
                             <th class="py-1 px-2">Toplam:</th>
-                            <th class="text-end py-1 px-2">{{this.price}}$</th>
+                            <th class="text-end py-1 px-2">{{this.price}}</th>
                         </tr>
                     </table>
                 </div>

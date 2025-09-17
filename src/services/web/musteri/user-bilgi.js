@@ -79,7 +79,7 @@ function pad(num, size) {
 function getTarih(time) {
   const mydate = new Date(parseInt(time));
   const day = pad(mydate.getDate(), 2);
-  const month = pad(mydate.getMonth() + 1,2);
+  const month = pad(mydate.getMonth() + 1, 2);
   const year = mydate.getFullYear();
   const hour = mydate.getHours();
   const minutes = mydate.getMinutes();
@@ -100,9 +100,19 @@ export const UserSiparisPageRender = async (req, res) => {
     let buyer = JSON.parse(a.buyer);
     buyer.identityNumber = creditCardMask(buyer.identityNumber, "*");
     let itemTransactions = JSON.parse(a.itemTransactions);
+    let basketItems= JSON.parse(a.basketItems);
+    for (let i = 0; i < basketItems.length; i++) {
+      basketItems[i] = {
+        ...basketItems[i],
+         fiyat: parseFloat(basketItems[i].fiyat).toFixed(2),
+        indirimli_fiyat: parseFloat(basketItems[i].indirimli_fiyat).toFixed(2),
+        price: parseFloat(basketItems[i].price).toFixed(2),
+      }
+    }
     return {
       ...a,
-      basketItems: JSON.parse(a.basketItems),
+      price:parseFloat(a.price).toFixed(2),
+      basketItems: basketItems,
       paymentCard: paymentCard,
       shippingAddress: JSON.parse(a.shippingAddress),
       billingAddress: JSON.parse(a.billingAddress),
@@ -111,8 +121,8 @@ export const UserSiparisPageRender = async (req, res) => {
       systemTimeStr: getTarih(a.systemTime),
     };
   });
-
   let basketItems = siparisler.map((a) => a.basketItems);
+ 
   return res.render("pages/website/auth/user-siparis.hbs", {
     title: "Siparişlerim",
     scriptname: `main`,

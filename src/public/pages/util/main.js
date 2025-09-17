@@ -363,3 +363,10 @@ export const SpinnerPop = async (action) => {
     $(".genel-spinner").remove();
   }
 };
+
+export const GetCurrncySym = (item)=>{
+  console.log(item.currency);
+  return item.currency == "USD" ? "$" : item.currency == "EUR" ? "€" : "₺"
+}
+
+

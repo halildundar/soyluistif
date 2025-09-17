@@ -17,6 +17,7 @@ export const SiparisApi = (app) => {
   router.get("/ctrlpanel/siparisler",checkLoggedIn, CtrlPanelSiparisRender);
   router.post("/ctrlpanel/siparisler/get-all", async (req, res) => {
     const resp = await DB.Query("SELECT * FROM `siparis`");
+    console.log(resp);
     return res.json(resp);
   });
 

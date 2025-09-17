@@ -6,6 +6,7 @@ import {
   GetMahalle,
   SetAdresData,
 } from "../util/adres.js";
+import { GetCurrncySym } from "./util/main.js";
 const getUrunler = (ids) => {
   return $.ajax({
     type: "POST",
@@ -27,7 +28,11 @@ const makeTotal = (urunler) => {
   let kdvToplam = 0;
   let inidirimTutar = 0;
   let indirim = 0;
+  let currSymb = "$"
   for (let i = 0; i < urunler.length; i++) {
+    if (i == 0) {
+      currSymb = GetCurrncySym(urunler[i]);
+    }
     const urun = urunler[i];
     toplamTutar += urun.adet * urun.fiyat;
     inidirimTutar += urun.adet * urun.indirimli_fiyat;
@@ -40,10 +45,10 @@ const makeTotal = (urunler) => {
   indirim = toplamTutar - inidirimTutar;
   let total = inidirimTutar + kdvToplam;
 
-  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + "$");
-  $(".total_kdv").html("+" + kdvToplam.toFixed(2) + "$");
-  $(".total_indirim").html("-" + indirim.toFixed(2) + "$");
-  $(".toplam").html(total.toFixed(2) + "$");
+  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + currSymb);
+  $(".total_kdv").html("+" + kdvToplam.toFixed(2) + currSymb);
+  $(".total_indirim").html("-" + indirim.toFixed(2) + currSymb);
+  $(".toplam").html(total.toFixed(2) + currSymb);
 };
 export const SiparisBilgiInit = async () => {
   const sepet = myloc.getItem("sepet");
@@ -95,7 +100,7 @@ export const SiparisBilgiInit = async () => {
     const rendredRight = Handlebars.compile(strTempRight);
     urunler = urunler.map(it=>{
       return {...it,
-        fiyatStr:it.fiyat.toFixed(2) + '$'
+        fiyatStr:it.fiyat.toFixed(2) + GetCurrncySym(it)
       }
     })
     $(".spetbfyRight").html(rendredRight({ urunler: urunler }));

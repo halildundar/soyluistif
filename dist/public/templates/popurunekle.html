@@ -10,35 +10,41 @@
         <hr>
         <div class="pop-bread-area flex items-center space-x-1 text-[0.8rem] italic pt-2 px-2"></div>
         <form class="flex-1 relative overflow-hidden overflow-y-auto py-2">
-            <div class="px-2">
-                <label for="name" class="frm-lbl">Ürün Adı</label>
-                <input id="name" name="name" type="text" class="frm-txt" placeholder="Ürün adı">
-                <div class="real-url text-[0.8rem] text-red-600 "></div>
-            </div>
-            <div class="flex items-center space-x-2 px-2 py-2">
-                  <div>
+            <div class="flex space-x-2 pr-2">
+                <div class="px-2 w-3/4">
+                    <label for="name" class="frm-lbl">Ürün Adı</label>
+                    <input id="name" name="name" type="text" class="frm-txt" placeholder="Ürün adı">
+                    <div class="real-url text-[0.8rem] text-red-600 "></div>
+                </div>
+                 <div class="w-1/4">
                     <label for="kod" class="frm-lbl">Ürü Kodu</label>
                     <input id="kod" name="kod" type="text" class="frm-txt" placeholder="Ürün Kodu">
-
                 </div>
-                <div>
+            </div>
+            <div class="flex items-center space-x-2 px-2 py-2">
+                <div class="flex-1">
                     <label for="stok" class="frm-lbl">Stok(adet)</label>
                     <input id="stok" name="stok" type="text" class="frm-txt" placeholder="Stok(adet)">
                 </div>
-                <div>
-                    <label for="fiyat" class="frm-lbl">Ürün Fiyatı($)</label>
+                <div class="flex-1">
+                    <label for="currency" class="frm-lbl">Ürün Birim</label>
+                    <select name="currency" id="currency" class="frm-slct">
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="TRY">TRY (₺)</option>
+                    </select>
+                </div>
+                <div class="flex-1">
+                    <label for="fiyat" class="frm-lbl">Ürün Fiyatı</label>
                     <input id="fiyat" name="fiyat" type="number" class="frm-txt" placeholder="Fiyat $">
                 </div>
-                 <!-- <div>
-                    <label for="fiyat" class="frm-lbl">Ürün Fiyatı($)</label>
-                    <input id="fiyat" name="fiyat" type="text" class="frm-txt" placeholder="Fiyat $">
-                </div> -->
-                <div>
+                 
+                <div class="flex-1">
                     <label for="indirim" class="frm-lbl">İndirim Oran(%)</label>
                     <input id="indirim" name="indirim" type="text" class="frm-txt" placeholder="İndirim %">
 
                 </div>
-                <div>
+                <div class="flex-1">
                     <label for="kdv" class="frm-lbl">KDV(%)</label>
                     <input id="kdv" name="kdv" type="text" class="frm-txt" placeholder="KDV %">
 

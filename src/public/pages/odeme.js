@@ -1,5 +1,6 @@
 import { myloc, HOST_NAME } from "../main.js";
 import { CreditCardArea } from "../util/fncs.js";
+import { GetCurrncySym } from "./util/main.js";
 const getUrunler = (ids) => {
   return $.ajax({
     type: "POST",
@@ -18,7 +19,8 @@ const getTemp = async (temname) => {
 };
 const getOneTotal = (urun) => {
   let toplamTutar = urun.adet * urun.fiyat;
-  let kdvToplam = urun.adet * urun.fiyat * (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
+  let kdvToplam =
+    urun.adet * urun.fiyat * (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
   let inidirimTutar = urun.adet * urun.indirimli_fiyat;
   let indirim = toplamTutar - inidirimTutar;
   indirim = toplamTutar - inidirimTutar;
@@ -39,7 +41,10 @@ const getTotal = (urunler) => {
     const urun = urunler[i];
     toplamTutar += urun.adet * urun.fiyat;
     inidirimTutar += urun.adet * urun.indirimli_fiyat;
-    kdvToplam += urun.adet * urun.fiyat * (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
+    kdvToplam +=
+      urun.adet *
+      urun.fiyat *
+      (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
   }
   indirim = toplamTutar - inidirimTutar;
   let total = inidirimTutar + kdvToplam;
@@ -55,18 +60,25 @@ const makeTotal = (urunler) => {
   let kdvToplam = 0;
   let inidirimTutar = 0;
   let indirim = 0;
+  let currSymb = "$";
   for (let i = 0; i < urunler.length; i++) {
+    if (i == 0) {
+      currSymb = GetCurrncySym(urunler[i]);
+    }
     const urun = urunler[i];
     toplamTutar += urun.adet * urun.fiyat;
     inidirimTutar += urun.adet * urun.indirimli_fiyat;
-    kdvToplam += urun.adet * urun.fiyat * (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
+    kdvToplam +=
+      urun.adet *
+      urun.fiyat *
+      (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
   }
   indirim = toplamTutar - inidirimTutar;
   let total = inidirimTutar + kdvToplam;
-  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + '$');
-  $(".total_kdv").html("+" + kdvToplam.toFixed(2) + "$");
-  $(".total_indirim").html("-" + indirim.toFixed(2) + "$");
-  $(".toplam").html(total.toFixed(2) + "$");
+  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + currSymb);
+  $(".total_kdv").html("+" + kdvToplam.toFixed(2) + currSymb);
+  $(".total_indirim").html("-" + indirim.toFixed(2) + currSymb);
+  $(".toplam").html(total.toFixed(2) + currSymb);
 };
 export const OdemeInit = async () => {
   const sepet = myloc.getItem("sepet");
@@ -88,11 +100,9 @@ export const OdemeInit = async () => {
     // Sağ Alan Init
     const strTempRight = await getTemp("odeme.html");
     const rendredRight = Handlebars.compile(strTempRight);
-    urunler = urunler.map(it=>{
-      return {...it,
-        fiyatStr:it.fiyat.toFixed(2) + '$'
-      }
-    })
+    urunler = urunler.map((it) => {
+      return { ...it, fiyatStr: it.fiyat.toFixed(2) + GetCurrncySym(it) };
+    });
     $(".spetbfyRight").html(rendredRight({ urunler: urunler }));
     $("[name='selctcart']").on("change", function () {
       $("[name='cardNumber']").val($(this).val());
@@ -114,9 +124,9 @@ export const OdemeInit = async () => {
     });
 
     $(".btn-3dinit").on("click", async function () {
-      $(".spnte").css('display','flex');
+      $(".spnte").css("display", "flex");
       let formCard = $(".form-card").serializeJSON();
-      formCard["cardNumber"] = formCard["cardNumber"].replace(/\s/g,"");
+      formCard["cardNumber"] = formCard["cardNumber"].replace(/\s/g, "");
       formCard["binNumber"] = formCard["cardNumber"].slice(0, 6);
       const fatura = myloc.getItem("fatura");
       const adres = myloc.getItem("adres");
@@ -137,6 +147,7 @@ export const OdemeInit = async () => {
           url: `/urun/${urun.url}`,
           kod: urun.kod,
           kdv: urun.kdv,
+          currency: urun.currency,
         };
         return newItem;
       });
@@ -170,7 +181,7 @@ export const OdemeInit = async () => {
         conversationId: "123456789",
         price: total,
         paidPrice: total,
-        // currency: Iyzipay.CURRENCY.TRY,
+        currency: newUrunler[0].currency, //Iyzipay.CURRENCY.TRY,
         installment: "1",
         basketId: "B67832",
         // paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
@@ -222,9 +233,8 @@ export const OdemeInit = async () => {
             `<div class="errmsg text-red-500 text-center font-semibold py-2">${res.msg}</div>`
           );
       }
-           $(".spnte").css('display','flex');
+      $(".spnte").css("display", "none");
     });
-
   } else {
     window.location = "/";
   }

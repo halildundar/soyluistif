@@ -1,5 +1,5 @@
 import { myloc } from "../main.js";
-import { SepetStatus } from "./util/main.js";
+import { GetCurrncySym, SepetStatus } from "./util/main.js";
 const getUrunler = (ids) => {
   return $.ajax({
     type: "POST",
@@ -28,22 +28,32 @@ const makeTotal = (urunler) => {
   let kdvToplam = 0;
   let inidirimTutar = 0;
   let indirim = 0;
+  let currSymb = "₺";
   for (let i = 0; i < urunler.length; i++) {
+    if (i == 0) {
+      currSymb = GetCurrncySym(urunler[i]);
+    }
     const urun = urunler[i];
-    toplamTutar += urun.adet * urun.fiyat;
-    inidirimTutar += urun.adet * urun.indirimli_fiyat;
-    kdvToplam +=
-      urun.adet *
-      urun.fiyat *
-      (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
+    if (urun.currency == urunler[0].currency) {
+      toplamTutar += urun.adet * urun.fiyat;
+      inidirimTutar += urun.adet * urun.indirimli_fiyat;
+      kdvToplam +=
+        urun.adet *
+        urun.fiyat *
+        (!urun.kdv || urun.kdv == 0 ? 0 : urun.kdv / 100);
+    }else{
+      $(".btn-sepet-ony").removeClass("bg-blue-500 hover:bg-blue-700 active:bg-blue-400");
+      $(".btn-sepet-ony").addClass("bg-red-500 hover:bg-red-700 active:bg-red-400  pointer-events-none select-none");
+      $(".btn-sepet-ony").html("Sepette aynı para birimi ürün olmalı");
+    }
   }
   indirim = toplamTutar - inidirimTutar;
 
   let total = inidirimTutar + kdvToplam;
-  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + "$");
-  $(".total_kdv").html("+" + kdvToplam.toFixed(2)  + "$");
-  $(".total_indirim").html("-" + indirim.toFixed(2) + "$");
-  $(".toplam").html(total.toFixed(2) + "$");
+  $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + currSymb);
+  $(".total_kdv").html("+" + kdvToplam.toFixed(2) + currSymb);
+  $(".total_indirim").html("-" + indirim.toFixed(2) + currSymb);
+  $(".toplam").html(total.toFixed(2) + currSymb);
 };
 export const SepetInit = async () => {
   let sepet = getSepet();
@@ -65,6 +75,7 @@ export const SepetInit = async () => {
         adet: adet,
       };
     });
+    console.log(urunler);
     makeTotal(urunler);
     $(".spetbfyLeft").html(rendred({ urunler: urunler }));
     for (let i = 0; i < urunler.length; i++) {
@@ -101,8 +112,7 @@ export const SepetInit = async () => {
         sepet = sepet.filter((item) => item.id != urun.id);
         // urunler = urunler.map(item=>item.id != urun.id);
         myloc.setAllItem("sepet", sepet);
-        SepetInit();
-        SepetStatus();
+        location.href = location.href;
       });
     }
   } else {

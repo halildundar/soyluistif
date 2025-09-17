@@ -8,7 +8,8 @@
     <tr class="text-[0.7rem] md:text-[0.9rem] border-b border-gray-200">
       <th class="text-start">Ürün</th>
       <th class="text-start">Miktar</th>
-      <th class="text-start">Birim Fiyat($)</th>
+       <th class="text-start">Birim</th>
+      <th class="text-start">Birim Fiyat</th>
       <th class="text-start">İndirim</th>
       <th class="text-start"></th>
     </tr>
@@ -46,7 +47,12 @@
       </td>
       <td>
         <div class="font-semibold text-[0.8rem] md:text-[1.1rem]">
-          {{#DigitFract this.fiyat 2}}{{/DigitFract}}$
+          {{this.currency}}
+        </div>
+      </td>
+      <td>
+        <div class="font-semibold text-[0.8rem] md:text-[1.1rem]">
+          {{#DigitFract this.fiyat 2}}{{/DigitFract}}
         </div>
       </td>
       <td>

@@ -53,9 +53,13 @@ const makeUrunArea = async (parents) => {
                   <td class="p-1 border-l border-t border-gray-300">${
                     urun.kod
                   }</td>
+                  <td class="p-1 border-l border-t border-gray-300">${
+                    urun.currency
+                  }</td>
                   <td class="p-1 border-l border-t border-gray-300">${urun.fiyat.toFixed(
                     2
                   )}</td>
+                    
                   <td class="p-1 border-l border-t border-gray-300">${
                     urun.indirim
                   }</td>
@@ -201,6 +205,7 @@ export const InitUrun = async () => {
     $("[name='kod']").val(selectedUrun.kod);
     $("[name='fiyat']").val(selectedUrun.fiyat);
     $("[name='indirim']").val(selectedUrun.indirim);
+     $("[name='currency']").val(selectedUrun.currency);
     $("[name='indirimli_fiyat']").val(selectedUrun.indirimli_fiyat);
     $("[name='stok']").val(selectedUrun.stok);
     $("[name='kdv']").val(selectedUrun.kdv);

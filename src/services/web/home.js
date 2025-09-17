@@ -5,7 +5,8 @@ import {
   getOneCikanlar,
   getYeniler,
   GetEticLogos,
-  GetSettings
+  GetSettings,
+  GetCurrncySym
 } from "./dbdata.js";
 const makeBannerAndUrunler = async () => {
   const bannerHomeLeft = await getBanners("homeleft");
@@ -27,7 +28,9 @@ const makeBannerAndUrunler = async () => {
       newItem.resimler.length > 1
         ? "/uploads" + newItem.resimler[1]
         : "/assets/urun/resim_yok.webp";
-    return newItem;
+    return {
+      ...newItem,symbcurr:GetCurrncySym(newItem)
+    };
   });
   let coksatanlar = await getCokSatanlar();
   coksatanlar = coksatanlar.map((item) => {
@@ -41,7 +44,9 @@ const makeBannerAndUrunler = async () => {
       newItem.resimler.length > 1
         ? "/uploads" + newItem.resimler[1]
         : "/assets/urun/resim_yok.webp";
-    return newItem;
+    return {
+      ...newItem,symbcurr:GetCurrncySym(newItem)
+    };
   });
   let enyeniler = await getYeniler();
   enyeniler = enyeniler.map((item) => {
@@ -55,7 +60,9 @@ const makeBannerAndUrunler = async () => {
       newItem.resimler.length > 1
         ? "/uploads" + newItem.resimler[1]
         : "/assets/urun/resim_yok.webp";
-    return newItem;
+    return {
+      ...newItem,symbcurr:GetCurrncySym(newItem)
+    };
   });
 
   return {
