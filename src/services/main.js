@@ -50,7 +50,7 @@ export let appRoutes = (app) => {
     res.set("Content-Type", "text/plain");
     return res.send(strText);
   });
-   CtrlPanelPageApi(app);
+  CtrlPanelPageApi(app);
   router.get("/ctrlpanel",checkLoggedIn, async (req, res) => {
     return res.render("pages/ctrlpanel/dashboard.hbs", {
       title: "Anasayfa",

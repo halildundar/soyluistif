@@ -122,6 +122,8 @@ $(async function () {
   if (window.matchMedia("(max-width: 767px)").matches) {
     InitMobilTree();
   }
+
+  BodyClick();
 });
 const Goruntulenenler = async () => {
   const settingsCaroson = {
@@ -263,9 +265,37 @@ const Goruntulenenler = async () => {
   }
 };
 const SearchHeaderItems = () => {
+  let timer;
+  $(".intxt-sserch").on("keydown", function () {
+    clearTimeout(timer);
+    timer = setTimeout(async () => {
+      let urunler = await $.ajax({
+        type: "POST",
+        url: "/kategori/search",
+        data: { search: $(".intxt-sserch").val() },
+        dataType: "json",
+      });
+      console.log(urunler)
+      $(".inptarea .sbmn").html("");
+      if ($(".intxt-sserch").val().length > 0) {
+        for (let i = 0; i < urunler.length; i++) {
+          const urun = urunler[i];
+          $(".inptarea .sbmn").append(`
+             <a href="/urun/${urun.url}" class="px-2 py-1 w-full flex items-center space-x-4 hover:bg-black/5 border-b border-gray-200">
+                  <img src="${urun.resim_on}" class="w-[50px] h-auto" alt="">
+                  <div>${urun.name}</div>
+                  <div>${urun.kod}</div>
+              </a>
+            `);
+        }
+      }
+    }, 1200);
+  });
   $(".btn-srch").on("click", function () {
     let searchLink =
-      $("#srch-kat-sel").val() + "?search=" + $(".intxt-sserch").val().toLocaleLowerCase().trim();
+      $("#srch-kat-sel").val() +
+      "?search=" +
+      $(".intxt-sserch").val().toLocaleLowerCase().trim();
     window.location = searchLink;
   });
 };
@@ -277,6 +307,11 @@ const getMenuList = async (id, parent_length) => {
     dataType: "json",
   });
 };
+const BodyClick = ()=>{
+  $("body").on("click",function(){
+      $(".inptarea .sbmn").html("");
+  })
+}
 export const makeMenuItems = () => {
   let timer;
   let initMenuEvent = () => {

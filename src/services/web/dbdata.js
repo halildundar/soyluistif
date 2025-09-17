@@ -117,7 +117,6 @@ export const getUrunlerIncludeKategori1 = async (query) => {
     urunler = await DB.Query(
       "SELECT * FROM `urun` WHERE  name LIKE '%" + query + "%'OR kod LIKE  '%" + query + "%'"
     );
-    console.log("urunler",urunler)
   } else {
     urunler = await DB.Query("SELECT * FROM `urun`");
   }

@@ -4,7 +4,7 @@ import { DB } from "./mysql.js";
 import { HomePageRender } from "./web/home.js";
 import { KurumsalRender } from "./web/kurumsal.js";
 import { UrunPageRender } from "./web/urun.js";
-import { KategoriPageRender, KategoriPageRenderAll } from "./web/kategori.js";
+import { KategoriPageRender, KategoriPageRenderAll,GetKategoriSearch } from "./web/kategori.js";
 import {
   SepetPageRender,
   SiparişBilgiPageRender,
@@ -88,6 +88,7 @@ export const UrunPageApi = (app) => {
 export const KategoriPageApi = (app) => {
   router.get("/kategori/all*", KategoriPageRenderAll);
   router.get("/kategori*", KategoriPageRender);
+  router.post("/kategori/search",GetKategoriSearch)
   return app.use("/", router);
 };
 export const MenuApi = (app) => {

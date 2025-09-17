@@ -6,3 +6,5 @@
 [req.path] ................... /profile/123/summary
 [req.url] ...................... /profile/123/summary?view=grid&leng=en
 [req.originalUrl] .......... /api/users/profile/123/summary?view=grid&leng=en
+
+req.protocol + '://' + req.get('host')

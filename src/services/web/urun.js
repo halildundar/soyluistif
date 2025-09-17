@@ -38,6 +38,7 @@ export const UrunPageRender = async (req, res) => {
     menus:[...mainMenus],
     eticSiteler:eticSiteler,
     wpno:sett.whatsappno,
-     musteri:req.user
+     musteri:req.user,
+     weblink:req.protocol + '://' + req.get('host')
   });
 };

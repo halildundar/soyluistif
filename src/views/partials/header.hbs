@@ -29,14 +29,14 @@
           class="hidden py-2 group-hover:flex items-center flex-col absolute top-full right-0 z-[100]  bg-white shadow-[0_0_10px_1px_rgba(0,0,0,0.2)]">
           <div class="px-4 pb-4">
             <div class="text-center py-1">{{musteri.name}} {{musteri.surname}}</div>
-              <div class="text-center py-1 text-[0.8rem] italic">{{musteri.email}} </div>
+            <div class="text-center py-1 text-[0.8rem] italic">{{musteri.email}} </div>
           </div>
-          <a  href="/cust"
+          <a href="/cust"
             class="bg-black/5  hover:bg-black/10 active:bg-transparent flex items-center space-x-2 rounded px-4 py-2 w-full font-normal">
             <i class="tio text-[1.2rem]">info_outined</i>
             <div class="text-nowrap ">Kullanıcı Bilgilerim</div>
           </a>
-            <a  href="/cust/adress"
+          <a href="/cust/adress"
             class="bg-black/5  hover:bg-black/10 active:bg-transparent flex items-center space-x-2 rounded px-4 py-2 w-full font-normal">
             <i class="tio text-[1.2rem]">bus</i>
             <div class="text-nowrap ">Adres Bilgilerim</div>
@@ -67,7 +67,7 @@
       </a>
     </div>
     <div class="w-1/2">
-      <div class="flex overflow-hidden rounded-lg bg-white space-x-2 border border-gray-300">
+      <div class="flex  rounded-lg bg-white space-x-2 border border-gray-300">
         <select id="srch-kat-sel"
           class="bg-gray-200 px-4 text-gray-600 text-[1rem] border-r border-gray-300 outline-none">
 
@@ -77,8 +77,13 @@
           {{/each}}
 
         </select>
-        <input type="text" class="intxt-sserch bg-transparent flex-1 text-[1.2rem]"
-          placeholder="soyluistif.com.tr araması yapın">
+        <div class="inptarea  relative flex-1 flex"> 
+          <input type="text" class="intxt-sserch bg-transparent w-full text-[1.2rem]"
+            placeholder="soyluistif.com.tr araması yapın">
+            <div class="sbmn absolute top-full left-0 min-w-full w-auto bg-white h-auto shadow-[0_0_10px_1px_rgba(0,0,0,0.3)] max-h-[500px] overflow-hidden overflow-y-auto z-[20]">
+             
+            </div>
+        </div>
         <div
           class="btn-srch tio inline-block p-2 text-[2rem] text-white  bg-[--main] hover:bg-[--main-dark] duration-200 cursor-pointer select-none">
           search</div>
