@@ -1,4 +1,5 @@
 import {
+  GetCurrncySym,
   getUrunlerIncludeKategori,
   getUrunlerIncludeKategori1,
 } from "./dbdata.js";
@@ -11,8 +12,8 @@ const makeUrunler = async () => {
 };
 export const GetKategoriSearch = async (req, res) => {
   try {
-    if(!req.body){
-      return res.json({status:false,msg:'Hata!'});
+    if (!req.body) {
+      return res.json({ status: false, msg: "Hata!" });
     }
     const { search } = req.body;
     console.log(search);
@@ -22,6 +23,7 @@ export const GetKategoriSearch = async (req, res) => {
       item.resimler = JSON.parse(item.resimler);
       let newItem = {
         ...item,
+           currSymb: GetCurrncySym(item),
         resim_on:
           !!item.resimler && item.resimler.length > 0
             ? "/uploads" + item.resimler[0]
@@ -47,8 +49,10 @@ export const KategoriPageRenderAll = async (req, res) => {
     await getUrunlerIncludeKategori1(search);
   urunler = urunler.map((item) => {
     item.resimler = JSON.parse(item.resimler);
+
     let newItem = {
       ...item,
+      currSymb: GetCurrncySym(item),
       resim_on:
         !!item.resimler && item.resimler.length > 0
           ? "/uploads" + item.resimler[0]
@@ -87,6 +91,7 @@ export const KategoriPageRender = async (req, res) => {
     item.resimler = JSON.parse(item.resimler);
     let newItem = {
       ...item,
+      currSymb: GetCurrncySym(item),
       resim_on:
         !!item.resimler && item.resimler.length > 0
           ? "/uploads" + item.resimler[0]

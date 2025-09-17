@@ -1,4 +1,4 @@
-import { getUrunByUrl, makeBredCrump,getMainMenu,GetEticLogos,GetSettings } from "./dbdata.js";
+import { getUrunByUrl, makeBredCrump,getMainMenu,GetEticLogos,GetSettings, GetCurrncySym } from "./dbdata.js";
 
 export const UrunPageRender = async (req, res) => {
   const { urunurl } = req.params;
@@ -10,6 +10,7 @@ export const UrunPageRender = async (req, res) => {
           const sett = await GetSettings();
   if (!!urunurl) {
     urun = await getUrunByUrl(urunurl);
+    urun.currSymb= GetCurrncySym(urun)
     urun.resimler = !!urun.resimler ? JSON.parse(urun.resimler) : urun.resimler;
     urun.aciklama = !!urun.aciklama ? JSON.parse(urun.aciklama) : urun.aciklama;
     urun.garanti_aciklama = !!urun.garanti_aciklama

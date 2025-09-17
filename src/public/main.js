@@ -1,7 +1,7 @@
 import "./main.scss";
 import "./jqform-serialize.js";
 import "./owl.carousel.js";
-import { TopBtnAndScrollPosInit } from "./pages/util/main.js";
+import { GetCurrncySym, TopBtnAndScrollPosInit } from "./pages/util/main.js";
 import { HomeInit } from "./pages/home.js";
 import { UrunInit } from "./pages/urun.js";
 import { KategoriInit } from "./pages/kategori.js";
@@ -173,6 +173,7 @@ const Goruntulenenler = async () => {
       return {
         ...item,
         resimler: resimler,
+        currSymb:GetCurrncySym(item.currency),
         adet: 1,
         img_on:
           !!resimler && resimler.length > 0
