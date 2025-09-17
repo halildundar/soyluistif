@@ -112,4 +112,4 @@ const runKAtegoriTirnakRemove = async () => {
   }
   console.log(urunler.length);
 };
-runKAtegoriTirnakRemove();
+// runKAtegoriTirnakRemove();
