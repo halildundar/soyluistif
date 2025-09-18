@@ -18,6 +18,9 @@ import "./views/pages/website/auth/onay-kod.hbs";
 import "./views/pages/website/auth/user-bilgi.hbs";
 import "./views/pages/website/auth/user-adresbilgi.hbs";
 import "./views/pages/website/auth/user-siparis.hbs";
+import "./views/pages/website/auth/sifre-unutma.hbs";
+import "./views/pages/website/auth/sifre-degistir.hbs";
+import "./views/pages/website/auth/activasyononay.hbs";
 import "./views/pages/website/urun.hbs";
 import "./views/pages/website/kategori.hbs";
 import "./views/pages/website/sepet/main.hbs";
@@ -27,8 +30,10 @@ import "./views/pages/website/sepet/odeme-result.hbs";
 import "./views/pages/website/siparis/main.hbs";
 import "./views/pages/website/siparis/main query.hbs";
 import "./views/pages/website/favori/main.hbs";
+
 import "./views/pages/dashboard.hbs";
 import "./views/pages/signin.hbs";
+
 import "./views/pages/404.hbs";
 import './const.env';
 import "./views/pages/ctrlpanel/dashboard.hbs";

@@ -116,3 +116,4 @@ export const KategoriPageRender = async (req, res) => {
     musteri: req.user,
   });
 };
+

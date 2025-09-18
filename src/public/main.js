@@ -14,10 +14,12 @@ import { OdemeResultInit } from "./pages/odeme-result.js";
 import { FavorilerInit } from "./pages/favoriler.js";
 import { LoginInit } from "./pages/auth/login.js";
 import { UyeOlInit } from "./pages/auth/uyeol.js";
-import { OnayKodInit } from "./pages/auth/onay-kod.js";
+// import { OnayKodInit } from "./pages/auth/onay-kod.js";
 import { UserInfoInit } from "./pages/auth/user-info.js";
 import { UserAdresInit } from "./pages/auth/user-adres.js";
 import { UserOrdersInit } from "./pages/auth/user-siparis.js";
+import { SendAktivasyonInit } from "./pages/auth/send-activasyon.js";
+import {SendSifreDegistirInit} from "./pages/auth/sifre-degistir.js";
 export const HOST_NAME = location.origin; //"http://localhost:3000";
 // export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let myloc;
@@ -87,11 +89,13 @@ $(async function () {
     UyeOlInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
-  } else if (pathname == "/onay-kodu") {
-    OnayKodInit();
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
-  } else if (pathname.includes("/cust/info")) {
+  }
+  // else if (pathname == "/onay-kodu") {
+  //   OnayKodInit();
+  //   $("body").css("overflow", "auto");
+  //   $(".all-spinn").css("display", "none");
+  // }
+  else if (pathname.includes("/cust/info")) {
     UserInfoInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
@@ -101,6 +105,14 @@ $(async function () {
     $(".all-spinn").css("display", "none");
   } else if (pathname.includes("/cust/order")) {
     UserOrdersInit();
+    $("body").css("overflow", "auto");
+    $(".all-spinn").css("display", "none");
+  } else if (pathname.includes("/cust/sendactivation")) {
+    SendAktivasyonInit();
+    $("body").css("overflow", "auto");
+    $(".all-spinn").css("display", "none");
+  } else if (pathname.includes("/cust/")) {
+    SendSifreDegistirInit();
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
   } else {
@@ -173,7 +185,7 @@ const Goruntulenenler = async () => {
       return {
         ...item,
         resimler: resimler,
-        currSymb:GetCurrncySym(item.currency),
+        currSymb: GetCurrncySym(item.currency),
         adet: 1,
         img_on:
           !!resimler && resimler.length > 0
@@ -276,7 +288,7 @@ const SearchHeaderItems = () => {
         data: { search: $(".intxt-sserch").val() },
         dataType: "json",
       });
-      console.log(urunler)
+      console.log(urunler);
       $(".inptarea .sbmn").html("");
       if ($(".intxt-sserch").val().length > 0) {
         for (let i = 0; i < urunler.length; i++) {
@@ -308,11 +320,11 @@ const getMenuList = async (id, parent_length) => {
     dataType: "json",
   });
 };
-const BodyClick = ()=>{
-  $("body").on("click",function(){
-      $(".inptarea .sbmn").html("");
-  })
-}
+const BodyClick = () => {
+  $("body").on("click", function () {
+    $(".inptarea .sbmn").html("");
+  });
+};
 export const makeMenuItems = () => {
   let timer;
   let initMenuEvent = () => {

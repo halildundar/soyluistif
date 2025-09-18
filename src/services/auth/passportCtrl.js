@@ -42,6 +42,7 @@ export let Authenticate = (req, res, next) => {
             .status(401)
             .json({ ok: false, msg: "Email veya şifre hatalı" });
         }
+       
         req.logIn(user, function (err) {
           if (err) {
             console.log(user, "Hatalı bir durum var");
@@ -78,13 +79,20 @@ export let Authenticate1 = (req, res, next) => {
         if (err) {
           return next(err);
         }
+        console.log(info);
+        const {status,msg} = info;
+        if(!status){
+           return res
+            .status(401)
+            .json({ ok: false, msg:msg });
+        }
         if (!user) {
           console.log("Kullunıcı bulunamadı11");
           return res
             .status(401)
             .json({ ok: false, msg: "Kullunıcı bulunamadı" });
         }
-        if (!!info) {
+        if (!info || !info.status) {
           console.log(info, user);
           return res
             .status(401)
@@ -115,7 +123,6 @@ export let initPassportLocal = () => {
     localOptions,
     async (req, email, sifre, done) => {
       try {
-      
         const user = await findUserByEmail(email);
         if (!user) {
           return done(
@@ -126,11 +133,11 @@ export let initPassportLocal = () => {
         } else {
           let match = await comparePassword(sifre, user);
           if (match === true) {
-            return done(null, {...user,role:'local'}, null);
+            return done(null, user, null);
           } else if (
             match === "The password that you've entered is incorrect"
           ) {
-            return done(null, {...user,role:'local'}, match);
+            return done(null, false, match);
           } else {
             return done(null, false, null);
           }
@@ -154,19 +161,22 @@ export let initPassportLocal = () => {
         if (!user) {
           return done(
             null,
-            false
-            // req.flash("errors", `This user email "${email}" doesn't exist`)
+            false,
+            {status:false,msg:"Email adresi veya Şifre Yanlış"}
           );
         } else {
           let match = await comparePassword(sifre, user);
-          if (match === true) {
-            return done(null, {...user,role:'musteri'}, null);
-          } else if (
-            match === "The password that you've entered is incorrect"
-          ) {
-            return done(null,  {...user,role:'musteri'}, match);
-          } else {
-            return done(null, false, null);
+          const {role,onay_kod} = user;
+          if (match === false) {
+            return done(null, user, {status:false,msg:"Email adresi veya Şifre Yanlış"});
+          } else if (match === "The password that you've entered is incorrect") {
+            return done(null, false, {status:false,msg:"Email adresi veya Şifre Yanlış"});
+          } else if (onay_kod !== "-") {
+            return done(null, false, {status:false,msg:"Email Adresinize gönderilen aktiviasyon mailinizi aktifleştirin"});
+          }else if (role !== "musteri") {
+            return done(null, false, {status:false,msg:"Email adresi veya Şifre Yanlış"});
+          } else{
+              return done(null, user, {status:true,msg:"OK!"});
           }
         }
       } catch (err) {
@@ -179,14 +189,14 @@ export let initPassportLocal = () => {
 };
 
 passport.serializeUser(function (userObject, done) {
-  done(null,userObject)
+  done(null, userObject);
 });
 
 passport.deserializeUser(function (userObject, done) {
   if (userObject.role == "local") {
     findUserById(userObject.id)
       .then((usr) => {
-        return done(null, {...usr,role:"local"});
+        return done(null, usr);
       })
       .catch((error) => {
         return done(error, null);
@@ -194,7 +204,7 @@ passport.deserializeUser(function (userObject, done) {
   } else if (userObject.role == "musteri") {
     findMusteriById(userObject.id)
       .then((usr) => {
-        return done(null, {...usr,role:"musteri"});
+        return done(null,usr);
       })
       .catch((error) => {
         return done(error, null);

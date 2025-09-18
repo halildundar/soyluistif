@@ -100,18 +100,18 @@ export const UserSiparisPageRender = async (req, res) => {
     let buyer = JSON.parse(a.buyer);
     buyer.identityNumber = creditCardMask(buyer.identityNumber, "*");
     let itemTransactions = JSON.parse(a.itemTransactions);
-    let basketItems= JSON.parse(a.basketItems);
+    let basketItems = JSON.parse(a.basketItems);
     for (let i = 0; i < basketItems.length; i++) {
       basketItems[i] = {
         ...basketItems[i],
-         fiyat: parseFloat(basketItems[i].fiyat).toFixed(2),
+        fiyat: parseFloat(basketItems[i].fiyat).toFixed(2),
         indirimli_fiyat: parseFloat(basketItems[i].indirimli_fiyat).toFixed(2),
         price: parseFloat(basketItems[i].price).toFixed(2),
-      }
+      };
     }
     return {
       ...a,
-      price:parseFloat(a.price).toFixed(2),
+      price: parseFloat(a.price).toFixed(2),
       basketItems: basketItems,
       paymentCard: paymentCard,
       shippingAddress: JSON.parse(a.shippingAddress),
@@ -122,7 +122,7 @@ export const UserSiparisPageRender = async (req, res) => {
     };
   });
   let basketItems = siparisler.map((a) => a.basketItems);
- 
+
   return res.render("pages/website/auth/user-siparis.hbs", {
     title: "Siparişlerim",
     scriptname: `main`,
@@ -134,3 +134,4 @@ export const UserSiparisPageRender = async (req, res) => {
     basketItems: basketItems,
   });
 };
+

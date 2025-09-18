@@ -4,7 +4,11 @@ import { DB } from "./mysql.js";
 import { HomePageRender } from "./web/home.js";
 import { KurumsalRender } from "./web/kurumsal.js";
 import { UrunPageRender } from "./web/urun.js";
-import { KategoriPageRender, KategoriPageRenderAll,GetKategoriSearch } from "./web/kategori.js";
+import {
+  KategoriPageRender,
+  KategoriPageRenderAll,
+  GetKategoriSearch,
+} from "./web/kategori.js";
 import {
   SepetPageRender,
   SiparişBilgiPageRender,
@@ -26,13 +30,20 @@ import { FavorilerPageRender } from "./web/favoriler.js";
 import { RaporUrunApi } from "./ctrlpanel/rapor-urunler.js";
 import { checkMusteriLoggedIn, checkMusteriLoggedOut } from "./auth/auth.js";
 import { Uyeol, UyeOlPageRender } from "./web/musteri/uye-ol.js";
-import { OnayKodPageRender } from "./web/musteri/onay-kod.js";
+import {
+  MusteriActivation,
+  SendActvCode,
+  SendActvCodeRender,
+  SendChangePasswRender,
+  SendChangePassw,
+  SendPassChangeActvCode
+} from "./web/musteri/onay-kod.js";
 import {
   UserBilgiPageRender,
   UserAdresBilgiPageRender,
   UserSiparisPageRender,
   UserDataUpdate,
-  UserDataUpdatAdres
+  UserDataUpdatAdres,
 } from "./web/musteri/user-bilgi.js";
 export const HomePageApi = (app) => {
   router.get("/", HomePageRender);
@@ -88,7 +99,7 @@ export const UrunPageApi = (app) => {
 export const KategoriPageApi = (app) => {
   router.get("/kategori/all*", KategoriPageRenderAll);
   router.get("/kategori*", KategoriPageRender);
-  router.post("/kategori/search",GetKategoriSearch)
+  router.post("/kategori/search", GetKategoriSearch);
   return app.use("/", router);
 };
 export const MenuApi = (app) => {
@@ -185,22 +196,19 @@ export const FavoriPageApi = (app) => {
   return app.use("/", router);
 };
 export const MusteriApi = (app) => {
+  router.get("/cust/chngepassw", SendChangePasswRender);
+    router.post("/cust/chngepasswactiv", SendPassChangeActvCode);
+  router.post("/cust/chngepassw", SendChangePassw);
+  router.get("/cust/sendactivation", SendActvCodeRender);
+  router.post("/cust/sendactivation", SendActvCode);
+  router.get("/cust/activation", MusteriActivation);
   router.get("/uye-ol", UyeOlPageRender);
   router.post("/uye-ol", Uyeol);
-  router.get("/onay-kodu", OnayKodPageRender);
   router.get("/cust/info", checkMusteriLoggedIn, UserBilgiPageRender);
-  router.get(
-    "/cust/adress",
-    checkMusteriLoggedIn,
-    UserAdresBilgiPageRender
-  );
-  router.get(
-    "/cust/order",
-    checkMusteriLoggedIn,
-    UserSiparisPageRender
-  );
-  router.post('/cust/update-info',UserDataUpdate);
-  router.post('/cust/update-useradres',UserDataUpdatAdres);
+  router.get("/cust/adress", checkMusteriLoggedIn, UserAdresBilgiPageRender);
+  router.get("/cust/order", checkMusteriLoggedIn, UserSiparisPageRender);
+  router.post("/cust/update-info", UserDataUpdate);
+  router.post("/cust/update-useradres", UserDataUpdatAdres);
   router.get("/cust*", (req, res) => res.redirect("/cust/info"));
   return app.use("/", router);
 };

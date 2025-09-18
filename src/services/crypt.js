@@ -1,5 +1,5 @@
 import {scryptSync} from "node:crypto";
- const salt = 'syldisr?*fe';
+export const salt = 'syldisr?*fe';
 // Function to hash a password
 export const  hashPassword = (password) => {
   // Generate a random salt (16 bytes)

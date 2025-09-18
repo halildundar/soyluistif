@@ -1,33 +1,11 @@
-import { myloc } from "../../main.js";
 const Validator = () => {
   let formData = $("form").serializeJSON();
-  if (!formData.name) {
-    $(".errtxt").html("Ad alanı boş olamaz!");
-    return false;
-  } else if (!formData.surname) {
-    $(".errtxt").html("Soyad alanı boş olamaz!");
-    return false;
-  } else if (!formData.email) {
-    $(".errtxt").html("Email alanı boş olamaz");
-    return false;
-  } else if (!formData.telefon) {
-    $(".errtxt").html("Telefon alanı boş olamaz");
-    return false;
-  } else if (!formData.newpassw1) {
+  if (!formData.newpassw1) {
     $(".errtxt").html("Şifre alanı boş olamaz");
     return false;
   } else if (!formData.newpassw2) {
     $(".errtxt").html("Şifre alanı boş olamaz");
     return false;
-  }
-  if (!!formData.email) {
-    let emailCheck = formData.email.match(
-      /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{3,}$/
-    );
-    if (!emailCheck) {
-      $(".errtxt").html("Email doğru formatta giriniz");
-      return false;
-    }
   }
   if (!!formData.newpassw1 && !!formData.newpassw2) {
     if (formData.newpassw1 != formData.newpassw2) {
@@ -42,11 +20,14 @@ const Validator = () => {
       return false;
     }
   }
+
   $(".errtxt").html("");
   return true;
 };
-export const UyeOlInit = () => {
-
+export const SendSifreDegistirInit = () => {
+  const params = new URL(location.href).searchParams;
+  const urn = params.get("urn");
+  const cdn = params.get("cdn");
   $(".btn-pass-sea-toggle").on("click", function (e) {
     e.preventDefault();
     if ($(this).html() == "password") {
@@ -69,25 +50,22 @@ export const UyeOlInit = () => {
       passw2 = $("#newpassw2").val();
       if (passw1 == passw2) {
         let isOk = passw1.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/);
-        // console.log(
-        //   "Minimum eight characters, at least one letter and one number:",
-        //   isOk
-        // );
       } else {
         // console.log("Şifreler Eşit Değil");
       }
     }, 200);
   });
 
-  $(".btn-uyeol").on("click", async function (e) {
+  $(".btn-gonder").on("click", async function (e) {
     e.preventDefault();
     $(".spnarea").css("display", "flex");
     if (Validator()) {
+      let formData = $("form").serializeJSON();
       const resp = await $.ajax({
         type: "POST",
-        url: "/uye-ol",
-        data: {...$("form").serializeJSON()},
-        dataType: "json"
+        url: "/cust/chngepassw",
+        data: { newpassw1: formData.newpassw1,urn:urn,cdn:cdn  },
+        dataType: "json",
       });
       $(".onaymsg").css("display", "flex");
       if (!!resp.status) {
