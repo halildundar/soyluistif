@@ -13,10 +13,7 @@ export const MusteriActivation = async (req, res) => {
   let respData = { status: false, msg: "Aktivasyon sağlanamadı" };
   if (!!urn && !!cdn) {
     let item = verifyPassword(cdn, urn);
-    let isAkitf = await DB.Query("SELECT id FROM `musteriler` WHERE onay_kod = ?", [
-      { onay_kod: cdn },
-      cdn,
-    ]);
+    let isAkitf = await DB.Query("SELECT id FROM `musteriler` WHERE onay_kod = ?", [cdn]);
     if (!!item) {
       if (isAkitf.length == 1) {
         respData = {
