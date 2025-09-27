@@ -15,7 +15,7 @@ const settingsCaro1 = {
   ],
   pagination: false,
   paginationNumbers: false,
-   autoHeight: false,
+  autoHeight: false,
   // Responsive
   responsive: true,
   items: 5,
@@ -36,8 +36,16 @@ settingsCaroSma.items = 1;
 export const HomeInit = () => {
   $(".caroBig.owl-carousel").owlCarousel(settingsCaroBig);
   $(".caroSma.owl-carousel").owlCarousel(settingsCaroSma);
-  $(".caro1.owl-carousel").owlCarousel(settingsCaro1);
-  $(".caro2.owl-carousel").owlCarousel(settingsCaro2);
+  $(".caro1.owl-carousel").owlCarousel({
+    ...settingsCaro1,
+    itemsTablet: [768, 2],
+    itemsMobile: [479, 2],
+  });
+  $(".caro2.owl-carousel").owlCarousel({
+    ...settingsCaro2,
+    itemsTablet: [768, 2],
+    itemsMobile: [479, 2],
+  });
   // makeMenuItems();
 
   $(".owl-carousel a").on("click", function () {

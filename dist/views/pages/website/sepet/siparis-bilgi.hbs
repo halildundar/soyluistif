@@ -11,17 +11,17 @@
     <div class="bg-black/5">
         <div class="max-w-[--max-w] mx-auto ">
             <div class="py-7 px-5  text-center flex items-center justify-center space-x-5 font-semibold text-[1.4rem]">
-                <button class="text-black pointer-events-auto hidden md:inline-block">Sepet Onay</button>
-                <span clasS="tio text-[1.4rem] hidden md:inline-block">chevron_right</span>
+                <button class="text-black pointer-events-auto hidden lg:inline-block">Sepet Onay</button>
+                <span clasS="tio text-[1.4rem] hidden lg:inline-block">chevron_right</span>
                 <button class="text-orange-600 pointer-events-auto">Sipariş Bilgileri</button>
-                <span clasS="tio text-[1.4rem] hidden md:inline-block">chevron_right</span>
-                <button class="text-gray-500 pointer-events-none hidden md:inline-block">Ödeme</button>
+                <span clasS="tio text-[1.4rem] hidden lg:inline-block">chevron_right</span>
+                <button class="text-gray-500 pointer-events-none hidden lg:inline-block">Ödeme</button>
             </div>
         </div>
     </div>
     <div>
-        <div class="max-w-[--max-w] mx-auto flex flex-col md:flex-row py-5 md:py-7">
-            <div class="md:w-1/2 p-2 px-10">
+        <div class="max-w-[--max-w] mx-auto flex flex-col lg:flex-row py-5 lg:py-7">
+            <div class="lg:w-1/2 p-2 px-4 lg:px-10">
                 <div class="px-4 py-2 border border-gray-200 rounded bg-white">
                     <form class="space-y-2 fat-area">
                         <div class="font-semibold text-[1.2rem] pb-4">Fatura Bilgileri</div>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="flex items-center space-x-1">
                             <input type="checkbox" class="frm-chckbx" id="isOtherAdres" name="isOtherAdres" />
-                            <label for="isOtherAdres" class="select-none">Fatura bilgileri dışında adrese
+                            <label for="isOtherAdres" class="select-none text-[0.8rem] lg:text-[1rem]">Fatura bilgileri dışında adrese
                                 gönderilsin?</label>
                         </div>
                     </form>
@@ -129,7 +129,7 @@
                 </div>
                 <div class="spetbfyLeft px-4 py-2 border border-gray-200 rounded bg-white"></div>
             </div>
-            <div class="md:w-1/2 p-2 px-16 ">
+            <div class="lg:w-1/2 p-2 px-4 lg:px-16 ">
                 <div class="spetbfyRight px-5 py-4 border border-gray-200 rounded sticky top-0 bg-white"></div>
             </div>
         </div>
@@ -137,3 +137,14 @@
 
 </div>
 {{>footer}}
+
+<div class="all-spinn">
+  <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
+    <div>
+      <img src="/assets/logo.png" class="w-[200px] " alt="">
+    </div>
+    <div class="text-[3rem] text-orange-700">
+      <div class="spin icon-spin-1 spin-steps1 "></div>
+    </div>
+  </div>
+</div>

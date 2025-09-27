@@ -221,6 +221,24 @@ textarea {
     background-color: #0099cc;
   }
 }
+
+@media screen and (min-width: 980px) {
+  .caro1.owl-carousel,
+  .caro2.owl-carousel,
+  .caro3.owl-carousel,
+  .caroBig.owl-carousel,
+  .caroSma.owl-carousel {
+    .owl-controls {
+      .owl-prev,
+      .owl-next {
+        padding: 10px !important;
+        i {
+          font-size: 24px !important;
+        }
+      }
+    }
+  }
+}
 @media screen and (min-width: 1500px) {
   html,
   body {

@@ -96,16 +96,16 @@
                                 heart_outlined</div>
                             <div class=" border border-gray-300  rounded-lg overflow-hidden pb-2 ]">
                                 <div class="group h-[200px] overflow-hidden ">
-                                    <img src="{{this.resim_on}}" class="group-hover:hidden w-full h-full"
+                                    <img src="{{this.resim_on}}" class="group-hover:hidden w-full h-full object-cover"
                                         fetchpriority="high" alt="">
-                                    <img src="{{this.resim_arka}}" class="hidden group-hover:block w-full h-full"
+                                    <img src="{{this.resim_arka}}" class="hidden group-hover:block w-full h-full object-cover"
                                         alt="">
                                 </div>
                                 <hr class="border-2 border-orange-300">
                                 <div class="bg-gray-50">
                                     <div class="py-2">
                                         <div
-                                            class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-1 px-5">
+                                            class="title min-h-[40px] text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-2 px-5">
                                             {{this.name}}
                                         </div>
                                     </div>
@@ -166,3 +166,16 @@
     </div>
 </div>
 {{> footer}}
+
+
+
+<div class="all-spinn">
+  <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
+    <div>
+      <img src="/assets/logo.png" class="w-[200px] " alt="">
+    </div>
+    <div class="text-[3rem] text-orange-700">
+      <div class="spin icon-spin-1 spin-steps1 "></div>
+    </div>
+  </div>
+</div>

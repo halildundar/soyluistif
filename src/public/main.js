@@ -19,7 +19,7 @@ import { UserInfoInit } from "./pages/auth/user-info.js";
 import { UserAdresInit } from "./pages/auth/user-adres.js";
 import { UserOrdersInit } from "./pages/auth/user-siparis.js";
 import { SendAktivasyonInit } from "./pages/auth/send-activasyon.js";
-import {SendSifreDegistirInit} from "./pages/auth/sifre-degistir.js";
+import { SendSifreDegistirInit } from "./pages/auth/sifre-degistir.js";
 export const HOST_NAME = location.origin; //"http://localhost:3000";
 // export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let myloc;
@@ -157,11 +157,11 @@ const Goruntulenenler = async () => {
     autoHeight: false,
     // Responsive
     responsive: true,
-    items: 6,
+    items: 5,
     itemsDesktop: [1199, 4],
-    itemsDesktopSmall: [980, 3],
-    itemsTablet: [768, 2],
-    itemsMobile: [479, 1],
+    itemsDesktopSmall: [980, 4],
+    itemsTablet: [768, 3],
+    itemsMobile: [479, 2],
   };
   let ids = myloc.getItem("seeprod");
   if (!!ids && ids.length > 0) {
@@ -187,6 +187,7 @@ const Goruntulenenler = async () => {
         resimler: resimler,
         currSymb: GetCurrncySym(item.currency),
         adet: 1,
+        kalan_stok: parseInt(item.stok) - parseInt(item.alinan),
         img_on:
           !!resimler && resimler.length > 0
             ? "/uploads" + resimler[0]
@@ -213,19 +214,19 @@ const Goruntulenenler = async () => {
         <div
           class="btn-fav z-10 absolute top-4 right-5  text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
           heart_outlined</div>
-        <div class=" border border-gray-300 rounded-lg overflow-hidden pb-2">
-          <div class="group h-[200px] overflow-hidden ">
+        <div class="min-h-[445px]  lg:min-h-[550px]  grid grid-cols-1 border border-gray-300 rounded-lg overflow-hidden pb-2">
+          <div class="group h-[175px] lg:h-[275px] overflow-hidden ">
             <img src="${
               urun.img_on
-            }" class="group-hover:hidden w-full h-full" alt="">
+            }" class="group-hover:hidden w-full h-full object-cover" alt="">
             <img src="${
               urun.img_arka
-            }" class="hidden group-hover:block w-full h-full" alt="">
+            }" class="hidden group-hover:block w-full h-full object-cover" alt="">
           </div>
-          <div class="py-2">
-            <div class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold px-5 line-clamp-1">
-             ${urun.name}
-            </div>
+          <div class="py-2 px-2 lg:px-5">
+              <div class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
+                    ${urun.name}
+              </div>
           </div>
           <div class="py-2">
             <div class="urun-kod text-center text-[0.8rem]">${urun.kod}</div>
@@ -234,7 +235,7 @@ const Goruntulenenler = async () => {
             } adet
             </div>
           </div>
-          <div class="flex items-center w-1/2 mx-auto space-x-3">
+          <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
             <div class="bg-[red] text-white text-[0.8rem] p-2 flex items-center justify-center rounded-md font-bold">
               %${urun.indirim}
             </div>
@@ -288,7 +289,6 @@ const SearchHeaderItems = () => {
         data: { search: $(".intxt-sserch").val() },
         dataType: "json",
       });
-      console.log(urunler);
       $(".inptarea .sbmn").html("");
       if ($(".intxt-sserch").val().length > 0) {
         for (let i = 0; i < urunler.length; i++) {
@@ -310,6 +310,12 @@ const SearchHeaderItems = () => {
       "?search=" +
       $(".intxt-sserch").val().toLocaleLowerCase().trim();
     window.location = searchLink;
+  });
+
+  $(document).on("keypress", function (e) {
+    if (e.which == 13 && $(".intxt-sserch").val().length > 0) {
+      $(".btn-srch").trigger("click");
+    }
   });
 };
 const getMenuList = async (id, parent_length) => {
@@ -427,30 +433,25 @@ function getMakeSubKat(kateg, id) {
     let subsubkateg = getSubKateg(sub.id, sub.parents.length + 1);
     $(`.sublink[data-pur='${id}']`).append(`<div class="link"  data-ur="${
       sub.id
-    }">
-             <div class=" flex items-center space-x-1 pb-2 ">
-               <span class="select-none tio text-[1.8rem] cursor-default text-gray-600">chevron_right</span>
-                <a route="${
-                  sub.url
-                }" class="kateglin cursor-pointer select-none leading-none block flex-1 py-0.5 px-1 text-gray-700 hover:text-red-400">${
-      sub.name
-    } <i class="font-semibold text-red-400 !text-[1rem]">${
-      subsubkateg.length == 0 ? "" : `( ${subsubkateg.length} )`
-    }</i></a>
-             
+    }"> 
+              <div class="px-2 pb-1">
+                <div class="link flex items-center space-x-1 border border-gray-300 rounded py-1 px-2">
+                    <a route="${sub.url}" class="kateglin font-bold  flex  cursor-pointer select-none leading-none  line-clamp-1 flex-1 py-0.5 px-1 text-gray-700 hover:text-red-400">${
+                          sub.name
+                        } </a>
+               <span class="select-none tio text-[1.8rem] cursor-default text-gray-600 rounded-full bg-black/5">chevron_down</span>
              </div>
-              <div class="sublink" data-pur="${sub.id}" style="padding-left:${
-      8 * (kateg.parents.length + 1)
-    }px"></div>
+              </div>
+              <div class="sublink text-[0.8rem] line-clamp-1" data-pur="${sub.id}" style="padding-left:${10 * (kateg.parents.length + 1)}px"></div>
             </div>
             `);
     $(`.link[data-ur='${sub.id}'] span`).on("click", function () {
       const txtStr = $(this).html();
-      if (txtStr == "chevron_right") {
+      if (txtStr == "chevron_down") {
         getMakeSubKat(sub, sub.id);
-        $(this).html("chevron_down");
-      } else {
         $(this).html("chevron_right");
+      } else {
+        $(this).html("chevron_down");
         $(`.sublink[data-pur='${sub.id}']`).html("");
       }
     });

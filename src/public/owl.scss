@@ -155,8 +155,10 @@
 /*
  Custom Area
 */
-.caro1.owl-carousel .owl-theme,.caro2.owl-carousel .owl-theme,
-.caroBig.owl-carousel .owl-theme,.caroSma.owl-carousel .owl-theme {
+.caro1.owl-carousel .owl-theme,
+.caro2.owl-carousel .owl-theme,
+.caroBig.owl-carousel .owl-theme,
+.caroSma.owl-carousel .owl-theme {
   position: relative;
 }
 .caroBig.owl-carousel,
@@ -164,7 +166,11 @@
   height: 100%;
   display: flex !important;
 }
-.caro1.owl-carousel,.caro2.owl-carousel,.caro3.owl-carousel,.caroBig.owl-carousel,.caroSma.owl-carousel {
+.caro1.owl-carousel,
+.caro2.owl-carousel,
+.caro3.owl-carousel,
+.caroBig.owl-carousel,
+.caroSma.owl-carousel {
   .owl-controls {
     .owl-prev,
     .owl-next {
@@ -175,12 +181,12 @@
       z-index: 10;
       transform: translateY(-50%);
       box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
-      padding: 10px !important;
+      padding: 5px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       i {
-        font-size: 24px;
+        font-size: 16px;
       }
     }
     .owl-prev {

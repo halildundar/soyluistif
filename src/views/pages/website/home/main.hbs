@@ -20,35 +20,32 @@
                     {{/each}}
                 </div>
             </div>
-
-
         </div>
 
-        <div class="overflow-hidden pt-5 px-5">
-            <div class="font-semibold text-[1.4rem] py-2 ">Öne Çıkanlar</div>
+        <div class="overflow-hidden pt-5 lg:pl-5 ">
+            <div class="font-semibold text-[1.4rem] py-2 px-2 lg:px-0">Öne Çıkanlar</div>
             <div class="caro1 owl-carousel owl-theme px-2">
                 {{#each onecikanlar}}
-                <a class="pr-2  cursor-pointer relative block z-0" route="/urun/{{this.url}}" data-ur="{{this.id}}">
+                <a class="pr-2  cursor-pointer relative block z-0 " route="/urun/{{this.url}}" data-ur="{{this.id}}">
                     <div
                         class="btn-fav z-10 absolute top-4 right-5  text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                         heart_outlined</div>
                     <div
-                        class=" border border-gray-300 rounded-lg overflow-hidden pb-2 ">
-                        <div class="group h-[275px] overflow-hidden ">
-                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" fetchpriority="high" alt="">
-                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full" alt="">
+                        class="min-h-[445px]  lg:min-h-[550px]  grid grid-cols-1 border border-gray-300 rounded-lg overflow-hidden pb-2 ">
+                        <div class="group h-[175px] lg:h-[275px] overflow-hidden ">
+                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full object-cover" fetchpriority="high" alt="">
+                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full object-cover" alt="">
                         </div>
-                        <div class="py-2">
-                            <div class="title text-[--koyu-dark] text-[1rem] text-center font-bold px-5 line-clamp-2">
+                        <div class="py-2 px-2 lg:px-5">
+                            <div class="title  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
                                 {{this.name}}
                             </div>
                         </div>
                         <div class="py-2">
-                            <div class="urun-kod text-center text-[0.9rem]">{{this.kod}}</div>
-                            {{!-- <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}</div> --}}
+                            <div class="urun-kod text-center text-[0.9rem] px-1 lg:px-2">{{this.kod}}</div>
                             <div class="stok text-[--koyu] text-[1rem] text-center"><strong>Stok:</strong>{{this.kalan_stok}} adet</div>
                         </div>
-                        <div class="flex items-center w-1/2 mx-auto space-x-3">
+                        <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
                             <div
                                 class="bg-[red] text-white text-[1rem] p-2 flex items-center justify-center rounded-md font-bold">
                                 %{{this.indirim}}
@@ -94,8 +91,8 @@
                 {{/each}}
             </div>
         </div>
-        <div class="overflow-hidden pt-5 px-5">
-            <div class="font-semibold text-[1.4rem] py-2">Yeni Ürünler</div>
+        <div class="overflow-hidden pt-5  lg:pl-5 ">
+            <div class="font-semibold text-[1.4rem]  px-2 lg:px-0">Yeni Ürünler</div>
             <div class="caro2 owl-carousel owl-theme px-2">
                 {{#each enyeniler}}
                 <a class="pr-2  cursor-pointer relative block z-0" route="/urun/{{this.url}}" data-ur="{{this.id}}">
@@ -103,22 +100,21 @@
                         class="btn-fav  absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                         heart_outlined</div>
                     <div
-                        class="z-[1] border border-gray-300 rounded-lg overflow-hidden pb-2 ">
-                        <div class="group h-[200px] overflow-hidden ">
-                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" fetchpriority="high" alt="">
-                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full" alt="">
+                        class="min-h-[445px]  lg:min-h-[550px]  grid grid-cols-1 z-[1] border border-gray-300 rounded-lg overflow-hidden pb-2 ">
+                        <div class="group h-[175px] lg:h-[275px] overflow-hidden ">
+                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full object-cover" fetchpriority="high" alt="">
+                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full object-cover" alt="">
                         </div>
-                        <div class="py-2">
-                            <div class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-1 px-5">
+                        <div class="py-2 px-2 lg:px-5">
+                            <div class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
                                 {{this.name}}
                             </div>
                         </div>
                         <div class="py-2">
                             <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
-                            {{!-- <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}</div> --}}
                             <div class="barkod text-[--koyu] text-[0.8rem] text-center"><strong>Stok:</strong>{{this.kalan_stok}} adet</div>
                         </div>
-                        <div class="flex items-center w-1/2 mx-auto space-x-3">
+                        <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
                             <div
                                 class="bg-[red] text-white text-[0.8rem] p-2 flex items-center justify-center rounded-md font-bold">
                                 %{{this.indirim}}
@@ -165,9 +161,9 @@
                 {{/each}}
             </div>
         </div>
-        <div class="overflow-hidden pt-5 px-2">
+        <div class="overflow-hidden pt-5 px-2   lg:pl-5 ">
             <div class="font-semibold text-[1.4rem] py-2">En Çok Satanlar</div>
-            <div class="cok-satan grid grid-cols-2 gap-1 md:grid-cols-6  md:gap-3 ">
+            <div class="cok-satan grid grid-cols-2 gap-1 lg:grid-cols-5  lg:gap-2 ">
                 {{#each coksatanlar}}
                 <a route="/urun/{{this.url}}" class="pr-2 z-0  cursor-pointer relative block h-full"
                     data-ur="{{this.id}}">
@@ -175,13 +171,13 @@
                         class="btn-fav absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                         heart_outlined</div>
                     <div
-                        class=" border border-gray-300 rounded-lg overflow-hidden pb-2 ">
-                        <div class="group h-[200px] overflow-hidden ">
-                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full" fetchpriority="high" alt="">
-                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full"  alt="">
+                        class="min-h-[445px]  lg:min-h-[550px]  grid grid-cols-1 border border-gray-300 rounded-lg overflow-hidden pb-2 ">
+                        <div class="group h-[175px] lg:h-[275px] overflow-hidden ">
+                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full object-cover" fetchpriority="high" alt="">
+                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full object-cover"  alt="">
                         </div>
-                        <div class="py-2">
-                            <div class="title text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-1 px-5">
+                        <div class="py-2 px-2 lg:px-5">
+                            <div class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
                                 {{this.name}}
                             </div>
                         </div>
@@ -190,7 +186,7 @@
                             {{!-- <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}</div> --}}
                             <div class="barkod text-[--koyu] text-[0.8rem] text-center"><strong>Stok:</strong>{{this.kalan_stok}} adet</div>
                         </div>
-                        <div class="flex items-center w-1/2 mx-auto space-x-3">
+                        <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
                             <div
                                 class="bg-[red] text-white text-[0.8rem] p-2 flex items-center justify-center rounded-md font-bold">
                                 %{{this.indirim}}
@@ -239,3 +235,13 @@
     </div>
 </div>
 {{>footer}}
+<div class="all-spinn">
+  <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
+    <div>
+      <img src="/assets/logo.png" class="w-[200px] " alt="">
+    </div>
+    <div class="text-[3rem] text-orange-700">
+      <div class="spin icon-spin-1 spin-steps1 "></div>
+    </div>
+  </div>
+</div>

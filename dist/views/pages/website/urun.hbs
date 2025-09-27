@@ -135,13 +135,13 @@
                 <div class="border border-gray-200 rounded-lg  bg-white px-2 ">
                     <div class="flex justify-center space-x-5 py-5 border-b  border-gray-200 text-center">
                         <div ro="urun"
-                            class="duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
+                            class="text-[0.8rem] lg:text-[1rem] duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
                             Ürün Açıklaması </div>
                         <div ro="garanti"
-                            class="duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
+                            class="text-[0.8rem] lg:text-[1rem] duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
                             Garanti ve Teslimat</div>
                         <div ro="yorum" data-ur="{{urun.id}}"
-                            class="duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
+                            class="text-[0.8rem] lg:text-[1rem] duration-200 hover:text-blue-700 text-gray-600 font-semibold cursor-pointer select-none">
                             Yorumlar</div>
                     </div>
                     <div class="p-5 alt-area">
@@ -151,7 +151,7 @@
                         <div style="display:none" class="garanti-ack">
                             {{{urun.garanti_aciklama}}}
                         </div>
-                        <div style="display:none" class="yorum-ack space-y-5 w-1/2 mx-auto space-x-2">
+                        <div style="display:none" class="yorum-ack space-y-5 w-full lg:w-1/2 mx-auto space-x-2">
                             {{!-- {{{urun.yorumlar}}} --}}
 
                             <hr>
@@ -180,3 +180,15 @@
     </div>
 </div>
 {{> footer}}
+
+
+<div class="all-spinn">
+  <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
+    <div>
+      <img src="/assets/logo.png" class="w-[200px] " alt="">
+    </div>
+    <div class="text-[3rem] text-orange-700">
+      <div class="spin icon-spin-1 spin-steps1 "></div>
+    </div>
+  </div>
+</div>

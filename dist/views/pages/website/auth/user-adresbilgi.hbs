@@ -3,19 +3,26 @@
 
     <div class="bg-black/5">
         <div class="max-w-[--max-w] mx-auto ">
-            <div class="py-7 px-5  text-center flex items-center justify-center space-x-5 font-semibold text-[1.4rem]">
-                <a href="/cust/info" class="text-gray-500 pointer-events-auto ">Kişisel Bilgilerim</a>
+            <div class="pt-7 lg:py-7  px-5  text-center flex items-center justify-center space-x-5 font-semibold text-[1.4rem]">
+                <a href="/cust/info" class="hidden md:inline-block text-gray-500 pointer-events-auto ">Kişisel Bilgilerim</a>
                 <span class="tio text-[1.4rem] hidden md:inline-block">remove</span>
-                <button class="text-orange-500  hidden md:inline-block">Adres Bilgilerim</button>
+                <button class="text-orange-500  ">Adres Bilgilerim</button>
                 <span class="tio text-[1.4rem] hidden md:inline-block">remove</span>
                 <a href="/cust/order" class="text-gray-500  hidden md:inline-block">Siparişlerim</a>
             </div>
+            <hr class="h-3 border-t border-gray-400 w-1/2  mx-auto lg:hidden">
+            <div class="lg:hidden pb-7 flex items-center justify-center space-x-2 text-[1rem]">
+                <a href="/cust/info" class="text-gray-500   lg:inline-block">Kişisel Bilgilerim</a>
+                <span class="tio text-[1rem]  lg:inline-block">remove</span>
+                <a href="/cust/order" class="text-gray-500   lg:inline-block">Siparişlerim</a>
+            </div>
+          
         </div>
     </div>
     <div class="relative">
-        <div class="max-w-[--max-w] mx-auto  flex space-x-5 py-10  ">
+        <div class="max-w-[--max-w] mx-auto  flex flex-col space-y-2 lf:space-y-0 lg:flex-row lg:space-x-5 py-10 px-4 lg:px-0 ">
 
-            <div class="border border-gray-200 p-2 px-4  w-1/2 fat-area">
+            <div class="border border-gray-200 p-2 px-4  w-full lg:w-1/2 fat-area">
                 <form class="space-y-2  pt-4">
                     <div class="font-semibold text-[1.2rem] pb-4">Fatura Bilgileri</div>
                     <div class="flex space-x-2">
@@ -49,7 +56,7 @@
                     </div>
                     <div>
                         <label for="" class="frm-lbl">Adres</label>
-                        <div class="flex items-center space-x-2 mb-1" >
+                        <div class="flex items-center space-x-2 mb-1">
                             <select name="il_id" class="frm-slct" data-ur="{{musteri.adres.fatura.il_id}}">
                                 <option value="1">Adana</option>
                                 <option value="2">Adıyaman</option>
@@ -187,22 +194,23 @@
                         <div class="text-end text-[0.8rem] py-1">
                             Posta Kodu: <span class="pk">01720</span>
                         </div>
-                        <input type="text" class="frm-txt" name="adres" placeholder="Cadde/Bulvar/Sokak/Kapı No..."  value="{{musteri.adres.fatura.adres}}">
+                        <input type="text" class="frm-txt" name="adres" placeholder="Cadde/Bulvar/Sokak/Kapı No..."
+                            value="{{musteri.adres.fatura.adres}}">
                     </div>
                     <div>
                         <label for="aciklama" class="frm-lbl">Açıklama</label>
                         <textarea class="frm-textarea" name="aciklama" id="aciklama" cols="30"
-                            placeholder="Mesaj Giriniz" >{{musteri.adres.fatura.aciklama}}</textarea>
+                            placeholder="Mesaj Giriniz">{{musteri.adres.fatura.aciklama}}</textarea>
                     </div>
 
                 </form>
                 <button
-                    class="btn-copy-data  px-4 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-400 text-white rounded">
+                    class="btn-copy-data text-[0.8rem] lg:text-[1rem]  px-4 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-400 text-white rounded">
                     Fatura bilgilerimi adres bilgilerine kopyala
                 </button>
                 <div class="errtxt text-center text-red-600 py-2"></div>
             </div>
-            <div class="border border-gray-200 p-2 px-4 w-1/2 kar-area">
+            <div class="border border-gray-200 p-2 px-4 w-full lg:w-1/2 kar-area">
                 <form style="display: block;" class="space-y-2 pt-4  ">
                     <div class="font-semibold text-[1.2rem] pb-4">Adres(Gönderim) Bilgileri</div>
                     <div class="flex space-x-2">
@@ -376,12 +384,13 @@
                         <div class="text-end text-[0.8rem] py-1">
                             Posta Kodu: <span class="pk">27880</span>
                         </div>
-                        <input type="text" class="frm-txt" name="adres" placeholder="Cadde/Bulvar/Sokak/Kapı No..."  value="{{musteri.adres.kargo.adres}}">
+                        <input type="text" class="frm-txt" name="adres" placeholder="Cadde/Bulvar/Sokak/Kapı No..."
+                            value="{{musteri.adres.kargo.adres}}">
                     </div>
                     <div>
                         <label for="aciklama" class="frm-lbl">Açıklama</label>
                         <textarea class="frm-textarea" name="aciklama" id="aciklama" cols="30"
-                            placeholder="Mesaj Giriniz" >{{musteri.adres.kargo.aciklama}}</textarea>
+                            placeholder="Mesaj Giriniz">{{musteri.adres.kargo.aciklama}}</textarea>
                     </div>
                 </form>
                 <div class="errtxt text-center text-red-600 py-2"></div>
@@ -403,3 +412,13 @@
 
 </div>
 {{>footer}}
+<div class="all-spinn">
+  <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
+    <div>
+      <img src="/assets/logo.png" class="w-[200px] " alt="">
+    </div>
+    <div class="text-[3rem] text-orange-700">
+      <div class="spin icon-spin-1 spin-steps1 "></div>
+    </div>
+  </div>
+</div>

@@ -3,20 +3,29 @@
 
     <div class="bg-black/5">
         <div class="max-w-[--max-w] mx-auto ">
-            <div class="py-7 px-5  text-center flex items-center justify-center space-x-5 font-semibold text-[1.4rem]">
-                <a href="/cust/info" class="text-gray-500 pointer-events-auto ">Kişisel Bilgilerim</a>
-                <span class="tio text-[1.4rem] hidden md:inline-block">remove</span>
-                <a href="/cust/adress" class="text-gray-500  hidden md:inline-block">Adres Bilgilerim</a>
-                <span class="tio text-[1.4rem] hidden md:inline-block">remove</span>
-                <button class="text-orange-500  hidden md:inline-block">Siparişlerim</a>
+            <div
+                class="pt-7 lg:py-7 px-5  text-center flex items-center justify-center space-x-5 font-semibold text-[1.4rem]">
+                <a href="/cust/info" class="hidden lg:inline-block text-gray-500 pointer-events-auto ">Kişisel
+                    Bilgilerim</a>
+                <span class="tio text-[1.4rem] hidden lg:inline-block">remove</span>
+                <a href="/cust/adress" class="text-gray-500  hidden lg:inline-block">Adres Bilgilerim</a>
+                <span class="tio text-[1.4rem] hidden lg:inline-block">remove</span>
+                <button class="text-orange-500   lg:inline-block">Siparişlerim</a>
+            </div>
+            <hr class="h-3 border-t border-gray-400 w-1/2  mx-auto">
+            <div class="lg:hidden pb-7 flex items-center justify-center space-x-2 text-[1rem]">
+                <a href="/cust/info" class="text-gray-500   lg:inline-block">Kişisel Bilgilerim</a>
+                <span class="tio text-[1rem]  lg:inline-block">remove</span>
+                <a href="/cust/adress" class="text-gray-500   lg:inline-block">Adres Bilgilerim</a>
             </div>
         </div>
     </div>
     <div>
-        <div class="max-w-[--max-w] mx-auto  py-10  space-y-4">
+        <div class="max-w-[--max-w] mx-auto  py-10  space-y-4 px-2 ">
             {{#each siparisler}}
-            <div class="ate{{id}} p-2 px-4  border border-gray-200 space-y-4 rounded-md shadow-[0_0_7px_1px_rgba(0,0,0,0.1)]">
-                <div class="flex items-center py-5 space-x-5 w-full">
+            <div
+                class="ate{{id}} p-2 px-4  border border-gray-200 space-y-4 rounded-md lg:shadow-[0_0_7px_1px_rgba(0,0,0,0.1)]">
+                <div class="hidden lg:flex items-center py-5 space-x-5 w-full">
                     <div>
                         <strong class="text-[#792525]">SiparişID:</strong>
                         {{paymentId}}
@@ -34,30 +43,64 @@
                         <strong class="text-[#792525]">İşlem Tarih:</strong> {{systemTimeStr}}
                     </div>
                 </div>
+                <div class="lg:hidden grid grid-cols-2">
+                    <div class="col-span-1">
+                        <div class="text-[#792525] font-bold">SiparişID:</div>
+                        {{paymentId}}
+                    </div>
+                    <div class="col-span-1">
+                        <div class="text-[#792525]  font-bold">İşlem Tarih:</div> {{systemTimeStr}}
+                    </div>
+
+                    <div class="col-span-1">
+                        <div class="text-[#792525]  font-bold">Toplam:</div>
+                        {{price}} {{currency}}
+                    </div>
+                    <div class="col-span-1">
+                        {{!-- <strong class="text-[#792525]">Durum:</strong> --}}
+                        <span class=" bg-green-600 text-white px-2 py-1 text-[0.9rem] rounded"> {{status}}</span>
+                    </div>
+                </div>
                 <div>
-                    <table class="w-full border-collapse">
+                    <div class="block lg:hidden">
+                        {{#each basketItems}}
+                        <div class="grid grid-cols-6">
+                            <div class="line-clamp-1 col-span-3 text-[0.8rem]"><a href="{{this.url}}" target="_blank"
+                                    class="text-blue-500 hover:underline">{{this.name}} dsads ad sadsafwfewfsadasdsa</a></div>
+                            <div class="col-span-1 text-[0.8rem]">{{this.adet}} adet</div>
+                            <div class="col-span-2 text-[0.8rem]">{{this.price}} {{this.currency}}</div>
+                        </div>
+                        {{/each}}
+                        <div class="grid grid-cols-6">
+                            <div class="col-span-3 font-bold text-[0.8rem]"></div>
+                            <div class="col-span-1 font-bold text-[0.8rem]">Toplam:</div>
+                            <div class="col-span-2 font-bold text-[0.8rem]">{{this.price}} {{this.currency}}</div>
+                        </div>
+                    </div>
+                    <table class="hidden lg:table w-full border-collapse">
                         <tr class="border-y border-gray-300">
                             <th class="text-start py-1 px-2">Ürün Adı</th>
-                                  <th class="text-center py-1 px-2">Birim</th>
+                            <th class="text-center py-1 px-2">Birim</th>
                             <th class="text-center py-1 px-2">Adet</th>
                             <th class="text-end py-1 px-2">Birim Fiyat</th>
                             <th class="text-center py-1 px-2">İndirim</th>
                             <th class="text-end py-1 px-2">İnd.Fiyat</th>
-                               <th class="text-center py-1 px-2">KDV</th>
+                            <th class="text-center py-1 px-2">KDV</th>
                             <th class="text-end py-1 px-2">Net</th>
                         </tr>
                         {{#each basketItems}}
 
                         <tr class="border-y border-gray-300">
                             <td class="py-1 px-2">
-                                <a href="{{this.url}}" target="_blank" class="text-blue-500 hover:underline">{{this.name}}</a>
+                                <a href="{{this.url}}" target="_blank"
+                                    class="text-blue-500 hover:underline">{{this.name}}</a>
                             </td>
-                              <td class="py-1 px-2  text-center">{{this.currency}}</td>
+                            <td class="py-1 px-2  text-center">{{this.currency}}</td>
                             <td class="py-1 px-2 text-center">{{this.adet}}</td>
                             <td class="py-1 px-2  text-end">{{this.fiyat}}</td>
                             <td class="py-1 px-2  text-center">%{{this.indirim}}</td>
                             <td class="py-1 px-2  text-end">{{this.indirimli_fiyat}}</td>
-                               <td class="py-1 px-2  text-center">%{{this.kdv}}</td>
+                            <td class="py-1 px-2  text-center">%{{this.kdv}}</td>
                             <td class="py-1 px-2  text-end">{{this.price}}</td>
                         </tr>
                         {{/each}}
@@ -69,15 +112,15 @@
                     </table>
                 </div>
                 <div class="flex items-center space-x-3" data-ur="{{id}}">
-                    <input type="checkbox" id="chk{{@index}}" class="shwchk w-[1.4rem] h-[1.4rem]" >
+                    <input type="checkbox" id="chk{{@index}}" class="shwchk w-[1.4rem] h-[1.4rem]">
                     <label for="chk{{@index}}" class="frm-lbl">Diğer Bilgiler</label>
                 </div>
                 <div style="display:none" class="adresar grid grid-cols-4 py-4 gap-5">
-                    <div class="col-span-2 p-2 border border-gray-200 rounded">
+                    <div class="lg:col-span-2 col-span-4 p-2 border border-gray-200 rounded">
                         <div class="pb-4">
                             <strong class="text-[#792525]">İşlemi Yapan:</strong>
                         </div>
-                        <div class="flex  space-x-4">
+                        <div class="flex lg:flex-row flex-col  space-y-2 lg:space-y-0 lg:space-x-4">
                             <div>
                                 <div>
                                     <strong class="text-[#792525]">Ad/Soyad:</strong>
@@ -112,7 +155,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-2 p-2 border border-gray-200 rounded">
+                    <div class="lg:col-span-2 col-span-4 p-1 lg:p-2 border border-gray-200 rounded">
                         <div>
                             <div>
                                 <strong class="text-[#792525]">Alıcı(Gönderim) Bilgileri:</strong>
@@ -121,14 +164,14 @@
                                 <strong class="text-[#792525]">Ad/Soyad:</strong>
                                 {{shippingAddress.contactName}}
                             </div>
-                             <div>
+                            <div>
                                 <strong class="text-[#792525]">TC:</strong>
                                 {{shippingAddress.identityNumber}}
                             </div>
                             <div>
                                 <strong class="text-[#792525]">Adres:</strong>
                                 {{shippingAddress.address}}
-                                 <strong class="text-[#792525]">PK:</strong>
+                                <strong class="text-[#792525]">PK:</strong>
                                 {{shippingAddress.zipCode}}
                             </div>
                             <div>
@@ -136,9 +179,9 @@
                                 {{shippingAddress.telefon}} <strong class="text-[#792525]">Email:</strong>
                                 {{shippingAddress.email}}
                             </div>
-                            
+
                         </div>
-                        <hr class="mb-2 border-t border-gray-300">
+                        <hr class="h-2 border-b border-gray-300">
                         <div>
                             <div>
                                 <strong class="text-[#792525]">Fatura Bilgileri:</strong>
@@ -150,17 +193,17 @@
                             <div>
                                 <strong class="text-[#792525]">Adres:</strong>
                                 {{billingAddress.address}}
-                                  <strong class="text-[#792525]">PK:</strong>
+                                <strong class="text-[#792525]">PK:</strong>
                                 {{billingAddress.zipCode}}
                             </div>
-                           
-                              <div>
+
+                            <div>
                                 <strong class="text-[#792525]">TC:</strong>
                                 {{billingAddress.identityNumber}}
                             </div>
-                              <div>
+                            <div>
                                 <strong class="text-[#792525]">Telefon:</strong>
-                                {{billingAddress.telefon}}  <strong class="text-[#792525]">Email:</strong>
+                                {{billingAddress.telefon}} <strong class="text-[#792525]">Email:</strong>
                                 {{billingAddress.email}}
                             </div>
                         </div>
@@ -181,3 +224,13 @@
 
 </div>
 {{>footer}}
+<div class="all-spinn">
+  <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
+    <div>
+      <img src="/assets/logo.png" class="w-[200px] " alt="">
+    </div>
+    <div class="text-[3rem] text-orange-700">
+      <div class="spin icon-spin-1 spin-steps1 "></div>
+    </div>
+  </div>
+</div>

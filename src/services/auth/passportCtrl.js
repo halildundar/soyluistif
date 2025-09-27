@@ -30,6 +30,7 @@ export let Authenticate = (req, res, next) => {
         if (err) {
           return next(err);
         }
+        console.log(user,info);
         if (!user) {
           console.log("Kullunıcı bulunamadı");
           return res
