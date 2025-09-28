@@ -6,7 +6,7 @@ import {checkLoggedIn} from '../auth/auth.js';
 export const CtrlPanelUrunRender = async (req, res) => {
   res.render("pages/ctrlpanel/urun.hbs", {
     title: "Ürünler",
-    scriptname: `ctrlpanel-main`,
+    scriptname: process.env.CTRLPANELSCRIPTNAME,
     styles: `<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"> <link
   href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
   rel="stylesheet"

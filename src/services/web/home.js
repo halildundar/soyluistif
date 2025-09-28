@@ -79,9 +79,11 @@ export const HomePageRender = async (req, res) => {
   const { enyeniler, coksatanlar, onecikanlar, imagesBg, imagesSm, mainMenus } = await makeBannerAndUrunler();
   const eticSiteler = await GetEticLogos();
   const sett = await GetSettings();
+  console.log(process.env.IYZICO_API_KEY);
+    console.log(process.env.WEBSCRIPTNAME)
   res.render("pages/website/home/main.hbs", {
     title: "Anasayfa",
-    scriptname: `main`,
+    scriptname:  process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     imagesBg: [
       ...imagesBg,

@@ -5,7 +5,7 @@ export const UserBilgiPageRender = async (req, res) => {
   const sett = await GetSettings();
   return res.render("pages/website/auth/user-bilgi.hbs", {
     title: "Müşteri Genel Bilgiler",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: [...mainMenus],
     wpno: sett.whatsappno,
@@ -51,7 +51,7 @@ export const UserAdresBilgiPageRender = async (req, res) => {
   let user = { ...req.user, adres: JSON.parse(req.user.adres) };
   return res.render("pages/website/auth/user-adresbilgi.hbs", {
     title: "Müşteri Adres Bilgileri",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: [...mainMenus],
     wpno: sett.whatsappno,
@@ -125,7 +125,7 @@ export const UserSiparisPageRender = async (req, res) => {
 
   return res.render("pages/website/auth/user-siparis.hbs", {
     title: "Siparişlerim",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: [...mainMenus],
     wpno: sett.whatsappno,

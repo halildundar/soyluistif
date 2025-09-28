@@ -17,12 +17,14 @@
         </div>
         <div>
             {{!-- Top Area --}}
-            <div class="flex md:flex-row flex-col md:space-x-5 space-y-5 md:space-y-0 border border-gray-200 rounded-lg p-5">
+            <div
+                class="flex md:flex-row flex-col md:space-x-5 space-y-5 md:space-y-0 border border-gray-200 rounded-lg p-5">
                 <div class="w-full md:w-[40%]">
                     <div class="flex flex-col-reverse md:flex-row md:space-x-2 space-y-2 md:space-y-0">
                         <div class="space-y-2  overflow-y-auto whitespace-nowrap">
                             {{#each urun.resimler}}
-                            <a href="/uploads{{this}}" class="w-[75px] h-[75px] inline-flex md:flex border border-gray-200">
+                            <a href="/uploads{{this}}"
+                                class="w-[75px] h-[75px] inline-flex md:flex border border-gray-200">
                                 <img src="/uploads{{this}}" class="w-full h-full" fetchpriority="high" alt="">
                             </a>
                             {{/each}}
@@ -42,8 +44,15 @@
                 </div>
                 <div class="w-full md:w-[60%] bg-white md:p-10 p-5 pt-5 border border-gray-200 rounded-md">
                     <div class="text-[1.4rem] pb-2 font-semibold">{{urun.name}}</div>
-                    <hr class="mb-4">
+                    <hr class="mb-2">
                     <div class="pb-2 text-[1rem]">
+                        <div class="flex items-center justify-start  text-[1.2rem]">
+                            <button class="tio text-gray-500">star</button>
+                            <button class="tio text-gray-500">star</button>
+                            <button class="tio text-gray-500">star</button>
+                            <button class="tio text-gray-500">star</button>
+                            <button class="tio text-gray-500">star</button>
+                        </div>
                         <div><strong>Ürün Kod:</strong> <span>{{urun.kod}}</span></div>
                         <div><strong>Barkod:</strong> <span>{{urun.barkod}}</span></div>
                         <div><strong>Kategori:</strong> <span>{{lastkategori.name}}</span></div>
@@ -56,8 +65,10 @@
                             <div class="">İndirim</div>
                         </div>
                         <div class="inline-block">
-                            <div class="text-gray-600 text-[1.4rem] font-bold line-through ">{{#DigitFract urun.fiyat 2}} {{/DigitFract}}{{urun.currSymb}}</div>
-                            <div class="text-[2rem] leading-none font-bold">{{#DigitFract urun.indirimli_fiyat 2}}  {{/DigitFract}}{{urun.currSymb}}</div>
+                            <div class="text-gray-600 text-[1.4rem] font-bold line-through ">{{#DigitFract urun.fiyat
+                                2}} {{/DigitFract}}{{urun.currSymb}}</div>
+                            <div class="text-[2rem] leading-none font-bold">{{#DigitFract urun.indirimli_fiyat 2}}
+                                {{/DigitFract}}{{urun.currSymb}}</div>
                         </div>
                     </div>
                     <div class="pt-5">
@@ -183,12 +194,12 @@
 
 
 <div class="all-spinn">
-  <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
-    <div>
-      <img src="/assets/logo.png" class="w-[200px] " alt="">
+    <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
+        <div>
+            <img src="/assets/logo.png" class="w-[200px] " alt="">
+        </div>
+        <div class="text-[3rem] text-orange-700">
+            <div class="spin icon-spin-1 spin-steps1 "></div>
+        </div>
     </div>
-    <div class="text-[3rem] text-orange-700">
-      <div class="spin icon-spin-1 spin-steps1 "></div>
-    </div>
-  </div>
 </div>

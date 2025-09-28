@@ -36,7 +36,7 @@ export const KurumsalRender = async (req, res) => {
   }
   res.render("pages/website/kurumsal/main.hbs", {
     title: "Kurumsal",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
         scripts:`<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
 
     temp: tempstr,

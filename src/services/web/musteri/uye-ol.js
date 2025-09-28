@@ -7,7 +7,7 @@ export const UyeOlPageRender = async (req, res) => {
      const sett = await GetSettings();
   res.render("pages/website/auth/uye-ol.hbs", {
     title: "Üye ol",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: [...mainMenus],
     wpno: sett.whatsappno,

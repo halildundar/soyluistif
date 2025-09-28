@@ -6,7 +6,7 @@ export const EticaretApi = (app) => {
   router.get("/ctrlpanel/etic-siteler",checkLoggedIn,  (req, res) => {
     return res.render("pages/ctrlpanel/eticaret.hbs", {
       title: "Eticaret Siteler",
-      scriptname: `ctrlpanel-main`,
+      scriptname: process.env.CTRLPANELSCRIPTNAME,
       styles: ``,
       scripts: `  <script defer src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,

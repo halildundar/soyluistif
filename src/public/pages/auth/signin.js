@@ -34,4 +34,6 @@ $(function () {
     }
     $(".spin-area").css("display", "none");
   });
+    $("body").css("overflow", "auto");
+    $(".all-spinn").css("display", "none");
 });

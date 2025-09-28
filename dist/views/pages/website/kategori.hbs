@@ -16,9 +16,9 @@
         </div>
         <div class="flex py-2 md:py-4">
             <div class="hidden md:block md:w-1/4 pr-4 space-y-4">
-                <div class="border border-gray-200 rounded-md px-4 py-2">
+                <div class="border border-gray-200 rounded-md pl-4 py-2">
                     <div class="font-semibold pb-2">Alt Kategoriler</div>
-                    <div class="text-[0.8rem]">
+                    <div class="text-[0.8rem] max-h-[400px] overflow-y-auto">
                         {{#each altKategoriler}}
                         <a href="{{this.url}}" class="cursor-pointer text-gray-500 hover:text-orange-700 py-1 block">
                             {{this.name}}
@@ -28,6 +28,22 @@
                 </div>
 
                 <div class="border border-gray-200 rounded-md px-4 py-2">
+                    <div class="font-semibold pb-2">Para Birimi</div>
+                    <div class="py-2 space-x-2 flex items-center select-none text-gray-600">
+                        <div class="flex items-center space-x-1">
+                            <input type="radio" id="usd" name="para_birim" value="USD" class="w-[1.2rem] h-[1.2rem]"
+                                checked>
+                            <label for="usd">USD($)</label>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <input type="radio" id="eur" name="para_birim" value="EUR" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="eur">EURO(€)</label>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <input type="radio" id="tl" name="para_birim" value="TL" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="tl">TL(₺)</label>
+                        </div>
+                    </div>
                     <div class="font-semibold pb-2">Fiyat Aralıkları</div>
                     <div class="flex items-center space-x-2">
                         <input type="number" name="minfiyat" placeholder="En Az"
@@ -40,7 +56,23 @@
                         </button>
                     </div>
                     <div class="py-2 space-y-1 select-none text-gray-600">
+
+                        {{#each filtreElemanlar}}
+                        {{#IsEq @index 0}}
                         <div class="flex items-center space-x-2">
+                            <input type="radio" id="fiyat_tum" name="minmax" value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]" checked>
+                            <label for="fiyat_tum">Tüm Fiyatlar <span
+                                    class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span> </label>
+                        </div>
+                        {{else}}
+                        <div class="flex items-center space-x-2">
+                            <input type="radio" id="fiyat_{{max}}" name="minmax" value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="fiyat_{{max}}">{{minStr}} $ - {{maxStr}} $ <span
+                                    class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span> </label>
+                        </div>
+                        {{/IsEq}}
+                        {{/each}}
+                        {{!-- <div class="flex items-center space-x-2">
                             <input type="radio" id="tum" name="minmax" value="" class="w-[1.2rem] h-[1.2rem]">
                             <label for="tum">Tüm Fiyatlar</label>
                         </div>
@@ -63,7 +95,7 @@
                         <div class="flex items-center space-x-2">
                             <input type="radio" id="3000" name="minmax" value="3000" class="w-[1.2rem] h-[1.2rem]">
                             <label for="3000">2.999,00 ₺ - 3.499,00 ₺</label>
-                        </div>
+                        </div> --}}
                     </div>
 
 
@@ -77,7 +109,8 @@
                             <label for="ucretsiz_kargo">Ücretsiz Kargo</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="stoktakiler" name="stoktakiler" value="on" class="w-[1.2rem] h-[1.2rem]">
+                            <input type="checkbox" id="stoktakiler" name="stoktakiler" value="on"
+                                class="w-[1.2rem] h-[1.2rem]">
                             <label for="stoktakiler">Sadece stoktakiler</label>
                         </div>
                     </div>
@@ -86,7 +119,6 @@
             <div class="w-full md:w-3/4 px-2 md:px-4 md:py-2 border border-gray-200 rounded-md">
                 <div class="fltr-area"></div>
                 <div class="urunler overflow-hidden w-full">
-                    {{!-- <div class="font-semibold text-[1.4rem] pb-2">Kategori Title</div> --}}
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-4">
                         {{#each urunler}}
                         <a route="/urun/{{this.url}}" class=" z-0  cursor-pointer relative block h-full"
@@ -95,17 +127,24 @@
                                 class="btn-fav absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                                 heart_outlined</div>
                             <div class=" border border-gray-300  rounded-lg overflow-hidden pb-2 ]">
-                                <div class="group h-[200px] overflow-hidden ">
+                                <div class="group h-[175px] lg:h-[275px] overflow-hidden ">
                                     <img src="{{this.resim_on}}" class="group-hover:hidden w-full h-full object-cover"
                                         fetchpriority="high" alt="">
-                                    <img src="{{this.resim_arka}}" class="hidden group-hover:block w-full h-full object-cover"
-                                        alt="">
+                                    <img src="{{this.resim_arka}}"
+                                        class="hidden group-hover:block w-full h-full object-cover" alt="">
                                 </div>
                                 <hr class="border-2 border-orange-300">
+                                <div class="flex items-center justify-center py-2 text-[1.2rem]">
+                                    <button class="tio text-gray-500">star</button>
+                                    <button class="tio text-gray-500">star</button>
+                                    <button class="tio text-gray-500">star</button>
+                                    <button class="tio text-gray-500">star</button>
+                                    <button class="tio text-gray-500">star</button>
+                                </div>
                                 <div class="bg-gray-50">
                                     <div class="py-2">
                                         <div
-                                            class="title min-h-[40px] text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-2 px-5">
+                                            class="title  text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-2 px-5">
                                             {{this.name}}
                                         </div>
                                     </div>
@@ -120,10 +159,12 @@
                                             %{{this.indirim}}
                                         </div>
                                         <div>
-                                            <div class="line-through text-[0.8rem] text-[--koyu]">{{#DigitFract this.fiyat 2}} {{/DigitFract}}{{this.currSymb}}
+                                            <div class="line-through text-[0.8rem] text-[--koyu]">{{#DigitFract
+                                                this.fiyat 2}} {{/DigitFract}}{{this.currSymb}}
                                             </div>
                                             <div class="text-[1rem] leading-tight">
-                                                <strong>{{#DigitFract this.indirimli_fiyat 2}}  {{/DigitFract}}{{this.currSymb}}</strong>
+                                                <strong>{{#DigitFract this.indirimli_fiyat 2}}
+                                                    {{/DigitFract}}{{this.currSymb}}</strong>
                                             </div>
                                         </div>
                                     </div>
@@ -170,12 +211,12 @@
 
 
 <div class="all-spinn">
-  <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
-    <div>
-      <img src="/assets/logo.png" class="w-[200px] " alt="">
+    <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
+        <div>
+            <img src="/assets/logo.png" class="w-[200px] " alt="">
+        </div>
+        <div class="text-[3rem] text-orange-700">
+            <div class="spin icon-spin-1 spin-steps1 "></div>
+        </div>
     </div>
-    <div class="text-[3rem] text-orange-700">
-      <div class="spin icon-spin-1 spin-steps1 "></div>
-    </div>
-  </div>
 </div>

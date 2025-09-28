@@ -24,7 +24,7 @@ export const AuthApi = (app) => {
          const sett = await GetSettings();
     return res.render("pages/website/auth/login.hbs", {
       title: "Login",
-      scriptname:`main`,
+      scriptname:process.env.WEBSCRIPTNAME,
         scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
            menus: [...mainMenus],
     wpno: sett.whatsappno,

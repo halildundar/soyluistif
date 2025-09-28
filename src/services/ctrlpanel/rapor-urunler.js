@@ -12,7 +12,7 @@ import { checkLoggedIn } from "../auth/auth.js";
 const RaporUrunRender = async (req, res) => {
   res.render("pages/ctrlpanel/rapor-urunler.hbs", {
     title: "Ürün Listesi",
-    scriptname: `ctrlpanel-main`,
+    scriptname: process.env.CTRLPANELSCRIPTNAME,
     styles: ``,
     scripts: `  <script defer src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,

@@ -1,7 +1,7 @@
 import {
   GetCurrncySym,
   getUrunlerIncludeKategori,
-  getUrunlerIncludeKategori1,
+  getUrunlerIncludeKategoriAll,
 } from "./dbdata.js";
 import { getMainMenu, GetEticLogos, GetSettings } from "./dbdata.js";
 
@@ -16,7 +16,6 @@ export const GetKategoriSearch = async (req, res) => {
       return res.json({ status: false, msg: "Hata!" });
     }
     const { search } = req.body;
-    console.log(search);
     let { urunler, altKategoriler, breadcrumbs } =
       await getUrunlerIncludeKategori1(search);
     urunler = urunler.map((item) => {
@@ -45,8 +44,8 @@ export const KategoriPageRenderAll = async (req, res) => {
   const eticSiteler = await GetEticLogos();
   const sett = await GetSettings();
   const { search } = req.query;
-  let { urunler, altKategoriler, breadcrumbs } =
-    await getUrunlerIncludeKategori1(search);
+  let { urunler, altKategoriler, breadcrumbs,filtreElemanlar } =
+    await getUrunlerIncludeKategoriAll(search);
   urunler = urunler.map((item) => {
     item.resimler = JSON.parse(item.resimler);
 
@@ -66,7 +65,7 @@ export const KategoriPageRenderAll = async (req, res) => {
   });
   res.render("pages/website/kategori.hbs", {
     title: "Kategori",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     urunler: !!urunler ? urunler : [],
     altKategoriler: mainMenus,
@@ -76,6 +75,7 @@ export const KategoriPageRenderAll = async (req, res) => {
     eticSiteler: eticSiteler,
     wpno: sett.whatsappno,
     musteri: req.user,
+    filtreElemanlar:filtreElemanlar
   });
 };
 export const KategoriPageRender = async (req, res) => {
@@ -85,8 +85,9 @@ export const KategoriPageRender = async (req, res) => {
     return res.redirect("/kategori/all");
   }
   const { search } = req.query;
-  let { urunler, altKategoriler, breadcrumbs } =
-    await getUrunlerIncludeKategori(req.path, search);
+  let path = decodeURIComponent(decodeURIComponent(req.path))
+  let { urunler, altKategoriler, breadcrumbs,filtreElemanlar } =
+    await getUrunlerIncludeKategori(path, search);
   urunler = urunler.map((item) => {
     item.resimler = JSON.parse(item.resimler);
     let newItem = {
@@ -105,7 +106,7 @@ export const KategoriPageRender = async (req, res) => {
   });
   res.render("pages/website/kategori.hbs", {
     title: "Kategori",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     urunler: !!urunler ? urunler : [],
     altKategoriler: !!altKategoriler ? altKategoriler : [],
@@ -114,6 +115,7 @@ export const KategoriPageRender = async (req, res) => {
     dizi1: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     eticSiteler: eticSiteler,
     musteri: req.user,
+    filtreElemanlar:filtreElemanlar
   });
 };
 

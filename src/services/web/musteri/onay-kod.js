@@ -34,7 +34,7 @@ export const MusteriActivation = async (req, res) => {
   }
   return res.render("pages/website/auth/activasyononay.hbs", {
     title: "Not Activation User",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     altKategoriler: mainMenus,
     menus: [...mainMenus],
@@ -81,7 +81,7 @@ export const SendActvCodeRender = async (req, res) => {
   const sett = await GetSettings();
   return res.render("pages/website/auth/sifre-unutma.hbs", {
     title: "Şifre Değiştir",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: [...mainMenus],
     wpno: sett.whatsappno,
@@ -93,7 +93,7 @@ export const SendChangePasswRender = async (req, res) => {
   const sett = await GetSettings();
   return res.render("pages/website/auth/sifre-degistir.hbs", {
     title: "Şifre Değiştir",
-    scriptname: `main`,
+    scriptname:process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: [...mainMenus],
     wpno: sett.whatsappno,

@@ -5,7 +5,8 @@ import TerserPlugin from "terser-webpack-plugin";
 import nodeExternals from "webpack-node-externals";
 import { config } from "dotenv";
 config({ path: "./src/const.env" });
-console.log(process.env.NODE_ENV);
+
+console.log("test:",process.env.WEBSCRIPTNAME)
 
 export default {
   // mode: "development",
@@ -15,9 +16,9 @@ export default {
   entry: {
     server: "./src/server.js",
     viewchanges: "./src/viewschanges.js",
-    "public/main": "./src/public/main.js",
-    "public/ctrlpanel-main": "./src/public/ctrlpanel-main.js",
-     "public/signin": "./src/public/pages/auth/signin.js",
+    ["public/" + process.env.WEBSCRIPTNAME]: "./src/public/main.js",
+    ["public/" + process.env.CTRLPANELSCRIPTNAME]: "./src/public/ctrlpanel-main.js",
+    "public/signin": "./src/public/pages/auth/signin.js",
   },
   output: {
     path: resolve(process.cwd(), "dist"),
@@ -81,7 +82,6 @@ export default {
       },
     ],
   },
- 
 
   optimization: {
     minimize: true,
@@ -109,8 +109,8 @@ export default {
         blocking: false,
         parallel: true,
       },
-      // onBeforeCompile: {
-      //   scripts: ["taskkill /f /im node.exe"],
+      // onBuildStart: {
+      //   scripts: ["node makeenvfile.js"],
       //   blocking: false,
       //   parallel: true,
       // },
@@ -132,8 +132,8 @@ export default {
     //   port: 4200,
     //   server: { baseDir: ['dist'] }
     // })
-   
   ],
   externalsPresets: { node: true },
-  externals: [nodeExternals()]
+  externals: [nodeExternals()],
 };
+

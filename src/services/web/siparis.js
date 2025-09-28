@@ -12,7 +12,7 @@ export const SiparişBilgiPageRender = async (req, res) => {
        let user = {...req.user,adres:JSON.parse(req.user.adres)}
   res.render("pages/website/sepet/siparis-bilgi.hbs", {
     title: "Siparişler",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: mainMenus,
     eticSiteler: eticSiteler,
@@ -29,7 +29,7 @@ export const SiparişlerPageRender = async (req, res) => {
   let user = {...req.user,adres:JSON.parse(req.user.adres)}
   let data = {
     title: "Siparişler",
-    scriptname: `main`,
+    scriptname:process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     menus: mainMenus,
     eticSiteler: eticSiteler,

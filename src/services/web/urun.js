@@ -31,7 +31,7 @@ export const UrunPageRender = async (req, res) => {
   }
   res.render("pages/website/urun.hbs", {
     title: "Ürün",
-    scriptname: `main`,
+    scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     urun: urun,
     breadcrumbs: parents,

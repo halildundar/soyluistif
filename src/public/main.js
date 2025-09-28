@@ -20,6 +20,7 @@ import { UserAdresInit } from "./pages/auth/user-adres.js";
 import { UserOrdersInit } from "./pages/auth/user-siparis.js";
 import { SendAktivasyonInit } from "./pages/auth/send-activasyon.js";
 import { SendSifreDegistirInit } from "./pages/auth/sifre-degistir.js";
+
 export const HOST_NAME = location.origin; //"http://localhost:3000";
 // export const HOST_NAME = "http://localhost:3000" //"https://crazy-noyce.89-250-72-218.plesk.page";
 export let myloc;
@@ -45,18 +46,10 @@ $(async function () {
     //   window.clearInterval(i);
     // }
     HomeInit();
-    setTimeout(() => {
-      $("body").css("overflow", "auto");
-      $(".all-spinn").css("display", "none");
-    }, 500);
   } else if (pathname.includes("/urun/")) {
     UrunInit();
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
   } else if (pathname.includes("/kategori/")) {
     KategoriInit();
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
   } else if (pathname.includes("/sepet")) {
     SepetInit();
     $("body").css("overflow", "auto");
@@ -87,8 +80,6 @@ $(async function () {
     $(".all-spinn").css("display", "none");
   } else if (pathname == "/uye-ol") {
     UyeOlInit();
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
   }
   // else if (pathname == "/onay-kodu") {
   //   OnayKodInit();
@@ -97,28 +88,19 @@ $(async function () {
   // }
   else if (pathname.includes("/cust/info")) {
     UserInfoInit();
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
   } else if (pathname.includes("/cust/adress")) {
     UserAdresInit();
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
   } else if (pathname.includes("/cust/order")) {
     UserOrdersInit();
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
   } else if (pathname.includes("/cust/sendactivation")) {
     SendAktivasyonInit();
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
   } else if (pathname.includes("/cust/")) {
     SendSifreDegistirInit();
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
   } else {
+  
+  }
     $("body").css("overflow", "auto");
     $(".all-spinn").css("display", "none");
-  }
   makeMenuItems();
   SearchHeaderItems();
   Goruntulenenler();
@@ -302,7 +284,7 @@ const SearchHeaderItems = () => {
             `);
         }
       }
-    }, 1200);
+    }, 400);
   });
   $(".btn-srch").on("click", function () {
     let searchLink =

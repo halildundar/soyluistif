@@ -208,7 +208,7 @@ export const IyzicoApi = (app) => {
     const mainMenus = await getMainMenu();
     let resparea = {
       title: "Ödeme Sonuç",
-      scriptname: `main`,
+      scriptname: process.env.WEBSCRIPTNAME,
       scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
       menus: mainMenus,
       odemeStatus: "",

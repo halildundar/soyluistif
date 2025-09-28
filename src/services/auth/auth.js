@@ -12,7 +12,10 @@ export let checkLoggedIn = (req, res, next) => {
     return res.redirect("/signin");
   }
   if (req.user.role === "musteri") {
-    return res.redirect("/signin");
+    return req.session.destroy(function (err) {
+      // return res.redirect("/login");
+      return res.redirect("/signin");
+    });
   }
   // if (!!req.user && req.user.role !== "ctrl-admin") {
   //   return res.redirect("");
@@ -22,8 +25,9 @@ export let checkLoggedIn = (req, res, next) => {
 
 export let checkLoggedOut = (req, res, next) => {
   if (req.isAuthenticated() && req.user.role == "local") {
-          return res.redirect("/ctrlpanel");
+    return res.redirect("/ctrlpanel");
   }
+
   next();
 };
 
@@ -44,15 +48,22 @@ export let GetMusteri = (req, res, next) => {
 };
 
 export let checkMusteriLoggedIn = (req, res, next) => {
-  if (!req.isAuthenticated() ) {
+  if (!req.isAuthenticated()) {
     return res.redirect("/login");
+  }
+
+  if (req.user.role === "local") {
+    return req.session.destroy(function (err) {
+      // return res.redirect("/login");
+      return res.redirect("/login");
+    });
   }
   next();
 };
 
 export let checkMusteriLoggedOut = (req, res, next) => {
   if (req.isAuthenticated() && req.user.role == "musteri") {
-     return res.redirect("/");
+    return res.redirect("/");
   }
   next();
 };

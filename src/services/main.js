@@ -54,7 +54,7 @@ export let appRoutes = (app) => {
   router.get("/ctrlpanel",checkLoggedIn, async (req, res) => {
     return res.render("pages/ctrlpanel/dashboard.hbs", {
       title: "Anasayfa",
-      scriptname: `ctrlpanel-main`,
+      scriptname: process.env.CTRLPANELSCRIPTNAME,
       scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
         user:req.user
     });
@@ -64,7 +64,7 @@ export let appRoutes = (app) => {
     const mainMenus = await getMainMenu();
     res.status(404).render("pages/404.hbs", {
       title: "404 Not Found",
-      scriptname: `main`,
+      scriptname: process.env.WEBSCRIPTNAME,
       scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
       menus: mainMenus,
     });

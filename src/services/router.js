@@ -98,7 +98,8 @@ export const UrunPageApi = (app) => {
 };
 export const KategoriPageApi = (app) => {
   router.get("/kategori/all*", KategoriPageRenderAll);
-  router.get("/kategori*", KategoriPageRender);
+    router.get("/kategori/:kategori", KategoriPageRender);
+  // router.get("/kategori*", KategoriPageRender);
   router.post("/kategori/search", GetKategoriSearch);
   return app.use("/", router);
 };

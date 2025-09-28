@@ -5,7 +5,7 @@ import {checkLoggedIn} from '../auth/auth.js';
 export const CtrlPanelSlaytRender = async (req, res) => {
   res.render("pages/ctrlpanel/slaytlar.hbs", {
     title: "Slaytlar",
-    scriptname: `ctrlpanel-main`,
+    scriptname:process.env.CTRLPANELSCRIPTNAME,
     styles:`<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">`,
     scripts:`  <script defer src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,

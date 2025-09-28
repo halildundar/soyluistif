@@ -12,9 +12,9 @@ export const getMainMenu = async () => {
   );
   return items;
 };
-export const GetCurrncySym = (item)=>{
-  return item.currency == "USD" ? "$" : item.currency == "EUR" ? "€" : "₺"
-}
+export const GetCurrncySym = (item) => {
+  return item.currency == "USD" ? "$" : item.currency == "EUR" ? "€" : "₺";
+};
 export const getMenus = async () => {
   const items = await DB.Query("SELECT * FROM `kategori`");
   return items;
@@ -59,6 +59,93 @@ export const makeBredCrump = async (parentIds) => {
     return newItem;
   });
 };
+export function pad(num, size) {
+  num = num.toString();
+  while (num.length < size) num = "0" + num;
+  return num;
+}
+function FiltreFiyatAralikOlustur(urunler) {
+  
+  function RunAraliklar1(sınırlar, aralikSayisi = 6) {
+    let result = [];
+    const sirali = [...sınırlar].sort((a, b) => a.fiyat - b.fiyat);
+    const urunPerAralik = Math.ceil(sirali.length / aralikSayisi);
+    for (let i = 0; i < sirali.length; i += urunPerAralik) {
+      const grup = sirali.slice(i, i + urunPerAralik);
+      let total = 0;
+      let min = 0;
+      let max = 0;
+      for (let j = 0; j < grup.length; j++) {
+        const grp = grup[j];
+        total += grp.grup.length;
+        if (j === 0) {
+          min = grp.fiyat;
+        }
+        if (j === grup.length - 1) {
+          max = grp.fiyat;
+        }
+      }
+      result.push({
+        min:min,max:max,total
+      })
+    }
+    let tumitem = {min:0,max:0,total:0};
+
+    for (let I = 0; I < result.length; I++) {
+      const res = result[I];
+      if(I == 0){
+        tumitem.min = res.min
+      }
+       tumitem.total += res.total;
+      if(I == result.length - 1){
+          tumitem.max = res.max;
+      }
+     
+    }
+    result = [{...tumitem},...result];
+    result = result.map((item=>{
+      return {
+        minStr:item.min.toFixed(2),
+        min:item.min,
+        maxStr:item.max.toFixed(2),
+        max:item.max,
+        total:item.total
+      }
+    }))
+    return result;
+  }
+  const sirali = [...urunler].sort((a, b) => a.fiyat - b.fiyat);
+  const maxUrunPerAralik = 10;
+  let startIdx = 0;
+  let sinirlar = [];
+  while (startIdx < sirali.length) {
+    let endIdx = startIdx;
+    while (
+      endIdx + 1 < sirali.length &&
+      sirali[endIdx + 1].fiyat === sirali[endIdx].fiyat
+    ) {
+      endIdx++;
+    }
+
+    if (endIdx - startIdx + 1 > maxUrunPerAralik) {
+      endIdx = startIdx + maxUrunPerAralik - 1;
+      while (
+        endIdx + 1 < sirali.length &&
+        sirali[endIdx + 1].fiyat === sirali[endIdx].fiyat
+      ) {
+        endIdx++;
+      }
+    }
+
+    const grup = sirali.slice(startIdx, endIdx + 1);
+    const min = grup[0].fiyat;
+    const max = grup[grup.length - 1].fiyat;
+    sinirlar.push({ fiyat: min, grup });
+    startIdx = endIdx + 1;
+  }
+  return RunAraliklar1(sinirlar);
+}
+
 export const getUrunlerIncludeKategori = async (url, query) => {
   await DB.Query("START TRANSACTION");
   let resp1 = await DB.Query(
@@ -105,6 +192,12 @@ export const getUrunlerIncludeKategori = async (url, query) => {
       "SELECT * FROM `urun` WHERE   name LIKE '%" + query + "%' "
     );
   }
+  let filtreElemanlar = [];
+  if (!!urunler && urunler.length > 0) {
+    // RunAraliklar(urunler);
+    // olusturAraliklar(urunler);
+    filtreElemanlar = FiltreFiyatAralikOlustur(urunler);
+  }
 
   let breadcrumbs = await makeBredCrump(allParents);
   await DB.Query("COMMIT");
@@ -112,21 +205,48 @@ export const getUrunlerIncludeKategori = async (url, query) => {
     urunler: urunler,
     altKategoriler: altKategoriler,
     breadcrumbs: breadcrumbs,
+    filtreElemanlar:filtreElemanlar
   };
 };
-export const getUrunlerIncludeKategori1 = async (query) => {
+export const getUrunlerIncludeKategoriAll = async (query) => {
   let urunler;
+  let kategoriler;
   if (!!query) {
-    urunler = await DB.Query(
-      "SELECT * FROM `urun` WHERE  name LIKE '%" + query + "%'OR kod LIKE  '%" + query + "%'"
+    kategoriler = await DB.Query(
+      "SELECT parents FROM `kategori` WHERE name LIKE '%" + query + "%'"
     );
+    kategoriler = kategoriler.filter(item=>item.parents.includes(','));
+    kategoriler = kategoriler.map((item)=>item.parents.replace(/[\[\]]/g,''));
+    kategoriler = kategoriler.reduce((acc,curr)=>{
+      let items = curr.split(',');
+      for (let I = 1; I < items.length; I++) {
+        const str = items[I];
+        if(!acc.includes(str)){
+          acc.push(str);
+        }
+      }
+      return acc;
+    },[]);
+    let likeStr = '';
+    for (let i = 0; i < kategoriler.length; i++) {
+      const kategori = kategoriler[i];
+      likeStr += " OR parents LIKE '%" +kategori +"%'"
+    }
+    let sql ="SELECT * FROM `urun` WHERE  name LIKE '%" + query + "%' OR kod LIKE  '%" +query +"%' OR kod LIKE '%" +query +"%'" + likeStr
+    console.log(sql);
+    urunler = await DB.Query(sql);
   } else {
     urunler = await DB.Query("SELECT * FROM `urun`");
+  }
+   let filtreElemanlar = [];
+  if (!!urunler && urunler.length > 0) {
+    filtreElemanlar = FiltreFiyatAralikOlustur(urunler);
   }
   return {
     urunler: urunler,
     altKategoriler: [],
     breadcrumbs: [],
+    filtreElemanlar:filtreElemanlar
   };
 };
 export const getUrunByUrl = async (urunurl) => {
@@ -174,11 +294,11 @@ export const SiparisByiIyzIDGet = async (ids) => {
 export const GetEticLogos = async () => {
   let siteler = await await DB.Query("SELECT * FROM `eticsites`");
   if (!!siteler && siteler.length > 0) {
-    return siteler.sort((a,b)=>a.sira < b.sira ? -1 : 1);
+    return siteler.sort((a, b) => (a.sira < b.sira ? -1 : 1));
   }
   return [];
 };
-export const GetSettings = async ()=>{
-  const rep = await DB.Query('SELECT * FROM `settings` WHERE id = 1');
+export const GetSettings = async () => {
+  const rep = await DB.Query("SELECT * FROM `settings` WHERE id = 1");
   return rep[0];
-}
+};
