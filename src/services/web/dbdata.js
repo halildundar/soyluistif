@@ -240,10 +240,10 @@ export const getUrunlerIncludeKategoriAll = async (
       sql += " AND stok > alinan";
     }
     console.log(sql);
-    sql += " LIMIT 100"
+    // sql += " LIMIT 100"
     urunler = await DB.Query(sql);
   } else {
-    urunler = await DB.Query("SELECT * FROM `urun` LIMIT 100");
+    urunler = await DB.Query("SELECT * FROM `urun`");
   }
   let filtreElemanlar = [];
   if (!!urunler && urunler.length > 0) {
