@@ -1,3 +1,4 @@
+
 {{> header}}
 <div>
     <div class="max-w-[--max-w] mx-auto">
@@ -31,27 +32,27 @@
                     <div class="font-semibold pb-2">Para Birimi</div>
                     <div class="py-2 space-x-2 flex items-center select-none text-gray-600">
                         <div class="flex items-center space-x-1">
-                            <input type="radio" id="usd" name="para_birim" value="USD" class="w-[1.2rem] h-[1.2rem]"
-                                checked>
-                            <label for="usd">USD($)</label>
+                            <input type="radio" id="USD" name="para_birim" value="USD" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="USD">USD($)</label>
                         </div>
                         <div class="flex items-center space-x-1">
-                            <input type="radio" id="eur" name="para_birim" value="EUR" class="w-[1.2rem] h-[1.2rem]">
-                            <label for="eur">EURO(€)</label>
+                            <input type="radio" id="EUR" name="para_birim" value="EUR" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="EUR">EURO(€)</label>
                         </div>
                         <div class="flex items-center space-x-1">
-                            <input type="radio" id="tl" name="para_birim" value="TL" class="w-[1.2rem] h-[1.2rem]">
-                            <label for="tl">TL(₺)</label>
+                            <input type="radio" id="TL" name="para_birim" value="TL" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="TL">TL(₺)</label>
                         </div>
                     </div>
                     <div class="font-semibold pb-2">Fiyat Aralıkları</div>
+                    <div class="errfyat text-red-600 text-[0.8rem]"></div>
                     <div class="flex items-center space-x-2">
                         <input type="number" name="minfiyat" placeholder="En Az"
                             class="p-2 min-w-[20px] flex-1  border border-gray-200">
                         <span>-</span>
                         <input type="number" name="maxfiyat" placeholder="En Çok"
                             class="p-2 min-w-[20px] flex-1  border border-gray-200">
-                        <button class="p-2 border border-gray-300 tio bg-gray-200 hover:bg-gray-300">
+                        <button class="btn-go-fiyat p-2 border border-gray-300 tio bg-gray-200 hover:bg-gray-300">
                             arrow_forward
                         </button>
                     </div>
@@ -60,14 +61,14 @@
                         {{#each filtreElemanlar}}
                         {{#IsEq @index 0}}
                         <div class="flex items-center space-x-2">
-                            <input type="radio" id="fiyat_tum" name="minmax" value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]" checked>
-                            <label for="fiyat_tum">Tüm Fiyatlar <span
+                            <input type="radio" id="fiyat_{{min}}-{{max}}" name="minmax" value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]" checked>
+                            <label for="fiyat_{{min}}-{{max}}">Tüm Fiyatlar <span
                                     class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span> </label>
                         </div>
                         {{else}}
                         <div class="flex items-center space-x-2">
-                            <input type="radio" id="fiyat_{{max}}" name="minmax" value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]">
-                            <label for="fiyat_{{max}}">{{minStr}} $ - {{maxStr}} $ <span
+                            <input type="radio" id="fiyat_{{min}}-{{max}}" name="minmax" value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]">
+                            <label for="fiyat_{{min}}-{{max}}">{{minStr}} $ - {{maxStr}} $ <span
                                     class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span> </label>
                         </div>
                         {{/IsEq}}
@@ -103,14 +104,13 @@
                 <div class="border border-gray-200 rounded-md px-4 py-2">
                     <div class="py-2 space-y-1 select-none text-gray-600">
                         <div class="font-semibold pb-2">Listeleme</div>
-                        <div class="flex items-center space-x-2">
+                        {{!-- <div class="flex items-center space-x-2">
                             <input type="checkbox" id="ucretsiz_kargo" value="on" name="ucretsiz_kargo"
                                 class="w-[1.2rem] h-[1.2rem]">
                             <label for="ucretsiz_kargo">Ücretsiz Kargo</label>
-                        </div>
+                        </div> --}}
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="stoktakiler" name="stoktakiler" value="on"
-                                class="w-[1.2rem] h-[1.2rem]">
+                            <input type="checkbox" id="stoktakiler" name="stoktakiler" class="w-[1.2rem] h-[1.2rem]">
                             <label for="stoktakiler">Sadece stoktakiler</label>
                         </div>
                     </div>
@@ -210,13 +210,3 @@
 
 
 
-<div class="all-spinn">
-    <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
-        <div>
-            <img src="/assets/logo.png" class="w-[200px] " alt="">
-        </div>
-        <div class="text-[3rem] text-orange-700">
-            <div class="spin icon-spin-1 spin-steps1 "></div>
-        </div>
-    </div>
-</div>

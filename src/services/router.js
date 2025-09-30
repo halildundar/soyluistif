@@ -7,7 +7,7 @@ import { UrunPageRender } from "./web/urun.js";
 import {
   KategoriPageRender,
   KategoriPageRenderAll,
-  GetKategoriSearch,
+  GetSearchMenu,
 } from "./web/kategori.js";
 import {
   SepetPageRender,
@@ -36,7 +36,7 @@ import {
   SendActvCodeRender,
   SendChangePasswRender,
   SendChangePassw,
-  SendPassChangeActvCode
+  SendPassChangeActvCode,
 } from "./web/musteri/onay-kod.js";
 import {
   UserBilgiPageRender,
@@ -97,10 +97,11 @@ export const UrunPageApi = (app) => {
   return app.use("/", router);
 };
 export const KategoriPageApi = (app) => {
-  router.get("/kategori/all*", KategoriPageRenderAll);
-    router.get("/kategori/:kategori", KategoriPageRender);
+  // router.get("/kategori/all*", KategoriPageRenderAll);
+  router.post("/kategori/search", GetSearchMenu);
+  router.get("/kategori/:kategori", KategoriPageRender);
   // router.get("/kategori*", KategoriPageRender);
-  router.post("/kategori/search", GetKategoriSearch);
+
   return app.use("/", router);
 };
 export const MenuApi = (app) => {
@@ -198,7 +199,7 @@ export const FavoriPageApi = (app) => {
 };
 export const MusteriApi = (app) => {
   router.get("/cust/chngepassw", SendChangePasswRender);
-    router.post("/cust/chngepasswactiv", SendPassChangeActvCode);
+  router.post("/cust/chngepasswactiv", SendPassChangeActvCode);
   router.post("/cust/chngepassw", SendChangePassw);
   router.get("/cust/sendactivation", SendActvCodeRender);
   router.post("/cust/sendactivation", SendActvCode);

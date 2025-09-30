@@ -10,13 +10,13 @@ export let GetUser = (req, res, next) => {
 export let checkLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/signin");
-  }
-  if (req.user.role === "musteri") {
+  } else if (req.user.role === "musteri") {
     return req.session.destroy(function (err) {
       // return res.redirect("/login");
       return res.redirect("/signin");
     });
   }
+
   // if (!!req.user && req.user.role !== "ctrl-admin") {
   //   return res.redirect("");
   // }
@@ -50,14 +50,13 @@ export let GetMusteri = (req, res, next) => {
 export let checkMusteriLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/login");
-  }
-
-  if (req.user.role === "local") {
+  } else if (req.user.role === "local") {
     return req.session.destroy(function (err) {
       // return res.redirect("/login");
       return res.redirect("/login");
     });
   }
+
   next();
 };
 

@@ -97,10 +97,9 @@ $(async function () {
   } else if (pathname.includes("/cust/")) {
     SendSifreDegistirInit();
   } else {
-  
   }
-    $("body").css("overflow", "auto");
-    $(".all-spinn").css("display", "none");
+  $("body").css("overflow", "auto");
+  $(".all-spinn").css("display", "none");
   makeMenuItems();
   SearchHeaderItems();
   Goruntulenenler();
@@ -262,6 +261,13 @@ const Goruntulenenler = async () => {
 };
 const SearchHeaderItems = () => {
   let timer;
+  let url = new URL(location.href);
+  if (url.pathname.split("/").length == 3) {
+    let kategoriParam = url.pathname.split("/")[2];
+    if ($(`#srch-kat-sel option[value='/kategori/${kategoriParam}']`).length > 0) {
+      $(`#srch-kat-sel`).val(`/kategori/${kategoriParam}`);
+    }
+  }
   $(".intxt-sserch").on("keydown", function () {
     clearTimeout(timer);
     timer = setTimeout(async () => {
@@ -274,7 +280,7 @@ const SearchHeaderItems = () => {
       $(".inptarea .sbmn").html("");
       if ($(".intxt-sserch").val().length > 0) {
         for (let i = 0; i < urunler.length; i++) {
-          const urun = urunler[i];
+          let urun = urunler[i];
           $(".inptarea .sbmn").append(`
              <a href="/urun/${urun.url}" class="px-2 py-1 w-full flex items-center space-x-4 hover:bg-black/5 border-b border-gray-200">
                   <img src="${urun.resim_on}" class="w-[50px] h-auto" alt="">
@@ -286,12 +292,16 @@ const SearchHeaderItems = () => {
       }
     }, 400);
   });
+  
   $(".btn-srch").on("click", function () {
-    let searchLink =
-      $("#srch-kat-sel").val() +
-      "?search=" +
-      $(".intxt-sserch").val().toLocaleLowerCase().trim();
-    window.location = searchLink;
+    filters = myloc.getItem("filters");
+    filters.search = $(".intxt-sserch").val().toLocaleLowerCase().trim();
+    $("#srch-kat-sel").val();
+    let link = `?birim=${filters.birim}&minfiyat=${filters.minfiyat}&maxfiyat=${filters.maxfiyat}&stok=${filters.stok}&search=${filters.search}`;
+    if (!!$("#srch-kat-sel").val()) {
+      link = `${$("#srch-kat-sel").val()}${link}`;
+    }
+    location.href = link;
   });
 
   $(document).on("keypress", function (e) {
@@ -311,12 +321,17 @@ const getMenuList = async (id, parent_length) => {
 const BodyClick = () => {
   $("body").on("click", function () {
     $(".inptarea .sbmn").html("");
+    $(".indexMenu1").remove();
+  });
+  $("body").on("mouseover", function () {
+    $(".indexMenu1").remove();
   });
 };
 export const makeMenuItems = () => {
   let timer;
   let initMenuEvent = () => {
-    $("a[href*='/kategori/']").on("mouseenter", async function () {
+    $("a[href*='/kategori/']").on("mouseenter", async function (e) {
+      e.stopPropagation();
       $(".indexMenu1").remove();
       let el = $(this);
       clearTimeout(timer);
@@ -346,7 +361,8 @@ ${menu.name}
           });
         }
         $(`[data-index="2"]`).off("mouseenter");
-        $(`[data-index="2"]`).on("mouseenter", async function () {
+        $(`[data-index="2"]`).on("mouseenter", async function (e) {
+          e.stopPropagation();
           const alt_menus = await getMenuList(
             $(this).attr("data-id"),
             $(this).attr("data-index")
@@ -418,13 +434,19 @@ function getMakeSubKat(kateg, id) {
     }"> 
               <div class="px-2 pb-1">
                 <div class="link flex items-center space-x-1 border border-gray-300 rounded py-1 px-2">
-                    <a route="${sub.url}" class="kateglin font-bold  flex  cursor-pointer select-none leading-none  line-clamp-1 flex-1 py-0.5 px-1 text-gray-700 hover:text-red-400">${
-                          sub.name
-                        } </a>
+                    <a route="${
+                      sub.url
+                    }" class="kateglin font-bold  flex  cursor-pointer select-none leading-none  line-clamp-1 flex-1 py-0.5 px-1 text-gray-700 hover:text-red-400">${
+      sub.name
+    } </a>
                <span class="select-none tio text-[1.8rem] cursor-default text-gray-600 rounded-full bg-black/5">chevron_down</span>
              </div>
               </div>
-              <div class="sublink text-[0.8rem] line-clamp-1" data-pur="${sub.id}" style="padding-left:${10 * (kateg.parents.length + 1)}px"></div>
+              <div class="sublink text-[0.8rem] line-clamp-1" data-pur="${
+                sub.id
+              }" style="padding-left:${
+      10 * (kateg.parents.length + 1)
+    }px"></div>
             </div>
             `);
     $(`.link[data-ur='${sub.id}'] span`).on("click", function () {

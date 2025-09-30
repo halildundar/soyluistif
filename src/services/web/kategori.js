@@ -1,6 +1,6 @@
 import {
   GetCurrncySym,
-  getUrunlerIncludeKategori,
+  GetUrunlerForSearchArea,
   getUrunlerIncludeKategoriAll,
 } from "./dbdata.js";
 import { getMainMenu, GetEticLogos, GetSettings } from "./dbdata.js";
@@ -10,19 +10,18 @@ const makeUrunler = async () => {
 
   return mainMenus;
 };
-export const GetKategoriSearch = async (req, res) => {
+export const GetSearchMenu = async (req, res) => {
   try {
     if (!req.body) {
       return res.json({ status: false, msg: "Hata!" });
     }
     const { search } = req.body;
-    let { urunler, altKategoriler, breadcrumbs } =
-      await getUrunlerIncludeKategori1(search);
+    let { urunler } = await GetUrunlerForSearchArea(search);
     urunler = urunler.map((item) => {
       item.resimler = JSON.parse(item.resimler);
       let newItem = {
         ...item,
-           currSymb: GetCurrncySym(item),
+        currSymb: GetCurrncySym(item),
         resim_on:
           !!item.resimler && item.resimler.length > 0
             ? "/uploads" + item.resimler[0]
@@ -39,55 +38,25 @@ export const GetKategoriSearch = async (req, res) => {
     console.log(error);
   }
 };
-export const KategoriPageRenderAll = async (req, res) => {
-  const mainMenus = await makeUrunler();
-  const eticSiteler = await GetEticLogos();
-  const sett = await GetSettings();
-  const { search } = req.query;
-  let { urunler, altKategoriler, breadcrumbs,filtreElemanlar } =
-    await getUrunlerIncludeKategoriAll(search);
-  urunler = urunler.map((item) => {
-    item.resimler = JSON.parse(item.resimler);
 
-    let newItem = {
-      ...item,
-      currSymb: GetCurrncySym(item),
-      resim_on:
-        !!item.resimler && item.resimler.length > 0
-          ? "/uploads" + item.resimler[0]
-          : "/assets/urun/resim_yok.webp",
-      resim_arka:
-        !!item.resimler && item.resimler.length > 1
-          ? "/uploads" + item.resimler[1]
-          : "/assets/urun/resim_yok.webp",
-    };
-    return newItem;
-  });
-  res.render("pages/website/kategori.hbs", {
-    title: "Kategori",
-    scriptname: process.env.WEBSCRIPTNAME,
-    scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
-    urunler: !!urunler ? urunler : [],
-    altKategoriler: mainMenus,
-    menus: [...mainMenus],
-    breadcrumbs: breadcrumbs,
-    dizi1: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    eticSiteler: eticSiteler,
-    wpno: sett.whatsappno,
-    musteri: req.user,
-    filtreElemanlar:filtreElemanlar
-  });
-};
 export const KategoriPageRender = async (req, res) => {
   const mainMenus = await makeUrunler();
   const eticSiteler = await GetEticLogos();
-  if (req.path == "/kategori/") {
-    return res.redirect("/kategori/all");
+  // if (req.path == "/kategori/") {
+  //   return res.redirect("/kategori/all");
+  // }
+  let { search, minfiyat, maxfiyat, stok,birim } = req.query;
+  // console.log(req.query, req.params);
+  let kategori = req.params.kategori;
+  console.log(kategori);
+  if (kategori == "all") {
+    search = kategori;
+  } else if(!!kategori) {
+    search = kategori;
   }
-  const { search } = req.query;
-  let path = decodeURIComponent(decodeURIComponent(req.path))
-  let { urunler, altKategoriler, breadcrumbs,filtreElemanlar } =
-    await getUrunlerIncludeKategori(path, search);
+  let path = decodeURIComponent(decodeURIComponent(req.path));
+  let { urunler, altKategoriler, breadcrumbs, filtreElemanlar } =
+    await getUrunlerIncludeKategoriAll(search,minfiyat,maxfiyat,birim,stok);
   urunler = urunler.map((item) => {
     item.resimler = JSON.parse(item.resimler);
     let newItem = {
@@ -109,13 +78,12 @@ export const KategoriPageRender = async (req, res) => {
     scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     urunler: !!urunler ? urunler : [],
-    altKategoriler: !!altKategoriler ? altKategoriler : [],
+    altKategoriler: altKategoriler,
     menus: [...mainMenus],
     breadcrumbs: breadcrumbs,
     dizi1: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     eticSiteler: eticSiteler,
     musteri: req.user,
-    filtreElemanlar:filtreElemanlar
+    filtreElemanlar: filtreElemanlar,
   });
 };
-

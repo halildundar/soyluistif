@@ -39,120 +39,93 @@ export const KategoriInit = () => {
 };
 
 const filterInit = () => {
-  const str = `
-  {{#if isFiyat}}
-  <div class="fiyatit inline-flex border text-[0.9rem] px-2 pr-1 py-1 border-gray-200 rounded items-center space-x-2">
-                        <strong class="">Fiyat:</strong>
-                        <span class="minfiyattxt">{{minfiyat}}₺</span>
-                        <span>-</span>
-                        <span class="maxfiyattxt">{{maxfiyat}}₺</span>
-                        <i class="tio text-[1rem] rounded-full p-0.5 bg-gray-100 hover:bg-gray-300 cursor-pointer select-none">clear</i>
-                    </div>
-  {{/if}}
-  {{#IsEq ucretsiz_kargo 1}}
-                     <div class="ucretkrit inline-flex border text-[0.9rem] px-2 pr-1 py-1 border-gray-200 rounded items-center space-x-2">
-                        <strong class="">Ücretsiz Kargo</strong>
-                        <i class="tio text-[1rem] rounded-full p-0.5 bg-gray-100 hover:bg-gray-300 cursor-pointer select-none">clear</i>
-                     </div>
-{{/IsEq}}
-    {{#IsEq stokta 1}}
-                      <div class="stokatakrit inline-flex border text-[0.9rem] px-2 pr-1 py-1 border-gray-200 rounded items-center space-x-2">
-                        <strong class="">Sadece Stoktakiler</strong>
-                        <i class="tio text-[1rem] rounded-full p-0.5 bg-gray-100 hover:bg-gray-300 cursor-pointer select-none">clear</i>
-                     </div>
-        {{/IsEq}}
-                     `;
-
-  const rend = Handlebars.compile(str);
   filters = myloc.getItem("filters");
-  console.log(filters);
-  $("[name='minfiyat']").val(filters.minfiyat);
-  $("[name='maxfiyat']").val(filters.maxfiyat);
-
-  $(".fltr-area").html(
-    rend({
-      ...filters,
-      isFiyat: !(filters.minfiyat == "" && filters.maxfiyat == ""),
-    })
-  );
-  $("[name='minmax']").on("change", function () {
-    if ($(this).val() == 500) {
-      $("[name='minfiyat']").val(500);
-      $("[name='maxfiyat']").val(1000);
-    } else if ($(this).val() == 1500) {
-      $("[name='minfiyat']").val(1500);
-      $("[name='maxfiyat']").val(2000);
-    } else if ($(this).val() == 2000) {
-      $("[name='minfiyat']").val(2000);
-      $("[name='maxfiyat']").val(2500);
-    } else if ($(this).val() == 2500) {
-      $("[name='minfiyat']").val(2500);
-      $("[name='maxfiyat']").val(3000);
-    } else if ($(this).val() == 3000) {
-      $("[name='minfiyat']").val(3000);
-      $("[name='maxfiyat']").val(3500);
-    } else {
-      $("[name='minfiyat']").val("");
-      $("[name='maxfiyat']").val("");
+  let searchItem = Object.fromEntries(new URLSearchParams(location.search));
+  for (const key in filters) {
+    if (key == "minfiyat") {
+      filters[key] = !!searchItem[key] ? searchItem[key] : 0;
+    } else if (key == "minfiyat") {
+      filters[key] = !!searchItem[key] ? searchItem[key] : 0;
+    } else if (key == "stok") {
+      filters["stok"] = !!searchItem["stok"] ? searchItem["stok"] : 1;
+    } else if (key == "birim") {
+      filters[key] = !!searchItem["birim"] ? searchItem["birim"] : "USD";
+    } else if (key == "search") {
+      filters[key] = !!searchItem["search"] ? searchItem["search"] : "";
     }
+  }
+  myloc.setAllItem("filters", filters);
+  filters = myloc.getItem("filters");
+
+  let checkInitStat = false;
+  $("[name='stoktakiler']").on("change", function () {
+    let status = 0;
+    if ($(this).prop("checked")) {
+      status = 1;
+    } else {
+      status = 0;
+    }
+    filters = {
+      ...filters,
+      stok: status,
+    };
+    if (checkInitStat) {
+      sendFilter(filters);
+    }
+  });
+  if (filters.stok === 1) {
+    $("[name='stoktakiler']").trigger("click");
+  }
+  checkInitStat = true;
+
+  $("[name='minmax']").on("change", function () {
+    let deger = $(this).val();
+    deger = deger.replaceAll("`", "").split("-");
+    let min = deger[0];
+    let max = deger[1];
+    $("[name='minfiyat']").val(min);
+    $("[name='maxfiyat']").val(max);
     filters = {
       ...filters,
       minfiyat: $("[name='minfiyat']").val(),
       maxfiyat: $("[name='maxfiyat']").val(),
     };
-    myloc.setAllItem("filters", filters);
-    filters = myloc.getItem("filters");
-    $(".fltr-area").html(
-      rend({
-        ...filters,
-        isFiyat: !(filters.minfiyat == "" && filters.maxfiyat == ""),
-      })
-    );
+    sendFilter(filters);
   });
-  $("[name='minmax']")
-    .filter(`[value='${filters.minfiyat}']`)
-    .attr("checked", true);
+  $(`#fiyat_${filters.minfiyat}-${filters.maxfiyat}`).trigger("click");
 
-  if (filters.ucretsiz_kargo == 1) {
-    $("[name='ucretsiz_kargo']").prop("checked",true)
-  } else {
-    $("[name='ucretsiz_kargo']").prop("checked",false)
-  }
-  $("[name='ucretsiz_kargo']").on("change", function () {
-    if ($(this).prop("checked")) {
-      filters = { ...filters, ucretsiz_kargo: 1 };
-    } else {
-      filters = { ...filters, ucretsiz_kargo: 0 };
+  let initbirim = false;
+  $("[name='para_birim']").on("change", function () {
+    filters = {
+      ...filters,
+      birim: $(this).val(),
+    };
+    if (initbirim) {
+      sendFilter(filters);
     }
-    myloc.setAllItem("filters", filters);
-    filters = myloc.getItem("filters");
-    $(".fltr-area").html(
-      rend({
-        ...filters,
-        isFiyat: !(filters.minfiyat == "" && filters.maxfiyat == ""),
-      })
-    );
   });
+  $(`#${filters.birim}`).trigger("click");
+  initbirim = true;
+     $(".errfyat").html("");
+  $(".btn-go-fiyat").on("click", function () {
+    let minFiyat = $("[name='minfiyat']").val();
+    let maxfiyat = $("[name='maxfiyat']").val();
+    minFiyat = !!minFiyat ? parseInt(minFiyat) : 0;
+    maxfiyat = !!maxfiyat ? parseInt(maxfiyat) : 0;
 
-
-  if (filters.stokta == 1) {
-    $("[name='stoktakiler']").prop("checked",true)
-  } else {
-    $("[name='stoktakiler']").prop("checked",false)
-  }
-  $("[name='stoktakiler']").on("change", function () {
-    if ($(this).prop("checked")) {
-      filters = { ...filters, stokta: 1 };
-    } else {
-      filters = { ...filters, stokta: 0 };
+    if (minFiyat < maxfiyat) {
+      let link = `?birim=${filters.birim}&minfiyat=${minFiyat}&maxfiyat=${maxfiyat}&stok=${filters.stok}`;
+      location.href = link;
+    }else{
+      $(".errfyat").html("min.fiyat alanı daha küçük olmalı")
     }
-    myloc.setAllItem("filters", filters);
-    filters = myloc.getItem("filters");
-    $(".fltr-area").html(
-      rend({
-        ...filters,
-        isFiyat: !(filters.minfiyat == "" && filters.maxfiyat == ""),
-      })
-    );
+
   });
+  const cleanUrl = window.location.origin + window.location.pathname;
+  window.history.replaceState({}, document.title, cleanUrl);
+};
+
+const sendFilter = (filters) => {
+  let link = `?birim=${filters.birim}&minfiyat=${filters.minfiyat}&maxfiyat=${filters.maxfiyat}&stok=${filters.stok}`;
+  location.href = link;
 };

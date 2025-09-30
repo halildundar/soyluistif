@@ -3,7 +3,7 @@ config({ path: ["const.env"] });
 import express from "express";
 import { engine } from "express-handlebars";
 import { list, calc,IsEq,BiggerThan,LessThan,Inc,Json,DigitFract } from "./services/helpers/help.js";
-import { appRoutes } from "./services/main.js";
+import { appRoutes, HOST_NAME } from "./services/main.js";
 import bodyParser from "body-parser";
 import methodOverride from "method-override";
 import cookieParser from 'cookie-parser';
@@ -19,18 +19,20 @@ let PORT = process.env.PORT || 3000;
 // let SOCKET_PORT = process.env.SOCKET_PORT || 3001;
 //only development mode
 if (process.env.NODE_ENV === "development") {
-  const livereload = require("livereload");
-  const connectLiveReload = require("connect-livereload");
-  const liveReloadServer = livereload.createServer();
-  liveReloadServer.watch(process.cwd());
-  liveReloadServer.server.once("connection", () => {
-    setTimeout(() => {
-      liveReloadServer.refresh("/");
-    }, 100);
-  });
-  console.log("port--->", PORT, process.cwd());
-  app.use(connectLiveReload());
+  HOST_NAME = "http://localhost:3000";
+  // const livereload = require("livereload");
+  // const connectLiveReload = require("connect-livereload");
+  // const liveReloadServer = livereload.createServer();
+  // liveReloadServer.watch(process.cwd());
+  // liveReloadServer.server.once("connection", () => {
+  //   setTimeout(() => {
+  //     liveReloadServer.refresh("/");
+  //   }, 100);
+  // });
+  // console.log("port--->", PORT, process.cwd());
+  // app.use(connectLiveReload());
 }else{
+  HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page";
   app.use(compression());
 }
 app.use(cookieParser('secret'));

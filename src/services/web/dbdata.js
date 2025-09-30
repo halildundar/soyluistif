@@ -65,7 +65,6 @@ export function pad(num, size) {
   return num;
 }
 function FiltreFiyatAralikOlustur(urunler) {
-  
   function RunAraliklar1(sınırlar, aralikSayisi = 6) {
     let result = [];
     const sirali = [...sınırlar].sort((a, b) => a.fiyat - b.fiyat);
@@ -86,32 +85,33 @@ function FiltreFiyatAralikOlustur(urunler) {
         }
       }
       result.push({
-        min:min,max:max,total
-      })
+        min: min,
+        max: max,
+        total,
+      });
     }
-    let tumitem = {min:0,max:0,total:0};
+    let tumitem = { min: 0, max: 0, total: 0 };
 
     for (let I = 0; I < result.length; I++) {
       const res = result[I];
-      if(I == 0){
-        tumitem.min = res.min
+      if (I == 0) {
+        tumitem.min = res.min;
       }
-       tumitem.total += res.total;
-      if(I == result.length - 1){
-          tumitem.max = res.max;
+      tumitem.total += res.total;
+      if (I == result.length - 1) {
+        tumitem.max = res.max;
       }
-     
     }
-    result = [{...tumitem},...result];
-    result = result.map((item=>{
+    result = [{ ...tumitem }, ...result];
+    result = result.map((item) => {
       return {
-        minStr:item.min.toFixed(2),
-        min:item.min,
-        maxStr:item.max.toFixed(2),
-        max:item.max,
-        total:item.total
-      }
-    }))
+        minStr: item.min.toFixed(2),
+        min: item.min,
+        maxStr: item.max.toFixed(2),
+        max: item.max,
+        total: item.total,
+      };
+    });
     return result;
   }
   const sirali = [...urunler].sort((a, b) => a.fiyat - b.fiyat);
@@ -146,37 +146,35 @@ function FiltreFiyatAralikOlustur(urunler) {
   return RunAraliklar1(sinirlar);
 }
 
-export const getUrunlerIncludeKategori = async (url, query) => {
-  await DB.Query("START TRANSACTION");
-  let resp1 = await DB.Query(
-    "SELECT id,parents FROM `kategori` WHERE url = ?",
-    [url]
+export const GetUrunlerForSearchArea = async (searchStr) => {
+  let urunler = await DB.Query(
+    "SELECT * FROM urun WHERE name LIKE '%" +
+      searchStr +
+      "%' OR kod LIKE '%" +
+      searchStr +
+      "%'"
   );
-  const { id, parents } = resp1[0];
+  return {
+    urunler: urunler,
+  };
+};
+
+const getAltKategorilerAndBreadCrumbs = async (param) => {
+  let sql1 = `SELECT id,parents FROM kategori WHERE url = '/kategori/${param}'`;
+  let resp1 = await DB.Query(sql1);
+  let id, parents;
   let allParents = [];
-  if (!!parents) {
-    allParents = [...JSON.parse(parents), id];
-  } else {
-    allParents = [id];
-  }
-  let urunler = [];
-  let isLength;
-  let altKategoriler;
-  if (!url.includes("/all")) {
-    if (!query) {
-      urunler = await DB.Query(
-        "SELECT * FROM `urun` WHERE JSON_CONTAINS(parents,?,'$')",
-        [id]
-      );
+  let altKategoriler = [];
+  let breadcrumbs = [];
+  if (!!resp1 && resp1.length == 1) {
+    id = resp1[0].id;
+    parents = resp1[0].parents;
+    if (!!parents) {
+      allParents = [...JSON.parse(parents), id];
     } else {
-      urunler = await DB.Query(
-        "SELECT * FROM `urun` WHERE JSON_CONTAINS(parents,?,'$') AND  name LIKE '%" +
-          query +
-          "%' ",
-        [id]
-      );
+      allParents = [id];
     }
-    isLength = allParents.length;
+    let isLength = allParents.length;
     altKategoriler = await DB.Query(
       "SELECT * FROM `kategori` WHERE JSON_CONTAINS(JSON_EXTRACT(parents,'$[?]'),?,'$') AND JSON_LENGTH(parents, '$') = ?",
       [isLength - 1, id, isLength]
@@ -187,66 +185,75 @@ export const getUrunlerIncludeKategori = async (url, query) => {
         [isLength - 2, allParents[allParents.length - 2], isLength - 1]
       );
     }
+    breadcrumbs = await makeBredCrump(allParents);
   } else {
-    urunler = await DB.Query(
-      "SELECT * FROM `urun` WHERE   name LIKE '%" + query + "%' "
-    );
-  }
-  let filtreElemanlar = [];
-  if (!!urunler && urunler.length > 0) {
-    // RunAraliklar(urunler);
-    // olusturAraliklar(urunler);
-    filtreElemanlar = FiltreFiyatAralikOlustur(urunler);
+    sql1 = `SELECT * FROM kategori WHERE parents IS NULL`;
+    resp1 = await DB.Query(sql1);
+    console.log(resp1);
+    altKategoriler = resp1;
   }
 
-  let breadcrumbs = await makeBredCrump(allParents);
-  await DB.Query("COMMIT");
-  return {
-    urunler: urunler,
-    altKategoriler: altKategoriler,
-    breadcrumbs: breadcrumbs,
-    filtreElemanlar:filtreElemanlar
-  };
+  return { altKategoriler, breadcrumbs };
 };
-export const getUrunlerIncludeKategoriAll = async (query) => {
+export const getUrunlerIncludeKategoriAll = async (
+  param,
+  minfiyat = 0,
+  maxfiyat = 0,
+  birim = "USD",
+  stok = 1
+) => {
   let urunler;
   let kategoriler;
-  if (!!query) {
-    kategoriler = await DB.Query(
-      "SELECT parents FROM `kategori` WHERE name LIKE '%" + query + "%'"
+  let altKategoriData;
+  let selectedKategori;
+  // await DB.Query("START TRANSACTION");
+  if (!!param) {
+    altKategoriData = await getAltKategorilerAndBreadCrumbs(param);
+    let res = await DB.Query(
+      "SELECT id FROM `kategori` WHERE url LIKE '%kategori/" +
+        param +
+        "%' OR name LIKE '%kategori/" +
+        param +
+        "%'"
     );
-    kategoriler = kategoriler.filter(item=>item.parents.includes(','));
-    kategoriler = kategoriler.map((item)=>item.parents.replace(/[\[\]]/g,''));
-    kategoriler = kategoriler.reduce((acc,curr)=>{
-      let items = curr.split(',');
-      for (let I = 1; I < items.length; I++) {
-        const str = items[I];
-        if(!acc.includes(str)){
-          acc.push(str);
-        }
-      }
-      return acc;
-    },[]);
-    let likeStr = '';
-    for (let i = 0; i < kategoriler.length; i++) {
-      const kategori = kategoriler[i];
-      likeStr += " OR parents LIKE '%" +kategori +"%'"
+    let sql = "";
+    if (!!res && res.length > 0) {
+      selectedKategori = res[0];
+      sql =
+        "SELECT * FROM `urun` WHERE currency = '" +
+        birim +
+        "' AND parents LIKE '%" +
+        selectedKategori.id +
+        "%'";
+    } else {
+      sql =
+        "SELECT * FROM `urun` WHERE currency = '" + birim + "'";
     }
-    let sql ="SELECT * FROM `urun` WHERE  name LIKE '%" + query + "%' OR kod LIKE  '%" +query +"%' OR kod LIKE '%" +query +"%'" + likeStr
+
+    if (maxfiyat > 0) {
+      sql += " AND fiyat  <= " + maxfiyat;
+    }
+    if (minfiyat >= 0) {
+      sql += " AND fiyat >= " + minfiyat;
+    }
+    if (stok == 1) {
+      sql += " AND stok > alinan";
+    }
     console.log(sql);
     urunler = await DB.Query(sql);
   } else {
     urunler = await DB.Query("SELECT * FROM `urun`");
   }
-   let filtreElemanlar = [];
+  let filtreElemanlar = [];
   if (!!urunler && urunler.length > 0) {
     filtreElemanlar = FiltreFiyatAralikOlustur(urunler);
   }
+  // await DB.Query("COMMIT");
   return {
     urunler: urunler,
-    altKategoriler: [],
-    breadcrumbs: [],
-    filtreElemanlar:filtreElemanlar
+    breadcrumbs: !!altKategoriData ? altKategoriData.breadcrumbs : [],
+    filtreElemanlar: filtreElemanlar,
+    altKategoriler: !!altKategoriData ? altKategoriData.altKategoriler : [],
   };
 };
 export const getUrunByUrl = async (urunurl) => {

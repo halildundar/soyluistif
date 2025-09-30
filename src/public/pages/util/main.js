@@ -198,8 +198,9 @@ export class LocalData {
       this.setAllItem("filters", {
         minfiyat:0,
         maxfiyat:0,
-        ucretsiz_kargo:0,
-        stokta:0
+        stok:1,
+        birim:"USD",
+        search:""
       });
     }
     filters = this.getItem("filters");
@@ -365,7 +366,6 @@ export const SpinnerPop = async (action) => {
 };
 
 export const GetCurrncySym = (item)=>{
-  console.log(item.currency);
   return item.currency == "USD" ? "$" : item.currency == "EUR" ? "€" : "₺"
 }
 
