@@ -42,13 +42,8 @@ export const GetSearchMenu = async (req, res) => {
 export const KategoriPageRender = async (req, res) => {
   const mainMenus = await makeUrunler();
   const eticSiteler = await GetEticLogos();
-  // if (req.path == "/kategori/") {
-  //   return res.redirect("/kategori/all");
-  // }
-  let { search, minfiyat, maxfiyat, stok,birim } = req.query;
-  // console.log(req.query, req.params);
+  let { search, minfiyat, maxfiyat, stok,birim,other } = req.query;
   let kategori = req.params.kategori;
-  console.log(kategori);
   if (kategori == "all") {
     search = kategori;
   } else if(!!kategori) {
@@ -56,7 +51,7 @@ export const KategoriPageRender = async (req, res) => {
   }
   let path = decodeURIComponent(decodeURIComponent(req.path));
   let { urunler, altKategoriler, breadcrumbs, filtreElemanlar } =
-    await getUrunlerIncludeKategoriAll(search,minfiyat,maxfiyat,birim,stok);
+    await getUrunlerIncludeKategoriAll(search,minfiyat,maxfiyat,birim,stok,other);
   urunler = urunler.map((item) => {
     item.resimler = JSON.parse(item.resimler);
     let newItem = {

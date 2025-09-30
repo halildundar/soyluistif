@@ -29,7 +29,6 @@ const Validator = (formData) => {
   return true;
 };
 export const LoginInit = () => {
-  console.log("Login init");
 
   $(".btn-pass-sea-toggle").on("click", async function (e) {
     e.preventDefault();
@@ -47,7 +46,6 @@ export const LoginInit = () => {
     e.preventDefault();
     let formData = $("form").serializeJSON();
     const isValid = Validator(formData);
-    console.log(formData, isValid);
     if (isValid) {
       const formData = $("form").serializeJSON();
       try {
@@ -57,11 +55,9 @@ export const LoginInit = () => {
         data: { ...formData },
         dataType: "json",
       });
-      console.log(respp);
       location.href = '/';
        $('.errtxt').html("");
       } catch ({responseJSON}) {
-        console.log(responseJSON)
         const {msg} = responseJSON;
         $('.errtxt').html(msg);
       }

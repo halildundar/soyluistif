@@ -297,7 +297,7 @@ const SearchHeaderItems = () => {
     filters = myloc.getItem("filters");
     filters.search = $(".intxt-sserch").val().toLocaleLowerCase().trim();
     $("#srch-kat-sel").val();
-    let link = `?birim=${filters.birim}&minfiyat=${filters.minfiyat}&maxfiyat=${filters.maxfiyat}&stok=${filters.stok}&search=${filters.search}`;
+    let link = `?birim=${filters.birim}&minfiyat=${filters.minfiyat}&maxfiyat=${filters.maxfiyat}&stok=${filters.stok}&search=${filters.search}&other=${filters.other}`;
     if (!!$("#srch-kat-sel").val()) {
       link = `${$("#srch-kat-sel").val()}${link}`;
     }

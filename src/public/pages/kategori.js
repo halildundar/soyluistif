@@ -43,15 +43,17 @@ const filterInit = () => {
   let searchItem = Object.fromEntries(new URLSearchParams(location.search));
   for (const key in filters) {
     if (key == "minfiyat") {
-      filters[key] = !!searchItem[key] ? searchItem[key] : 0;
-    } else if (key == "minfiyat") {
-      filters[key] = !!searchItem[key] ? searchItem[key] : 0;
+      filters[key] = !!searchItem["minfiyat"] ? searchItem["minfiyat"] : 0;
+    } else if (key == "maxfiyat") {
+      filters[key] = !!searchItem["maxfiyat"] ? searchItem["maxfiyat"] : 0;
     } else if (key == "stok") {
       filters["stok"] = !!searchItem["stok"] ? searchItem["stok"] : 1;
     } else if (key == "birim") {
       filters[key] = !!searchItem["birim"] ? searchItem["birim"] : "USD";
     } else if (key == "search") {
       filters[key] = !!searchItem["search"] ? searchItem["search"] : "";
+    }else if (key == "other") {
+      filters[key] = !!searchItem["other"] ? searchItem["other"] : "urun_a_z";
     }
   }
   myloc.setAllItem("filters", filters);
@@ -106,7 +108,7 @@ const filterInit = () => {
   });
   $(`#${filters.birim}`).trigger("click");
   initbirim = true;
-     $(".errfyat").html("");
+  $(".errfyat").html("");
   $(".btn-go-fiyat").on("click", function () {
     let minFiyat = $("[name='minfiyat']").val();
     let maxfiyat = $("[name='maxfiyat']").val();
@@ -116,16 +118,70 @@ const filterInit = () => {
     if (minFiyat < maxfiyat) {
       let link = `?birim=${filters.birim}&minfiyat=${minFiyat}&maxfiyat=${maxfiyat}&stok=${filters.stok}`;
       location.href = link;
-    }else{
-      $(".errfyat").html("min.fiyat alanı daha küçük olmalı")
+    } else {
+      $(".errfyat").html("min.fiyat alanı daha küçük olmalı");
     }
-
   });
+
+  let initFilter2 = false;
+  $("#filter2").on("change", function () {
+    filters = {
+      ...filters,
+      other: $(this).val(),
+    };
+    if (initFilter2) {
+      sendFilter(filters);
+    }
+  });
+  $(`#filter2`).val(filters.other);
+  initFilter2 = true;
+
   const cleanUrl = window.location.origin + window.location.pathname;
   window.history.replaceState({}, document.title, cleanUrl);
+
+  $(".ikili").on("click", function () {
+    $(".uclu div").removeClass("bg-gray-500").addClass("bg-gray-200");
+    $(".ikili div").removeClass("bg-gray-200").addClass("bg-gray-500");
+    $(".dortlu div").removeClass("bg-gray-500").addClass("bg-gray-200");
+    $(".runrea")
+      .removeClass("md:grid-cols-4")
+      .removeClass("md:grid-cols-3")
+      .addClass("md:grid-cols-2");
+    $(".runrea .imgrea")
+      .removeClass("lg:h-[275px]")
+      .removeClass("lg:h-[375px]")
+      .addClass("lg:h-[375px]");
+  });
+  $(".uclu").on("click", function () {
+    $(".uclu div").removeClass("bg-gray-200").addClass("bg-gray-500");
+    $(".ikili div").removeClass("bg-gray-500").addClass("bg-gray-200");
+    $(".dortlu div").removeClass("bg-gray-500").addClass("bg-gray-200");
+    $(".runrea")
+      .removeClass("md:grid-cols-4")
+      .removeClass("md:grid-cols-2")
+      .addClass("md:grid-cols-3");
+    $(".runrea .imgrea")
+      .removeClass("lg:h-[275px]")
+      .removeClass("lg:h-[375px]")
+      .addClass("lg:h-[325px]");
+  });
+  $(".dortlu").on("click", function () {
+    $(".uclu div").removeClass("bg-gray-500").addClass("bg-gray-200");
+    $(".ikili div").removeClass("bg-gray-500").addClass("bg-gray-200");
+    $(".dortlu div").removeClass("bg-gray-200").addClass("bg-gray-500");
+
+    $(".runrea")
+      .addClass("md:grid-cols-4")
+      .removeClass("md:grid-cols-3")
+      .removeClass("md:grid-cols-2");
+    $(".runrea .imgrea")
+      .removeClass("lg:h-[375px]")
+      .removeClass("lg:h-[325px]")
+      .addClass("lg:h-[275px]");
+  });
 };
 
 const sendFilter = (filters) => {
-  let link = `?birim=${filters.birim}&minfiyat=${filters.minfiyat}&maxfiyat=${filters.maxfiyat}&stok=${filters.stok}`;
+  let link = `?birim=${filters.birim}&minfiyat=${filters.minfiyat}&maxfiyat=${filters.maxfiyat}&stok=${filters.stok}&other=${filters.other}`;
   location.href = link;
 };

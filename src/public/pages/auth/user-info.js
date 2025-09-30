@@ -46,7 +46,6 @@ const Validator = () => {
   return true;
 };
 export const UserInfoInit = () => {
-  console.log("Üye ol init");
 
   $(".btn-pass-sea-toggle").on("click", function (e) {
     e.preventDefault();
@@ -64,14 +63,12 @@ export const UserInfoInit = () => {
     e.preventDefault();
     $(".spnarea").css("display", "flex");
     if (Validator()) {
-      console.log($("form").serializeJSON());
       const resp = await $.ajax({
         type: "POST",
         url: "/cust/update-info",
         data: {...$("form").serializeJSON()},
         dataType: "json"
       });
-      console.log(resp);
       if(resp.status){
           location.href = location.href;
       }
@@ -82,7 +79,6 @@ export const UserInfoInit = () => {
   });
   $('#sifre_guncelle').on('change',function(e){
     e.preventDefault();
-    console.log($(this).prop('checked'))
     if($(this).prop('checked')){
         $('.passrea').css('display',"block")
     }else{

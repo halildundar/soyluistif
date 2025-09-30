@@ -189,7 +189,6 @@ const getAltKategorilerAndBreadCrumbs = async (param) => {
   } else {
     sql1 = `SELECT * FROM kategori WHERE parents IS NULL`;
     resp1 = await DB.Query(sql1);
-    console.log(resp1);
     altKategoriler = resp1;
   }
 
@@ -200,7 +199,8 @@ export const getUrunlerIncludeKategoriAll = async (
   minfiyat = 0,
   maxfiyat = 0,
   birim = "USD",
-  stok = 1
+  stok = 1,
+  other = "urun_a_z"
 ) => {
   let urunler;
   let kategoriler;
@@ -226,8 +226,7 @@ export const getUrunlerIncludeKategoriAll = async (
         selectedKategori.id +
         "%'";
     } else {
-      sql =
-        "SELECT * FROM `urun` WHERE currency = '" + birim + "'";
+      sql = "SELECT * FROM `urun` WHERE currency = '" + birim + "'";
     }
 
     if (maxfiyat > 0) {
@@ -239,8 +238,25 @@ export const getUrunlerIncludeKategoriAll = async (
     if (stok == 1) {
       sql += " AND stok > alinan";
     }
-    console.log(sql);
+    // console.log(sql);
+
+    if (other == "urun_a_z") {
+      sql += " ORDER BY name ASC";
+    } else if (other == "urun_z_a") {
+      sql += " ORDER BY name DESC";
+    } else if (other == "dusuk_fiyat") {
+      sql += " ORDER BY fiyat ASC";
+    } else if (other == "yuksek_fiyat") {
+      sql += " ORDER BY fiyat DESC";
+    } else if (other == "yeni") {
+      sql += " ORDER BY kayit_tarih DESC";
+    } else if (other == "cok_satan") {
+      sql += " ORDER BY alinan DESC";
+    } else if (other == "cok_oylanan") {
+      sql += " ORDER BY begenilme DESC";
+    }
     // sql += " LIMIT 100"
+
     urunler = await DB.Query(sql);
   } else {
     urunler = await DB.Query("SELECT * FROM `urun`");

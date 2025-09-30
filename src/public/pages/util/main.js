@@ -200,7 +200,8 @@ export class LocalData {
         maxfiyat:0,
         stok:1,
         birim:"USD",
-        search:""
+        search:"",
+        other:"urun_a_z"
       });
     }
     filters = this.getItem("filters");

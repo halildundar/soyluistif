@@ -221,7 +221,6 @@ export const SiparisBilgiInit = async () => {
         fatura: faturaData,
         kargo: adresData,
       };
-      console.log(adres);
       window.location = "/odeme";
     });
 
