@@ -246,7 +246,7 @@ export const IyzicoApi = (app) => {
             "UPDATE `siparis` SET ? WHERE paymentId = " + paymentId,
             [{ itemTransactions: JSON.stringify(itemTransactions) }]
           );
-           let user = {...req.user,adres:JSON.parse(req.user.adres)};
+           let user = {...req.user};
           return res.render("pages/website/sepet/odeme-result.hbs", {
             ...resparea,
             odemestatus: "Success",

@@ -44,14 +44,15 @@ export const KategoriPageRender = async (req, res) => {
   const eticSiteler = await GetEticLogos();
   let { search, minfiyat, maxfiyat, stok,birim,other } = req.query;
   let kategori = req.params.kategori;
+  let param;
   if (kategori == "all") {
-    search = kategori;
+    param = kategori;
   } else if(!!kategori) {
-    search = kategori;
+    param = kategori;
   }
   let path = decodeURIComponent(decodeURIComponent(req.path));
   let { urunler, altKategoriler, breadcrumbs, filtreElemanlar } =
-    await getUrunlerIncludeKategoriAll(search,minfiyat,maxfiyat,birim,stok,other);
+    await getUrunlerIncludeKategoriAll(param,search,minfiyat,maxfiyat,birim,stok,other);
   urunler = urunler.map((item) => {
     item.resimler = JSON.parse(item.resimler);
     let newItem = {

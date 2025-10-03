@@ -303,10 +303,25 @@ const SearchHeaderItems = () => {
     }
     location.href = link;
   });
+   $(".btn-srcee").on("click", function () {
+    filters = myloc.getItem("filters");
+    filters.search = $(".intt-serc").val().toLocaleLowerCase().trim();
+    // $("#srch-kat-sel").val();
+    let link = `/kategori/all?birim=${filters.birim}&minfiyat=${filters.minfiyat}&maxfiyat=${filters.maxfiyat}&stok=${filters.stok}&search=${filters.search}&other=${filters.other}`;
+    // if (!!$("#srch-kat-sel").val()) {
+    //   link = `${$("#srch-kat-sel").val()}${link}`;
+    // }
+    location.href = link;
+  });
 
-  $(document).on("keypress", function (e) {
+  $(".intxt-sserch").on("keypress", function (e) {
     if (e.which == 13 && $(".intxt-sserch").val().length > 0) {
       $(".btn-srch").trigger("click");
+    }
+  });
+  $(".intt-serc").on("keypress", function (e) {
+    if (e.which == 13 && $(".intt-serc").val().length > 0) {
+      $(".btn-srcee").trigger("click");
     }
   });
 };

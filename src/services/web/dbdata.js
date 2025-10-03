@@ -196,6 +196,7 @@ const getAltKategorilerAndBreadCrumbs = async (param) => {
 };
 export const getUrunlerIncludeKategoriAll = async (
   param,
+  search,
   minfiyat = 0,
   maxfiyat = 0,
   birim = "USD",
@@ -220,13 +221,15 @@ export const getUrunlerIncludeKategoriAll = async (
     if (!!res && res.length > 0) {
       selectedKategori = res[0];
       sql =
-        "SELECT * FROM `urun` WHERE currency = '" +
-        birim +
-        "' AND parents LIKE '%" +
-        selectedKategori.id +
-        "%'";
+        "SELECT * FROM `urun` WHERE currency = '" +birim +"'";
+      if (!!search) {
+        sql += " AND (parents LIKE '%" +selectedKategori.id +"%' AND (name LIKE '%" + search + "%' OR kod LIKE '%"+search+"%'))" ;
+      }
     } else {
       sql = "SELECT * FROM `urun` WHERE currency = '" + birim + "'";
+      if (!!search) {
+        sql += " AND (name LIKE '%" + search + "%' OR kod LIKE '%"+search+"%')";
+      }
     }
 
     if (maxfiyat > 0) {
@@ -256,7 +259,7 @@ export const getUrunlerIncludeKategoriAll = async (
       sql += " ORDER BY begenilme DESC";
     }
     // sql += " LIMIT 100"
-
+    console.log(sql);
     urunler = await DB.Query(sql);
   } else {
     urunler = await DB.Query("SELECT * FROM `urun`");

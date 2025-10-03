@@ -1,12 +1,12 @@
 <div class="all-spinn">
-    <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
-        <div>
-            <img src="/assets/logo.png" class="w-[200px] " alt="">
-        </div>
-        <div class="text-[3rem] text-orange-700">
-            <div class="spin icon-spin-1 spin-steps1 "></div>
-        </div>
+  <div class="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-[--acik] z-[999]">
+    <div>
+      <img src="/assets/logo.png" class="w-[200px] " alt="">
     </div>
+    <div class="text-[3rem] text-orange-700">
+      <div class="spin icon-spin-1 spin-steps1 "></div>
+    </div>
+  </div>
 </div>
 <header class="sticky top-0  z-[52] md:relative ">
   <div class="hidden md:flex items-center justify-between py-1 max-w-[--max-w] mx-auto">
@@ -248,7 +248,7 @@
       class="btn-men-clos rounded-full tio p-2 text-[1.4rem] border border-gray-300 text-gray-400 hover:bg-black/5">clear</i>
   </div>
   <div class="px-4 py-2 flex items-center  bg-gray-100">
-    <input type="text" class="intt-serc flex-1 text-[1.2rem] bg-transparent text-gray-500 font-semibold"
+    <input type="text" class="intt-serc  flex-1 text-[1.2rem] bg-transparent text-gray-500 font-semibold"
       placeholder="Search">
     <i class="btn-srcee text-[1.8rem] tio p-2 text-gray-400">search</i>
   </div>
@@ -257,7 +257,36 @@
     <div class="sublink text-[1.2rem]" data-pur="0"></div>
   </div>
   <hr class=" border border-gray-300">
+  {{#if musteri}}
+  <div class="py-4">
+     <div class="text-center text-[0.9rem] font-bold">{{musteri.name}} {{musteri.surname}}</div>
+     <div class="text-center text-[0.8rem] italic">{{musteri.email}}</div>
+  </div>
+  <hr class=" border border-gray-300">
+  {{/if}}
   <div class="py-2 grid grid-cols-2  px-4">
+    {{#if musteri}}
+    <a href="/cust"
+      class="flex items-center justify-center h-[75px] border-r border-b border-gray-400 space-x-2 relative  hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+      <i class="tio text-[1.6rem]">info_outined</i>
+      <span class="text-[0.9rem]">Kullanıcı Bilgileri</span>
+    </a>
+    <a href="/cust/adress"
+      class="flex items-center justify-center h-[75px] border-r border-b border-gray-400 space-x-2 relative  hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+      <i class="tio text-[1.6rem]">bus</i>
+      <span class="text-[0.9rem]">Adres Bilgilerim</span>
+    </a>
+    <a href="/cust/order"
+      class="flex items-center justify-center h-[75px] border-r border-b border-gray-400 space-x-2 relative  hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+      <i class="tio text-[1.6rem]">shopping_icon</i>
+      <span class="text-[0.9rem]">Siparişler</span>
+    </a>
+     <button 
+      class="btn-logut flex items-center justify-center h-[75px] border-r border-b border-gray-400 space-x-2 relative  hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
+      <i class="tio text-[1.6rem]">sign_out</i>
+      <span class="text-[0.9rem]">Çıkış Yap</span>
+    </button>
+    {{else}}
     <a href="/login"
       class="flex items-center justify-center h-[75px] border-r border-b border-gray-400 space-x-2 relative  hover:bg-black/10 duration-300 px-2 py-1 cursor-pointer ">
       <i class="tio text-[1.6rem]">user</i>
@@ -280,6 +309,7 @@
       <i class="tio text-[1.6rem]">home</i>
       <span class="text-[0.9rem]">Aanasayfa</span>
     </a>
+    {{/if}}
     {{!-- <a href="/hakkimizda" class="px-2 border border-gray-300 py-4 font-semibold rounded-md text-gray-600">
       Hakkımızda
     </a>
