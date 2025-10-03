@@ -26,15 +26,32 @@
             <div class="font-semibold text-[1.4rem] py-2 px-2 lg:px-0">Öne Çıkanlar</div>
             <div class="caro1 owl-carousel owl-theme px-2">
                 {{#each onecikanlar}}
-                <a class="pr-2  cursor-pointer relative block z-0 " route="/urun/{{this.url}}" data-ur="{{this.id}}">
+                <a class="pr-2 group cursor-pointer relative block z-0 " route="/urun/{{this.url}}" data-ur="{{this.id}}">
                     <div
                         class="btn-fav z-10 absolute top-4 right-5  text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                         heart_outlined</div>
                     <div
                         class="min-h-[480px]  lg:min-h-[565px]  grid grid-cols-1 border border-gray-300 rounded-lg overflow-hidden pb-2 ">
-                        <div class="group h-[175px] lg:h-[275px] overflow-hidden ">
-                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full object-cover" fetchpriority="high" alt="">
-                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full object-cover" alt="">
+                        <div class=" h-[175px] lg:h-[275px] overflow-hidden relative">
+                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full object-cover"
+                                fetchpriority="high" alt="">
+                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full object-cover"
+                                alt="">
+
+                            <div
+                                class="opacity-0  group-hover:opacity-100  absolute top-0 left-0 w-full h-full  bg-black/10 duration-300 flex items-end justify-center py-5">
+                                {{#IsEq this.stok 0}}
+                                <div class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
+                                    <div>Stoklarımız Tükenmiştir. </div>
+                                </div>
+                                {{else}}
+                                <button data-ur="{{this.id}}"
+                                    class="btn-sepete-ekle translate-y-[200%] group-hover:translate-y-0 group-hover:scale-110 duration-200 px-2 py-1 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                    <i class="tio text-[1rem]">shopping_cart_add</i>
+                                    <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
+                                </button>
+                                {{/IsEq}}
+                            </div>
                         </div>
                         <div class="flex items-center justify-center py-2 text-[1.2rem]">
                             <button class="tio text-gray-500">star</button>
@@ -44,13 +61,16 @@
                             <button class="tio text-gray-500">star</button>
                         </div>
                         <div class="py-2 px-2 lg:px-5">
-                            <div class="title  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
+                            <div
+                                class="title  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
                                 {{this.name}}
                             </div>
                         </div>
                         <div class="py-2">
                             <div class="urun-kod text-center text-[0.9rem] px-1 lg:px-2">{{this.kod}}</div>
-                            <div class="stok text-[--koyu] text-[1rem] text-center"><strong>Stok:</strong>{{this.kalan_stok}} adet</div>
+                            <div class="stok text-[--koyu] text-[1rem] text-center">
+                                <strong>Stok:</strong>{{this.kalan_stok}} adet
+                            </div>
                         </div>
                         <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
                             <div
@@ -58,8 +78,10 @@
                                 %{{this.indirim}}
                             </div>
                             <div>
-                               <div class="line-through text-[1rem] text-[--koyu]">{{#DigitFract this.fiyat 2}} {{/DigitFract}}{{this.symbcurr}}</div>
-                                <div class="text-[1rem] leading-tight"><strong>{{#DigitFract this.indirimli_fiyat 2}}  {{/DigitFract}}{{this.symbcurr}}</strong>
+                                <div class="line-through text-[1rem] text-[--koyu]">{{#DigitFract this.fiyat 2}}
+                                    {{/DigitFract}}{{this.symbcurr}}</div>
+                                <div class="text-[1rem] leading-tight"><strong>{{#DigitFract this.indirimli_fiyat 2}}
+                                        {{/DigitFract}}{{this.symbcurr}}</strong>
                                 </div>
                             </div>
                         </div>
@@ -102,17 +124,33 @@
             <div class="font-semibold text-[1.4rem]  px-2 lg:px-0">Yeni Ürünler</div>
             <div class="caro2 owl-carousel owl-theme px-2">
                 {{#each enyeniler}}
-                <a class="pr-2  cursor-pointer relative block z-0" route="/urun/{{this.url}}" data-ur="{{this.id}}">
+                <a class="pr-2 group cursor-pointer relative block z-0" route="/urun/{{this.url}}" data-ur="{{this.id}}">
                     <div
                         class="btn-fav  absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                         heart_outlined</div>
                     <div
                         class="min-h-[480px]  lg:min-h-[565px]  grid grid-cols-1 z-[1] border border-gray-300 rounded-lg overflow-hidden pb-2 ">
-                        <div class="group h-[175px] lg:h-[275px] overflow-hidden ">
-                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full object-cover" fetchpriority="high" alt="">
-                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full object-cover" alt="">
+                        <div class=" h-[175px] lg:h-[275px] overflow-hidden relative">
+                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full object-cover"
+                                fetchpriority="high" alt="">
+                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full object-cover"
+                                alt="">
+                            <div
+                                class="opacity-0  group-hover:opacity-100  absolute top-0 left-0 w-full h-full  bg-black/10 duration-300 flex items-end justify-center py-5">
+                                {{#IsEq this.stok 0}}
+                                <div class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
+                                    <div>Stoklarımız Tükenmiştir. </div>
+                                </div>
+                                {{else}}
+                                <button data-ur="{{this.id}}"
+                                    class="btn-sepete-ekle translate-y-[200%] group-hover:translate-y-0 group-hover:scale-110 duration-200 px-2 py-1 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                    <i class="tio text-[1rem]">shopping_cart_add</i>
+                                    <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
+                                </button>
+                                {{/IsEq}}
+                            </div>
                         </div>
-                           <div class="flex items-center justify-center  py-2 text-[1.2rem]">
+                        <div class="flex items-center justify-center  py-2 text-[1.2rem]">
                             <button class="tio text-gray-500">star</button>
                             <button class="tio text-gray-500">star</button>
                             <button class="tio text-gray-500">star</button>
@@ -120,13 +158,16 @@
                             <button class="tio text-gray-500">star</button>
                         </div>
                         <div class="py-2 px-2 lg:px-5">
-                            <div class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
+                            <div
+                                class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
                                 {{this.name}}
                             </div>
                         </div>
                         <div class="py-2">
                             <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
-                            <div class="barkod text-[--koyu] text-[0.8rem] text-center"><strong>Stok:</strong>{{this.kalan_stok}} adet</div>
+                            <div class="barkod text-[--koyu] text-[0.8rem] text-center">
+                                <strong>Stok:</strong>{{this.kalan_stok}} adet
+                            </div>
                         </div>
                         <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
                             <div
@@ -134,8 +175,10 @@
                                 %{{this.indirim}}
                             </div>
                             <div>
-                                <div class="line-through text-[0.8rem] text-[--koyu]">{{#DigitFract this.fiyat 2}} {{/DigitFract}}{{this.symbcurr}}</div>
-                                <div class="text-[1rem] leading-tight"><strong>{{#DigitFract this.indirimli_fiyat 2}}  {{/DigitFract}}{{this.symbcurr}}</strong>
+                                <div class="line-through text-[0.8rem] text-[--koyu]">{{#DigitFract this.fiyat 2}}
+                                    {{/DigitFract}}{{this.symbcurr}}</div>
+                                <div class="text-[1rem] leading-tight"><strong>{{#DigitFract this.indirimli_fiyat 2}}
+                                        {{/DigitFract}}{{this.symbcurr}}</strong>
                                 </div>
                             </div>
                         </div>
@@ -179,18 +222,34 @@
             <div class="font-semibold text-[1.4rem] py-2">En Çok Satanlar</div>
             <div class="cok-satan grid grid-cols-2 gap-1 lg:grid-cols-5  lg:gap-2 ">
                 {{#each coksatanlar}}
-                <a route="/urun/{{this.url}}" class="pr-2 z-0  cursor-pointer relative block h-full"
+                <a route="/urun/{{this.url}}" class="group pr-2 z-0  cursor-pointer relative block h-full"
                     data-ur="{{this.id}}">
                     <div
                         class="btn-fav absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                         heart_outlined</div>
                     <div
                         class="min-h-[480px]  lg:min-h-[565px]  grid grid-cols-1 border border-gray-300 rounded-lg overflow-hidden pb-2 ">
-                        <div class="group h-[175px] lg:h-[275px] overflow-hidden ">
-                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full object-cover" fetchpriority="high" alt="">
-                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full object-cover"  alt="">
+                        <div class=" h-[175px] lg:h-[275px] overflow-hidden relative">
+                            <img src="{{this.img_on}}" class="group-hover:hidden w-full h-full object-cover"
+                                fetchpriority="high" alt="">
+                            <img src="{{this.img_arka}}" class="hidden group-hover:block w-full h-full object-cover"
+                                alt="">
+                            <div
+                                class="opacity-0  group-hover:opacity-100  absolute top-0 left-0 w-full h-full  bg-black/10 duration-300 flex items-end justify-center py-5">
+                                {{#IsEq this.stok 0}}
+                                <div class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
+                                    <div>Stoklarımız Tükenmiştir. </div>
+                                </div>
+                                {{else}}
+                                <button data-ur="{{this.id}}"
+                                    class="btn-sepete-ekle translate-y-[200%] group-hover:translate-y-0 group-hover:scale-110 duration-200 px-2 py-1 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                    <i class="tio text-[1rem]">shopping_cart_add</i>
+                                    <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
+                                </button>
+                                {{/IsEq}}
+                            </div>
                         </div>
-                          <div class="flex items-center justify-center py-2 text-[1.2rem]">
+                        <div class="flex items-center justify-center py-2 text-[1.2rem]">
                             <button class="tio text-gray-500">star</button>
                             <button class="tio text-gray-500">star</button>
                             <button class="tio text-gray-500">star</button>
@@ -198,14 +257,17 @@
                             <button class="tio text-gray-500">star</button>
                         </div>
                         <div class="py-2 px-2 lg:px-5">
-                            <div class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
+                            <div
+                                class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
                                 {{this.name}}
                             </div>
                         </div>
                         <div class="py-2">
                             <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
                             {{!-- <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}</div> --}}
-                            <div class="barkod text-[--koyu] text-[0.8rem] text-center"><strong>Stok:</strong>{{this.kalan_stok}} adet</div>
+                            <div class="barkod text-[--koyu] text-[0.8rem] text-center">
+                                <strong>Stok:</strong>{{this.kalan_stok}} adet
+                            </div>
                         </div>
                         <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
                             <div
@@ -213,8 +275,10 @@
                                 %{{this.indirim}}
                             </div>
                             <div>
-                             <div class="line-through text-[0.8rem] text-[--koyu]">{{#DigitFract this.fiyat 2}} {{/DigitFract}}{{this.symbcurr}}</div>
-                                <div class="text-[1rem] leading-tight"><strong>{{#DigitFract this.indirimli_fiyat 2}}  {{/DigitFract}}{{this.symbcurr}}</strong>
+                                <div class="line-through text-[0.8rem] text-[--koyu]">{{#DigitFract this.fiyat 2}}
+                                    {{/DigitFract}}{{this.symbcurr}}</div>
+                                <div class="text-[1rem] leading-tight"><strong>{{#DigitFract this.indirimli_fiyat 2}}
+                                        {{/DigitFract}}{{this.symbcurr}}</strong>
                                 </div>
                             </div>
                         </div>

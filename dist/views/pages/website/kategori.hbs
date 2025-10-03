@@ -137,12 +137,12 @@
                             <div class="h-[15px] w-[10px] bg-gray-200"></div>
                             <div class="h-[15px] w-[10px] bg-gray-200"></div>
                         </button>
-                        <button  class="uclu p-2 border border-gray-200 bg-white grid grid-cols-3 gap-1">
+                        <button class="uclu p-2 border border-gray-200 bg-white grid grid-cols-3 gap-1">
                             <div class="h-[15px] w-[10px] bg-gray-200"></div>
                             <div class="h-[15px] w-[10px] bg-gray-200"></div>
                             <div class="h-[15px] w-[10px] bg-gray-200"></div>
                         </button>
-                        <button  class="dortlu p-2 border border-gray-200 bg-white grid grid-cols-4 gap-1">
+                        <button class="dortlu p-2 border border-gray-200 bg-white grid grid-cols-4 gap-1">
                             <div class="h-[15px] w-[10px] bg-gray-500"></div>
                             <div class="h-[15px] w-[10px] bg-gray-500"></div>
                             <div class="h-[15px] w-[10px] bg-gray-500"></div>
@@ -153,17 +153,33 @@
                 <div class="urunler overflow-hidden w-full">
                     <div class="runrea grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-4">
                         {{#each urunler}}
-                        <a route="/urun/{{this.url}}" class=" z-0  cursor-pointer relative block h-full"
+                        <a route="/urun/{{this.url}}" class="group z-0  cursor-pointer relative block h-full"
                             data-ur="{{this.id}}">
                             <div
                                 class="btn-fav absolute top-4 right-5 z-[5] text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
                                 heart_outlined</div>
                             <div class=" border border-gray-300  rounded-lg overflow-hidden pb-2 ]">
-                                <div class="imgrea group h-[175px] lg:h-[275px] overflow-hidden ">
+                                <div class="imgrea  h-[175px] lg:h-[275px] overflow-hidden relative">
                                     <img src="{{this.resim_on}}" class="group-hover:hidden w-full h-full object-cover"
                                         fetchpriority="high" alt="">
                                     <img src="{{this.resim_arka}}"
                                         class="hidden group-hover:block w-full h-full object-cover" alt="">
+
+                                    <div
+                                        class="opacity-0  group-hover:opacity-100  absolute top-0 left-0 w-full h-full  bg-black/10 duration-300 flex items-end justify-center py-5">
+                                        {{#IsEq this.stok 0}}
+                                        <div
+                                            class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
+                                            <div>Stoklarımız Tükenmiştir. </div>
+                                        </div>
+                                        {{else}}
+                                        <button data-ur="{{this.id}}"
+                                            class="btn-sepete-ekle translate-y-[200%] group-hover:translate-y-0 group-hover:scale-110 duration-200 px-2 py-1 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                            <i class="tio text-[1rem]">shopping_cart_add</i>
+                                            <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
+                                        </button>
+                                        {{/IsEq}}
+                                    </div>
                                 </div>
                                 <hr class="border-2 border-orange-300">
                                 <div class="flex items-center justify-center py-2 text-[1.2rem]">
