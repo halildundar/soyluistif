@@ -191,7 +191,6 @@ export class LocalData {
       this.setAllItem("seeprod", []);
     }
     seeprod = this.getItem("seeprod");
-
     
     let filters = this.getItem("filters");
     if (filters == null) {
@@ -204,17 +203,20 @@ export class LocalData {
         other:"urun_a_z"
       });
     }
-    if(!filters['birim']){
+
+    if(!filters.birim){
        this.setAllItem("filters", {
         ...filters,
         birim:"USD"
        });
-    }else if(!filters["search"]){
+    }
+    if(!filters.search){
       this.setAllItem("filters", {
         ...filters,
         search:""
        });
-    }else if(!filters["other"]){
+    }
+    if(!filters.other){
       this.setAllItem("filters", {
         ...filters,
         other:"urun_a_z"
