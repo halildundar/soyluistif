@@ -204,6 +204,22 @@ export class LocalData {
         other:"urun_a_z"
       });
     }
+    if(!filters['birim']){
+       this.setAllItem("filters", {
+        ...filters,
+        birim:"USD"
+       });
+    }else if(!filters["search"]){
+      this.setAllItem("filters", {
+        ...filters,
+        search:""
+       });
+    }else if(!filters["other"]){
+      this.setAllItem("filters", {
+        ...filters,
+        other:"urun_a_z"
+       });
+    }
     filters = this.getItem("filters");
   }
   getItem(key) {
