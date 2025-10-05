@@ -294,7 +294,30 @@ const SearchHeaderItems = () => {
       }
     }, 400);
   });
-
+ $(".intt-serc").on("keydown", function () {
+    clearTimeout(timer);
+    timer = setTimeout(async () => {
+      let urunler = await $.ajax({
+        type: "POST",
+        url: "/kategori/search",
+        data: { search: $(".intxt-sserch").val() },
+        dataType: "json",
+      });
+      $(".inptarea1 .sbmnm").html("");
+      if ($(".intt-serc").val().length > 0) {
+        for (let i = 0; i < urunler.length; i++) {
+          let urun = urunler[i];
+          $(".inptarea1 .sbmnm").append(`
+             <a href="/urun/${urun.url}" class="px-2 py-1 w-full flex items-center space-x-4 hover:bg-black/5 border-b border-gray-200">
+                  <img src="${urun.resim_on}" class="w-[50px] h-auto" alt="">
+                  <div>${urun.name}</div>
+                  <div>${urun.kod}</div>
+              </a>
+            `);
+        }
+      }
+    }, 400);
+  });
   $(".btn-srch").on("click", function () {
     filters = myloc.getItem("filters");
     filters.search = $(".intxt-sserch").val().toLocaleLowerCase().trim();
@@ -338,6 +361,7 @@ const getMenuList = async (id, parent_length) => {
 const BodyClick = () => {
   $("body").on("click", function () {
     $(".inptarea .sbmn").html("");
+      $(".inptarea1 .sbmnm").html("");
     $(".indexMenu1").remove();
   });
   // $("body").on("mouseover", function () {
