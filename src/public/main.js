@@ -297,7 +297,6 @@ const SearchHeaderItems = () => {
  $(".intt-serc").on("keydown", function () {
     clearTimeout(timer);
     timer = setTimeout(async () => {
-      console.log($(".intt-serc").val())
       let urunler = await $.ajax({
         type: "POST",
         url: "/kategori/search",

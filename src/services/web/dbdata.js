@@ -296,7 +296,7 @@ export const getUrunlerIncludeKategoriAll = async (
       sql += " ORDER BY begenilme DESC";
     }
     // sql += " LIMIT 100"
-    console.log(sql);
+    // console.log(sql);
     urunler = await DB.Query(sql);
   } else {
     urunler = await DB.Query("SELECT * FROM `urun`");

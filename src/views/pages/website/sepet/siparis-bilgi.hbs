@@ -28,25 +28,25 @@
                         <div class="flex space-x-2">
                             <div class="w-1/2">
                                 <label for="isim" class="frm-lbl">İsim*</label>
-                                <input type="text" name="isim" placeholder="isim" class="frm-txt" value="{{musteri.adres.fatura.isim}}"/>
+                                <input type="text" name="isim" placeholder="isim" class="frm-txt" required value="{{musteri.adres.fatura.isim}}"/>
                             </div>
                             <div class="w-1/2">
                                 <label for="soyisim" class="frm-lbl">Soyisim*</label>
-                                <input type="text" name="soyisim" placeholder="soyisim" class="frm-txt" value="{{musteri.adres.fatura.soyisim}}" />
+                                <input type="text" name="soyisim" placeholder="soyisim" class="frm-txt" required value="{{musteri.adres.fatura.soyisim}}" />
                             </div>
                         </div>
                         <div class="flex space-x-2">
                             <div class="w-1/3">
                                 <label for="tc" class="frm-lbl">TC*</label>
-                                <input type="text" name="tc" placeholder="11111111111" class="frm-txt" value="{{musteri.adres.fatura.tc}}" />
+                                <input type="text" name="tc" placeholder="11111111111" class="frm-txt" required value="{{musteri.adres.fatura.tc}}" />
                             </div>
                             <div class="w-1/3">
                                 <label for="telefon" class="frm-lbl">Telefon*</label>
-                                <input type="text" name="telefon" placeholder="+90XXXXXXXXXX" class="frm-txt" value="{{musteri.adres.fatura.telefon}}" />
+                                <input type="text" name="telefon" placeholder="+90XXXXXXXXXX" class="frm-txt" required value="{{musteri.adres.fatura.telefon}}" />
                             </div>
                             <div class="w-1/3">
                                 <label for="email" class="frm-lbl">Email*</label>
-                                <input type="text" name="email" placeholder="xxx@xxx.xxx" class="frm-txt" value="{{musteri.adres.fatura.email}}"/>
+                                <input type="text" name="email" placeholder="xxx@xxx.xxx" class="frm-txt" required value="{{musteri.adres.fatura.email}}"/>
                             </div>
                         </div>
                         <div>
@@ -60,7 +60,7 @@
                                 Posta Kodu: <span class="pk"></span>
                             </div>
                             <input type="text" class="frm-txt" name="adres"
-                                placeholder="Cadde/Bulvar/Sokak/Kapı No..." value="{{musteri.adres.fatura.adres}}"/>
+                                placeholder="Cadde/Bulvar/Sokak/Kapı No..." required value="{{musteri.adres.fatura.adres}}"/>
                         </div>
                         <div>
                             <label for="aciklama" class="frm-lbl">Açıklama</label>
