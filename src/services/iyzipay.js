@@ -7,11 +7,21 @@ const Iyzipay = require("iyzipay");
 import { Transport } from "./mail/main.js";
 import { utils } from "./utilsiyzico.js";
 import { HOST_NAME } from "../server.js";
-const iyzipay = new Iyzipay({
-  apiKey: process.env.IYZICO_API_KEY,
-  secretKey: process.env.IYZICO_SECRET_KEY,
-  uri: process.env.IYZICO_BASE_URL,
-});
+let iyzipay;
+if (process.env.NODE_ENV == "production") {
+  iyzipay = new Iyzipay({
+    apiKey: process.env.IYZICO_API_KEY,
+    secretKey: process.env.IYZICO_SECRET_KEY,
+    uri: process.env.IYZICO_BASE_URL,
+  });
+} else {
+  iyzipay = new Iyzipay({
+    apiKey: process.env.IYZICO_API_KEY_TEST,
+    secretKey: process.env.IYZICO_SECRET_KEY_TEST,
+    uri: process.env.IYZICO_BASE_URL,
+  });
+}
+
 const sendMail = async (email, siparisKodu) => {
   const trns = new Transport();
   const ersp = await trns.sendMail({
@@ -84,7 +94,7 @@ export const IyzicoApi = (app) => {
       return;
     }
     let request = {
-      userid:user.id,
+      userid: user.id,
       locale: Iyzipay.LOCALE.TR,
       conversationId: "123456789",
       price: "1",
@@ -246,13 +256,13 @@ export const IyzicoApi = (app) => {
             "UPDATE `siparis` SET ? WHERE paymentId = " + paymentId,
             [{ itemTransactions: JSON.stringify(itemTransactions) }]
           );
-           let user = {...req.user};
+          let user = { ...req.user };
           return res.render("pages/website/sepet/odeme-result.hbs", {
             ...resparea,
             odemestatus: "Success",
             odememesaj: "Ödeme Başarılı",
             paymentId: paymentId,
-            musteri:user
+            musteri: user,
           });
         } else if (result.status == "failure") {
           if (!!paymentId) {

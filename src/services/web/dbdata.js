@@ -252,16 +252,14 @@ export const getUrunlerIncludeKategoriAll = async (
     let sql = "";
     if (!!res && res.length > 0) {
       selectedKategori = res[0];
-      sql = "SELECT * FROM `urun` WHERE currency = '" + birim + "'";
+      sql = "SELECT * FROM `urun` WHERE parents LIKE '%"+selectedKategori.id+"%' AND currency = '" + birim + "'";
       if (!!search) {
         sql +=
-          " AND (parents LIKE '%" +
-          selectedKategori.id +
-          "%' AND (name LIKE '%" +
+          " AND (name LIKE '%" +
           search +
           "%' OR kod LIKE '%" +
           search +
-          "%'))";
+          "%')";
       }
     } else {
       sql = "SELECT * FROM `urun` WHERE currency = '" + birim + "'";
