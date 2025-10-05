@@ -189,7 +189,7 @@ const Goruntulenenler = async () => {
     for (let i = 0; i < urunlet.length; i++) {
       let urun = urunlet[i];
       $(".caro-son .owl-carousel.owl-theme").append(`
-       <a class="pr-2  cursor-pointer relative block z-0" route="/urun/${
+       <a href="/urun/${urun.url}" class="pr-2  cursor-pointer relative block z-0" route="/urun/${
          urun.url
        }" data-ur="${urun.id}">
         <div
@@ -264,7 +264,9 @@ const SearchHeaderItems = () => {
   let url = new URL(location.href);
   if (url.pathname.split("/").length == 3) {
     let kategoriParam = url.pathname.split("/")[2];
-    if ($(`#srch-kat-sel option[value='/kategori/${kategoriParam}']`).length > 0) {
+    if (
+      $(`#srch-kat-sel option[value='/kategori/${kategoriParam}']`).length > 0
+    ) {
       $(`#srch-kat-sel`).val(`/kategori/${kategoriParam}`);
     }
   }
@@ -292,7 +294,7 @@ const SearchHeaderItems = () => {
       }
     }, 400);
   });
-  
+
   $(".btn-srch").on("click", function () {
     filters = myloc.getItem("filters");
     filters.search = $(".intxt-sserch").val().toLocaleLowerCase().trim();
@@ -303,7 +305,7 @@ const SearchHeaderItems = () => {
     }
     location.href = link;
   });
-   $(".btn-srcee").on("click", function () {
+  $(".btn-srcee").on("click", function () {
     filters = myloc.getItem("filters");
     filters.search = $(".intt-serc").val().toLocaleLowerCase().trim();
     // $("#srch-kat-sel").val();
@@ -338,9 +340,9 @@ const BodyClick = () => {
     $(".inptarea .sbmn").html("");
     $(".indexMenu1").remove();
   });
-  $("body").on("mouseover", function () {
-    $(".indexMenu1").remove();
-  });
+  // $("body").on("mouseover", function () {
+  //   $(".indexMenu1").remove();
+  // });
 };
 export const makeMenuItems = () => {
   let timer;
