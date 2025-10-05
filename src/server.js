@@ -11,8 +11,9 @@ import {
   Inc,
   Json,
   DigitFract,
+  jsonld,
 } from "./services/helpers/help.js";
-import { appRoutes, HOST_NAME } from "./services/main.js";
+import { appRoutes } from "./services/main.js";
 import bodyParser from "body-parser";
 import methodOverride from "method-override";
 import cookieParser from "cookie-parser";
@@ -20,6 +21,8 @@ import session from "express-session";
 import passport from "passport";
 import compression from "compression";
 import cors from "cors";
+import { SeoApp } from "./services/seo/mainApp.js";
+export let HOST_NAME = ""
 const app = express();
 app.use(cors({ origin: true }));
 let PORT = process.env.PORT || 3000;
@@ -47,7 +50,7 @@ app.engine(
     extname: ".hbs",
     layoutsDir: "views/layouts",
     partialsDir: ["views/partials"],
-    helpers: { calc, list, IsEq, BiggerThan, LessThan, Inc, Json, DigitFract },
+    helpers: { calc, list, IsEq, BiggerThan, LessThan, Inc, Json, DigitFract,jsonld },
   })
 );
 app.set("view engine", ".hbs");
@@ -67,7 +70,10 @@ app.use(methodOverride("_method"));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+SeoApp(app);
 appRoutes(app);
+
 app.all("**", (req, res) => {
   res.render("pages/404.hbs", {
     title: "Kontrol Panel",

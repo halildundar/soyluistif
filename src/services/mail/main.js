@@ -1,7 +1,7 @@
 import express from "express";
 let router = express.Router({ mergeParams: true });
 import { createTransport } from "nodemailer";
-import { HOST_NAME } from "../main.js";
+import { HOST_NAME } from "../../server.js";
 export class Transport {
   trans;
   constructor() {

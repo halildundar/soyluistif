@@ -1,0 +1,28 @@
+<header>
+    <div class="container">
+        <a href="/">
+            <img src="/assets/logoY1.png" width="200" height="68" alt="Soylu İstif Makinaları Logosu">
+        </a>
+    </div>
+    <div class="container">
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">ANSAYFA</a>
+                </li>
+                <li>
+                    <a href="/hakkimizda">HAKKIMIZDA</a>
+                </li>
+                <li>
+                    <a href="/iletisim">İLETİŞİM</a>
+                </li>
+                {{#each ekmenu}}
+                <li>
+                    <a href="{{url}}">{{name}}</a>
+                </li>
+                {{/each}}
+            </ul>
+        </nav>
+    </div>
+
+</header>

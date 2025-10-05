@@ -36,3 +36,7 @@ export function Inc(v1, options) {
 export function Json(v1,options){
   return JSON.stringify(v1);
 }
+
+export function jsonld(context){
+  return JSON.stringify(context,null,2);
+}

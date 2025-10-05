@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <link rel="canonical" href="{{href}}">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <meta name="designer" content="Karahan">
+  <meta name="description" content="{{description}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@soyluistif">
+  <meta name="twitter:creator" content="@soyluistif">
+  <meta name="twitter:title" content="{{title}}">
+  <meta name="twitter:description" content="{{description}}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:url" content="{{href}}">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:site_name" content="Soyluistif Makinaları">
+  <meta property="og:image" content="{{image}}">
+  <meta name="thumbnail" content="{{image}}">
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .container nav {
+      padding: none;
+    }
+    .container nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      padding: 10px 4px;
+      margin: 0
+    }
+    .container nav ul li {
+      margin-right: 10px;
+    }
+    a {
+      color: blue;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .grdarea{
+      display: grid;
+      gap:10px;
+      grid-template-columns: auto auto auto;
+      
+    }
+    .urunitem{
+      background-color: rgba(0, 0, 0, 0.2);
+      border:1px solid rgba(0, 0, 0, 0.4);
+      border-radius: 4px;
+    }
+    .urunitem a{
+      display: flex;
+      align-items: center;
+      color:black
+
+    }
+    .urunitem a span{
+      margin-right: 10px;
+    }
+    footer{
+      padding: 10px;
+    }
+
+    @media screen and (max-width: 600px){
+       .grdarea{
+        grid-template-columns: auto;
+        padding: 0 10px;
+       }
+       nav{
+        padding-left: 10px;
+       }
+       nav a{
+        font-size: 0.8rem;
+       }
+       nav ul li:nth-child(1){
+        display: none;
+       }
+       nav ul li:nth-child(2){
+        display: none;
+       }
+       nav ul li:nth-child(3){
+        display: none;
+       }
+    }
+  </style>
+
+  {{#each jsonLDdata}}
+  <script type="application/ld+json">
+      {{{jsonld this}}}
+    </script>
+  {{/each}}
+
+  </script>
+
+</head>
+
+<body>
+  {{{body}}}
+</body>
+
+</html>

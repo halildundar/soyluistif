@@ -1,10 +1,16 @@
 import "./public/favicon.ico";
 import "./public/robots.txt";
 import "./views/layouts/main.hbs";
+import "./views/layouts/seo-main.hbs";
 import "./views/partials/header.hbs";
 import "./views/partials/footer.hbs";
 import "./views/partials/ctrlheader.hbs";
+import "./views/partials/seoheader.hbs";
+import "./views/partials/seofooter.hbs";
 import "./views/partials/raporlarheader.hbs";
+import "./views/pages/seo/home.hbs";
+import "./views/pages/seo/urun.hbs";
+import "./views/pages/seo/kategori.hbs";
 import "./views/pages/website/home/main.hbs";
 import "./views/pages/website/kurumsal/main.hbs";
 import "./views/pages/website/kurumsal/hakkimizda.hbs";

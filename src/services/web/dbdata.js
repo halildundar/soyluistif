@@ -158,7 +158,39 @@ export const GetUrunlerForSearchArea = async (searchStr) => {
     urunler: urunler,
   };
 };
-
+export const SeoDataForPage = async (param) => {
+  let siteOrigin = "https://soyluistif.com";
+  let statikUrls = [
+    {
+      url: "/",
+      title: "",
+      description: "",
+      image: "/assets/thumbnail.png",
+      derece: 1,
+    },
+    {
+      url: "/hakkimizda",
+      title: "Hakkımızda",
+      description: "",
+      image: "/assets/thumbnail.png",
+      derece: 2,
+    },
+    {
+      url: "/iletisim",
+      title: "İletişim",
+      description: "",
+      image: "/assets/thumbnail.png",
+      derece: 1,
+    },
+    {
+      url: "/mesafeli-satis-sozlesmesi",
+      title: "Mesafeli SAtış Sözleşmesi",
+      description: "",
+      image: "/assets/thumbnail.png",
+      derece: 4,
+    },
+  ];
+};
 const getAltKategorilerAndBreadCrumbs = async (param) => {
   let sql1 = `SELECT id,parents FROM kategori WHERE url = '/kategori/${param}'`;
   let resp1 = await DB.Query(sql1);
@@ -220,15 +252,22 @@ export const getUrunlerIncludeKategoriAll = async (
     let sql = "";
     if (!!res && res.length > 0) {
       selectedKategori = res[0];
-      sql =
-        "SELECT * FROM `urun` WHERE currency = '" +birim +"'";
+      sql = "SELECT * FROM `urun` WHERE currency = '" + birim + "'";
       if (!!search) {
-        sql += " AND (parents LIKE '%" +selectedKategori.id +"%' AND (name LIKE '%" + search + "%' OR kod LIKE '%"+search+"%'))" ;
+        sql +=
+          " AND (parents LIKE '%" +
+          selectedKategori.id +
+          "%' AND (name LIKE '%" +
+          search +
+          "%' OR kod LIKE '%" +
+          search +
+          "%'))";
       }
     } else {
       sql = "SELECT * FROM `urun` WHERE currency = '" + birim + "'";
       if (!!search) {
-        sql += " AND (name LIKE '%" + search + "%' OR kod LIKE '%"+search+"%')";
+        sql +=
+          " AND (name LIKE '%" + search + "%' OR kod LIKE '%" + search + "%')";
       }
     }
 

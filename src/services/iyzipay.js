@@ -6,7 +6,7 @@ import { DB } from "./mysql.js";
 const Iyzipay = require("iyzipay");
 import { Transport } from "./mail/main.js";
 import { utils } from "./utilsiyzico.js";
-import { HOST_NAME } from "./main.js";
+import { HOST_NAME } from "../server.js";
 const iyzipay = new Iyzipay({
   apiKey: process.env.IYZICO_API_KEY,
   secretKey: process.env.IYZICO_SECRET_KEY,

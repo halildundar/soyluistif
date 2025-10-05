@@ -1,0 +1,16 @@
+{{> seoheader}}
+<div class="container">
+    <div class="grdarea">
+        {{#each urunlerRs}}
+        <div class="urunitem">
+            <a href="/urun/{{url}}">
+                <img src="{{resim}}" alt="">
+                <span> {{name}}</span>
+                
+            </a>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+{{> seofooter}}
