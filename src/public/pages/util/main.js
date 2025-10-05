@@ -191,36 +191,38 @@ export class LocalData {
       this.setAllItem("seeprod", []);
     }
     seeprod = this.getItem("seeprod");
-    
+
     let filters = this.getItem("filters");
     if (filters == null) {
       this.setAllItem("filters", {
-        minfiyat:0,
-        maxfiyat:0,
-        stok:1,
-        birim:"USD",
-        search:"",
-        other:"urun_a_z"
+        minfiyat: 0,
+        maxfiyat: 0,
+        stok: 1,
+        birim: "USD",
+        search: "",
+        other: "urun_a_z",
       });
     }
-
-    if(!filters.birim){
-       this.setAllItem("filters", {
-        ...filters,
-        birim:"USD"
-       });
-    }
-    if(!filters.search){
+    filters = this.getItem("filters");
+    if (!filters.birim) {
       this.setAllItem("filters", {
         ...filters,
-        search:""
-       });
+        birim: "USD",
+      });
     }
-    if(!filters.other){
+    filters = this.getItem("filters");
+    if (!filters.search) {
       this.setAllItem("filters", {
         ...filters,
-        other:"urun_a_z"
-       });
+        search: "",
+      });
+    }
+    filters = this.getItem("filters");
+    if (!filters.other) {
+      this.setAllItem("filters", {
+        ...filters,
+        other: "urun_a_z",
+      });
     }
     filters = this.getItem("filters");
   }
@@ -384,8 +386,6 @@ export const SpinnerPop = async (action) => {
   }
 };
 
-export const GetCurrncySym = (item)=>{
-  return item.currency == "USD" ? "$" : item.currency == "EUR" ? "€" : "₺"
-}
-
-
+export const GetCurrncySym = (item) => {
+  return item.currency == "USD" ? "$" : item.currency == "EUR" ? "€" : "₺";
+};
