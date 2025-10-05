@@ -297,10 +297,11 @@ const SearchHeaderItems = () => {
  $(".intt-serc").on("keydown", function () {
     clearTimeout(timer);
     timer = setTimeout(async () => {
+      console.log($(".intt-serc").val())
       let urunler = await $.ajax({
         type: "POST",
         url: "/kategori/search",
-        data: { search: $(".intxt-sserch").val() },
+        data: { search: $(".intt-serc").val() },
         dataType: "json",
       });
       $(".inptarea1 .sbmnm").html("");

@@ -75,7 +75,6 @@ export const SepetInit = async () => {
         adet: adet,
       };
     });
-    console.log(urunler);
     makeTotal(urunler);
     $(".spetbfyLeft").html(rendred({ urunler: urunler }));
     for (let i = 0; i < urunler.length; i++) {
