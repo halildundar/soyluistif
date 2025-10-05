@@ -29,7 +29,8 @@ let PORT = process.env.PORT || 3000;
 if (process.env.NODE_ENV === "development") {
   HOST_NAME = "http://localhost:3000";
 } else {
-  HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page";
+  // HOST_NAME = "https://crazy-noyce.89-250-72-218.plesk.page";
+  HOST_NAME = "https://soyluistif.com.tr";
 }
 app.use(compression());
 app.use(cookieParser("secret"));
