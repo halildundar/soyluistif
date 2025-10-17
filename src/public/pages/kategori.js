@@ -52,7 +52,7 @@ const filterInit = () => {
       filters[key] = !!searchItem["birim"] ? searchItem["birim"] : "USD";
     } else if (key == "search") {
       filters[key] = !!searchItem["search"] ? searchItem["search"] : "";
-    }else if (key == "other") {
+    } else if (key == "other") {
       filters[key] = !!searchItem["other"] ? searchItem["other"] : "urun_a_z";
     }
   }
@@ -87,6 +87,8 @@ const filterInit = () => {
     let max = deger[1];
     $("[name='minfiyat']").val(min);
     $("[name='maxfiyat']").val(max);
+    $("[name='minfiyat1']").val(min);
+    $("[name='maxfiyat1']").val(max);
     filters = {
       ...filters,
       minfiyat: $("[name='minfiyat']").val(),
@@ -94,7 +96,23 @@ const filterInit = () => {
     };
     sendFilter(filters);
   });
-  $(`#fiyat_${filters.minfiyat}-${filters.maxfiyat}`).trigger("click");
+  $("[name='minmax1']").on("change", function () {
+    let deger = $(this).val();
+    deger = deger.replaceAll("`", "").split("-");
+    let min = deger[0];
+    let max = deger[1];
+    $("[name='minfiyat']").val(min);
+    $("[name='maxfiyat']").val(max);
+    $("[name='minfiyat1']").val(min);
+    $("[name='maxfiyat1']").val(max);
+    filters = {
+      ...filters,
+      minfiyat: $("[name='minfiyat']").val(),
+      maxfiyat: $("[name='maxfiyat']").val(),
+    };
+    sendFilter(filters);
+  });
+  // $(`#fiyat_${filters.minfiyat}-${filters.maxfiyat}`).trigger("click");
 
   let initbirim = false;
   $("[name='para_birim']").on("change", function () {
@@ -103,10 +121,29 @@ const filterInit = () => {
       birim: $(this).val(),
     };
     if (initbirim) {
-      sendFilter(filters);
+      sendFilter({
+        ...filters,
+        minfiyat: 0,
+        maxfiyat: 0,
+      });
+    }
+    $("[name='para_birim_seclt']").val($(this).val());
+  });
+  $("[name='para_birim_seclt']").on("change", function () {
+    filters = {
+      ...filters,
+      birim: $(this).val(),
+    };
+    if (initbirim) {
+      sendFilter({
+        ...filters,
+        minfiyat: 0,
+        maxfiyat: 0,
+      });
     }
   });
   $(`#${filters.birim}`).trigger("click");
+  $("[name='para_birim_seclt']").val(filters.birim);
   initbirim = true;
   $(".errfyat").html("");
   $(".btn-go-fiyat").on("click", function () {
@@ -121,6 +158,15 @@ const filterInit = () => {
     } else {
       $(".errfyat").html("min.fiyat alanı daha küçük olmalı");
     }
+  });
+
+  $("body").on("click", function () {
+    $(".btnfiytslist").hide();
+  });
+
+  $(".btn-showfiyats ").on("click", function (e) {
+    e.stopPropagation();
+    $(".btnfiytslist").toggle();
   });
 
   let initFilter2 = false;

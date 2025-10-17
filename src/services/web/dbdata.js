@@ -145,6 +145,80 @@ function FiltreFiyatAralikOlustur(urunler) {
   }
   return RunAraliklar1(sinirlar);
 }
+async function FiltreFiyatAralikOlustur1(currency) {
+  function makeRanges(minPrice, maxPrice, count = 5) {
+    if (minPrice === null || maxPrice === null) return [];
+
+    // Fiyatlar aynıysa tek aralık döndür
+    if (minPrice === maxPrice) {
+      return [{ id: 1, min: Number(minPrice), max: Number(maxPrice) }];
+    }
+
+    const span = Number(maxPrice) - Number(minPrice);
+    const step = span / count;
+    const ranges = [];
+
+    for (let i = 0; i < count; i++) {
+      const startRaw = Number(minPrice) + step * i;
+      const endRaw =
+        i === count - 1 ? Number(maxPrice) : Number(minPrice) + step * (i + 1);
+
+      // Yuvarlama: daha mantıklı aralık değerleri gösterilsin diye
+      const start = Math.round(startRaw);
+      const end = Math.round(endRaw);
+
+      ranges.push({
+        id: i + 1,
+        min: start,
+        max: end,
+      });
+    }
+
+    // Aralıkları tutarlı yapmak için düzeltmeler:
+    //  - Her aralığın min'i öncekinin max+1'ine eşit olmasın diye set et
+    for (let i = 1; i < ranges.length; i++) {
+      ranges[i].min = ranges[i - 1].max + 1;
+      if (ranges[i].min > ranges[i].max) ranges[i].min = ranges[i - 1].max; // koruma
+    }
+
+    // Son aralığın max'ını kesin maxPrice yap
+    ranges[ranges.length - 1].max = Math.round(maxPrice);
+
+    return ranges;
+  }
+  let filtsql =
+    "SELECT MIN(fiyat) AS minPrice, MAX(fiyat) AS maxPrice FROM urun WHERE currency = '" +
+    currency +
+    "'";
+  const [rows] = await DB.Query(filtsql);
+  // if (!rows || rows.length === 0) return res.json({ ranges: [] });
+
+  const { minPrice, maxPrice } = rows;
+  if (minPrice === null || maxPrice === null) return res.json({ ranges: [] });
+
+  let ranges = makeRanges(Number(minPrice), Number(maxPrice), 5);
+
+  ranges.push({
+    id: 6,
+    min: 0,
+    max: ranges[ranges.length - 1].max,
+  });
+  ranges = ranges.map((a) => {
+    if (a.id === 6) {
+      return {
+        ...a,
+        selected: true,
+      };
+    }
+    return {
+      ...a,
+      minStr: a.min.toFixed(2),
+      maxStr: a.max.toFixed(2),
+      selected: false,
+    };
+  });
+  return ranges.reverse();
+}
 
 export const GetUrunlerForSearchArea = async (searchStr) => {
   let urunler = await DB.Query(
@@ -252,14 +326,15 @@ export const getUrunlerIncludeKategoriAll = async (
     let sql = "";
     if (!!res && res.length > 0) {
       selectedKategori = res[0];
-      sql = "SELECT * FROM `urun` WHERE parents LIKE '%"+selectedKategori.id+"%' AND currency = '" + birim + "'";
+      sql =
+        "SELECT * FROM `urun` WHERE parents LIKE '%" +
+        selectedKategori.id +
+        "%' AND currency = '" +
+        birim +
+        "'";
       if (!!search) {
         sql +=
-          " AND (name LIKE '%" +
-          search +
-          "%' OR kod LIKE '%" +
-          search +
-          "%')";
+          " AND (name LIKE '%" + search + "%' OR kod LIKE '%" + search + "%')";
       }
     } else {
       sql = "SELECT * FROM `urun` WHERE currency = '" + birim + "'";
@@ -303,8 +378,17 @@ export const getUrunlerIncludeKategoriAll = async (
   }
   let filtreElemanlar = [];
   if (!!urunler && urunler.length > 0) {
-    filtreElemanlar = FiltreFiyatAralikOlustur(urunler);
+    // filtreElemanlar = FiltreFiyatAralikOlustur(urunler);
+    // console.log(filtreElemanlar);
+    filtreElemanlar = await FiltreFiyatAralikOlustur1(birim);
+    filtreElemanlar = filtreElemanlar.map((a) => {
+      if (a.min === parseInt(minfiyat) && a.max === parseInt(maxfiyat)) {
+        a.selected = true;
+      }
+      return a;
+    });
   }
+
   // await DB.Query("COMMIT");
   return {
     urunler: urunler,

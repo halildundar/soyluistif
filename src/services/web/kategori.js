@@ -42,17 +42,25 @@ export const GetSearchMenu = async (req, res) => {
 export const KategoriPageRender = async (req, res) => {
   const mainMenus = await makeUrunler();
   const eticSiteler = await GetEticLogos();
-  let { search, minfiyat, maxfiyat, stok,birim,other } = req.query;
+  let { search, minfiyat, maxfiyat, stok, birim, other } = req.query;
   let kategori = req.params.kategori;
   let param;
   if (kategori == "all") {
     param = kategori;
-  } else if(!!kategori) {
+  } else if (!!kategori) {
     param = kategori;
   }
   let path = decodeURIComponent(decodeURIComponent(req.path));
   let { urunler, altKategoriler, breadcrumbs, filtreElemanlar } =
-    await getUrunlerIncludeKategoriAll(param,search,minfiyat,maxfiyat,birim,stok,other);
+    await getUrunlerIncludeKategoriAll(
+      param,
+      search,
+      minfiyat,
+      maxfiyat,
+      birim,
+      stok,
+      other
+    );
   urunler = urunler.map((item) => {
     item.resimler = JSON.parse(item.resimler);
     let newItem = {
@@ -69,7 +77,7 @@ export const KategoriPageRender = async (req, res) => {
     };
     return newItem;
   });
-  res.render("pages/website/kategori.hbs", {
+  let sneddata = {
     title: "Kategori",
     scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
@@ -81,5 +89,13 @@ export const KategoriPageRender = async (req, res) => {
     eticSiteler: eticSiteler,
     musteri: req.user,
     filtreElemanlar: filtreElemanlar,
-  });
+    currSymb: birim == "TRY" ? "₺" : birim == "EUR" ? "€" : "$",
+  }
+  if(!!minfiyat && parseInt(minfiyat) !== 0){
+    sneddata = {...sneddata,minfiyat:parseInt(minfiyat)}
+  }
+  if(!!minfiyat && parseInt(maxfiyat) !== 0){
+    sneddata = {...sneddata,maxfiyat:parseInt(maxfiyat)}
+  }
+  res.render("pages/website/kategori.hbs", sneddata);
 };

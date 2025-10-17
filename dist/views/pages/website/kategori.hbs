@@ -47,11 +47,23 @@
                     <div class="font-semibold pb-2">Fiyat Aralıkları</div>
                     <div class="errfyat text-red-600 text-[0.8rem]"></div>
                     <div class="flex items-center space-x-2">
+                        {{#IsEq minfiyat 0}}
                         <input type="number" name="minfiyat" placeholder="En Az"
                             class="p-2 min-w-[20px] flex-1  border border-gray-200">
+
+                        {{else}}
+                        <input type="number" name="minfiyat" placeholder="En Az"
+                            class="p-2 min-w-[20px] flex-1  border border-gray-200" value="{{minfiyat}}">
+                        {{/IsEq}}
                         <span>-</span>
+                        {{#IsEq maxfiyat 0}}
+
                         <input type="number" name="maxfiyat" placeholder="En Çok"
                             class="p-2 min-w-[20px] flex-1  border border-gray-200">
+                        {{else}}
+                        <input type="number" name="maxfiyat" placeholder="En Çok"
+                            class="p-2 min-w-[20px] flex-1  border border-gray-200" value="{{maxfiyat}}">
+                        {{/IsEq}}
                         <button class="btn-go-fiyat p-2 border border-gray-300 tio bg-gray-200 hover:bg-gray-300">
                             arrow_forward
                         </button>
@@ -59,19 +71,32 @@
                     <div class="py-2 space-y-1 select-none text-gray-600">
 
                         {{#each filtreElemanlar}}
-                        {{#IsEq @index 0}}
+                        {{#IsEq id 6}}
                         <div class="flex items-center space-x-2">
+                            {{#if selected}}
                             <input type="radio" id="fiyat_{{min}}-{{max}}" name="minmax" value="`{{min}}-{{max}}`"
                                 class="w-[1.2rem] h-[1.2rem]" checked>
-                            <label for="fiyat_{{min}}-{{max}}">Tüm Fiyatlar <span
-                                    class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span> </label>
+                            {{else}}
+                            <input type="radio" id="fiyat_{{min}}-{{max}}" name="minmax" value="`{{min}}-{{max}}`"
+                                class="w-[1.2rem] h-[1.2rem]">
+                            {{/if}}
+                            <label for="fiyat_{{min}}-{{max}}">Tüm Fiyatlar
+                                {{!-- <span class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span> --}}
+                            </label>
                         </div>
                         {{else}}
                         <div class="flex items-center space-x-2">
+
+                            {{#if selected}}
+                            <input type="radio" id="fiyat_{{min}}-{{max}}" name="minmax" value="`{{min}}-{{max}}`"
+                                class="w-[1.2rem] h-[1.2rem]" checked>
+                            {{else}}
                             <input type="radio" id="fiyat_{{min}}-{{max}}" name="minmax" value="`{{min}}-{{max}}`"
                                 class="w-[1.2rem] h-[1.2rem]">
-                            <label for="fiyat_{{min}}-{{max}}">{{minStr}} $ - {{maxStr}} $ <span
-                                    class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span> </label>
+                            {{/if}}
+                            <label for="fiyat_{{min}}-{{max}}">{{minStr}} {{../currSymb}} - {{maxStr}} {{../currSymb}}
+                                {{!-- <span class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span> --}}
+                            </label>
                         </div>
                         {{/IsEq}}
                         {{/each}}
@@ -148,6 +173,81 @@
                             <div class="h-[15px] w-[10px] bg-gray-500"></div>
                             <div class="h-[15px] w-[10px] bg-gray-500"></div>
                         </button>
+                    </div>
+                    <div>
+                        <select name="para_birim_seclt" id="para_birim_seclt" class="frm-slct">
+                            <option value="USD">USD($)</option>
+                            <option value="EUR">EUR(€)</option>
+                            <option value="TRY">TRY(₺)</option>
+                        </select>
+
+                    </div>
+                    <div class="relative z-50 btn-showfiyats">
+                        <button class="frm-slct">Fiyat Aralıkları</button>
+                        <div class="btnfiytslist absolute hidden top-full right-0 bg-white shadow border border-gray-200 z-100 p-2">
+                            <div class="font-semibold pb-2">Fiyat Aralıkları</div>
+                            <div class="errfyat text-red-600 text-[0.8rem]"></div>
+                            <div class="flex items-center space-x-2">
+                                {{#IsEq minfiyat 0}}
+                                <input type="number" name="minfiyat" placeholder="En Az"
+                                    class="p-2 min-w-[20px] max-w-[125px] flex-1  border border-gray-200">
+
+                                {{else}}
+                                <input type="number" name="minfiyat" placeholder="En Az"
+                                    class="p-2 min-w-[20px] max-w-[125px] flex-1  border border-gray-200" value="{{minfiyat}}">
+                                {{/IsEq}}
+                                <span>-</span>
+                                {{#IsEq maxfiyat 0}}
+
+                                <input type="number" name="maxfiyat" placeholder="En Çok"
+                                    class="p-2 min-w-[20px] max-w-[125px] flex-1  border border-gray-200">
+                                {{else}}
+                                <input type="number" name="maxfiyat" placeholder="En Çok"
+                                    class="p-2 min-w-[20px]  max-w-[125px] flex-1  border border-gray-200" value="{{maxfiyat}}">
+                                {{/IsEq}}
+                                <button
+                                    class="btn-go-fiyat p-2 border border-gray-300 tio bg-gray-200 hover:bg-gray-300">
+                                    arrow_forward
+                                </button>
+                            </div>
+                            <div class="py-2 space-y-1 select-none text-gray-600">
+
+                                {{#each filtreElemanlar}}
+                                {{#IsEq id 6}}
+                                <div class="flex items-center space-x-2">
+                                    {{#if selected}}
+                                    <input type="radio" id="fiyat1_{{min}}-{{max}}" name="minmax1"
+                                        value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]" checked>
+                                    {{else}}
+                                    <input type="radio" id="fiyat1_{{min}}-{{max}}" name="minmax1"
+                                        value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]">
+                                    {{/if}}
+                                    <label for="fiyat1_{{min}}-{{max}}">Tüm Fiyatlar
+                                        {{!-- <span class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span>
+                                        --}}
+                                    </label>
+                                </div>
+                                {{else}}
+                                <div class="flex items-center space-x-2">
+
+                                    {{#if selected}}
+                                    <input type="radio" id="fiyat1_{{min}}-{{max}}" name="minmax1"
+                                        value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]" checked>
+                                    {{else}}
+                                    <input type="radio" id="fiyat1_{{min}}-{{max}}" name="minmax1"
+                                        value="`{{min}}-{{max}}`" class="w-[1.2rem] h-[1.2rem]">
+                                    {{/if}}
+                                    <label for="fiyat1_{{min}}-{{max}}">{{minStr}} {{../currSymb}} - {{maxStr}}
+                                        {{../currSymb}}
+                                        {{!-- <span class="text-[0.8rem] text-red-500 italic"> [{{total}} ürün]</span>
+                                        --}}
+                                    </label>
+                                </div>
+                                {{/IsEq}}
+                                {{/each}}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="urunler overflow-hidden w-full">
