@@ -8,6 +8,7 @@ export const KurumsalRender = async (req, res) => {
        const eticSiteler = await GetEticLogos();
   const kurumsalviewPath = join(process.cwd(), "/views/pages/website/kurumsal");
     const sett = await GetSettings();
+    console.log(req.path)
   let tempstr = "Not Found";
   let pageurl = "";
   let pagename = '';
@@ -19,6 +20,10 @@ export const KurumsalRender = async (req, res) => {
     tempstr = readFileSync(join(kurumsalviewPath, "iletisim.hbs"));
     pageurl = "iletisim";
     pagename = 'İletişim'
+  } else if (req.path === "/teslimat-iade-sartlar") {
+    tempstr = readFileSync(join(kurumsalviewPath, "teslimat-iade-sartlar.hbs"));
+    pageurl = "teslimat-iade-sartlar";
+    pagename = 'Teslimat ve İade Şartları'
   } else if (req.path === "/mesafeli-satis-sozlesmesi") {
     tempstr = readFileSync(
       join(kurumsalviewPath, "mesafeli-satis-sozlesmesi.hbs")

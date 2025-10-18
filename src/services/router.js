@@ -54,6 +54,7 @@ export const KurumsalPageApi = (app) => {
   router.get("/iletisim", KurumsalRender);
   router.get("/kullanici-sozlesmesi", KurumsalRender);
   router.get("/mesafeli-satis-sozlesmesi", KurumsalRender);
+    router.get("/teslimat-iade-sartlar", KurumsalRender);
   router.get("/siparis-takip", KurumsalRender);
   router.get("/havale-bildirimleri", KurumsalRender);
   return app.use("/", router);

@@ -39,6 +39,16 @@
 
                     Mesafeli Satış Sözleşmesi</a>
                 {{/IsEq}}
+                 {{#IsEq pagename 'teslimat-iade-sartlar'}}
+                <a href="/teslimat-iade-sartlar"
+                    class="block px-4 py-2 hover:bg-black/10 border-t  text-[--main] font-semibold hover:text-black   border-gray-200 cursor-pointer">
+                    Teslimat ve İade Şartaları</a>
+                {{else}}
+                <a href="/teslimat-iade-sartlar"
+                    class="block px-4 py-2 hover:bg-black/10 border-t hover:font-semibold hover:text-black text-[--koyu-dark]  border-gray-200 cursor-pointer">
+
+                    Teslimat ve İade Şartaları</a>
+                {{/IsEq}}
                 {{!-- {{#IsEq pagename 'havale-bildirimleri'}}
                 <a href="/havale-bildirimleri"
                     class="block px-4 py-2 hover:bg-black/10 text-[--main] font-semibold hover:text-black border-t  border-gray-200 cursor-pointer">

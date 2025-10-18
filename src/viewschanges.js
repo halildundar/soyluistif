@@ -18,6 +18,7 @@ import "./views/pages/website/kurumsal/iletisim.hbs";
 import "./views/pages/website/kurumsal/havale-bildirimleri.hbs";
 import "./views/pages/website/kurumsal/mesafeli-satis-sozlesmesi.hbs";
 import "./views/pages/website/kurumsal/siparis-takip.hbs";
+import "./views/pages/website/kurumsal/teslimat-iade-sartlar.hbs";
 import "./views/pages/website/auth/login.hbs";
 import "./views/pages/website/auth/uye-ol.hbs";
 import "./views/pages/website/auth/onay-kod.hbs";

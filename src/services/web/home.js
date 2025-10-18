@@ -79,8 +79,8 @@ export const HomePageRender = async (req, res) => {
   const { enyeniler, coksatanlar, onecikanlar, imagesBg, imagesSm, mainMenus } = await makeBannerAndUrunler();
   const eticSiteler = await GetEticLogos();
   const sett = await GetSettings();
-  console.log(process.env.IYZICO_API_KEY);
-    console.log(process.env.WEBSCRIPTNAME)
+  // console.log(process.env.IYZICO_API_KEY);
+    // console.log(process.env.WEBSCRIPTNAME)
   res.render("pages/website/home/main.hbs", {
     title: "Anasayfa",
     scriptname:  process.env.WEBSCRIPTNAME,
