@@ -1,3 +1,55 @@
+export const OptimizePhoto = async (photo, MAX_VAL, QUALITY) => {
+  const readPhoto = async (photo) => {
+    const canvas = document.createElement("canvas");
+    const img = document.createElement("img");
+
+    // create img element from File object
+    img.src = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target.result);
+      reader.readAsDataURL(photo);
+    });
+    await new Promise((resolve) => {
+      img.onload = resolve;
+    });
+
+    // draw image in canvas element
+    canvas.width = img.width;
+    canvas.height = img.height;
+    canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    return canvas;
+  };
+  const scaleCanvas = (canvas, scale) => {
+    const scaledCanvas = document.createElement("canvas");
+    scaledCanvas.width = canvas.width * scale;
+    scaledCanvas.height = canvas.height * scale;
+
+    scaledCanvas
+      .getContext("2d")
+      .drawImage(canvas, 0, 0, scaledCanvas.width, scaledCanvas.height);
+
+    return scaledCanvas;
+  };
+  let canvas = await readPhoto(photo);
+  while (canvas.width >= 2 * MAX_VAL) {
+    canvas = scaleCanvas(canvas, 0.5);
+  }
+  if (canvas.width >= canvas.height) {
+    canvas = scaleCanvas(canvas, MAX_VAL / canvas.height);
+  } else {
+    canvas = scaleCanvas(canvas, MAX_VAL / canvas.width);
+  }
+  const newOptimazedBlob = await new Promise((resolve) => {
+    canvas.toBlob(resolve, "image/jpeg", QUALITY);
+  });
+  return new File([newOptimazedBlob], photo.name, {
+    lastModified: new Date().getTime(),
+  });
+};
+export const GetFileExt = (fname) => {
+  return fname.slice((Math.max(0, fname.lastIndexOf(".")) || Infinity) + 1);
+};
 export const GetTemp = async (folderpath) => {
   try {
     const resp = await fetch("/templates/get-temp", {
@@ -7,7 +59,8 @@ export const GetTemp = async (folderpath) => {
         "Content-Type": "application/json",
       },
     });
-    return resp.text();
+    let strTemp = await resp.text();
+    return Handlebars.compile(strTemp);
   } catch (error) {
     console.log(error);
   }
@@ -586,4 +639,3 @@ export function CreditCardArea() {
   // ccExpiryInput.addEventListener("keydown", ccExpiryInputKeyDownHandler);
   // ccExpiryInput.addEventListener("input", ccExpiryInputInputHandler);
 }
-

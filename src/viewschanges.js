@@ -49,6 +49,9 @@ import "./views/pages/ctrlpanel/siparisler.hbs";
 import "./views/pages/ctrlpanel/eticaret.hbs";
 import "./views/pages/ctrlpanel/rapor-urunler.hbs";
 
+
+
+import "./public/templates/pop-resimler.hbs";
 import "./public/templates/popurunekle.html";
 import "./public/templates/popurunresim.html";
 import "./public/templates/sepeturunrow.html";

@@ -1,0 +1,32 @@
+<div class="popasresimler fixed top-0 left-0 w-[100vw] h-[100vh] bg-black/5 flex items-center justify-center">
+    <div class="w-[60%] h-[80%] bg-white flex flex-col rounded-md shadow-[0_0_5px_1px_rgba(0,0,0,0.3)] relative overflow-hidden">
+        <div class="flex items-center justify-between pl-3 pr-2 py-1">
+            <div class="font-semibold">Ürün Resimler</div>
+            <button
+                class="btn-close tio text-[1.4rem] p-1 rounded-full hover:bg-black/10 active:bg-black/0 bg-black/5 select-none">clear</button>
+        </div>
+        <div class="py-2 px-3">
+            <button class="select-resim-frompc px-2 py-1 text-[0.8rem] bg-blue-600 hover:bg-blue-700 active:bg-blue-400  text-white">Yükle</button>
+            <input type="file" name="files" class="hidden" multiple="true" accept=".png,.jpeg,.jpg" >
+        </div>
+        <div class="flex-1 relative overflow-hidden overflow-y-auto px-3 res-wrpa">
+            {{#if resimler}}
+            <div  id="sortable1" class="grid grid-cols-6  gap-2 ">
+                {{#each resimler}}
+                <a href="{{this}}" target="_blank" class="w-full h-[150px] border border-gray-200 rounded ">
+                    <img src="{{this}}" class="w-full h-full object-contain">
+                </a>
+                {{/each}}
+            </div>
+            {{else}}
+                <div class="py-10 text-center font-bold text-gray-400 text-[1.4rem]">
+                    Hiç resim yok! Ürün resimlerini yükleyiniz!!!
+                </div>
+            {{/if}}
+        </div>
+        <div style="display:none" class="spinner-ar bg-white absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+               <div class="spin icon-spin-1 spin-steps1 text-[2rem] text-blue-600" ></div>
+        </div>
+    </div>
+
+</div>

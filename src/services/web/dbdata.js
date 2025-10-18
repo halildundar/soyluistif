@@ -377,17 +377,24 @@ export const getUrunlerIncludeKategoriAll = async (
     urunler = await DB.Query("SELECT * FROM `urun`");
   }
   let filtreElemanlar = [];
-  if (!!urunler && urunler.length > 0) {
-    // filtreElemanlar = FiltreFiyatAralikOlustur(urunler);
-    // console.log(filtreElemanlar);
-    filtreElemanlar = await FiltreFiyatAralikOlustur1(birim);
-    filtreElemanlar = filtreElemanlar.map((a) => {
-      if (a.min === parseInt(minfiyat) && a.max === parseInt(maxfiyat)) {
-        a.selected = true;
-      }
-      return a;
-    });
-  }
+  // if (!!urunler && urunler.length > 0) {
+  //   // filtreElemanlar = FiltreFiyatAralikOlustur(urunler);
+  //   // console.log(filtreElemanlar);
+  //   filtreElemanlar = await FiltreFiyatAralikOlustur1(birim);
+  //   filtreElemanlar = filtreElemanlar.map((a) => {
+  //     if (a.min === parseInt(minfiyat) && a.max === parseInt(maxfiyat)) {
+  //       a.selected = true;
+  //     }
+  //     return a;
+  //   });
+  // }
+  filtreElemanlar = await FiltreFiyatAralikOlustur1(birim);
+  filtreElemanlar = filtreElemanlar.map((a) => {
+    if (a.min === parseInt(minfiyat) && a.max === parseInt(maxfiyat)) {
+      a.selected = true;
+    }
+    return a;
+  });
 
   // await DB.Query("COMMIT");
   return {

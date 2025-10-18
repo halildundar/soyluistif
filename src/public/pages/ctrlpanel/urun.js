@@ -1,4 +1,10 @@
-import { StringToUrl, GetTemp, Upload } from "../../util/fncs.js";
+import {
+  StringToUrl,
+  GetTemp,
+  Upload,
+  GetFileExt,
+  OptimizePhoto,
+} from "../../util/fncs.js";
 let urunler;
 let selectedUrun;
 let selectedKategori;
@@ -41,15 +47,25 @@ const makeUrunArea = async (parents) => {
     $(".urun-area table tbody").html("");
     for (let i = 0; i < urunler.length; i++) {
       const urun = urunler[i];
+      let resimler = JSON.parse(urun.resimler);
+      // <td class="p-1 border-l border-t border-gray-300">${
+      //             urun.url
+      //           }</td>
       const str = `<tr class="urun${
         urun.id
       } cursor-pointer hover:bg-black/5 text-[0.8rem]">
                   <td class="p-1 border-l border-t border-gray-300">${
                     urun.name
                   }</td>
-                  <td class="p-1 border-l border-t border-gray-300">${
-                    urun.url
-                  }</td>
+                  <td class="p-1 border-l border-t border-gray-300">
+                      <button class="btnresim${
+                        urun.id
+                      } hover:underline text-blue-500">${
+        !!resimler && resimler.length > 0
+          ? resimler.length + " resim"
+          : "0 Resim"
+      }</button>
+                  </td>
                   <td class="p-1 border-l border-t border-gray-300">${
                     urun.kod
                   }</td>
@@ -77,6 +93,11 @@ const makeUrunArea = async (parents) => {
                       }</td>
               </tr>`;
       $(".urun-area table tbody").append(str);
+      $(`.urun-area table tbody .btnresim${urun.id}`).off("click");
+      $(`.urun-area table tbody .btnresim${urun.id}`).on("click", (e) => {
+        e.stopPropagation();
+        PopResim(urun, resimler);
+      });
       $(`.urun-area table tbody .urun${urun.id}`).on("click", function () {
         $.each($(`.urun-area table tbody tr`), function () {
           $(`.urun-area table tbody tr`).css("background-color", "transparent");
@@ -205,7 +226,7 @@ export const InitUrun = async () => {
     $("[name='kod']").val(selectedUrun.kod);
     $("[name='fiyat']").val(selectedUrun.fiyat);
     $("[name='indirim']").val(selectedUrun.indirim);
-     $("[name='currency']").val(selectedUrun.currency);
+    $("[name='currency']").val(selectedUrun.currency);
     $("[name='indirimli_fiyat']").val(selectedUrun.indirimli_fiyat);
     $("[name='stok']").val(selectedUrun.stok);
     $("[name='kdv']").val(selectedUrun.kdv);
@@ -242,72 +263,72 @@ export const InitUrun = async () => {
     $(`.btn-urun-temizle`).trigger("click");
     await makeUrunArea(parents);
   });
-  $(".btn-urun-resim").on("click", async function () {
-    const resimHtml = await GetTemp("popurunresim.html");
-    $(".urunresim-ekle-pop").remove();
-    const renderUrunResim = Handlebars.compile(resimHtml);
-    let resimler = [];
-    if (!!selectedUrun.resimler) {
-      resimler = JSON.parse(selectedUrun.resimler);
-    }
-    $(".urun-areaa").after(
-      renderUrunResim({
-        resimler: [...resimler],
-      })
-    );
-    $(".btn-resim-sec").on("click", function () {
-      $("input[type='file']").trigger("click");
-    });
+  // $(".btn-urun-resim").on("click", async function () {
+  //   const resimHtml = await GetTemp("popurunresim.html");
+  //   $(".urunresim-ekle-pop").remove();
+  //   const renderUrunResim = Handlebars.compile(resimHtml);
+  //   let resimler = [];
+  //   if (!!selectedUrun.resimler) {
+  //     resimler = JSON.parse(selectedUrun.resimler);
+  //   }
+  //   $(".urun-areaa").after(
+  //     renderUrunResim({
+  //       resimler: [...resimler],
+  //     })
+  //   );
+  //   $(".btn-resim-sec").on("click", function () {
+  //     $("input[type='file']").trigger("click");
+  //   });
 
-    $("input[type='file']").on("change", function () {
-      $(".imgcont").html("");
-      $.map($("input[type='file']").get(0).files, function (file, index) {
-        const upld = new Upload(
-          file,
-          ".imgcont",
-          index,
-          `/urunler/${selectedUrun.name}/`,
-          ""
-        );
-        upld.isValidSize(1, async (data) => {
-          let resimler = await GetUrunResimler(selectedUrun.id);
-          resimler = JSON.parse(resimler);
-          resimler = !!resimler ? resimler : [];
-          await updateUrun({
-            resimler: JSON.stringify([
-              ...resimler,
-              `/urunler/${selectedUrun.name}/${file.name}`,
-            ]),
-          });
-          selectedUrun = await GetUrun(selectedUrun.id);
-          $("#sortable")
-            .append(`<div class="imges h-[150px] w-full bg-pink-500 flex items-center justify-center hover:cursor-move relative" >
-                        <img src="/uploads/urunler/${selectedUrun.name}/${file.name}" class="w-full h-full object-fill" alt="">
-                        <i class="btn-sil-img${index} tio rounded-full text-[1.4rem] bg-red-700 text-white cursor-pointer absolute top-2 right-2 p-1" data-it="${index}">clear</i>
-                    </div> `);
-          makeEventForImgDelete();
-        });
-      });
-    });
+  //   $("input[type='file']").on("change", function () {
+  //     $(".imgcont").html("");
+  //     $.map($("input[type='file']").get(0).files, function (file, index) {
+  //       const upld = new Upload(
+  //         file,
+  //         ".imgcont",
+  //         index,
+  //         `/urunler/${selectedUrun.name}/`,
+  //         ""
+  //       );
+  //       upld.isValidSize(1, async (data) => {
+  //         let resimler = await GetUrunResimler(selectedUrun.id);
+  //         resimler = JSON.parse(resimler);
+  //         resimler = !!resimler ? resimler : [];
+  //         await updateUrun({
+  //           resimler: JSON.stringify([
+  //             ...resimler,
+  //             `/urunler/${selectedUrun.name}/${file.name}`,
+  //           ]),
+  //         });
+  //         selectedUrun = await GetUrun(selectedUrun.id);
+  //         $("#sortable")
+  //           .append(`<div class="imges h-[150px] w-full bg-pink-500 flex items-center justify-center hover:cursor-move relative" >
+  //                       <img src="/uploads/urunler/${selectedUrun.name}/${file.name}" class="w-full h-full object-fill" alt="">
+  //                       <i class="btn-sil-img${index} tio rounded-full text-[1.4rem] bg-red-700 text-white cursor-pointer absolute top-2 right-2 p-1" data-it="${index}">clear</i>
+  //                   </div> `);
+  //         makeEventForImgDelete();
+  //       });
+  //     });
+  //   });
 
-    $("#sortable").sortable({
-      revert: true,
-      update: async (e) => {
-        let list = [];
-        $.each($(".imges img"), function () {
-          let link = $(this).attr("src").replace("/uploads", "");
-          list.push(link);
-        });
-        await updateUrun({ resimler: JSON.stringify(list) });
-        selectedUrun = await GetUrun(selectedUrun.id);
-      },
-    });
-    makeEventForImgDelete();
-    $(".pop-title-area").html(selectedUrun.name);
-    $(".btn-close-urun-resim-edit").on("click", function () {
-      $(".urunresim-ekle-pop").remove();
-    });
-  });
+  //   $("#sortable").sortable({
+  //     revert: true,
+  //     update: async (e) => {
+  //       let list = [];
+  //       $.each($(".imges img"), function () {
+  //         let link = $(this).attr("src").replace("/uploads", "");
+  //         list.push(link);
+  //       });
+  //       await updateUrun({ resimler: JSON.stringify(list) });
+  //       selectedUrun = await GetUrun(selectedUrun.id);
+  //     },
+  //   });
+  //   makeEventForImgDelete();
+  //   $(".pop-title-area").html(selectedUrun.name);
+  //   $(".btn-close-urun-resim-edit").on("click", function () {
+  //     $(".urunresim-ekle-pop").remove();
+  //   });
+  // });
 
   $(".btn-multi-ekle").on("click", async function () {
     const str = await GetTemp("uruntoplu.hbs");
@@ -374,7 +395,7 @@ export const InitUrun = async () => {
       return newArray.filter((it) => !!it.name);
     }
     $(".coklucsvlist").on("change", function () {
-      $(".toplusave .spnte").css('display','flex');
+      $(".toplusave .spnte").css("display", "flex");
       const file = $(this)[0].files[0];
       const reader = new FileReader();
       reader.onload = async (e) => {
@@ -398,29 +419,126 @@ Lütfen Ürünün Görselini Dikkatlice İnceleyiniz Ürünün Sizin Numune İle
           newArrayItems.push(items);
         }
         if (newArrayItems.length > 0 && newArrayItems.length <= 100) {
-            $('.errtxtcsv').html('');
+          $(".errtxtcsv").html("");
           const re = await $.ajax({
             type: "POST",
             url: "/ctrlpanel/urun/insert-multiple-urun",
             data: { arrayData: newArrayItems },
             dataType: "json",
           });
-          console.log("re",re)
+          // console.log("re", re);
           if (re.status) {
             $(".btn-close-urun-edit").trigger("click");
             await makeUrunArea(parents);
             $(".toplusave .btn-close").trigger("click");
           }
-        }else{
-          $('.errtxtcsv').html("1'den fazla ve max.100 Ürün Ekleyin")
+        } else {
+          $(".errtxtcsv").html("1'den fazla ve max.100 Ürün Ekleyin");
         }
-           $(".toplusave .spnte").css('display','none');
+        $(".toplusave .spnte").css("display", "none");
       };
       reader.readAsText(file);
     });
   });
 };
+const PopResim = async (urun, resimler) => {
+  // resimler = !!resimler && resimler.length > 0 ? JSON.parse(resimler) : null;
+  // console.log(resimler)
+  const rendTemp = await GetTemp("pop-resimler.hbs");
+  $("body").append(
+    rendTemp({
+      resimler: resimler,
+    })
+  );
 
+  $(`.popasresimler .select-resim-frompc`).on("click", function () {
+    $(".popasresimler [type='file']").val("");
+    $(".popasresimler [type='file']").trigger("click");
+  });
+  $(".popasresimler [type='file']").on("change", async function () {
+    let files = $(this).get(0).files;
+    let fileurls = [];
+    $(".popasresimler .spinner-ar").css("display", "flex");
+    if (!!resimler && resimler.length > 0) {
+      let urunnname = urun.name.replace("/", "");
+      const result = await $.ajax({
+        type: "POST",
+        url: "/stat/folderdelete",
+        data: { folderpath: `/uploads/urunler/${urunnname}` },
+        dataType: "json",
+      });
+    }
+    // let promiesesOptimize = [];
+    let optimezedFiles = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      let urunnname = urun.name.replace("/", "");
+      fileurls.push(`/uploads/urunler/${urunnname}/${file.name}`);
+      let img = await OptimizePhoto(file, 500, 0.9);
+      optimezedFiles.push(img);
+      // promiesesOptimize.push();
+    }
+    // const optimezedFiles = await Promise.all(promiesesOptimize);
+    let uploadedFilePromises = [];
+    for (let i = 0; i < optimezedFiles.length; i++) {
+      const file = optimezedFiles[i];
+      let fileext = GetFileExt(file.name);
+      let filepurename = file.name.replace(`.${fileext}`, "");
+      const upld = new Upload(file);
+      let urunnname = urun.name.replace("/", "");
+      uploadedFilePromises.push(
+        upld.doUpload(`/uploads/urunler/${urunnname}`, filepurename, (data) => {
+          // console.log(data);
+        })
+      );
+    }
+    const reslUploads = await Promise.all(uploadedFilePromises);
+    const isAlluploaded = reslUploads
+      .map((item) => item.msg)
+      .every((item) => item == "Ok!");
+    if (isAlluploaded) {
+      await $.ajax({
+        type: "post",
+        url: "/ctrlpanel/urun/update-urun",
+        data: { id: urun.id, resimler: JSON.stringify(fileurls) },
+        dataType: "json",
+      });
+      resimler = JSON.stringify(fileurls);
+      $(".popasresimler .res-wrpa").html(`
+             <div class="grid grid-cols-4  gap-2"></div>
+            `);
+      for (let i = 0; i < fileurls.length; i++) {
+        const element = fileurls[i];
+        $(".popasresimler .res-wrpa div").append(`
+              <a href="${element}" target="_blank" class="w-full h-[150px] border border-gray-200 rounded ">
+                    <img src="${element}" class="w-full h-full object-contain">
+                </a>
+              `);
+      }
+    }
+    $(".popasresimler .spinner-ar").css("display", "none");
+  });
+
+  $(`.popasresimler .btn-close`).on("click", function () {
+    $(`.popasresimler`).remove();
+        $(`.link[data-ur='${selectedKategori.id}'] a`).trigger('click');
+  });
+  $("#sortable1").sortable({
+    revert: false,
+    update: async (e) => {
+      let imgurls = [];
+      $.each($(`#sortable1 a img`),(index,el)=>{
+        imgurls.push($(el).attr("src"))
+      })
+      await $.ajax({
+        type: "post",
+        url: "/ctrlpanel/urun/update-urun",
+        data: { id: urun.id, resimler: JSON.stringify(imgurls) },
+        dataType: "json",
+      });
+    },
+  });
+};
 const GetUrunler = async (kategori_ids) => {
   return $.ajax({
     type: "POST",
