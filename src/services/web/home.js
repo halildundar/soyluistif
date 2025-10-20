@@ -22,11 +22,11 @@ const makeBannerAndUrunler = async () => {
     let newItem = { ...item,kalan_stok:item.stok - item.alinan, resimler: imgs };
     newItem["img_on"] =
       newItem.resimler.length > 0
-        ? "/uploads" + newItem.resimler[0]
+        ? newItem.resimler[0]
         : "/assets/urun/resim_yok.webp";
     newItem["img_arka"] =
       newItem.resimler.length > 1
-        ? "/uploads" + newItem.resimler[1]
+        ? newItem.resimler[1]
         : "/assets/urun/resim_yok.webp";
     return {
       ...newItem,symbcurr:GetCurrncySym(newItem)
@@ -38,11 +38,11 @@ const makeBannerAndUrunler = async () => {
     let newItem = { ...item,kalan_stok:item.stok - item.alinan, resimler: imgs };
     newItem["img_on"] =
       newItem.resimler.length > 0
-        ? "/uploads" + newItem.resimler[0]
+        ? newItem.resimler[0]
         : "/assets/urun/resim_yok.webp";
     newItem["img_arka"] =
       newItem.resimler.length > 1
-        ? "/uploads" + newItem.resimler[1]
+        ? newItem.resimler[1]
         : "/assets/urun/resim_yok.webp";
     return {
       ...newItem,symbcurr:GetCurrncySym(newItem)
@@ -54,11 +54,11 @@ const makeBannerAndUrunler = async () => {
     let newItem = { ...item,kalan_stok:item.stok - item.alinan, resimler: imgs };
     newItem["img_on"] =
       newItem.resimler.length > 0
-        ? "/uploads" + newItem.resimler[0]
+        ? newItem.resimler[0]
         : "/assets/urun/resim_yok.webp";
     newItem["img_arka"] =
       newItem.resimler.length > 1
-        ? "/uploads" + newItem.resimler[1]
+        ? newItem.resimler[1]
         : "/assets/urun/resim_yok.webp";
     return {
       ...newItem,symbcurr:GetCurrncySym(newItem)
