@@ -171,11 +171,11 @@ const Goruntulenenler = async () => {
         kalan_stok: parseInt(item.stok) - parseInt(item.alinan),
         img_on:
           !!resimler && resimler.length > 0
-            ? "/uploads" + resimler[0]
+            ? resimler[0]
             : "/assets/urun/resim_yok.webp",
         img_arka:
           !!resimler && resimler.length > 1
-            ? "/uploads" + resimler[1]
+            ? resimler[1]
             : "/assets/urun/resim_yok.webp",
       };
     });
