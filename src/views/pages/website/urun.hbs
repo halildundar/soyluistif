@@ -5,9 +5,7 @@
             <span class="cursor-pointer">Anasayfa</span>
             <span class="tio">chevron_right</span>
             {{#each breadcrumbs}}
-
             {{#IsEq this.last 0}}
-
             <a href="{{this.url}}" class="cursor-pointer font-normal italic">{{this.name}}</a>
             {{else}}
             <a href="{{this.url}}" class="cursor-pointer">{{this.name}}</a>
