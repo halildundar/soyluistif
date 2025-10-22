@@ -80,7 +80,7 @@ export const HomePageRender = async (req, res) => {
   // console.log(process.env.IYZICO_API_KEY);
     // console.log(process.env.WEBSCRIPTNAME)
   res.render("pages/website/home/main.hbs", {
-    title: "Anasayfa",
+    title: "Anasayfa | Soylu İstif Makinaları",
     scriptname:  process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     imagesBg: [

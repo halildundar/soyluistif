@@ -40,10 +40,9 @@ export const KurumsalRender = async (req, res) => {
     pagename = 'Havale Bildirimleri'
   }
   res.render("pages/website/kurumsal/main.hbs", {
-    title: "Kurumsal",
+    title: pagename + " | Soylu İstif Makinaları",
     scriptname: process.env.WEBSCRIPTNAME,
         scripts:`<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
-
     temp: tempstr,
     pagename: pagename,
     pageurl:pageurl,

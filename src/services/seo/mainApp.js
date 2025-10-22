@@ -117,7 +117,7 @@ export const SeoApp = (app) => {
           "SELECT name,url,resimler FROM urun WHERE parents LIKE '%" +
           stri +
           "%'";
-        console.log(sqlUrunler);
+        // console.log(sqlUrunler);
         urunler = await DB.Query(sqlUrunler);
 
         for (let i = 0; i < urunler.length; i++) {
@@ -169,7 +169,7 @@ export const SeoApp = (app) => {
     next();
   });
   router.get("/urun/:slug", async (req, res, next) => {
-    console.log("isBot:", isbot(req.get("user-agent")));
+    // console.log("isBot:", isbot(req.get("user-agent")));
     const sitename = "Soylu istif Makineleri";
     const telefon = "+905099129428";
     let slug = req.params.slug;
@@ -312,7 +312,7 @@ export const SeoApp = (app) => {
     next();
   });
   router.get("/iletisim", async (req, res, next) => {
-    console.log("isBot:", isbot(req.get("user-agent")));
+    // console.log("isBot:", isbot(req.get("user-agent")));
     const sitename = "Soylu İstif Makinaları";
     const telefon = "+905099129428";
 
@@ -387,7 +387,7 @@ export const SeoApp = (app) => {
     next();
   });
   router.get("/hakkimizda", async (req, res, next) => {
-    console.log("isBot:", isbot(req.get("user-agent")));
+    // console.log("isBot:", isbot(req.get("user-agent")));
     const sitename = "Soylu İstif Makinaları";
     const telefon = "+905099129428";
 
@@ -449,7 +449,7 @@ export const SeoApp = (app) => {
         "SELECT url,name FROM kategori WHERE parents IS NULL"
       );
       return res.render("pages/seo/hakkimizda.hbs", {
-        title: "Hakkımızda | " + sitename,
+        title: "İletişim | " + sitename,
         layout: "seo-main.hbs",
         jsonLDdata: res.locals.jsonLd,
         ekmenu: menuS,
@@ -462,7 +462,7 @@ export const SeoApp = (app) => {
     next();
   });
   router.get("/", async (req, res, next) => {
-    console.log("isBot:", isbot(req.get("user-agent")));
+    // console.log("isBot:", isbot(req.get("user-agent")));
     const sitename = "Soylu İstif Makinaları";
     const telefon = "+905099129428";
 

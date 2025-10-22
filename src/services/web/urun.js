@@ -30,7 +30,7 @@ export const UrunPageRender = async (req, res) => {
     });
   }
   res.render("pages/website/urun.hbs", {
-    title: "Ürün",
+    title: urun.name + " | Soylu İstif Makinaları",
     scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     urun: urun,
