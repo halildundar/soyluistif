@@ -107,6 +107,7 @@ export const UserSiparisPageRender = async (req, res) => {
         fiyat: parseFloat(basketItems[i].fiyat).toFixed(2),
         indirimli_fiyat: parseFloat(basketItems[i].indirimli_fiyat).toFixed(2),
         price: parseFloat(basketItems[i].price).toFixed(2),
+        resim:"" || "/assets/urun/resim_yok.webp"
       };
     }
     return {
@@ -119,6 +120,7 @@ export const UserSiparisPageRender = async (req, res) => {
       itemTransactions: itemTransactions,
       buyer: buyer,
       systemTimeStr: getTarih(a.systemTime),
+      resim:"" || "/assets/urun/resim_yok.webp"
     };
   });
   let basketItems = siparisler.map((a) => a.basketItems);

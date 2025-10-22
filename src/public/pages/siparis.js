@@ -172,6 +172,7 @@ export const SiparisInit = async () => {
           SiparisStatus();
         });
       }
+     
     }
   }
 

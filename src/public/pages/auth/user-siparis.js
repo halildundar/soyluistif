@@ -7,4 +7,23 @@ export const UserOrdersInit = () => {
       $(`.ate${id} .adresar`).css("display", "none");
     }
   });
+  $(".btn-yes-iptal").on("click", async function () {
+    let siparisID = $(this).attr("data-ur");
+    const ta = await $.ajax({
+      type: "POST",
+      url: "/ctrlpanel/siparisler/update-iade",
+      data: { siparis_id: siparisID, status: "Sipariş İptal Edildi" },
+      dataType: "json",
+    });
+    location.href = location.href;
+  });
+  $(".btn-no-iptal").on("click", function () {
+    $(".iptlpop").hide();
+    $(".btn-yes-iptal").attr("data-ur","");
+  });
+  $(".btn-iade").on("click", async function () {
+    let siparisID = $(this).attr("data-ur");
+    $(".iptlpop").show();
+    $(".btn-yes-iptal").attr("data-ur",siparisID);
+  });
 };

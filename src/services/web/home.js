@@ -13,9 +13,7 @@ const makeBannerAndUrunler = async () => {
   const bannerHomeRight = await getBanners("homeright");
   const imagesBg = bannerHomeLeft.map((item) => item.img_url);
   const imagesSm = bannerHomeRight.map((item) => item.img_url);
-
   const mainMenus = await getMainMenu();
-
   let onecikanlar = await getOneCikanlar();
   onecikanlar = onecikanlar.map((item) => {
     let imgs = !!item["resimler"] ? JSON.parse(item["resimler"]) : [];

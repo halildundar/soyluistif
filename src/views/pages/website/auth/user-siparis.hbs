@@ -30,45 +30,85 @@
                         <strong class="text-[#792525]">SiparişID:</strong>
                         {{paymentId}}
                     </div>
+                    {{#IsEq status "Sipariş Alındı"}}
                     <div>
                         <strong class="text-[#792525]">Durum:</strong>
                         <span class=" bg-green-600 text-white px-2 py-1 text-[0.9rem] rounded"> {{status}}</span>
                     </div>
+                    {{else}}
+                    <div>
+                        <strong class="text-[#792525]">Durum:</strong>
+                        <span class=" bg-red-600 text-white px-2 py-1 text-[0.9rem] rounded"> {{status}}</span>
+                    </div>
+                    {{/IsEq}}
                     <div>
                         <strong class="text-[#792525]">Birim:</strong>
                         {{currency}}
                     </div>
                     <div class="flex-1"></div>
+                    {{#IsEq status "Sipariş Alındı"}}
+                    <div>
+                        <button data-ur="{{paymentId}}"
+                            class="btn-iade text-[0.8rem] text-white bg-red-600 hover:bg-red-500 active:bg-red-700 px-1 py-0.5 rounded">Sipariş
+                            İptal Et</button>
+                    </div>
+                    {{/IsEq}}
+
                     <div>
                         <strong class="text-[#792525]">İşlem Tarih:</strong> {{systemTimeStr}}
                     </div>
                 </div>
                 <div class="lg:hidden grid grid-cols-2">
                     <div class="col-span-1">
+
                         <div class="text-[#792525] font-bold">SiparişID:</div>
                         {{paymentId}}
                     </div>
                     <div class="col-span-1">
+                        
                         <div class="text-[#792525]  font-bold">İşlem Tarih:</div> {{systemTimeStr}}
                     </div>
 
                     <div class="col-span-1">
-                        <div class="text-[#792525]  font-bold">Toplam:</div>
-                        {{price}} {{currency}}
+                        {{!-- <div class="text-[#792525]  font-bold">Toplam:</div>
+                        {{price}} {{currency}} --}}
+                        {{#IsEq status "Sipariş Alındı"}}
+                        <span class=" bg-green-600 text-white px-2 py-1 text-[0.8rem] rounded"> {{status}}</span>
+                        {{else}}
+                        <span class=" bg-red-600 text-white px-2 py-1 text-[0.8rem] rounded"> {{status}}</span>
+                        {{/IsEq}}
                     </div>
                     <div class="col-span-1">
+                        {{#IsEq status "Sipariş Alındı"}}
+
+                        <div>
+                            <button data-ur="{{paymentId}}"
+                                class="btn-iade text-[0.8rem] text-white bg-red-600 hover:bg-red-500 active:bg-red-700 px-1 py-0.5 rounded">Sipariş
+                                İptal Et</button>
+                        </div>
+                        {{/IsEq}}
                         {{!-- <strong class="text-[#792525]">Durum:</strong> --}}
-                        <span class=" bg-green-600 text-white px-2 py-1 text-[0.9rem] rounded"> {{status}}</span>
+
                     </div>
                 </div>
                 <div>
                     <div class="block lg:hidden">
                         {{#each basketItems}}
                         <div class="grid grid-cols-6">
-                            <div class="line-clamp-1 col-span-3 text-[0.8rem]"><a href="{{this.url}}" target="_blank"
-                                    class="text-blue-500 hover:underline">{{this.name}} dsads ad sadsafwfewfsadasdsa</a></div>
-                            <div class="col-span-1 text-[0.8rem]">{{this.adet}} adet</div>
-                            <div class="col-span-2 text-[0.8rem]">{{this.price}} {{this.currency}}</div>
+                            <div class="col-span-3 ">
+                                <a href="{{this.url}}" target="_blank" class="text-blue-500 hover:underline ">
+                                    <img src="{{this.resim}}" class="w-[50px] h-[50px] object-fill" alt="">
+                                </a>
+                            </div>
+                            <div class="col-span-3">
+                                <div class="line-clamp-1  text-[0.8rem]"><a href="{{this.url}}" target="_blank"
+                                        class="text-blue-500 hover:underline">{{this.name}}</a>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-1/2 text-[0.8rem]">{{this.adet}} adet</div>
+                                    <div class="w-1/2 text-[0.8rem]">{{this.price}} {{this.currency}}</div>
+                                </div>
+                            </div>
                         </div>
                         {{/each}}
                         <div class="grid grid-cols-6">
@@ -78,7 +118,7 @@
                         </div>
                     </div>
                     <table class="hidden lg:table w-full border-collapse">
-                        <tr class="border-y border-gray-300">
+                        <tr class="border-y border-gray-200">
                             <th class="text-start py-1 px-2">Ürün Adı</th>
                             <th class="text-center py-1 px-2">Birim</th>
                             <th class="text-center py-1 px-2">Adet</th>
@@ -90,7 +130,7 @@
                         </tr>
                         {{#each basketItems}}
 
-                        <tr class="border-y border-gray-300">
+                        <tr class="border-y border-gray-200">
                             <td class="py-1 px-2">
                                 <a href="{{this.url}}" target="_blank"
                                     class="text-blue-500 hover:underline">{{this.name}}</a>
@@ -224,3 +264,18 @@
 
 </div>
 {{>footer}}
+
+
+<div style="display:none"
+    class="iptlpop  fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/10">
+    <div
+        class=" bg-white shadow-[0_0_10px_1px_rgba(0,0,0,0.3)] border border-gray-300 rounded-md text-center flex flex-col items-center justify-center p-[40px]">
+        <p class="text-[1.2rem] font-semibold">Siparişi İptal Etmek istiyor musunuz?</p>
+        <div class="flex items-center space-x-2 py-3">
+            <button
+                class="btn-yes-iptal text-white bg-red-500 hover:bg-red-600 active:bg-red-400 px-3 py-0.5 rounded">Evet</button>
+            <button
+                class="btn-no-iptal text-white bg-purple-500 hover:bg-purple-600 active:bg-purple-400 px-3 py-0.5 rounded">İptal</button>
+        </div>
+    </div>
+</div>
