@@ -11,6 +11,8 @@ import "./views/partials/raporlarheader.hbs";
 import "./views/pages/seo/home.hbs";
 import "./views/pages/seo/urun.hbs";
 import "./views/pages/seo/kategori.hbs";
+import "./views/pages/seo/hakkimizda.hbs";
+import "./views/pages/seo/iletisim.hbs";
 import "./views/pages/website/home/main.hbs";
 import "./views/pages/website/kurumsal/main.hbs";
 import "./views/pages/website/kurumsal/hakkimizda.hbs";

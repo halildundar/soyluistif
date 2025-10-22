@@ -4,7 +4,7 @@ import { DB } from "../mysql.js";
 import { isbot } from "isbot";
 import { SitemapStream, streamToPromise } from "sitemap";
 import { HOST_NAME } from "../../server.js";
-import {pad} from "../web/dbdata.js";
+import { pad } from "../web/dbdata.js";
 
 const jsonLdMiddleware = (req, res, next) => {
   res.locals.jsonLd = [];
@@ -55,7 +55,6 @@ export const SeoApp = (app) => {
   router.get("/kategori/:slug", async (req, res, next) => {
     let isBot = isbot(req.get("user-agent"));
     let slug = req.params.slug;
-
     if (isBot) {
       //Her sayfada
       res.addJsonLd({
@@ -156,7 +155,7 @@ export const SeoApp = (app) => {
       });
 
       return res.render("pages/seo/kategori.hbs", {
-        title: kategoriName + " Ürünleri",
+        title: kategoriName + " ÜRÜNLERİ",
         layout: "seo-main.hbs",
         jsonLDdata: res.locals.jsonLd,
         urunlerRs: urunlerRs,
@@ -175,8 +174,9 @@ export const SeoApp = (app) => {
     const telefon = "+905099129428";
     let slug = req.params.slug;
 
-    let urunname = 'Ürün';
-    let description = 'Soylu İstif Makinaları A.Ş. Transpalet, istif makineleri ve kaldırma ekipmanlarının satışı, transpalet tekerleri ve yedek parça üretimi.';
+    let urunname = "Ürün";
+    let description =
+      "Soylu İstif Makinaları A.Ş. Transpalet, istif makineleri ve kaldırma ekipmanlarının satışı, transpalet tekerleri ve yedek parça üretimi.";
 
     if (isbot(req.get("user-agent"))) {
       //Her sayfada
@@ -212,46 +212,43 @@ export const SeoApp = (app) => {
           "query-input": "required name=search_term_string",
         },
       });
-      //Breadcrumb
-      // res.addJsonLd({
-      //   "@context": "https://schema.org",
-      //   "@type": "BreadcrumbList",
-      //   itemListElement: [
-      //     {
-      //       "@type": "ListItem",
-      //       position: 1,
-      //       name: "Ana Sayfa",
-      //       item: "https://www.orneksite.com/",
-      //     },
-      //     {
-      //       "@type": "ListItem",
-      //       position: 2,
-      //       name: "Spor Ayakkabılar",
-      //       item: "https://www.orneksite.com/spor-ayakkabilar",
-      //     },
-      //     {
-      //       "@type": "ListItem",
-      //       position: 3,
-      //       name: "Erkek Spor Ayakkabı X123",
-      //       item: "https://www.orneksite.com/urun/erkek-spor-ayakkabi-x123",
-      //     },
-      //   ],
-      // });
+
       let resf = await DB.Query(
         "SELECT * FROM urun WHERE url = '" + slug + "'"
       );
       let selectedUrun = resf[0];
-      console.log(selectedUrun);
+
       if (!!selectedUrun) {
+        // Breadcrumb
+        res.addJsonLd({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Ana Sayfa",
+              item: HOST_NAME,
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: selectedUrun.name,
+              item: HOST_NAME + "/urun/" + selectedUrun.url,
+            },
+          ],
+        });
         description = selectedUrun.aciklama;
         urunname = selectedUrun.name;
-        let price = pad(parseFloat(selectedUrun.fiyat),2);
+        let price = pad(parseFloat(selectedUrun.fiyat), 2);
         //Üründe
         res.addJsonLd({
           "@context": "https://schema.org/",
           "@type": "Product",
           name: selectedUrun.name,
-          image: !!selectedUrun.resimler ? JSON.parse(selectedUrun.resimler): ["/assets/logo.png"],
+          image: !!selectedUrun.resimler
+            ? JSON.parse(selectedUrun.resimler)
+            : ["/assets/logo.png"],
           description: selectedUrun.aciklama,
           sku: selectedUrun.kod,
           brand: {
@@ -296,7 +293,9 @@ export const SeoApp = (app) => {
       let menuS = await DB.Query(
         "SELECT url,name FROM kategori WHERE parents IS NULL"
       );
-      let resimler = !!selectedUrun.resimler ? JSON.parse(selectedUrun.resimler) : [];
+      let resimler = !!selectedUrun.resimler
+        ? JSON.parse(selectedUrun.resimler)
+        : [];
       return res.render("pages/seo/urun.hbs", {
         title: urunname,
         layout: "seo-main.hbs",
@@ -304,10 +303,160 @@ export const SeoApp = (app) => {
         ekmenu: menuS,
         image: HOST_NAME + "/thumbnail.png",
         href: HOST_NAME + "/" + slug,
-        description:description,
-        urun:selectedUrun,
-        resimler:resimler,
-        firstResim:resimler.length > 0 ? resimler[0]:""
+        description: description,
+        urun: selectedUrun,
+        resimler: resimler,
+        firstResim: resimler.length > 0 ? resimler[0] : "",
+      });
+    }
+    next();
+  });
+  router.get("/iletisim", async (req, res, next) => {
+    console.log("isBot:", isbot(req.get("user-agent")));
+    const sitename = "Soylu İstif Makinaları";
+    const telefon = "+905099129428";
+
+    if (isbot(req.get("user-agent"))) {
+      //Her sayfada
+      res.addJsonLd({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: sitename,
+        url: HOST_NAME,
+        logo: HOST_NAME + "/logo.png",
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            telephone: telefon,
+            contactType: "customer service",
+            areaServed: "TR",
+            availableLanguage: ["Turkish"],
+          },
+        ],
+        sameAs: [
+          "https://www.facebook.com/",
+          "https://www.instagram.com/",
+          "https://www.twitter.com/",
+        ],
+      });
+      res.addJsonLd({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        url: HOST_NAME + req.path,
+        name: sitename,
+        potentialAction: {
+          "@type": "SearchAction",
+          target: HOST_NAME + "/kategori?search={search_term_string}",
+          "query-input": "required name=search_term_string",
+        },
+      });
+      // Breadcrumb
+      res.addJsonLd({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Ana Sayfa",
+            item: HOST_NAME,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "İletişim",
+            item: HOST_NAME + "/iletisim",
+          },
+        ],
+      });
+
+      let menuS = await DB.Query(
+        "SELECT url,name FROM kategori WHERE parents IS NULL"
+      );
+      return res.render("pages/seo/iletisim.hbs", {
+        title: "Hakkımızda | " + sitename,
+        layout: "seo-main.hbs",
+        jsonLDdata: res.locals.jsonLd,
+        ekmenu: menuS,
+        image: HOST_NAME + "/assets/thumbnail.png",
+        href: HOST_NAME,
+        description:
+          "Soylu İstif Makinaları A.Ş. Transpalet, istif makineleri ve kaldırma ekipmanlarının satışı, transpalet tekerleri ve yedek parça üretimi.",
+      });
+    }
+    next();
+  });
+  router.get("/hakkimizda", async (req, res, next) => {
+    console.log("isBot:", isbot(req.get("user-agent")));
+    const sitename = "Soylu İstif Makinaları";
+    const telefon = "+905099129428";
+
+    if (isbot(req.get("user-agent"))) {
+      //Her sayfada
+      res.addJsonLd({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: sitename,
+        url: HOST_NAME,
+        logo: HOST_NAME + "/logo.png",
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            telephone: telefon,
+            contactType: "customer service",
+            areaServed: "TR",
+            availableLanguage: ["Turkish"],
+          },
+        ],
+        sameAs: [
+          "https://www.facebook.com/",
+          "https://www.instagram.com/",
+          "https://www.twitter.com/",
+        ],
+      });
+      res.addJsonLd({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        url: HOST_NAME + req.path,
+        name: sitename,
+        potentialAction: {
+          "@type": "SearchAction",
+          target: HOST_NAME + "/kategori?search={search_term_string}",
+          "query-input": "required name=search_term_string",
+        },
+      });
+      // Breadcrumb
+      res.addJsonLd({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Ana Sayfa",
+            item: HOST_NAME,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Hakkımızda",
+            item: HOST_NAME + "/hakkimizda",
+          },
+        ],
+      });
+
+      let menuS = await DB.Query(
+        "SELECT url,name FROM kategori WHERE parents IS NULL"
+      );
+      return res.render("pages/seo/hakkimizda.hbs", {
+        title: "Hakkımızda | " + sitename,
+        layout: "seo-main.hbs",
+        jsonLDdata: res.locals.jsonLd,
+        ekmenu: menuS,
+        image: HOST_NAME + "/assets/thumbnail.png",
+        href: HOST_NAME,
+        description:
+          "Soylu İstif Makinaları A.Ş. Transpalet, istif makineleri ve kaldırma ekipmanlarının satışı, transpalet tekerleri ve yedek parça üretimi.",
       });
     }
     next();
@@ -351,79 +500,47 @@ export const SeoApp = (app) => {
           "query-input": "required name=search_term_string",
         },
       });
-      //Breadcrumb
-      // res.addJsonLd({
-      //   "@context": "https://schema.org",
-      //   "@type": "BreadcrumbList",
-      //   itemListElement: [
-      //     {
-      //       "@type": "ListItem",
-      //       position: 1,
-      //       name: "Ana Sayfa",
-      //       item: "https://www.orneksite.com/",
-      //     },
-      //     {
-      //       "@type": "ListItem",
-      //       position: 2,
-      //       name: "Spor Ayakkabılar",
-      //       item: "https://www.orneksite.com/spor-ayakkabilar",
-      //     },
-      //     {
-      //       "@type": "ListItem",
-      //       position: 3,
-      //       name: "Erkek Spor Ayakkabı X123",
-      //       item: "https://www.orneksite.com/urun/erkek-spor-ayakkabi-x123",
-      //     },
-      //   ],
-      // });
-      //Üründe
+      // Breadcrumb
       res.addJsonLd({
-        "@context": "https://schema.org/",
-        "@type": "Product",
-        name: "Erkek Spor Ayakkabı X123",
-        image: [
-          "https://www.orneksite.com/images/urun-x123-1.jpg",
-          "https://www.orneksite.com/images/urun-x123-2.jpg",
-        ],
-        description:
-          "Rahat ve hafif erkek spor ayakkabı. Günlük kullanım için idealdir.",
-        sku: "X123",
-        brand: {
-          "@type": "Brand",
-          name: "Örnek Marka",
-        },
-        offers: {
-          "@type": "Offer",
-          url: "https://www.orneksite.com/urun/erkek-spor-ayakkabi-x123",
-          priceCurrency: "TRY",
-          price: "799.90",
-          priceValidUntil: "2025-12-31",
-          itemCondition: "https://schema.org/NewCondition",
-          availability: "https://schema.org/InStock",
-          seller: {
-            "@type": "Organization",
-            name: "Örnek E-Ticaret",
-          },
-        },
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "4.5",
-          reviewCount: "128",
-        },
-        review: [
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
           {
-            "@type": "Review",
-            author: { "@type": "Person", name: "Ali" },
-            datePublished: "2025-08-12",
-            reviewBody: "Ürün çok rahat ve hızlı kargo.",
-            name: "Harika spor ayakkabı",
-            reviewRating: {
-              "@type": "Rating",
-              ratingValue: "5",
-              bestRating: "5",
-            },
+            "@type": "ListItem",
+            position: 1,
+            name: "Ana Sayfa",
+            item: HOST_NAME,
           },
         ],
+      });
+      let sqlUrunler = "SELECT name,url,resimler FROM urun";
+      let urunler = (urunler = await DB.Query(sqlUrunler));
+      let itemListElement = [];
+      for (let i = 0; i < urunler.length; i++) {
+        const urun = urunler[i];
+        itemListElement.push({
+          "@type": "ListItem",
+          position: i + 1,
+          url: HOST_NAME + "/urun/" + urun.url,
+          name: urun.name,
+        });
+      }
+      res.addJsonLd({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "Tüm Ürünler",
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        numberOfItems: urunler.length,
+        itemListElement: [...itemListElement],
+      });
+      let urunlerRs = urunler.map((a) => {
+        return {
+          ...a,
+          resim:
+            !!a.resimler && a.resimler.length > 0
+              ? JSON.parse(a.resimler)[0]
+              : "/assets/logosm.png",
+        };
       });
       let menuS = await DB.Query(
         "SELECT url,name FROM kategori WHERE parents IS NULL"
@@ -434,7 +551,8 @@ export const SeoApp = (app) => {
         jsonLDdata: res.locals.jsonLd,
         ekmenu: menuS,
         image: HOST_NAME + "/assets/thumbnail.png",
-        href: HOST_NAME ,
+        href: HOST_NAME,
+        urunlerRs: urunlerRs,
         description:
           "Soylu İstif Makinaları A.Ş. Transpalet, istif makineleri ve kaldırma ekipmanlarının satışı, transpalet tekerleri ve yedek parça üretimi.",
       });
