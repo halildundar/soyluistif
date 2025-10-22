@@ -52,7 +52,6 @@ export const SeoApp = (app) => {
     const xml = await streamToPromise(stream);
     return res.send(xml.toString());
   });
-
   router.get("/kategori/:slug", async (req, res, next) => {
     let isBot = isbot(req.get("user-agent"));
     let slug = req.params.slug;
@@ -151,7 +150,7 @@ export const SeoApp = (app) => {
           ...a,
           resim:
             !!a.resimler && a.resimler.length > 0
-              ? a.resimler[0]
+              ? JSON.parse(a.resimler)[0]
               : "/assets/logosm.png",
         };
       });
@@ -252,11 +251,7 @@ export const SeoApp = (app) => {
           "@context": "https://schema.org/",
           "@type": "Product",
           name: selectedUrun.name,
-          image: [
-            !!selectedUrun.resimler
-              ? selectedUrun.resimler
-              : "/assets/logo.png",
-          ],
+          image: !!selectedUrun.resimler ? JSON.parse(selectedUrun.resimler): ["/assets/logo.png"],
           description: selectedUrun.aciklama,
           sku: selectedUrun.kod,
           brand: {
@@ -431,7 +426,7 @@ export const SeoApp = (app) => {
         "SELECT url,name FROM kategori WHERE parents IS NULL"
       );
       return res.render("pages/seo/home.hbs", {
-        title: "Home",
+        title: sitename,
         layout: "seo-main.hbs",
         jsonLDdata: res.locals.jsonLd,
         ekmenu: menuS,
