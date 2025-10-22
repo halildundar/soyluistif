@@ -310,7 +310,7 @@ export const SeoApp = (app) => {
   });
   router.get("/", async (req, res, next) => {
     console.log("isBot:", isbot(req.get("user-agent")));
-    const sitename = "Örnek E-Ticaret";
+    const sitename = "Soylu İstif Makinaları";
     const telefon = "+905099129428";
 
     if (isbot(req.get("user-agent"))) {
@@ -372,7 +372,6 @@ export const SeoApp = (app) => {
           },
         ],
       });
-
       //Üründe
       res.addJsonLd({
         "@context": "https://schema.org/",
