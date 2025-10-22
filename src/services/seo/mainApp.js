@@ -161,7 +161,7 @@ export const SeoApp = (app) => {
         urunlerRs: urunlerRs,
         ekmenu: menuS,
         image: HOST_NAME + "/assets/thumbnail.png",
-        href: HOST_NAME + "/" + slug,
+        href: HOST_NAME + "/kategori/" + slug,
         description:
           "Soylu İstif Makinaları A.Ş. Transpalet, istif makineleri ve kaldırma ekipmanlarının satışı, transpalet tekerleri ve yedek parça üretimi.",
       });
@@ -301,8 +301,8 @@ export const SeoApp = (app) => {
         layout: "seo-main.hbs",
         jsonLDdata: res.locals.jsonLd,
         ekmenu: menuS,
-        image: HOST_NAME + resimler.length > 0 ? resimler[0] : "/assets/thumbnail.png",
-        href: HOST_NAME + "/" + slug,
+        image: HOST_NAME + (resimler.length > 0 ? resimler[0] : "/assets/thumbnail.png"),
+        href: HOST_NAME + "/urun/" + slug,
         description: description,
         urun: selectedUrun,
         resimler: resimler,
