@@ -52,6 +52,7 @@ export const GetFileExt = (fname) => {
 };
 export const GetTemp = async (folderpath) => {
   try {
+
     const resp = await fetch("/templates/get-temp", {
       method: "POST",
       body: JSON.stringify({ folderpath: folderpath }),

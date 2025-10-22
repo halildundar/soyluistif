@@ -331,9 +331,8 @@ export const InitUrun = async () => {
   // });
 
   $(".btn-multi-ekle").on("click", async function () {
-    const str = await GetTemp("uruntoplu.hbs");
-    const rand = Handlebars.compile(str);
-    $("body").append(rand({}));
+    const rand = await GetTemp("uruntoplu.hbs");
+    $("body").append(rand());
     $(".toplusave .btn-close").on("click", function () {
       $(".toplusave").remove();
     });
