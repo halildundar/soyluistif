@@ -171,7 +171,7 @@ export const SeoApp = (app) => {
   });
   router.get("/urun/:slug", async (req, res, next) => {
     console.log("isBot:", isbot(req.get("user-agent")));
-    const sitename = "Örnek E-Ticaret";
+    const sitename = "Soylu istif Makineleri";
     const telefon = "+905099129428";
     let slug = req.params.slug;
 
@@ -296,6 +296,7 @@ export const SeoApp = (app) => {
       let menuS = await DB.Query(
         "SELECT url,name FROM kategori WHERE parents IS NULL"
       );
+      let resimler = !!selectedUrun.resimler ? JSON.parse(selectedUrun.resimler) : [];
       return res.render("pages/seo/urun.hbs", {
         title: urunname,
         layout: "seo-main.hbs",
@@ -304,6 +305,9 @@ export const SeoApp = (app) => {
         image: HOST_NAME + "/thumbnail.png",
         href: HOST_NAME + "/" + slug,
         description:description,
+        urun:selectedUrun,
+        resimler:resimler,
+        firstResim:resimler.length > 0 ? resimler[0]:""
       });
     }
     next();
@@ -348,30 +352,30 @@ export const SeoApp = (app) => {
         },
       });
       //Breadcrumb
-      res.addJsonLd({
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Ana Sayfa",
-            item: "https://www.orneksite.com/",
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Spor Ayakkabılar",
-            item: "https://www.orneksite.com/spor-ayakkabilar",
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: "Erkek Spor Ayakkabı X123",
-            item: "https://www.orneksite.com/urun/erkek-spor-ayakkabi-x123",
-          },
-        ],
-      });
+      // res.addJsonLd({
+      //   "@context": "https://schema.org",
+      //   "@type": "BreadcrumbList",
+      //   itemListElement: [
+      //     {
+      //       "@type": "ListItem",
+      //       position: 1,
+      //       name: "Ana Sayfa",
+      //       item: "https://www.orneksite.com/",
+      //     },
+      //     {
+      //       "@type": "ListItem",
+      //       position: 2,
+      //       name: "Spor Ayakkabılar",
+      //       item: "https://www.orneksite.com/spor-ayakkabilar",
+      //     },
+      //     {
+      //       "@type": "ListItem",
+      //       position: 3,
+      //       name: "Erkek Spor Ayakkabı X123",
+      //       item: "https://www.orneksite.com/urun/erkek-spor-ayakkabi-x123",
+      //     },
+      //   ],
+      // });
       //Üründe
       res.addJsonLd({
         "@context": "https://schema.org/",

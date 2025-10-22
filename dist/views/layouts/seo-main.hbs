@@ -33,13 +33,25 @@
       margin-left: auto;
       margin-right: auto;
     }
-    .container .leftarea img,.container .urunitem img{
+    .menu a{
+      color:black;
+      font-weight: bold;
+    }
+
+    .container .leftarea img {
+      width: 200px;
+      height: 200px;
+    }
+
+    .container .urunitem img {
       width: 50px;
       height: 50px;
     }
+
     .container nav {
       padding: none;
     }
+
     .container nav ul {
       list-style: none;
       display: flex;
@@ -47,60 +59,72 @@
       padding: 10px 4px;
       margin: 0
     }
+
     .container nav ul li {
       margin-right: 10px;
     }
+
     a {
       color: blue;
       text-decoration: none;
     }
+
     a:hover {
       text-decoration: underline;
     }
-    .grdarea{
+
+    .grdarea {
       display: grid;
-      gap:10px;
+      gap: 10px;
       grid-template-columns: auto auto auto;
-      
-    }
-    .urunitem{
-      background-color: rgba(0, 0, 0, 0.2);
-      border:1px solid rgba(0, 0, 0, 0.4);
-      border-radius: 4px;
-    }
-    .urunitem a{
-      display: flex;
-      align-items: center;
-      color:black
 
     }
-    .urunitem a span{
+
+    .urunitem {
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 0, 0, 0.4);
+      border-radius: 4px;
+    }
+
+    .urunitem a {
+      display: flex;
+      align-items: center;
+      color: black
+    }
+
+    .urunitem a span {
       margin-right: 10px;
     }
-    footer{
+
+    footer {
       padding: 10px;
     }
 
-    @media screen and (max-width: 600px){
-       .grdarea{
+    @media screen and (max-width: 600px) {
+      .grdarea {
         grid-template-columns: auto;
         padding: 0 10px;
-       }
-       nav{
+      }
+
+      nav {
         padding-left: 10px;
-       }
-       nav a{
+      }
+
+      nav a {
         font-size: 0.8rem;
-       }
-       nav ul li:nth-child(1){
+      }
+
+      nav ul li:nth-child(1) {
         display: none;
-       }
-       nav ul li:nth-child(2){
+      }
+
+      nav ul li:nth-child(2) {
         display: none;
-       }
-       nav ul li:nth-child(3){
+      }
+
+      nav ul li:nth-child(3) {
         display: none;
-       }
+      }
     }
   </style>
 
