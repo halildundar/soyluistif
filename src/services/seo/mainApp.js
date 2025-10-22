@@ -436,7 +436,7 @@ export const SeoApp = (app) => {
         jsonLDdata: res.locals.jsonLd,
         ekmenu: menuS,
         image: HOST_NAME + "/thumbnail.png",
-        href: HOST_NAME + "/" + slug,
+        href: HOST_NAME ,
         description:
           "Soylu İstif Makinaları A.Ş. Transpalet, istif makineleri ve kaldırma ekipmanlarının satışı, transpalet tekerleri ve yedek parça üretimi.",
       });
