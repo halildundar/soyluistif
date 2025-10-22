@@ -301,12 +301,12 @@ export const SeoApp = (app) => {
         layout: "seo-main.hbs",
         jsonLDdata: res.locals.jsonLd,
         ekmenu: menuS,
-        image: HOST_NAME + "/thumbnail.png",
+        image: HOST_NAME + resimler.length > 0 ? resimler[0] : "/assets/thumbnail.png",
         href: HOST_NAME + "/" + slug,
         description: description,
         urun: selectedUrun,
         resimler: resimler,
-        firstResim: resimler.length > 0 ? resimler[0] : "",
+        firstResim: resimler.length > 0 ? resimler[0] : "/assets/thumbnail.png",
       });
     }
     next();
