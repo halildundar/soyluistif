@@ -191,10 +191,10 @@ async function FiltreFiyatAralikOlustur1(currency) {
     currency +
     "'";
   const [rows] = await DB.Query(filtsql);
-  // if (!rows || rows.length === 0) return res.json({ ranges: [] });
+  if (!rows || rows.length === 0) return [];
 
   const { minPrice, maxPrice } = rows;
-  if (minPrice === null || maxPrice === null) return res.json({ ranges: [] });
+  if (minPrice === null || maxPrice === null) return [];
 
   let ranges = makeRanges(Number(minPrice), Number(maxPrice), 5);
 
@@ -412,7 +412,7 @@ export const getUrunByUrl = async (urunurl) => {
 };
 export const SiparisDelete = async (id) => {
   const result = await DB.Query("DELETE FROM `siparis` WHERE id = ?", [id]);
-  return res.json({ msg: "OK!" });
+  return { msg: "OK!" };
 };
 export const SiparisAdd = async (data) => {
   let newData = {
