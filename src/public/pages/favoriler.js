@@ -32,7 +32,7 @@ export const FavorilerInit = async () => {
         adet: 1,
         resim:
           !!resimler && !!resimler[0]
-            ? "/uploads" + resimler[0]
+            ? resimler[0]
             : "/assets/urun/resim_yok.webp",
       };
     });

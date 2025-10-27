@@ -70,7 +70,7 @@ export const SepetInit = async () => {
         fiyat: Number(urun.fiyat),
         resim:
           !!resimler && !!resimler[0]
-            ? "/uploads" + resimler[0]
+            ?  resimler[0]
             : "/assets/urun/resim_yok.webp",
         adet: adet,
       };

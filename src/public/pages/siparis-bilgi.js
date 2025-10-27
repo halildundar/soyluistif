@@ -127,7 +127,7 @@ export const SiparisBilgiInit = async () => {
         ...urun,
         resim:
           !!resimler && !!resimler[0]
-            ? "/uploads" + resimler[0]
+            ? resimler[0]
             : "/assets/urun/resim_yok.webp",
         adet: adet,
       };
