@@ -78,7 +78,7 @@ export const KategoriPageRender = async (req, res) => {
     return newItem;
   });
   let sneddata = {
-    title: breadcrumbs[breadcrumbs.length - 1].name + " | Soylu İstif Makinaları",
+    title: !!breadcrumbs[breadcrumbs.length - 1] ? breadcrumbs[breadcrumbs.length - 1].name + " | Soylu İstif Makinaları" : "Soylu İstif Makinaları",
     scriptname: process.env.WEBSCRIPTNAME,
     scripts: `<script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>`,
     urunler: !!urunler ? urunler : [],
