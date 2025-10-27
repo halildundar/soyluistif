@@ -24,11 +24,11 @@ export const GetSearchMenu = async (req, res) => {
         currSymb: GetCurrncySym(item),
         resim_on:
           !!item.resimler && item.resimler.length > 0
-            ? "/uploads" + item.resimler[0]
+            ? item.resimler[0]
             : "/assets/urun/resim_yok.webp",
         resim_arka:
           !!item.resimler && item.resimler.length > 1
-            ? "/uploads" + item.resimler[1]
+            ? item.resimler[1]
             : "/assets/urun/resim_yok.webp",
       };
       return newItem;
