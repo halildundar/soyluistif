@@ -40,7 +40,7 @@
 
                             <div
                                 class="opacity-0  group-hover:opacity-100  absolute top-0 left-0 w-full h-full  bg-black/10 duration-300 flex items-end justify-center py-5">
-                                {{#IsEq this.stok 0}}
+                                {{!-- {{#IsEq this.stok 0}}
                                 <div class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
                                     <div>Stoklarımız Tükenmiştir. </div>
                                 </div>
@@ -50,7 +50,12 @@
                                     <i class="tio text-[1rem]">shopping_cart_add</i>
                                     <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
                                 </button>
-                                {{/IsEq}}
+                                {{/IsEq}} --}}
+                                 <button data-ur="{{this.id}}"
+                                    class="btn-sepete-ekle translate-y-[200%] group-hover:translate-y-0 group-hover:scale-110 duration-200 px-2 py-1 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                    <i class="tio text-[1rem]">shopping_cart_add</i>
+                                    <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
+                                </button>
                             </div>
                         </div>
                         <div class="flex items-center justify-center py-2 text-[1.2rem]">
@@ -63,14 +68,14 @@
                         <div class="py-2 px-2 lg:px-5">
                             <div
                                 class="title  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
-                                {{this.name}}
+                                {{this.kod}}
                             </div>
                         </div>
                         <div class="py-2">
-                            <div class="urun-kod text-center text-[0.9rem] px-1 lg:px-2">{{this.kod}}</div>
-                            <div class="stok text-[--koyu] text-[1rem] text-center">
+                            <div class="urun-kod text-center text-[0.9rem] px-1 lg:px-2">{{this.name}}</div>
+                            {{!-- <div class="stok text-[--koyu] text-[1rem] text-center">
                                 <strong>Stok:</strong>{{this.kalan_stok}} adet
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
                             <div
@@ -99,7 +104,7 @@
                                     add</div>
                             </div>
                             <div class="flex items-center justify-center py-2">
-                                {{#IsEq this.stok 0}}
+                                {{!-- {{#IsEq this.stok 0}}
                                 <div class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
                                     <div>Stoklarımız Tükenmiştir. </div>
                                 </div>
@@ -109,7 +114,12 @@
                                     <i class="tio text-[1rem]">shopping_cart_add</i>
                                     <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
                                 </button>
-                                {{/IsEq}}
+                                {{/IsEq}} --}}
+                                 <button data-ur="{{this.id}}"
+                                    class="btn-sepete-ekle px-2 py-1 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                    <i class="tio text-[1rem]">shopping_cart_add</i>
+                                    <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -137,7 +147,7 @@
                                 alt="">
                             <div
                                 class="opacity-0  group-hover:opacity-100  absolute top-0 left-0 w-full h-full  bg-black/10 duration-300 flex items-end justify-center py-5">
-                                {{#IsEq this.stok 0}}
+                                {{!-- {{#IsEq this.stok 0}}
                                 <div class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
                                     <div>Stoklarımız Tükenmiştir. </div>
                                 </div>
@@ -147,7 +157,12 @@
                                     <i class="tio text-[1rem]">shopping_cart_add</i>
                                     <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
                                 </button>
-                                {{/IsEq}}
+                                {{/IsEq}} --}}
+                                 <button data-ur="{{this.id}}"
+                                    class="btn-sepete-ekle px-2 py-1 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                    <i class="tio text-[1rem]">shopping_cart_add</i>
+                                    <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
+                                </button>
                             </div>
                         </div>
                         <div class="flex items-center justify-center  py-2 text-[1.2rem]">
@@ -160,14 +175,14 @@
                         <div class="py-2 px-2 lg:px-5">
                             <div
                                 class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
-                                {{this.name}}
+                                {{this.kod}}
                             </div>
                         </div>
                         <div class="py-2">
-                            <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
-                            <div class="barkod text-[--koyu] text-[0.8rem] text-center">
+                            <div class="urun-kod text-center text-[0.8rem]">{{this.name}}</div>
+                            {{!-- <div class="barkod text-[--koyu] text-[0.8rem] text-center">
                                 <strong>Stok:</strong>{{this.kalan_stok}} adet
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
                             <div
@@ -236,7 +251,7 @@
                                 alt="">
                             <div
                                 class="opacity-0  group-hover:opacity-100  absolute top-0 left-0 w-full h-full  bg-black/10 duration-300 flex items-end justify-center py-5">
-                                {{#IsEq this.stok 0}}
+                                {{!-- {{#IsEq this.stok 0}}
                                 <div class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
                                     <div>Stoklarımız Tükenmiştir. </div>
                                 </div>
@@ -246,7 +261,12 @@
                                     <i class="tio text-[1rem]">shopping_cart_add</i>
                                     <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
                                 </button>
-                                {{/IsEq}}
+                                {{/IsEq}} --}}
+                                 <button data-ur="{{this.id}}"
+                                    class="btn-sepete-ekle translate-y-[200%] group-hover:translate-y-0 group-hover:scale-110 duration-200 px-2 py-1 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                    <i class="tio text-[1rem]">shopping_cart_add</i>
+                                    <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
+                                </button>
                             </div>
                         </div>
                         <div class="flex items-center justify-center py-2 text-[1.2rem]">
@@ -259,15 +279,15 @@
                         <div class="py-2 px-2 lg:px-5">
                             <div
                                 class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
-                                {{this.name}}
+                                {{this.kod}}
                             </div>
                         </div>
                         <div class="py-2">
-                            <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
+                            <div class="urun-kod text-center text-[0.8rem]">{{this.name}}</div>
                             {{!-- <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}</div> --}}
-                            <div class="barkod text-[--koyu] text-[0.8rem] text-center">
+                            {{!-- <div class="barkod text-[--koyu] text-[0.8rem] text-center">
                                 <strong>Stok:</strong>{{this.kalan_stok}} adet
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
                             <div

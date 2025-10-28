@@ -267,7 +267,7 @@
 
                                     <div
                                         class="opacity-0  group-hover:opacity-100  absolute top-0 left-0 w-full h-full  bg-black/10 duration-300 flex items-end justify-center py-5">
-                                        {{#IsEq this.stok 0}}
+                                        {{!-- {{#IsEq this.stok 0}}
                                         <div
                                             class="px-4 py-2 rounded-md bg-gray-200 text-red-600 font-bold text-[0.8rem]">
                                             <div>Stoklarımız Tükenmiştir. </div>
@@ -278,7 +278,12 @@
                                             <i class="tio text-[1rem]">shopping_cart_add</i>
                                             <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
                                         </button>
-                                        {{/IsEq}}
+                                        {{/IsEq}} --}}
+                                           <button data-ur="{{this.id}}"
+                                            class="btn-sepete-ekle translate-y-[200%] group-hover:translate-y-0 group-hover:scale-110 duration-200 px-2 py-1 text-white bg-blue-900  font-bold hover:bg-blue-950 active:bg-blue-700 rounded-md flex items-center space-x-2">
+                                            <i class="tio text-[1rem]">shopping_cart_add</i>
+                                            <div class="text-[0.9rem]"> <span>Sepete ekle</span></div>
+                                        </button>
                                     </div>
                                 </div>
                                 <hr class="border-2 border-orange-300">
@@ -293,11 +298,11 @@
                                     <div class="py-2">
                                         <div
                                             class="title  text-[--koyu-dark] text-[0.8rem] text-center font-bold line-clamp-2 px-5">
-                                            {{this.name}}
+                                            {{this.kod}}
                                         </div>
                                     </div>
                                     <div class="py-2">
-                                        <div class="urun-kod text-center text-[0.8rem]">{{this.kod}}</div>
+                                        <div class="urun-kod text-center text-[0.8rem]">{{this.name}}</div>
                                         <div class="barkod text-[--koyu] text-[0.8rem] text-center">{{this.barkod}}
                                         </div>
                                     </div>
