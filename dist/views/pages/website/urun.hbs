@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="w-full md:w-[60%] bg-white md:p-10 p-5 pt-5 border border-gray-200 rounded-md">
-                    <div class="text-[1.4rem] pb-2 font-semibold">{{urun.name}}</div>
+                    <div class="text-[1.4rem] pb-2 font-semibold">{{urun.kod}}</div>
                     <hr class="mb-2">
                     <div class="pb-2 text-[1rem]">
                         <div class="flex items-center justify-start  text-[1.2rem]">
@@ -51,10 +51,10 @@
                             <button class="tio text-gray-500">star</button>
                             <button class="tio text-gray-500">star</button>
                         </div>
-                        <div><strong>Ürün Kod:</strong> <span>{{urun.kod}}</span></div>
-                        <div><strong>Barkod:</strong> <span>{{urun.barkod}}</span></div>
+                        <div><strong>Ürün Kod:</strong> <span>{{urun.name}}</span></div>
+                        {{!-- <div><strong>Barkod:</strong> <span>{{urun.barkod}}</span></div> --}}
                         <div><strong>Kategori:</strong> <span>{{lastkategori.name}}</span></div>
-                        <div><strong>Stok:</strong> <span>{{urun.stok}}</span> adet</div>
+                        {{!-- <div><strong>Stok:</strong> <span>{{urun.stok}}</span> adet</div> --}}
                     </div>
                     <div class=" flex items-center space-x-5">
                         <div
@@ -94,11 +94,11 @@
                             <i class="tio text-[1rem]">shopping_cart_outlined</i>
                             <div class="text-[0.8rem]">Sepete ekle</div>
                         </button>
-                        <button
+                        {{!-- <button
                             class="btn-hmnal p-2 text-white bg-gray-500  font-bold hover:bg-gray-700 active:bg-gray-400 rounded-md flex items-center space-x-2">
                             <i class="tio text-[1rem]">shopping_basket_outlined</i>
                             <div class="text-[0.8rem]">Hemen Al</div>
-                        </button>
+                        </button> --}}
                         {{/IsEq}}
                         <a href="https://api.whatsapp.com/send?phone={{wpno}}&text={{weblink}}/urun/{{urun.url}}"
                             target="_blank"
