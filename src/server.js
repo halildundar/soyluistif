@@ -12,6 +12,7 @@ import {
   Json,
   DigitFract,
   jsonld,
+  stars
 } from "./services/helpers/help.js";
 import { appRoutes } from "./services/main.js";
 import bodyParser from "body-parser";
@@ -51,7 +52,7 @@ app.engine(
     extname: ".hbs",
     layoutsDir: "views/layouts",
     partialsDir: ["views/partials"],
-    helpers: { calc, list, IsEq, BiggerThan, LessThan, Inc, Json, DigitFract,jsonld },
+    helpers: { calc, list, IsEq, BiggerThan, LessThan, Inc, Json, DigitFract,jsonld,stars },
   })
 );
 app.set("view engine", ".hbs");

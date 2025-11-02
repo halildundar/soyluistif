@@ -205,16 +205,12 @@ const Goruntulenenler = async () => {
             }" class="hidden group-hover:block w-full h-full object-cover" alt="">
           </div>
           <div class="py-2 px-2 lg:px-5">
-              <div class="title min-h-[40px]  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
-                    ${urun.name}
+              <div class="title min-h-[40px] leading-tight  text-black lg:text-[--koyu-dark] text-[0.8rem] lg:text-[1rem]  text-center font-bold  line-clamp-2">
+                    ${urun.kod}
               </div>
           </div>
           <div class="py-2">
-            <div class="urun-kod text-center text-[0.8rem]">${urun.kod}</div>
-            <div class="stok text-[--koyu] text-[0.8rem] text-center"><strong>Stok:</strong>${
-              urun.kalan_stok
-            } adet
-            </div>
+            <div class="urun-kod text-center text-[0.8rem]">${urun.name}</div>
           </div>
           <div class="flex items-center w-3/4 lg:w-1/2 mx-auto space-x-3">
             <div class="bg-[red] text-white text-[0.8rem] p-2 flex items-center justify-center rounded-md font-bold">
@@ -286,8 +282,7 @@ const SearchHeaderItems = () => {
           $(".inptarea .sbmn").append(`
              <a href="/urun/${urun.url}" class="px-2 py-1 w-full flex items-center space-x-4 hover:bg-black/5 border-b border-gray-200">
                   <img src="${urun.resim_on}" class="w-[50px] h-auto" alt="">
-                  <div>${urun.name}</div>
-                  <div>${urun.kod}</div>
+                  <div class="text-[0.9rem]">${urun.kod}</div>
               </a>
             `);
         }
@@ -303,6 +298,7 @@ const SearchHeaderItems = () => {
         data: { search: $(".intt-serc").val() },
         dataType: "json",
       });
+      //  <div>${urun.name}</div>
       $(".inptarea1 .sbmnm").html("");
       if ($(".intt-serc").val().length > 0) {
         for (let i = 0; i < urunler.length; i++) {
@@ -310,8 +306,8 @@ const SearchHeaderItems = () => {
           $(".inptarea1 .sbmnm").append(`
              <a href="/urun/${urun.url}" class="px-2 py-1 w-full flex items-center space-x-4 hover:bg-black/5 border-b border-gray-200">
                   <img src="${urun.resim_on}" class="w-[50px] h-auto" alt="">
-                  <div>${urun.name}</div>
-                  <div>${urun.kod}</div>
+                 
+                  <div class="text-[0.8rem]">${urun.kod}</div>
               </a>
             `);
         }

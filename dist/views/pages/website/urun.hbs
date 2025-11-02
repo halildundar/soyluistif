@@ -21,8 +21,7 @@
                     <div class="flex flex-col-reverse md:flex-row md:space-x-2 space-y-2 md:space-y-0">
                         <div class="space-y-2  overflow-y-auto whitespace-nowrap">
                             {{#each urun.resimler}}
-                            <a href="{{this}}"
-                                class="w-[75px] h-[75px] inline-flex md:flex border border-gray-200">
+                            <a href="{{this}}" class="w-[75px] h-[75px] inline-flex md:flex border border-gray-200">
                                 <img src="{{this}}" class="w-full h-full" fetchpriority="high" alt="">
                             </a>
                             {{/each}}
@@ -116,26 +115,28 @@
                         {{!-- <div class="inline-flex items-center space-x-1"><strong
                                 class="tio text-[1.4rem]">incognito</strong> <strong class="goruntulenme text-[1.2rem]"
                                 data-say="{{urun.goruntulenme}}">{{urun.goruntulenme}}</strong></div> --}}
-                        <div class="inline-flex items-center space-x-1"><strong
-                                class="tio text-[1.4rem]">thumbs_up</strong> <strong class="begenilme text-[1.2rem]"
-                                data-say="{{urun.begenilme}}">{{urun.begenilme}}</strong></div>
+                        {{!-- <div class="inline-flex items-center space-x-1">
+                            <strong class="tio text-[1.4rem]">thumbs_up</strong>
+                            <strong class="begenilme text-[1.2rem]"
+                                data-say="{{urun.begenilme}}">{{urun.begenilme}}</strong>
+                        </div> --}}
                         <div class="kalan hidden" data-say="{{urun.alinan}}">{{urun.alinan}}</div>
                     </div>
                     <div class="flex items-center space-x-2 py-5">
                         <div
                             class="inline-flex flex-col items-center border border-gray-300 rounded-md p-2 text-[0.9rem]">
                             <div class="tio text-[1.5rem]">protection</div>
-                            <div>Hızlı Gönderi</div>
+                            <div class="text-center lg:text-start">Hızlı Gönderi</div>
                         </div>
                         <div
                             class="inline-flex flex-col items-center border border-gray-300 rounded-md p-2 text-[0.9rem]">
                             <div class="tio text-[1.5rem]">security</div>
-                            <div>Güvenli Alışveriş</div>
+                            <div class="text-center lg:text-start">Güvenli Alışveriş</div>
                         </div>
                         <div
                             class="inline-flex flex-col items-center border border-gray-300 rounded-md p-2 text-[0.9rem]">
                             <div class="tio text-[1.5rem]">sort</div>
-                            <div>İade ve Değişim</div>
+                            <div class="text-center lg:text-start">İade ve Değişim</div>
                         </div>
                     </div>
                 </div>
@@ -160,27 +161,67 @@
                         <div style="display:none" class="garanti-ack">
                             {{{urun.garanti_aciklama}}}
                         </div>
-                        <div style="display:none" class="yorum-ack space-y-5 w-full lg:w-1/2 mx-auto space-x-2">
+                        <div style="display:none" class="yorum-ack lg:space-y-5 w-full lg:w-1/2 mx-auto lg:space-x-2">
                             {{!-- {{{urun.yorumlar}}} --}}
 
-                            <hr>
-                            <div class="yrmfrma-rea flex flex-col space-y-2">
-                                <div>
-                                    <label for="" class="frm-lbl">Ad-Soyad</label>
-                                    <input type="text" placeholder="Ad/Soyad" class="frm-txt" name="ad_soyad">
-                                    <div class="text-red-500 italic text-[0.8rem] err-adsyd"></div>
+                            {{#if yorumlar}}
+                            <div class="ylist">
+                                <div class="star-area py-5 flex items-center justify-center space-x-5">
+                                    <div class="text-center">
+                                        <div class="text-[1.2rem] font-semibold">{{yorumTotal}}</div>
+                                        <div class="flex items-center justify-center text-[1.5rem]">
+                                            {{{totalStars}}}
+                                           
+                                        </div>
+                                        <div class="text-[0.8rem] font-semibold">{{yorumlength}} Yorum</div>
+                                    </div>
+                                    <div>
+                                        <button
+                                            class="btn-yrm-yapp text-[0.8rem] bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 active:bg-green-400 flex items-center space-x-2">
+                                            <span class="tio ">message_outlined</span>
+                                            <span>Yorum Yap</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="" class="frm-lbl">Yorumunuz</label>
-                                    <textarea class="frm-txt !h-[150px] w-full" placeholder="Yorum yap"
-                                        name="msg_area"></textarea>
-                                    <div class="text-red-500 italic text-[0.8rem] err-msgra"></div>
+
+                            </div>
+                            {{#each yorumlar}}
+                            <div class="yromlar pt-6">
+                                <div class="flex items-center space-x-2 pb-2">
+                                    <div class="font-semibold">{{this.ad_soyad}}</div>
+                                    <div class="flex items-center justify-center text-[1.2rem] ">
+                                        {{#stars this.oran }}
+                                        {{/stars}}
+                                         
+                                    </div>
+                                    <div class="flex-1"></div>
+                                    <div class="text-[0.7rem]">{{this.tarih}}</div>
                                 </div>
-                                <button class="px-4 py-2 border border-gray-600 text-black rounded-md">
-                                    Gönder
+                                <div class="pb-2 text-[0.8rem]">
+                                    {{{this.msg_area}}}
+                                </div>
+                                {{#if this.first_resim}}
+                                <button class="">
+                                    <img src="{{this.first_resim}}" class="w-[100px] h-auto">
+                                </button>
+                                {{/if}}
+                                <hr class="mt-2">
+                            </div>
+                            {{/each}}
+                            {{else}}
+                            <div class="text-center pb-8">
+                                <div class="text-gray-600 py-2">Bu ürün içim henüz yorum yapılmadı</div>
+                                <button
+                                    class="mx-auto btn-yrm-yapp text-[0.8rem] bg-transparent border border-black/80 text-black px-2 py-1 rounded hover:bg-black/10 active:bg-black/5 flex items-center space-x-2">
+                                    <span class="tio ">message_outlined</span>
+                                    <span>Yorum Yap</span>
                                 </button>
                             </div>
+                            {{/if}}
+
                         </div>
+
+
                     </div>
                 </div>
 
@@ -190,3 +231,76 @@
 </div>
 {{> footer}}
 
+<div style="display: none;"
+    class="yrmfrma-area fixed top-0 left-0 w-[100vw] h-[100vh] bg-black/10 z-[9999] flex items-center justify-center">
+    <div
+        class=" border w-full h-full lg:w-1/2 lg:h-[90vh] rounded-md  lg:shadow-lg bg-white relative overflow-hidden overflow-y-auto">
+        <div class="relative">
+            <div class="flex items-center bg-white sticky top-0 w-full pl-4 z-10">
+                <div class="flex-1 font-semibold">
+                    Ürünü Yorumlayın
+                </div>
+                <button data-ur="{{urun.id}}" data-yrmlnghth="{{yorumlenght}}"
+                    class="btn-yrmyapp-close  tio rounded-full hover:bg-black/10 active:bg-black/5 p-2 flex items-center justify-center text-[1.4rem] ">clear</button>
+            </div>
+            <form class="flex flex-col space-y-2 yrmform p-5 ">
+
+                <div class="flex items-center justify-center space-x-2 text-[2rem] stars">
+                    <button data-ur="1" class="tio text-orange-500">star</button>
+                    <button data-ur="2" class="tio text-orange-500">star</button>
+                    <button data-ur="3" class="tio text-orange-500">star</button>
+                    <button data-ur="4" class="tio text-orange-500">star</button>
+                    <button data-ur="5" class="tio text-orange-500">star</button>
+                    <input type="hidden" name="oran" value="5">
+                </div>
+                <div>
+                    <label for="" class="frm-lbl">Ad-Soyad</label>
+                    <input type="text" placeholder="Ad/Soyad" class="frm-txt" name="ad_soyad">
+                    <div class="text-red-500 italic text-[0.8rem] err-adsyd"></div>
+                </div>
+                <div>
+                    <label for="" class="frm-lbl">E-Posta Adresi</label>
+                    <input type="text" placeholder="Eposta" class="frm-txt" name="email">
+                    <div class="text-red-500 italic text-[0.8rem] err-email"></div>
+                </div>
+
+                <div>
+                    <label for="" class="frm-lbl">Yorumunuz</label>
+                    <textarea class="frm-txt !h-[150px] w-full"
+                        placeholder="Ürünün hem fiyatı uygun hem de göründüğü gibi kaliteli bir ürün"
+                        name="msg_area"></textarea>
+                    <div class="text-red-500 italic text-[0.8rem] err-msgra"></div>
+                </div>
+                <div class="pb-10">
+                    <label for="" class="frm-lbl">Ürün Fotoğrafları</label>
+                    <button
+                        class="btn-res-sec p-4 flex flex-col items-center justify-center text-black/50  w-[100px] h-[100px] border-2 border-dashed border-black/30  rounded hover:bg-black/10 active:bg-black/5">
+                        <div class="tio text-[1.2rem]">photo_camera</div>
+                        <div class="text-[0.8rem] leading-tight font-semibold text-center">
+                            Fotoğraf
+                            Ekle</div>
+                    </button>
+                    <div style="display: none;" class="spinrea flex items-center justify-center py-5">
+                        <div class="spin icon-spin-1 spin-steps1 text-[24px]  text-orange-500"></div>
+                    </div>
+                    <div class="">
+                        <div class="resim-list grid grid-cols-4 gap-3 py-4"></div>
+                        <input type="text" class="hidden" name="resimler">
+                        <input type="file" class="hidden" id="resimler" multiple accept=".png,.jpeg,.jpg,.webp"
+                            data-ur="{{urun.id}}" data-yrmlnghth="{{yorumlenght}}">
+                    </div>
+
+            </form>
+            <div class="px-4 pb-4">
+                <button data-ur="{{urun.id}}"
+                    class="btn-yrm-gondeer px-4 py-2 border text-white bg-orange-500 hover:bg-orange-700 active:bg-orange-400 rounded-md w-full font-semibold">
+                    Gönder
+                </button>
+            </div>
+            <div style="display: none;"
+                class="spinrea1 absolute top-0 left-0 w-full h-full bg-white flex items-center justify-center z-20">
+                <div class="spin icon-spin-1 spin-steps1 text-[24px]  text-orange-500"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -114,7 +114,7 @@ export const SeoApp = (app) => {
           }
         }
         let sqlUrunler =
-          "SELECT name,url,resimler FROM urun WHERE parents LIKE '%" +
+          "SELECT name,kod,url,resimler FROM urun WHERE parents LIKE '%" +
           stri +
           "%'";
         // console.log(sqlUrunler);
@@ -126,7 +126,7 @@ export const SeoApp = (app) => {
             "@type": "ListItem",
             position: i + 1,
             url: HOST_NAME + "/urun/" + urun.url,
-            name: urun.name,
+            name: urun.kod,
           });
         }
       }
@@ -233,7 +233,7 @@ export const SeoApp = (app) => {
             {
               "@type": "ListItem",
               position: 2,
-              name: selectedUrun.name,
+              name: selectedUrun.kod,
               item: HOST_NAME + "/urun/" + selectedUrun.url,
             },
           ],
@@ -245,15 +245,15 @@ export const SeoApp = (app) => {
         res.addJsonLd({
           "@context": "https://schema.org/",
           "@type": "Product",
-          name: selectedUrun.name,
+          name: selectedUrun.kod,
           image: !!selectedUrun.resimler
             ? JSON.parse(selectedUrun.resimler)
             : ["/assets/logo.png"],
           description: selectedUrun.aciklama,
-          sku: selectedUrun.kod,
+          sku: selectedUrun.name,
           brand: {
             "@type": "Brand",
-            name: selectedUrun.name,
+            name: selectedUrun.kod,
           },
           offers: {
             "@type": "Offer",
@@ -297,7 +297,7 @@ export const SeoApp = (app) => {
         ? JSON.parse(selectedUrun.resimler)
         : [];
       return res.render("pages/seo/urun.hbs", {
-        title: urunname,
+        title: selectedUrun.kod,
         layout: "seo-main.hbs",
         jsonLDdata: res.locals.jsonLd,
         ekmenu: menuS,

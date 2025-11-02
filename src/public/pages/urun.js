@@ -1,6 +1,6 @@
 import { SepetBtn, SepetStatus } from "./util/main.js";
 import { myloc } from "../main.js";
-import { pad } from "../util/fncs.js";
+import { pad, OptimizePhoto, GetFileExt, Upload } from "./util/main.js";
 const settingsCaro1 = {
   //Basic Speeds
   slideSpeed: 200,
@@ -97,7 +97,6 @@ const AltButonArea = () => {
     $(".yorum-ack").css("display", "none");
   });
   $("[ro='yorum']").on("click", async function () {
-    await getYorumlar($(this).attr("data-ur"));
     $("[ro]").css("color", "#4b5563");
     $("[ro='yorum']").css("color", "blue");
     $(".urun-ack").css("display", "none");
@@ -128,22 +127,23 @@ const FavStatus1 = () => {
 };
 const makeSeeProd = async (id) => {
   let items = myloc.getItem("seeprod");
-  const goruntulenme = parseInt($(".goruntulenme").attr('data-say'));
-  let isFind = !!items && items.length > 0 ? items.find((a) => a.id == id) : false;
+  const goruntulenme = parseInt($(".goruntulenme").attr("data-say"));
+  let isFind =
+    !!items && items.length > 0 ? items.find((a) => a.id == id) : false;
   if (!isFind) {
-    let data = { id,  goruntulenme: goruntulenme + 1 };
+    let data = { id, goruntulenme: goruntulenme + 1 };
     await $.ajax({
       type: "POST",
       url: "/urun/update-urun-goruntu",
-      data: {...data},
-      dataType: "json"
+      data: { ...data },
+      dataType: "json",
     });
-    myloc.setItem("seeprod", {id:id});
+    myloc.setItem("seeprod", { id: id });
   }
 };
 export const UrunInit = async () => {
   urunId = $("[ro='yorum']").attr("data-ur");
- 
+
   $(".caro3.owl-carousel").owlCarousel(settingsCaro1);
   AltButonArea();
 
@@ -186,47 +186,105 @@ export const UrunInit = async () => {
   });
   SepetStatus();
 
-  $(".yrmfrma-rea button").on("click", async function () {
-    $(".yrmfrma-rea [name='ad_soyad']").val();
-    $(".yrmfrma-rea [name='msg_area']").val();
-    if (!$(".yrmfrma-rea [name='ad_soyad']").val()) {
-      $(".err-adsyd").html("Bu alan boş olamaz");
-    } else {
-      $(".err-adsyd").html("");
-    }
-    if (!$(".yrmfrma-rea [name='msg_area']").val()) {
-      $(".err-msgra").html("Bu alan boş olamaz");
-    } else {
-      $(".err-msgra").html("");
-    }
 
-    if (
-      !!$(".yrmfrma-rea [name='ad_soyad']").val() &&
-      !!$(".yrmfrma-rea [name='msg_area']").val()
-    ) {
-      const urunid = $("[ro='yorum']").attr("data-ur");
-
-      await $.ajax({
-        type: "POST",
-        url: "/urun/update-urun",
-        data: {
-          id: urunid,
-          yorumlar: JSON.stringify([
-            ...yorumlar,
-            {
-              ad_soyad: $(".yrmfrma-rea [name='ad_soyad']").val(),
-              msg_area: $(".yrmfrma-rea [name='msg_area']").val(),
-              tarih: new Date().getTime(),
-            },
-          ]),
-        },
-        dataType: "json",
-      });
-      await getYorumlar(urunid);
-      $(".yrmfrma-rea [name='ad_soyad']").val("");
-      $(".yrmfrma-rea [name='msg_area']").val("");
-    }
+  $(".btn-yrm-yapp").on("click", async function (e) {
+    e.preventDefault();
+    $(".yrmfrma-area").show();
+    $("body").css("overflow-y", "hidden");
+    $("#resimler").val("");
+    $(".resim-list").html("");
   });
- await makeSeeProd(urunId);
-  await getYorumlar(urunId);
+  $(".btn-yrmyapp-close").on("click", async function (e) {
+    e.preventDefault();
+    $(".yrmfrma-area").hide();
+    $("body").css("overflow-y", "auto");
+    let urunid = $(this).attr("data-ur");
+    let yorumlgnt = parseInt($(this).attr("data-yrmlnghth")) + 1;
+    const result = await $.ajax({
+      type: "POST",
+      url: "/stat/folderdelete",
+      data: { folderpath: `/uploads/yorumphoto/${urunid}/${yorumlgnt}/` },
+      dataType: "json",
+    });
+  });
+  $(".stars button").on("click", function (e) {
+    e.preventDefault();
+    let oran = $(this).attr("data-ur");
+    for (let index = 1; index <= 5; index++) {
+      if (parseInt(oran) >= index) {
+        $(`.stars button[data-ur=${index}]`)
+          .removeClass("text-gray-500")
+          .addClass("text-orange-500");
+      } else {
+        $(`.stars button[data-ur=${index}]`)
+          .addClass("text-gray-500")
+          .removeClass("text-orange-500");
+      }
+    }
+    $("[name='oran'").val(oran);
+  });
+  $(".btn-yrm-gondeer").on("click", async function (e) {
+    e.preventDefault();
+    let formData = $(".yrmform").serializeJSON();
+    formData["resimler"] = JSON.parse(formData["resimler"]);
+    let urunid = $(this).attr("data-ur");
+    let gelenStrYorumlar = await $.ajax({
+      type: "POST",
+      url: "/urun/get-yorumlar",
+      data: { id: urunid },
+      dataType: "json",
+    });
+    yorumlar = JSON.parse(!!gelenStrYorumlar ? gelenStrYorumlar : []);
+    if (!!yorumlar && yorumlar.length > 0) {
+      yorumlar = yorumlar.sort((a, b) => (a.tarih < b.tarih ? -1 : 1));
+    }
+    $(".spinrea1").show();
+    await $.ajax({
+      type: "POST",
+      url: "/urun/update-urun",
+      data: {
+        id: urunid,
+        yorumlar: JSON.stringify([...yorumlar, { ...formData,tarih:new Date().getTime() }]),
+      },
+      dataType: "json",
+    });
+    $(".spinrea1").hide();
+    location.href = location.href;
+  });
+  $(".btn-res-sec").on("click", function (e) {
+    e.preventDefault();
+    $("#resimler").val("");
+    $("#resimler").trigger("click");
+    $(".btn-res-sec").show();
+  });
+  $("#resimler").on("change", async function () {
+    $(".spinrea").show();
+    $(".btn-res-sec").hide();
+    let urunid = $(this).attr("data-ur");
+    let yorumlgnt = parseInt($(this).attr("data-yrmlnghth")) + 1;
+    let files = $(this).get(0).files;
+    let fileurls = [];
+    $(".resim-list").html("");
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      let fileext = GetFileExt(file.name);
+      let filepurename = file.name.replace(`.${fileext}`, "");
+      fileurls.push(`/uploads/yorumphoto/${urunid}/${yorumlgnt}/${file.name}`);
+      let img = await OptimizePhoto(file, 450, 0.9);
+      const upld = new Upload(img);
+      upld.doUpload(
+        `/uploads/yorumphoto/${urunid}/${yorumlgnt}`,
+        filepurename,
+        (data) => {
+          let imgTagHtml = `<img src="/uploads/yorumphoto/${urunid}/${yorumlgnt}/${file.name}" class="w-[100px] h-auto object-contain">`;
+          $(".resim-list").append(imgTagHtml);
+        }
+      );
+      $("[name='resimler']").val(JSON.stringify(fileurls));
+    }
+    $(".spinrea").hide();
+  });
+  await makeSeeProd(urunId);
+  // await getYorumlar(urunId);
 };
+
