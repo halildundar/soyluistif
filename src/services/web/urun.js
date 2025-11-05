@@ -69,7 +69,7 @@ export const UrunPageRender = async (req, res) => {
     yorumTotal = yorumTotal.toFixed(1);
     yorumlength = yorumlar.length;
   }
-  let urunresimler = !!urun && !!urun.resimler ? JSON.parse(urun.resimler) : null;
+  let urunresimler = !!urun && !!urun.resimler ? urun.resimler : null;
   res.render("pages/website/urun.hbs", {
     title: !!urun
       ? urun.kod + " | Soylu İstif Makinaları"
