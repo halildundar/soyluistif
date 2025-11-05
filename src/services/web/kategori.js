@@ -63,6 +63,11 @@ export const KategoriPageRender = async (req, res) => {
     );
   urunler = urunler.map((item) => {
     item.resimler = JSON.parse(item.resimler);
+    let yorumlar = item.yorumlar;
+    let oran = 0;
+    if(!!yorumlar){
+      oran = Math.floor(JSON.parse(yorumlar).map(a=>Number(a.oran)).reduce((acc,curr)=>acc + curr,0) / JSON.parse(yorumlar).length);
+    }
     let newItem = {
       ...item,
       currSymb: GetCurrncySym(item),
@@ -74,6 +79,7 @@ export const KategoriPageRender = async (req, res) => {
         !!item.resimler && item.resimler.length > 1
           ?  item.resimler[1]
           : "/assets/urun/resim_yok.webp",
+          oran:oran
     };
     return newItem;
   });
