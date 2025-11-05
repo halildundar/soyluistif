@@ -33,6 +33,9 @@ settingsCaro2.slideSpeed = 600;
 settingsCaro2.goToFirstSpeed = 1500;
 settingsCaro2.paginationSpeed = 1400;
 settingsCaro2.items = 5;
+
+let settingsCaro3 = { ...settingsCaro1 };
+settingsCaro3.items = 1;
 let yorumlar = [];
 
 const getTemps = async (folderpath) => {
@@ -186,7 +189,6 @@ export const UrunInit = async () => {
   });
   SepetStatus();
 
-
   $(".btn-yrm-yapp").on("click", async function (e) {
     e.preventDefault();
     $(".yrmfrma-area").show();
@@ -225,6 +227,7 @@ export const UrunInit = async () => {
   });
   $(".btn-yrm-gondeer").on("click", async function (e) {
     e.preventDefault();
+    $(".spinrea1").show();
     let formData = $(".yrmform").serializeJSON();
     formData["resimler"] = JSON.parse(formData["resimler"]);
     let urunid = $(this).attr("data-ur");
@@ -238,13 +241,16 @@ export const UrunInit = async () => {
     if (!!yorumlar && yorumlar.length > 0) {
       yorumlar = yorumlar.sort((a, b) => (a.tarih < b.tarih ? -1 : 1));
     }
-    $(".spinrea1").show();
+    // $(".spinrea1").show();
     await $.ajax({
       type: "POST",
       url: "/urun/update-urun",
       data: {
         id: urunid,
-        yorumlar: JSON.stringify([...yorumlar, { ...formData,tarih:new Date().getTime() }]),
+        yorumlar: JSON.stringify([
+          ...yorumlar,
+          { ...formData, tarih: new Date().getTime() },
+        ]),
       },
       dataType: "json",
     });
@@ -259,7 +265,7 @@ export const UrunInit = async () => {
   });
   $("#resimler").on("change", async function () {
     $(".spinrea").show();
-    $(".btn-res-sec").hide();
+    // $(".btn-res-sec").hide();
     let urunid = $(this).attr("data-ur");
     let yorumlgnt = parseInt($(this).attr("data-yrmlnghth")) + 1;
     let files = $(this).get(0).files;
@@ -276,15 +282,68 @@ export const UrunInit = async () => {
         `/uploads/yorumphoto/${urunid}/${yorumlgnt}`,
         filepurename,
         (data) => {
-          let imgTagHtml = `<img src="/uploads/yorumphoto/${urunid}/${yorumlgnt}/${file.name}" class="w-[100px] h-auto object-contain">`;
+          let imgTagHtml = `<img src="/uploads/yorumphoto/${urunid}/${yorumlgnt}/${file.name}" class="w-[100px] h-[100px] object-cover">`;
           $(".resim-list").append(imgTagHtml);
         }
       );
       $("[name='resimler']").val(JSON.stringify(fileurls));
     }
-    $(".spinrea").hide();
+    setTimeout(() => {
+      $(".spinrea").hide();
+    }, 2000);
   });
+
+  $(".popsinglimgbtn").on("click", function (e) {
+    e.preventDefault();
+    $(".popsinglimg").show();
+  });
+  $(".popsinglimg button").on("click", function (e) {
+    e.preventDefault();
+    $(".popsinglimg").hide();
+  });
+
+  $(".resim-list").on("click", function (e) {
+    e.preventDefault();
+    // $(".photocar .owl-carousel").trigger('remove.owl.carousel', 0);
+    // $(".photocar .owl-carousel.owl-theme").html("");
+     $(".photocar .owl-carousel.owl-theme").remove();
+    $(".photocar .tlear").html(`<div class="owl-carousel owl-theme"></div>`);
+    // let resim
+    $.each($(".resim-list img"), (index, el) => {
+      console.log(el);
+      let url = $(el).attr("src");
+      console.log(url);
+      $(".photocar .owl-carousel.owl-theme").append(`
+    <div class="h-[90vh] ">
+                    <img src="${url}" class="h-full w-full object-contain " alt="">
+                </div>`);
+    });
+    $(".photocar .owl-carousel").owlCarousel(settingsCaro3);
+    $(".photocar").show();
+  });
+  $(".urunyrmpic").on("click", function (e) {
+    e.preventDefault();
+
+    $(".photocar .owl-carousel.owl-theme").remove();
+    $(".photocar .tlear").html(`<div class="owl-carousel owl-theme"></div>`);
+    // let resim
+    $.each($(".urun_ytrm_resim img"), (index, el) => {
+      let url = $(el).attr("src");
+      $(".photocar .owl-carousel.owl-theme").append(`
+        <div>
+    <div class="h-[90vh] ">
+                    <img src="${url}" class="h-full w-full object-contain " alt="">
+                </div>`);
+    });
+    $(".photocar .owl-carousel").owlCarousel(settingsCaro3);
+    $(".photocar").show();
+  });
+  $(".popcorbtncls").on("click", function (e) {
+    e.preventDefault();
+    $(".photocar").hide();
+  
+  });
+  // $(".photocar .owl-carousel").owlCarousel(settingsCaro3);
   await makeSeeProd(urunId);
   // await getYorumlar(urunId);
 };
-

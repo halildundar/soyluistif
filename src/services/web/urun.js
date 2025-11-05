@@ -44,7 +44,10 @@ export const UrunPageRender = async (req, res) => {
   let yorumTotal = 5;
   let totalStars = "";
   let yorumlength = 0;
+  let oran = 0;
   if (!!yorumlar) {
+    oran = yorumlar.map(a=>Number(a.oran)).reduce((acc,curr)=>acc + curr,0) / yorumlar.length;
+    oran = Math.floor(oran);
     yorumlar = yorumlar
       .sort((a, b) => b.tarih - a.tarih)
       .map((a) => {
@@ -66,7 +69,7 @@ export const UrunPageRender = async (req, res) => {
     yorumTotal = yorumTotal.toFixed(1);
     yorumlength = yorumlar.length;
   }
-
+  let urunresimler = !!urun && !!urun.resimler ? JSON.stringify(urun.resimler) : null;
   res.render("pages/website/urun.hbs", {
     title: !!urun
       ? urun.kod + " | Soylu İstif Makinaları"
@@ -86,5 +89,8 @@ export const UrunPageRender = async (req, res) => {
     yorumTotal: yorumTotal,
     totalStars: totalStars,
     yorumlength: yorumlength,
+    firsturunresim:!!urunresimler ? urunresimler[0] : '/assets/urun/resim_yok.webp',
+    oran:oran
+    // urunyorum_imgs:!!urunresimler ? !!urunresimler  : ["/assets/urun/resim_yok.webp"]
   });
 };

@@ -44,11 +44,7 @@
                     <hr class="mb-2">
                     <div class="pb-2 text-[1rem]">
                         <div class="flex items-center justify-start  text-[1.2rem]">
-                            <button class="tio text-gray-500">star</button>
-                            <button class="tio text-gray-500">star</button>
-                            <button class="tio text-gray-500">star</button>
-                            <button class="tio text-gray-500">star</button>
-                            <button class="tio text-gray-500">star</button>
+                            {{#stars this.oran }}{{/stars}}
                         </div>
                         <div><strong>Ürün Kod:</strong> <span>{{urun.name}}</span></div>
                         {{!-- <div><strong>Barkod:</strong> <span>{{urun.barkod}}</span></div> --}}
@@ -171,7 +167,7 @@
                                         <div class="text-[1.2rem] font-semibold">{{yorumTotal}}</div>
                                         <div class="flex items-center justify-center text-[1.5rem]">
                                             {{{totalStars}}}
-                                           
+
                                         </div>
                                         <div class="text-[0.8rem] font-semibold">{{yorumlength}} Yorum</div>
                                     </div>
@@ -192,7 +188,7 @@
                                     <div class="flex items-center justify-center text-[1.2rem] ">
                                         {{#stars this.oran }}
                                         {{/stars}}
-                                         
+
                                     </div>
                                     <div class="flex-1"></div>
                                     <div class="text-[0.7rem]">{{this.tarih}}</div>
@@ -202,8 +198,13 @@
                                 </div>
                                 {{#if this.first_resim}}
                                 <button class="">
-                                    <img src="{{this.first_resim}}" class="w-[100px] h-auto">
+                                    <img src="{{this.first_resim}}" class="urunyrmpic w-[100px] h-[100px] object-contain">
                                 </button>
+                                <div class="hidden urun_ytrm_resim">
+                                {{#each this.resimler}}
+                                    <img src="{{this}}" alt="">
+                                {{/each}}
+                                 </div>
                                 {{/if}}
                                 <hr class="mt-2">
                             </div>
@@ -230,11 +231,26 @@
     </div>
 </div>
 {{> footer}}
-
+<div style="display:none" class="photocar">
+    <div style="" class="popcorarea fixed top-0 left-0 w-full h-full bg-black/30 flex items-center justify-center z-20">
+        <button
+            class="popcorbtncls absolute top-5 right-5 text-[2rem] rounded-full bg-black/50 p-2 text-white flex items-center justify-center tio">clear</button>
+        <div class="w-[90vw] tlear">
+            <div class="owl-carousel owl-theme">
+                <div class="h-[90vh] ">
+                    <img src="{{firsturunresim}}" class="h-full w-full object-contain " alt="">
+                </div>
+                <div class="h-[90vh] ">
+                    <img src="{{firsturunresim}}" class="h-full w-full object-contain " alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div style="display: none;"
     class="yrmfrma-area fixed top-0 left-0 w-[100vw] h-[100vh] bg-black/10 z-[9999] flex items-center justify-center">
     <div
-        class=" border w-full h-full lg:w-1/2 lg:h-[90vh] rounded-md  lg:shadow-lg bg-white relative overflow-hidden overflow-y-auto">
+        class=" border w-full h-full lg:w-1/3 lg:h-[90vh] rounded-md  lg:shadow-lg bg-white relative overflow-hidden overflow-y-auto">
         <div class="relative">
             <div class="flex items-center bg-white sticky top-0 w-full pl-4 z-10">
                 <div class="flex-1 font-semibold">
@@ -245,13 +261,30 @@
             </div>
             <form class="flex flex-col space-y-2 yrmform p-5 ">
 
-                <div class="flex items-center justify-center space-x-2 text-[2rem] stars">
-                    <button data-ur="1" class="tio text-orange-500">star</button>
-                    <button data-ur="2" class="tio text-orange-500">star</button>
-                    <button data-ur="3" class="tio text-orange-500">star</button>
-                    <button data-ur="4" class="tio text-orange-500">star</button>
-                    <button data-ur="5" class="tio text-orange-500">star</button>
-                    <input type="hidden" name="oran" value="5">
+                <div class=" flex items-center">
+                    <div class="">
+                        <button class="popsinglimgbtn">
+                            <img src="{{firsturunresim}}" class="w-[100px] h-auto" alt="">
+                        </button>
+                        <div style="display:none"
+                            class="popsinglimg fixed top-0 left-0 w-full h-full bg-black/30 flex items-center justify-center z-20">
+                            <button
+                                class="absolute top-5 right-5 text-[2rem] rounded-full bg-black/50 p-2 text-white flex items-center justify-center tio">clear</button>
+                            <img src="{{firsturunresim}}" class="w-full h-[90%] object-contain " alt="">
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-center space-x-2 text-[2rem] stars">
+                            <button data-ur="1" class="tio text-orange-500">star</button>
+                            <button data-ur="2" class="tio text-orange-500">star</button>
+                            <button data-ur="3" class="tio text-orange-500">star</button>
+                            <button data-ur="4" class="tio text-orange-500">star</button>
+                            <button data-ur="5" class="tio text-orange-500">star</button>
+                            <input type="hidden" name="oran" value="5">
+                        </div>
+                        <div class="text-center text-[0.8rem]">Lütfen ürünü puanlayın</div>
+                    </div>
+
                 </div>
                 <div>
                     <label for="" class="frm-lbl">Ad-Soyad</label>
@@ -263,7 +296,6 @@
                     <input type="text" placeholder="Eposta" class="frm-txt" name="email">
                     <div class="text-red-500 italic text-[0.8rem] err-email"></div>
                 </div>
-
                 <div>
                     <label for="" class="frm-lbl">Yorumunuz</label>
                     <textarea class="frm-txt !h-[150px] w-full"
