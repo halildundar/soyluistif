@@ -508,10 +508,9 @@ async function getMakeSubKat(kateg, id) {
       selectedKategori = sub;
       window.location = sub.url;
     });
+    void $(`.sublink-item[data-pur='${id}']`).offsetHeight;
   }
-  await Promise.resolve();
 
-  console.log($(`.sublink-item[data-pur='${id}']`).height());
 }
 const IsSelectKategori = async (kategori, kate) => {
   selectedKategori = kategori;
