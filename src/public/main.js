@@ -466,33 +466,29 @@ function getMakeSubKat(kateg, id) {
   for (let j = 0; j < subkateg.length; j++) {
     const sub = subkateg[j];
     let subsubkateg = getSubKateg(sub.id, sub.parents.length + 1);
-    $(`.sublink[data-pur='${id}']`).append(`<div class="link" style="min-height:40px" data-ur="${sub.id}"> 
+    $(`.sublink-item[data-pur='${id}']`).append(`<div class="link-item" style="min-height:40px" data-ur="${sub.id}"> 
               <div class="px-2 pb-1">
-                <div class="link flex items-center space-x-1 border border-gray-300 rounded py-1 px-2">
+                <div class="link-item flex items-center space-x-1 border border-gray-300 rounded py-1 px-2">
                     <a route="${sub.url}" class="kateglin font-bold  flex  cursor-pointer select-none leading-none  line-clamp-1 flex-1 py-0.5 px-1 text-gray-700 hover:text-red-400">${
       sub.name
     } </a>
-               <span class="select-none tio text-[1.8rem] cursor-default text-gray-600 rounded-full bg-black/5">chevron_down</span>
-             </div>
+                    <span class="select-none tio text-[1.8rem] cursor-default text-gray-600 rounded-full bg-black/5">chevron_down</span>
+                </div>
               </div>
-              <div class="sublink text-[0.8rem] line-clamp-1" data-pur="${
-                sub.id
-              }" style="padding-left:${
-      10 * (kateg.parents.length + 1)
-    }px"></div>
+              <div class="sublink-item text-[0.8rem] line-clamp-1" data-pur="${sub.id}" style="padding-left:${10 * (kateg.parents.length + 1)}px"></div>
             </div>
             `);
-    $(`.link[data-ur='${sub.id}'] span`).on("click", function () {
+    $(`.link-item[data-ur='${sub.id}'] span`).on("click", function () {
       const txtStr = $(this).html();
       if (txtStr == "chevron_down") {
         getMakeSubKat(sub, sub.id);
         $(this).html("chevron_right");
       } else {
         $(this).html("chevron_down");
-        $(`.sublink[data-pur='${sub.id}']`).html("");
+        $(`.sublink-item[data-pur='${sub.id}']`).html("");
       }
     });
-    $(`.link[data-ur='${sub.id}'] a`).on("click", function () {
+    $(`.link-item[data-ur='${sub.id}'] a`).on("click", function () {
       $(".kateglin").css("color", "black");
       $(this).css("color", "red");
       $(".sel-area").css("display", "block");
@@ -552,6 +548,6 @@ const InitMobilTree = async () => {
   });
   await GetKategoriler();
   // let TopKateogirler = getSubKateg(0, kategoriler.length);
-  $(".kategori1-area .sublink[data-pur='0']").html("");
+  $(".kategori1-area .sublink-item[data-pur='0']").html("");
   getMakeSubKat({ id: 0, parents: [] }, 0);
 };
