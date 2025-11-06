@@ -466,14 +466,10 @@ function getMakeSubKat(kateg, id) {
   for (let j = 0; j < subkateg.length; j++) {
     const sub = subkateg[j];
     let subsubkateg = getSubKateg(sub.id, sub.parents.length + 1);
-    $(`.sublink[data-pur='${id}']`).append(`<div class="link"  data-ur="${
-      sub.id
-    }"> 
+    $(`.sublink[data-pur='${id}']`).append(`<div class="link" style="min-height:40px" data-ur="${sub.id}"> 
               <div class="px-2 pb-1">
                 <div class="link flex items-center space-x-1 border border-gray-300 rounded py-1 px-2">
-                    <a route="${
-                      sub.url
-                    }" class="kateglin font-bold  flex  cursor-pointer select-none leading-none  line-clamp-1 flex-1 py-0.5 px-1 text-gray-700 hover:text-red-400">${
+                    <a route="${sub.url}" class="kateglin font-bold  flex  cursor-pointer select-none leading-none  line-clamp-1 flex-1 py-0.5 px-1 text-gray-700 hover:text-red-400">${
       sub.name
     } </a>
                <span class="select-none tio text-[1.8rem] cursor-default text-gray-600 rounded-full bg-black/5">chevron_down</span>
