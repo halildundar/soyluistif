@@ -189,9 +189,11 @@ const Goruntulenenler = async () => {
     for (let i = 0; i < urunlet.length; i++) {
       let urun = urunlet[i];
       $(".caro-son .owl-carousel.owl-theme").append(`
-       <a href="/urun/${urun.url}" class="pr-2  cursor-pointer relative block z-0" route="/urun/${
+       <a href="/urun/${
          urun.url
-       }" data-ur="${urun.id}">
+       }" class="pr-2  cursor-pointer relative block z-0" route="/urun/${
+        urun.url
+      }" data-ur="${urun.id}">
         <div
           class="btn-fav z-10 absolute top-4 right-5  text-[2rem] tio text-orange-500 hover:text-orange-700 duration-200">
           heart_outlined</div>
@@ -289,7 +291,7 @@ const SearchHeaderItems = () => {
       }
     }, 400);
   });
- $(".intt-serc").on("keydown", function () {
+  $(".intt-serc").on("keydown", function () {
     clearTimeout(timer);
     timer = setTimeout(async () => {
       let urunler = await $.ajax({
@@ -357,7 +359,7 @@ const getMenuList = async (id, parent_length) => {
 const BodyClick = () => {
   $("body").on("click", function () {
     $(".inptarea .sbmn").html("");
-      $(".inptarea1 .sbmnm").html("");
+    $(".inptarea1 .sbmnm").html("");
     $(".indexMenu1").remove();
   });
   // $("body").on("mouseover", function () {
@@ -457,25 +459,33 @@ function getSubKateg(parentid, length) {
           item.parents.length == length && item.parents[length - 1] == parentid;
   return kategoriler.filter(filteredItem);
 }
-function getMakeSubKat(kateg, id) {
+async function getMakeSubKat(kateg, id) {
   let subkateg = getSubKateg(kateg.id, kateg.parents.length);
   if (id != 0) {
     subkateg = getSubKateg(kateg.id, kateg.parents.length + 1);
   }
-
   for (let j = 0; j < subkateg.length; j++) {
     const sub = subkateg[j];
-    let subsubkateg = getSubKateg(sub.id, sub.parents.length + 1);
-    $(`.sublink-item[data-pur='${id}']`).append(`<div class="link-item" style="min-height:40px" data-ur="${sub.id}"> 
+    // let subsubkateg = getSubKateg(sub.id, sub.parents.length + 1);
+    $(`.sublink-item[data-pur='${id}']`)
+      .append(`<div class="link-item" style="min-height:40px" data-ur="${
+      sub.id
+    }"> 
               <div class="px-2 pb-1">
                 <div class="link-item flex items-center space-x-1 border border-gray-300 rounded py-1 px-2">
-                    <a route="${sub.url}" class="kateglin font-bold  flex  cursor-pointer select-none leading-none  line-clamp-1 flex-1 py-0.5 px-1 text-gray-700 hover:text-red-400">${
+                    <a route="${
+                      sub.url
+                    }" class="kateglin font-bold  flex  cursor-pointer select-none leading-none  line-clamp-1 flex-1 py-0.5 px-1 text-gray-700 hover:text-red-400">${
       sub.name
     } </a>
                     <span class="select-none tio text-[1.8rem] cursor-default text-gray-600 rounded-full bg-black/5">chevron_down</span>
                 </div>
               </div>
-              <div class="sublink-item text-[0.8rem] line-clamp-1" data-pur="${sub.id}" style="padding-left:${10 * (kateg.parents.length + 1)}px"></div>
+              <div class="sublink-item text-[0.8rem] line-clamp-1" data-pur="${
+                sub.id
+              }" style="padding-left:${
+      10 * (kateg.parents.length + 1)
+    }px"></div>
             </div>
             `);
     $(`.link-item[data-ur='${sub.id}'] span`).on("click", function () {
@@ -499,6 +509,9 @@ function getMakeSubKat(kateg, id) {
       window.location = sub.url;
     });
   }
+  await Promise.resolve();
+
+  console.log($(`.sublink-item[data-pur='${id}']`).height());
 }
 const IsSelectKategori = async (kategori, kate) => {
   selectedKategori = kategori;

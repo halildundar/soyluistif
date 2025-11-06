@@ -198,13 +198,14 @@
                                 </div>
                                 {{#if this.first_resim}}
                                 <button class="">
-                                    <img src="{{this.first_resim}}" class="urunyrmpic w-[100px] h-[100px] object-contain">
+                                    <img src="{{this.first_resim}}"
+                                        class="urunyrmpic w-[100px] h-[100px] object-contain">
                                 </button>
                                 <div class="hidden urun_ytrm_resim">
-                                {{#each this.resimler}}
+                                    {{#each this.resimler}}
                                     <img src="{{this}}" alt="">
-                                {{/each}}
-                                 </div>
+                                    {{/each}}
+                                </div>
                                 {{/if}}
                                 <hr class="mt-2">
                             </div>
@@ -336,3 +337,4 @@
         </div>
     </div>
 </div>
+
