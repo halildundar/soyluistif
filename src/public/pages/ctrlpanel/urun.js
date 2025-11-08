@@ -55,7 +55,7 @@ const makeUrunArea = async (parents) => {
         urun.id
       } cursor-pointer hover:bg-black/5 text-[0.8rem]">
                   <td class="p-1 border-l border-t border-gray-300">${
-                    urun.name
+                    urun.kod
                   }</td>
                   <td class="p-1 border-l border-t border-gray-300">
                       <button class="btnresim${
@@ -67,7 +67,7 @@ const makeUrunArea = async (parents) => {
       }</button>
                   </td>
                   <td class="p-1 border-l border-t border-gray-300">${
-                    urun.kod
+                    urun.name
                   }</td>
                   <td class="p-1 border-l border-t border-gray-300">${
                     urun.currency
@@ -192,17 +192,19 @@ export const InitUrun = async () => {
     $(".btn-tamam-urun-ekle").on("click", async function () {
       let formData = $("form").serializeJSON();
       formData["parents"] = JSON.stringify([...parents]);
-      formData["url"] = StringToUrl(formData.name);
+      formData["url"] = StringToUrl(formData.kod);
       formData["aciklama"] = JSON.stringify($(".aciklama .ql-editor").html());
       formData["garanti_aciklama"] = JSON.stringify(
         $(".garanti_aciklama .ql-editor").html()
       );
       formData["indirimli_fiyat"] =
         formData.fiyat - (formData.indirim * formData.fiyat) / 100.0;
+          let urunname = formData.name;
+        let kod =formData.kod;
       if (!selectedUrun) {
-        await addUrun({ ...formData, kayit_tarih: new Date().getTime() });
+        await addUrun({ ...formData,name:kod,kod:urunname, kayit_tarih: new Date().getTime() });
       } else {
-        await updateUrun(formData);
+        await updateUrun({...formData,name:kod,kod:urunname});
         $(`.btn-urun-temizle`).trigger("click");
       }
       $(".btn-close-urun-edit").trigger("click");
@@ -243,14 +245,16 @@ export const InitUrun = async () => {
 
     $(".btn-tamam-urun-ekle").on("click", async function () {
       let formData = $("form").serializeJSON();
-      formData["url"] = StringToUrl(formData.name);
+      formData["url"] = StringToUrl(formData.kod);
       formData["aciklama"] = JSON.stringify($(".aciklama .ql-editor").html());
       formData["garanti_aciklama"] = JSON.stringify(
         $(".garanti_aciklama .ql-editor").html()
       );
       formData["indirimli_fiyat"] =
         formData.fiyat - (formData.indirim * formData.fiyat) / 100;
-      await updateUrun(formData);
+               let urunname = formData.name;
+        let kod =formData.kod;
+      await updateUrun({...formData,name:kod,kod:urunname});
       $(`.btn-urun-temizle`).trigger("click");
       $(".btn-close-urun-edit").trigger("click");
       await makeUrunArea(parents);
