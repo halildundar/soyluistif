@@ -518,7 +518,7 @@ async function getMakeSubKat(kateg, id) {
                     <span class="select-none tio text-[1.8rem] cursor-default text-gray-600 rounded-full bg-black/5">chevron_down</span>
                 </div>
               </div>
-              <div class="sublink-item text-[0.8rem] line-clamp-1" data-pur="${
+              <div class="sublink-item text-[0.8rem]" data-pur="${
                 sub.id
               }" style="padding-left:${
       10 * (kateg.parents.length + 1)
