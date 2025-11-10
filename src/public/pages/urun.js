@@ -229,7 +229,7 @@ export const UrunInit = async () => {
     e.preventDefault();
     $(".spinrea1").show();
     let formData = $(".yrmform").serializeJSON();
-    formData["resimler"] = JSON.parse(formData["resimler"]);
+    formData["resimler"] = !!formData["resimler"] ? JSON.parse(formData["resimler"]) : '';
     let urunid = $(this).attr("data-ur");
     let gelenStrYorumlar = await $.ajax({
       type: "POST",
@@ -254,8 +254,10 @@ export const UrunInit = async () => {
       },
       dataType: "json",
     });
-    $(".spinrea1").hide();
-    location.href = location.href;
+    setTimeout(() => {
+      location.href = location.href;
+      $(".spinrea1").hide();
+    }, 1000);
   });
   $(".btn-res-sec").on("click", function (e) {
     e.preventDefault();

@@ -45,6 +45,7 @@ import {
   UserDataUpdate,
   UserDataUpdatAdres,
 } from "./web/musteri/user-bilgi.js";
+import { YorumApi } from "./ctrlpanel/yorumlar.js";
 export const HomePageApi = (app) => {
   router.get("/", HomePageRender);
   return app.use("/", router);
@@ -222,5 +223,6 @@ export const CtrlPanelPageApi = (app) => {
   SiparisApi(app);
   EticaretApi(app);
   RaporUrunApi(app);
+  YorumApi(app);
   return app.use("/", router);
 };

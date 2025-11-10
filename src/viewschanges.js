@@ -47,6 +47,7 @@ import "./views/pages/404.hbs";
 import './const.env';
 import "./views/pages/ctrlpanel/dashboard.hbs";
 import "./views/pages/ctrlpanel/urun.hbs";
+import "./views/pages/ctrlpanel/yorum.hbs";
 import "./views/pages/ctrlpanel/slaytlar.hbs";
 import "./views/pages/ctrlpanel/siparisler.hbs";
 import "./views/pages/ctrlpanel/eticaret.hbs";

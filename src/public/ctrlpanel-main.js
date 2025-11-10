@@ -4,6 +4,7 @@ import "./owl.carousel.js";
 import { AjaxPromise } from "./pages/auth/signin.js";
 // import "./socket.js";
 import { DashboardInit,KategorilerInit,SlaytlarInit,SiparislerInit,EticaretInit,RaporlarInit } from "./pages/ctrlpanel/main.js";
+import { YorumInit } from "./pages/ctrlpanel/yorum.js";
 
 Handlebars.registerHelper("inc", function (value, options) {
   return parseInt(value) + 1;
@@ -52,6 +53,8 @@ $(async function () {
     EticaretInit();
   }else if(pathname.includes("/ctrlpanel/rapor-")){
     RaporlarInit();
+  }else if(pathname.includes("/ctrlpanel/yorum")){
+    YorumInit();
   }
 
 usrPnlArea();

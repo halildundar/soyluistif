@@ -36,7 +36,44 @@ Handlebars.registerHelper("IsEq", function (v1, v2, options) {
 Handlebars.registerHelper("DigitFract", function (value, fractDigit) {
   return value.toFixed(fractDigit);
 });
-
+Handlebars.registerHelper("stars", function (oran) {
+  if (oran === 5) {
+    return `<button data-ur="1" class="tio text-orange-500">star</button>
+    <button data-ur="2" class="tio text-orange-500">star</button>
+    <button data-ur="3" class="tio text-orange-500">star</button>
+    <button data-ur="4" class="tio text-orange-500">star</button>
+    <button data-ur="5" class="tio text-orange-500">star</button>`;
+  } else if (oran === 4) {
+    return `<button data-ur="1" class="tio text-orange-500">star</button>
+    <button data-ur="2" class="tio text-orange-500">star</button>
+    <button data-ur="3" class="tio text-orange-500">star</button>
+    <button data-ur="4" class="tio text-orange-500">star</button>
+    <button data-ur="5" class="tio text-gray-500">star</button>`;
+  } else if (oran === 3) {
+    return `<button data-ur="1" class="tio text-orange-500">star</button>
+    <button data-ur="2" class="tio text-orange-500">star</button>
+    <button data-ur="3" class="tio text-orange-500">star</button>
+    <button data-ur="4" class="tio text-gray-500">star</button>
+    <button data-ur="5" class="tio text-gray-500">star</button>`;
+  } else if (oran === 2) {
+    return `<button data-ur="1" class="tio text-orange-500">star</button>
+    <button data-ur="2" class="tio text-orange-500">star</button>
+    <button data-ur="3" class="tio text-gray-500">star</button>
+    <button data-ur="4" class="tio text-gray-500">star</button>
+    <button data-ur="5" class="tio text-gray-500">star</button>`;
+  } else if (oran === 1) {
+    return `<button data-ur="1" class="tio text-orange-500">star</button>
+    <button data-ur="2" class="tio text-gray-500">star</button>
+    <button data-ur="3" class="tio text-gray-500">star</button>
+    <button data-ur="4" class="tio text-gray-500">star</button>
+    <button data-ur="5" class="tio text-gray-500">star</button>`;
+  }
+  return `<button data-ur="1" class="tio text-gray-500">star</button>
+    <button data-ur="2" class="tio text-gray-500">star</button>
+    <button data-ur="3" class="tio text-gray-500">star</button>
+    <button data-ur="4" class="tio text-gray-500">star</button>
+    <button data-ur="5" class="tio text-gray-500">star</button>`;
+});
 $(async function () {
   myloc = new LocalData();
   let pathname = this.location.pathname;
@@ -488,6 +525,7 @@ async function getMakeSubKat(kateg, id) {
     }px"></div>
             </div>
             `);
+    void $(`.sublink-item[data-pur='${id}']`).offsetHeight;
     $(`.link-item[data-ur='${sub.id}'] span`).on("click", function () {
       const txtStr = $(this).html();
       if (txtStr == "chevron_down") {
@@ -508,9 +546,8 @@ async function getMakeSubKat(kateg, id) {
       selectedKategori = sub;
       window.location = sub.url;
     });
-    void $(`.sublink-item[data-pur='${id}']`).offsetHeight;
+    
   }
-
 }
 const IsSelectKategori = async (kategori, kate) => {
   selectedKategori = kategori;
