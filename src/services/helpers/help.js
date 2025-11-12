@@ -41,6 +41,23 @@ export function jsonld(context) {
   return JSON.stringify(context, null, 2);
 }
 
+export function isimstatus(context, isok) {
+  function maskString(str) {
+    if (str.length <= 2) return str; // 3 karakter veya daha azsa maskeye gerek yok
+    const visible = str.slice(0, 2);
+    const masked = "*".repeat(3);
+    return visible + masked;
+  }
+  if (isok !== "on") {
+    let isimArray = context.split(" ");
+    for (let i = 0; i < isimArray.length; i++) {
+      const isim = isimArray[i];
+      isimArray[i] = maskString(isim);
+    }
+    return isimArray.join(" ");
+  }
+  return context;
+}
 export function stars(oran) {
   if (oran === 5) {
     return `<button data-ur="1" class="tio text-orange-500">star</button>

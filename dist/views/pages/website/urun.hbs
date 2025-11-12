@@ -183,8 +183,8 @@
                             </div>
                             {{#each yorumlar}}
                             <div class="yromlar pt-6">
-                                <div class="flex items-center space-x-2 pb-2">
-                                    <div class="font-semibold">{{this.ad_soyad}}</div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="font-semibold">{{#isimstatus this.ad_soyad this.isim_status}}{{/isimstatus}}</div>
                                     <div class="flex items-center justify-center text-[1.2rem] ">
                                         {{#stars this.oran }}
                                         {{/stars}}
@@ -192,6 +192,11 @@
                                     </div>
                                     <div class="flex-1"></div>
                                     <div class="text-[0.7rem]">{{this.tarih}}</div>
+                                </div>
+                                <div class="pb-2">
+                                    {{#if this.dogru_kullan}}
+                                    <span class="text-[0.8rem] px-4 py-1 text-white bg-green-500 rounded shadow-md">Doğrulanmış Kullanıcı</span>
+                                    {{/if}}
                                 </div>
                                 <div class="pb-2 text-[0.8rem]">
                                     {{{this.msg_area}}}
@@ -304,7 +309,7 @@
                         name="msg_area"></textarea>
                     <div class="text-red-500 italic text-[0.8rem] err-msgra"></div>
                 </div>
-                <div class="pb-10">
+                <div class="">
                     <label for="" class="frm-lbl">Ürün Fotoğrafları</label>
                     <button
                         class="btn-res-sec p-4 flex flex-col items-center justify-center text-black/50  w-[100px] h-[100px] border-2 border-dashed border-black/30  rounded hover:bg-black/10 active:bg-black/5">
@@ -322,7 +327,11 @@
                         <input type="file" class="hidden" id="resimler" multiple accept=".png,.jpeg,.jpg,.webp"
                             data-ur="{{urun.id}}" data-yrmlnghth="{{yorumlenght}}">
                     </div>
-
+                </div>
+                <div class="flex items-center space-x-2 text-[0.8rem] font-bold">
+                    <input type="checkbox" name="isim_status" id="isim_status" class="w-[1rem] h-[1rem]">
+                    <label for="isim_status">İsmim Görünsün</label>
+                </div>
             </form>
             <div class="px-4 pb-4">
                 <button data-ur="{{urun.id}}"

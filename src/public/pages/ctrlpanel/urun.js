@@ -600,7 +600,7 @@ const PopResim1 = async (urun, resimler) => {
     });
   });
 };
-const PopResim = async (urun, resimler) => {
+const PopResimAllInit = async (urun, resimler) => {
   // resimler = !!resimler && resimler.length > 0 ? JSON.parse(resimler) : null;
   // console.log(resimler)
   const rendTemp = await GetTemp("pop-resimler.hbs");

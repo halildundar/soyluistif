@@ -249,7 +249,7 @@ export const UrunInit = async () => {
         id: urunid,
         yorumlar: JSON.stringify([
           ...yorumlar,
-          { ...formData, tarih: new Date().getTime() },
+          { ...formData, tarih: new Date().getTime(),dogru_kullan:$(".mstsig").length > 0 },
         ]),
       },
       dataType: "json",

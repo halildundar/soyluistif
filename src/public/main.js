@@ -546,7 +546,6 @@ async function getMakeSubKat(kateg, id) {
       selectedKategori = sub;
       window.location = sub.url;
     });
-    
   }
 }
 const IsSelectKategori = async (kategori, kate) => {
