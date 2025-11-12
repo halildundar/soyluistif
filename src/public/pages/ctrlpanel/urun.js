@@ -96,7 +96,7 @@ const makeUrunArea = async (parents) => {
       $(`.urun-area table tbody .btnresim${urun.id}`).off("click");
       $(`.urun-area table tbody .btnresim${urun.id}`).on("click", (e) => {
         e.stopPropagation();
-        PopResim(urun, resimler);
+        PopResim1(urun, resimler);
       });
       $(`.urun-area table tbody .urun${urun.id}`).on("click", function () {
         $.each($(`.urun-area table tbody tr`), function () {
@@ -199,12 +199,17 @@ export const InitUrun = async () => {
       );
       formData["indirimli_fiyat"] =
         formData.fiyat - (formData.indirim * formData.fiyat) / 100.0;
-          let urunname = formData.name;
-        let kod =formData.kod;
+      let urunname = formData.name;
+      let kod = formData.kod;
       if (!selectedUrun) {
-        await addUrun({ ...formData,name:kod,kod:urunname, kayit_tarih: new Date().getTime() });
+        await addUrun({
+          ...formData,
+          name: kod,
+          kod: urunname,
+          kayit_tarih: new Date().getTime(),
+        });
       } else {
-        await updateUrun({...formData,name:kod,kod:urunname});
+        await updateUrun({ ...formData, name: kod, kod: urunname });
         $(`.btn-urun-temizle`).trigger("click");
       }
       $(".btn-close-urun-edit").trigger("click");
@@ -252,9 +257,9 @@ export const InitUrun = async () => {
       );
       formData["indirimli_fiyat"] =
         formData.fiyat - (formData.indirim * formData.fiyat) / 100;
-               let urunname = formData.name;
-        let kod =formData.kod;
-      await updateUrun({...formData,name:kod,kod:urunname});
+      let urunname = formData.name;
+      let kod = formData.kod;
+      await updateUrun({ ...formData, name: kod, kod: urunname });
       $(`.btn-urun-temizle`).trigger("click");
       $(".btn-close-urun-edit").trigger("click");
       await makeUrunArea(parents);
@@ -379,15 +384,17 @@ export const InitUrun = async () => {
             newHeader = "stok";
             val = parseInt(val);
           } else if (currentHeader == "Ürün Adı") {
-            newHeader = "name";
-          } else if (currentHeader == "Ürün Fiyat($)") {
+            newHeader = "kod";
+          } else if (currentHeader == "Ürün Fiyat") {
             newHeader = "fiyat";
             val = parseFloat(val);
           } else if (currentHeader == "Ürün Kodu") {
-            newHeader = "kod";
+            newHeader = "name";
           } else if (currentHeader == "İndirim Oran(%)") {
             newHeader = "indirim";
             val = parseInt(val);
+          } else if (currentHeader == "Birim") {
+            newHeader = "currency";
           }
           return {
             ...acc,
@@ -441,6 +448,155 @@ Lütfen Ürünün Görselini Dikkatlice İnceleyiniz Ürünün Sizin Numune İle
         $(".toplusave .spnte").css("display", "none");
       };
       reader.readAsText(file);
+    });
+  });
+};
+const PopResim1 = async (urun, resimler) => {
+  // resimler = !!resimler && resimler.length > 0 ? JSON.parse(resimler) : null;
+  // console.log(resimler)
+  const rendTemp = await GetTemp("pop-resimler.hbs");
+  $("body").append(
+    rendTemp({
+      resimler: resimler,
+    })
+  );
+  $(`.popasresimler .select-resim-frompc`).off("click");
+  $(`.popasresimler .select-resim-frompc`).on("click", function () {
+    $(".popasresimler [type='file']").val("");
+    $(".popasresimler [type='file']").trigger("click");
+  });
+  $(".popasresimler [type='file']").on("change", async function () {
+    let files = $(this).get(0).files;
+    let fileurls = [];
+    $(".popasresimler .spinner-ar").css("display", "flex");
+    let optimezedFiles = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      let urunnname = urun.name.replace("/", "");
+      fileurls.push(`/uploads/urunler/${urunnname}/${file.name}`);
+      let img = await OptimizePhoto(file, 500, 0.9);
+      optimezedFiles.push(img);
+    }
+    let uploadedFilePromises = [];
+    for (let i = 0; i < optimezedFiles.length; i++) {
+      const file = optimezedFiles[i];
+      let fileext = GetFileExt(file.name);
+      let filepurename = file.name.replace(`.${fileext}`, "");
+      const upld = new Upload(file);
+      let urunnname = urun.name.replace("/", "");
+      uploadedFilePromises.push(
+        upld.doUpload(`/uploads/urunler/${urunnname}`, filepurename, (data) => {
+          // console.log(data);
+        })
+      );
+    }
+    let initImages = [];
+    $.each($(".popasresimler .res-wrpa img"), (ind, item) => {
+      initImages.push($(item).attr("src"));
+    });
+    const reslUploads = await Promise.all(uploadedFilePromises);
+    const isAlluploaded = reslUploads
+      .map((item) => item.msg)
+      .every((item) => item == "Ok!");
+    if (isAlluploaded) {
+      await $.ajax({
+        type: "post",
+        url: "/ctrlpanel/urun/update-urun",
+        data: {
+          id: urun.id,
+          resimler: JSON.stringify([...initImages, ...fileurls]),
+        },
+        dataType: "json",
+      });
+      // resimler = JSON.stringify(fileurls);
+      let newResimler = [...fileurls, ...initImages];
+      $(".popasresimler .res-wrpa").html("");
+      $(".popasresimler .res-wrpa").html(`
+             <div class="grid grid-cols-4  gap-2 pt-5"></div>
+            `);
+      for (let i = 0; i < newResimler.length; i++) {
+        const element = newResimler[i];
+        $(".popasresimler .res-wrpa>div").append(`
+          <div class="relative w-full h-[150px] border border-gray-200 rounded">
+              <a href="${element}" target="_blank" class=" ">
+                    <img src="${element}" class="w-full h-full object-contain">
+                </a>
+              <button data-ur="${element}" class="btnimgdlet absolute -top-[7px] -right-[7px] rounded-full w-[25px] h-[25px] z-10 flex items-center justify-center tio text-white bg-red-500 text-[1.2rem]">clear</button>
+
+          </div>
+              `);
+      }
+    }
+    $(".popasresimler .spinner-ar").css("display", "none");
+    $(".btnimgdlet").off("click");
+    $(".btnimgdlet").on("click", async function () {
+      let url = $(this).attr("data-ur");
+      let initImages = [];
+      $.each($(".popasresimler .res-wrpa img"), (ind, item) => {
+        initImages.push($(item).attr("src"));
+      });
+      initImages = initImages.filter((a) => a != url);
+      $(`.popasresimler .res-wrpa a[href='${url}']`).parent().remove();
+      const result = await $.ajax({
+        type: "POST",
+        url: "/stat/filedelete",
+        data: { filepath: `${url}` },
+        dataType: "json",
+      });
+      await $.ajax({
+        type: "post",
+        url: "/ctrlpanel/urun/update-urun",
+        data: {
+          id: urun.id,
+          resimler: JSON.stringify([...initImages]),
+        },
+        dataType: "json",
+      });
+    });
+  });
+
+  $(`.popasresimler .btn-close`).on("click", function () {
+    $(`.popasresimler`).remove();
+    $(`.link[data-ur='${selectedKategori.id}'] a`).trigger("click");
+  });
+  $("#sortable1").sortable({
+    revert: false,
+    update: async (e) => {
+      let imgurls = [];
+      $.each($(`#sortable1 a img`), (index, el) => {
+        imgurls.push($(el).attr("src"));
+      });
+      await $.ajax({
+        type: "post",
+        url: "/ctrlpanel/urun/update-urun",
+        data: { id: urun.id, resimler: JSON.stringify(imgurls) },
+        dataType: "json",
+      });
+    },
+  });
+
+  $(".btnimgdlet").on("click", async function () {
+    let url = $(this).attr("data-ur");
+    let initImages = [];
+    $.each($(".popasresimler .res-wrpa img"), (ind, item) => {
+      initImages.push($(item).attr("src"));
+    });
+    initImages = initImages.filter((a) => a != url);
+    $(`.popasresimler .res-wrpa a[href='${url}']`).parent().remove();
+    const result = await $.ajax({
+      type: "POST",
+      url: "/stat/filedelete",
+      data: { filepath: `${url}` },
+      dataType: "json",
+    });
+    await $.ajax({
+      type: "post",
+      url: "/ctrlpanel/urun/update-urun",
+      data: {
+        id: urun.id,
+        resimler: JSON.stringify([...initImages]),
+      },
+      dataType: "json",
     });
   });
 };
@@ -524,15 +680,15 @@ const PopResim = async (urun, resimler) => {
 
   $(`.popasresimler .btn-close`).on("click", function () {
     $(`.popasresimler`).remove();
-        $(`.link[data-ur='${selectedKategori.id}'] a`).trigger('click');
+    $(`.link[data-ur='${selectedKategori.id}'] a`).trigger("click");
   });
   $("#sortable1").sortable({
     revert: false,
     update: async (e) => {
       let imgurls = [];
-      $.each($(`#sortable1 a img`),(index,el)=>{
-        imgurls.push($(el).attr("src"))
-      })
+      $.each($(`#sortable1 a img`), (index, el) => {
+        imgurls.push($(el).attr("src"));
+      });
       await $.ajax({
         type: "post",
         url: "/ctrlpanel/urun/update-urun",
