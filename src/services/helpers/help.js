@@ -58,6 +58,31 @@ export function isimstatus(context, isok) {
   }
   return context;
 }
+export function KargoUrundurum(fiyat, birim) {
+  if (birim === "$") {
+    if (parseInt(fiyat) > 25) {
+      return `<div class="pl-4 flex flex-col items-center px-5 py-1 text-white bg-blue-600  rounded">
+                                <div class="">Kargo Ücretsiz</div>
+                                <div class="text-[0.8rem]">25 $ üstü alışverişlerde kargo ücretsiz</div>
+                            </div>`;
+    }
+  } else if (birim === "€") {
+    if (parseInt(fiyat) > 20) {
+       return `<div class="pl-4 flex flex-col items-center px-5 py-1 text-white bg-blue-600  rounded">
+                                <div class="">Kargo Ücretsiz</div>
+                                <div class="text-[0.8rem]">20 € üstü alışverişlerde kargo ücretsiz</div>
+                            </div>`;
+    }
+  } else {
+    if (parseInt(fiyat) > 1000) {
+       return `<div class="pl-4 flex flex-col items-center px-5 py-1 text-white bg-blue-600  rounded">
+                                <div class="">Kargo Ücretsiz</div>
+                                <div class="text-[0.8rem]">1000 ₺ üstü alışverişlerde kargo ücretsiz</div>
+                            </div>`;
+    }
+  }
+  return "";
+}
 export function stars(oran) {
   if (oran === 5) {
     return `<button data-ur="1" class="tio text-orange-500">star</button>

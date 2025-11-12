@@ -58,13 +58,12 @@
                             <div class="">İndirim</div>
                         </div>
                         <div class="inline-block">
-                            <div class="text-gray-600 text-[1.4rem] font-bold line-through ">{{#DigitFract urun.fiyat
-                                2}} {{/DigitFract}}{{urun.currSymb}}</div>
+                            <div class="text-gray-600 text-[1.4rem] font-bold line-through ">{{#DigitFract urun.fiyat 2}} {{/DigitFract}}{{urun.currSymb}}</div>
                             <div class="text-[2rem] leading-none font-bold">{{#DigitFract urun.indirimli_fiyat 2}}
                                 {{/DigitFract}}{{urun.currSymb}}</div>
                         </div>
                     </div>
-                    <div class="pt-5">
+                    <div class="pt-5 flex items-center space-x-5">
                         <div class="inline-flex border border-gray-200">
                             <div data-ur="{{urun.id}}"
                                 class="btn-subsepet tio text-[1rem] p-2   font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
@@ -75,6 +74,9 @@
                             <div data-ur="{{urun.id}}"
                                 class=" btn-addsepet tio text-[1rem] p-2 font-bold bg-gray-200 select-none cursor-pointer hover:bg-gray-300">
                                 add</div>
+                        </div>
+                        <div>
+                            {{#KargoUrundurum urun.fiyat urun.currSymb}}{{/KargoUrundurum}}
                         </div>
                     </div>
                     <div class="flex flex-col md:flex-row md:space-x-3 space-y-2 md:space-y-0 py-5">
@@ -184,7 +186,8 @@
                             {{#each yorumlar}}
                             <div class="yromlar pt-6">
                                 <div class="flex items-center space-x-2">
-                                    <div class="font-semibold">{{#isimstatus this.ad_soyad this.isim_status}}{{/isimstatus}}</div>
+                                    <div class="font-semibold">{{#isimstatus this.ad_soyad
+                                        this.isim_status}}{{/isimstatus}}</div>
                                     <div class="flex items-center justify-center text-[1.2rem] ">
                                         {{#stars this.oran }}
                                         {{/stars}}
@@ -195,7 +198,9 @@
                                 </div>
                                 <div class="pb-2">
                                     {{#if this.dogru_kullan}}
-                                    <span class="text-[0.8rem] px-4 py-1 text-white bg-green-500 rounded shadow-md">Doğrulanmış Kullanıcı</span>
+                                    <span
+                                        class="text-[0.8rem] px-4 py-1 text-white bg-green-500 rounded shadow-md">Doğrulanmış
+                                        Kullanıcı</span>
                                     {{/if}}
                                 </div>
                                 <div class="pb-2 text-[0.8rem]">
@@ -346,4 +351,3 @@
         </div>
     </div>
 </div>
-

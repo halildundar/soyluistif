@@ -60,12 +60,12 @@ export const UrunApi = async (app) => {
       return;
     }
     const { ids } = data;
-    await DB.Query("START TRANSACTION");
+    // await DB.Query("START TRANSACTION");
     for (let i = 0; i < ids.length; i++) {
       const id = ids[i];
       await DB.Query("DELETE FROM `kategori` WHERE id = " + id);
     }
-    await DB.Query("COMMIT");
+    // await DB.Query("COMMIT");
     // return res.json(items);
     return res.json({ msg: "OK!" });
   });
@@ -93,7 +93,7 @@ export const UrunApi = async (app) => {
     }
     let { ids } = data;
     // ids = ids.replace(/[\[\]]/g,'');
-    await DB.Query("START TRANSACTION");
+    // await DB.Query("START TRANSACTION");
     const deletedUrunler = await DB.Query(
       "SELECT id,resimler FROM `urun` WHERE JSON_CONTAINS(parents,?,'$')",
       [[ids]]
@@ -115,7 +115,7 @@ export const UrunApi = async (app) => {
       }
       await DB.Query("DELETE FROM `urun` WHERE id = " + id);
     }
-    await DB.Query("COMMIT");
+    // await DB.Query("COMMIT");
     return res.json({ msg: "OK!" });
   });
   router.post("/ctrlpanel/urun/delete-urun",checkLoggedIn, async (req, res) => {
@@ -197,11 +197,11 @@ export const UrunApi = async (app) => {
     }
     let {arrayData} = data;
     // let promises = [];
-    const rs = await  DB.Query("START TRANSACTION");
+    // const rs = await  DB.Query("START TRANSACTION");
     for (const element of arrayData) {
           await DB.Query("INSERT INTO `urun` set ?",[{...element}])
     }
-    const re1 = await  DB.Query("COMMIT");
+    // const re1 = await  DB.Query("COMMIT");
     return res.json({status:true,msg:'Ok!'});
   });
   return app.use("/", router);
