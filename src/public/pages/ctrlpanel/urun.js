@@ -259,7 +259,7 @@ export const InitUrun = async () => {
         formData.fiyat - (formData.indirim * formData.fiyat) / 100;
       let urunname = formData.name;
       let kod = formData.kod;
-      await updateUrun({ ...formData, name: kod, kod: urunname });
+      await updateUrun({ ...formData });
       $(`.btn-urun-temizle`).trigger("click");
       $(".btn-close-urun-edit").trigger("click");
       await makeUrunArea(parents);
