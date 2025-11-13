@@ -48,6 +48,33 @@ const makeTotal = (urunler) => {
   $(".toplam_tutar").html("+" + toplamTutar.toFixed(2) + currSymb);
   $(".total_kdv").html("+" + kdvToplam.toFixed(2) + currSymb);
   $(".total_indirim").html("-" + indirim.toFixed(2) + currSymb);
+
+  let kalan_ucret = 25;
+  if (currSymb === "$") {
+    kalan_ucret = 25 - total;
+    if (kalan_ucret > 0) {
+      $(".kargo_ucret").html("25.00$");
+      total += 25;
+    } else {
+      $(".kargo_ucret").html("0.00$");
+    }
+  } else if (currSymb === "€") {
+    kalan_ucret = 20 - total;
+    if (kalan_ucret > 0) {
+      $(".kargo_ucret").html("20.00€");
+      total += 20;
+    } else {
+      $(".kargo_ucret").html("0.00€");
+    }
+  } else {
+    kalan_ucret = 1000 - total;
+    if (kalan_ucret > 0) {
+      $(".kargo_ucret").html("1000.00₺");
+      total += 1000;
+    } else {
+      $(".kargo_ucret").html("0.00₺");
+    }
+  }
   $(".toplam").html(total.toFixed(2) + currSymb);
 };
 const Validator = (formData, classname) => {
