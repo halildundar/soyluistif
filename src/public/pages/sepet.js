@@ -76,6 +76,12 @@ const makeTotal = (urunler) => {
     } else {
       $(".kargo_ucret").html("0.00$");
     }
+    Strhand({
+      total_limit: parseInt("25").toFixed(2),
+      birim: currSymb,
+      kalan_ucret: kalan_ucret,
+      kalan_ucretStr: kalan_ucret.toFixed(2),
+    });
   } else if (currSymb === "€") {
     kalan_ucret = 20 - total;
     if (kalan_ucret > 0) {
@@ -84,6 +90,12 @@ const makeTotal = (urunler) => {
     } else {
       $(".kargo_ucret").html("0.00€");
     }
+    Strhand({
+      total_limit: parseInt("20").toFixed(2),
+      birim: currSymb,
+      kalan_ucret: kalan_ucret,
+      kalan_ucretStr: kalan_ucret.toFixed(2),
+    });
   } else {
     kalan_ucret = 1000 - total;
     if (kalan_ucret > 0) {
@@ -92,15 +104,15 @@ const makeTotal = (urunler) => {
     } else {
       $(".kargo_ucret").html("0.00₺");
     }
+    $(".fkargo_area").html(
+      Strhand({
+        total_limit: parseInt("1000").toFixed(2),
+        birim: currSymb,
+        kalan_ucret: kalan_ucret,
+        kalan_ucretStr: kalan_ucret.toFixed(2),
+      })
+    );
   }
-  $(".fkargo_area").html(
-    Strhand({
-      total_limit: parseInt("25").toFixed(2),
-      birim: currSymb,
-      kalan_ucret: kalan_ucret,
-      kalan_ucretStr: kalan_ucret.toFixed(2),
-    })
-  );
 
   $(".toplam").html(total.toFixed(2) + currSymb);
 };
